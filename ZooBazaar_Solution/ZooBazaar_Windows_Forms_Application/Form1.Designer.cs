@@ -1,4 +1,4 @@
-﻿namespace ZooBazaar_DesktopApp
+﻿namespace ZooBazaar_Windows_Forms_Application
 {
     partial class Form1
     {
