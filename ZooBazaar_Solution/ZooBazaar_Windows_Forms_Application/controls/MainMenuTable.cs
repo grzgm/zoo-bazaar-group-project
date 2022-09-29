@@ -8,14 +8,34 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 {
     internal class MainMenuTable : TableLayoutPanel
     {
+        //Fields
+        private string[] menuButtonsText;
+
         //Controls
+        private MainScheduleTable mainScheduleTable;
+        private MenuButton[] menuButtons;
 
         //Color
         SolidBrush highlightBrush;
 
         public MainMenuTable()
         {
+            //Fields
+            menuButtonsText = new string[] { "s", "e", "a" };
+
             //Controls
+            mainScheduleTable = new MainScheduleTable();
+            menuButtons = new MenuButton[3];
+
+
+
+            //controls -> buttons
+            for (int i = menuButtonsText.Length - 1; i >= 0; i--)
+            {
+                MenuButton menuButton = new MenuButton(i, menuButtonsText[i], this);
+                menuButtons[i] = menuButton;
+                Controls.Add(menuButton, 0, 1);
+            }
 
 
             //Properties
@@ -37,6 +57,29 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //Events
             this.CellPaint += TableLayoutPanel_CellPaint;
+        }
+
+
+        public void ButtonClick(MenuButton buttonClicked)
+        {
+            Controls.Remove(GetControlFromPosition(2, 1));
+            for (int i = 0; i < menuButtons.Length; i++)
+            {
+                if (menuButtons[i] == buttonClicked)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            Controls.Add(mainScheduleTable, 2, 1);
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                    }
+                }
+            }
+            //depending on what button load connected table
         }
 
 
