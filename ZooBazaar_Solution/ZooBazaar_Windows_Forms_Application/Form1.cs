@@ -11,6 +11,8 @@ namespace ZooBazaar_Windows_Forms_Application
             InitializeComponent();
             mainMenutable = new MainMenuTable();
 
+            Size = new Size(1920 , 1080);
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
