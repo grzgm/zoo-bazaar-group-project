@@ -14,6 +14,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         //Controls
         private MainScheduleTable mainScheduleTable;
         private MenuButton[] menuButtons;
+        private Panel buttonPanel;
 
         //Color
         SolidBrush highlightBrush;
@@ -27,6 +28,11 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             mainScheduleTable = new MainScheduleTable();
             menuButtons = new MenuButton[3];
 
+            buttonPanel = new Panel();
+            buttonPanel.Dock = DockStyle.Fill;
+            buttonPanel.Padding = Padding.Empty;
+            Controls.Add(buttonPanel, 0,1);
+
 
 
             //controls -> buttons
@@ -34,12 +40,14 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             {
                 MenuButton menuButton = new MenuButton(i, menuButtonsText[i], this);
                 menuButtons[i] = menuButton;
-                Controls.Add(menuButton, 0, 1);
+                buttonPanel.Controls.Add(menuButton);
             }
 
 
             //Properties
             Dock = DockStyle.Fill;
+            //Padding = Padding.Empty;
+            //Margin = Padding.Empty;
             ColumnCount = 3;
             ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
             ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10));
@@ -79,7 +87,6 @@ namespace ZooBazaar_Windows_Forms_Application.controls
                     }
                 }
             }
-            //depending on what button load connected table
         }
 
 
