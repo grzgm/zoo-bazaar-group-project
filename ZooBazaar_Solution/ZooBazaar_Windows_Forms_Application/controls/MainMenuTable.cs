@@ -15,6 +15,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         //Controls
         private MainScheduleTable mainScheduleTable;
         private MainEmployeeTable mainEmployeeTable;
+        private MainAnimalTable mainAnimalTable;
         private MenuButton[] menuButtons;
         private Panel buttonPanel;
 
@@ -29,6 +30,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             //Controls
             mainScheduleTable = new MainScheduleTable();
             mainEmployeeTable = new MainEmployeeTable();
+            mainAnimalTable = new MainAnimalTable();
             menuButtons = new MenuButton[3];
 
             buttonPanel = new Panel();
@@ -47,7 +49,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             }
 
             //Debug Employees fast render
-            Controls.Add(mainEmployeeTable, 2, 1);
+            //Controls.Add(mainEmployeeTable, 2, 1);
+            Controls.Add(mainAnimalTable, 2, 1);
 
 
             //Properties
@@ -90,6 +93,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
                             Controls.Add(mainEmployeeTable, 2, 1);
                             break;
                         case 2:
+                            Controls.Add(mainAnimalTable, 2, 1);
                             break;
                     }
                 }
