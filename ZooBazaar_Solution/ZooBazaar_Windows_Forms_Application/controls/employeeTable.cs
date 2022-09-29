@@ -8,24 +8,20 @@ using System.Xml;
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
-    internal class employeeTable : TableLayoutPanel
+    internal class EmployeeTable : TableLayoutPanel
     {
-        private string[] weekDays;
-        //private DayTable[] _DayTables;
-        //private TimeTable _TimeTable;
+        private List<EmployeeDetailsTable> employeeDetailsTable;
 
-        public employeeTable()
+        public EmployeeTable()
         {
             //assigning variables
-            weekDays = new string[7] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 
             //assigning controls
-            //_TimeTable = new TimeTable();
-            //_DayTables = new DayTable[7];
-            //for (int i = 0; i < 7; i++)
-            //{
-            //    _DayTables[i] = new DayTable();
-            //}
+            employeeDetailsTable = new List<EmployeeDetailsTable>();
+            for (int i = 0; i < 5; i++)
+            {
+                employeeDetailsTable.Add(new EmployeeDetailsTable("test", "test", "test"));
+            }
 
 
 
@@ -35,38 +31,27 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
 
             //table style
-            RowCount = 2;
-            RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
-            RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+            RowCount = employeeDetailsTable.Count;
 
-            ColumnCount = 8;
-            ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
-            ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / 7));
-            ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / 7));
-            ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / 7));
-            ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / 7));
-            ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / 7));
-            ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / 7));
-            ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / 7));
+            for (int i = 0; i < employeeDetailsTable.Count; i++)
+            {
+                RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+            }
+
+            ColumnCount = 1;
+            ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 
 
             //adding controls
 
-            //Controls.Add(_TimeTable, 0, 1);
-            //for (int i = 0; i < _DayTables.Length; i++)
-            //{
-            //    Controls.Add(_DayTables[i], i + 1, 1);
-            //}
+            // -1 cuz last employee is streched ikd why
+            for (int i = 0; i < employeeDetailsTable.Count-1; i++)
+            {
+                Controls.Add(employeeDetailsTable[i], 0, i);
+            }
 
-            //for (int i = 0; i < weekDays.Length; i++)
-            //{
-            //    Label _WeekDayLabel = new Label();
-            //    _WeekDayLabel.Dock = DockStyle.Fill;
-            //    _WeekDayLabel.Text = weekDays[i];
-            //    _WeekDayLabel.TextAlign = ContentAlignment.MiddleCenter;
-            //    _WeekDayLabel.Font = new Font("Calibri", 11, FontStyle.Regular);
-            //    Controls.Add(_WeekDayLabel, i + 1, 0);
-            //}
+            //debug
+            //BackColor = Color.Blue;
         }
     }
 }

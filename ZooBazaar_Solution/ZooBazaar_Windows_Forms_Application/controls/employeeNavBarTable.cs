@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
-    internal class employeeNavBarTable : TableLayoutPanel
+    internal class EmployeeNavBarTable : TableLayoutPanel
     {
 
         private ComboBox _NameComboBox;
         private ComboBox _FunctionComboBox;
         private ComboBox _WorkZoneComboBox;
 
-        public employeeNavBarTable()
+        public EmployeeNavBarTable()
         {
             //assigning controls
             _NameComboBox = new ComboBox();
@@ -42,6 +42,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Controls.Add(_FunctionComboBox, 1, 0);
             Controls.Add(_WorkZoneComboBox, 2, 0);
 
+            //debug
+            //BackColor = Color.Red;
         }
 
     }

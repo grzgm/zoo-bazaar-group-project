@@ -9,8 +9,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
     internal class MainEmployeeTable : TableLayoutPanel
     {
         //controls
-        private employeeNavBarTable _NavBarTable;
-        private employeeTable _ScheduleTable;
+        private EmployeeNavBarTable _EmployeeNavBarTable;
+        private EmployeeTable _EmployeeScheduleTable;
         private emptyTable empty;
 
 
@@ -19,8 +19,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         public MainEmployeeTable()
         {
             //controls
-            _NavBarTable = new employeeNavBarTable();
-            _ScheduleTable = new employeeTable();
+            _EmployeeNavBarTable = new EmployeeNavBarTable();
+            _EmployeeScheduleTable = new EmployeeTable();
             empty = new emptyTable();
 
 
@@ -32,14 +32,14 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             RowCount = 4;
             RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
             RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-            RowStyles.Add(new RowStyle(SizeType.Absolute, 300));
+            RowStyles.Add(new RowStyle(SizeType.Absolute, 200));
 
             ColumnCount = 1;
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 
-            Controls.Add(_NavBarTable, 0, 0);
-            Controls.Add(_ScheduleTable, 0, 2);
-            Controls.Add(empty, 0, 3);
+            Controls.Add(_EmployeeNavBarTable, 0, 0);
+            Controls.Add(_EmployeeScheduleTable, 0, 1);
+            Controls.Add(empty, 0, 2);
             /*debug
             Panel testpanel = new Panel();
             testpanel.Dock = DockStyle.Fill;

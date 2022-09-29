@@ -8,7 +8,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         {
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
-            BackColor = Color.Red;
+            //BackColor = Color.Red;
         }
     }
 }
