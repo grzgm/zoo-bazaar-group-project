@@ -49,8 +49,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             }
 
             //Debug Employees fast render
-            //Controls.Add(mainEmployeeTable, 2, 1);
-            Controls.Add(mainAnimalTable, 2, 1);
+            Controls.Add(mainEmployeeTable, 2, 1);
+            //Controls.Add(mainAnimalTable, 2, 1);
 
 
             //Properties

@@ -11,7 +11,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         //controls
         private EmployeeNavBarTable _EmployeeNavBarTable;
         private EmployeeTable _EmployeeScheduleTable;
-        private EmployeeActivityTable empty;
+        private EmployeeActivityTable _ActivityTable;
 
 
 
@@ -21,7 +21,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             //controls
             _EmployeeNavBarTable = new EmployeeNavBarTable();
             _EmployeeScheduleTable = new EmployeeTable();
-            empty = new EmployeeActivityTable();
+            _ActivityTable = new EmployeeActivityTable();
 
 
 
@@ -39,7 +39,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             Controls.Add(_EmployeeNavBarTable, 0, 0);
             Controls.Add(_EmployeeScheduleTable, 0, 1);
-            Controls.Add(empty, 0, 2);
+            Controls.Add(_ActivityTable, 0, 2);
             /*debug
             Panel testpanel = new Panel();
             testpanel.Dock = DockStyle.Fill;

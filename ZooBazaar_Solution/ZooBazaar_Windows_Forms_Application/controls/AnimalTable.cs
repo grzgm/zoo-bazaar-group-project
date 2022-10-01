@@ -18,17 +18,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //assigning controls
             animalDetailsTable = new List<AnimalDetailsTable>();
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    animalDetailsTable.Add(new AnimalDetailsTable("Animal", "Animal", "Animal", "Animal"));
-            //}
-
-            animalDetailsTable.Add(new AnimalDetailsTable("Leopard", "Mammal", "Africa", "11"));
-            animalDetailsTable.Add(new AnimalDetailsTable("Snake", "Reptile", "Africa", "8"));
-            animalDetailsTable.Add(new AnimalDetailsTable("Dog", "Mammal", "Europe", "4"));
-            animalDetailsTable.Add(new AnimalDetailsTable("Cat", "Mammal", "Europe", "3"));
-            //dummy for layout
-            animalDetailsTable.Add(new AnimalDetailsTable("Cat", "Mammal", "Europe", "3"));
+            for (int i = 0; i < 5; i++)
+            {
+                animalDetailsTable.Add(new AnimalDetailsTable("Animal", "Animal", "Animal", "Animal"));
+            }
 
 
 
