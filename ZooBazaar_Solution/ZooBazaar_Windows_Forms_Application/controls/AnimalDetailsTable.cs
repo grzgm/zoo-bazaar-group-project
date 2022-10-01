@@ -8,33 +8,36 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private Label _animalSpecies;
         private Label _animalHabitat;
         private Label _animalZone;
+        private List<Label> _labels;
         private Button _animalMoreInfo;
         public AnimalDetailsTable(string name, string species, string habitat, string zone)
         {
             //assigning controls
+            _labels = new List<Label>();
+
             _animalName = new Label();
             _animalName.Text = name;
-            _animalName.Dock = DockStyle.Fill;
-            _animalName.BackColor = Color.LightGray;
-            _animalName.Margin = Padding.Empty;
+            _labels.Add(_animalName);
 
             _animalSpecies = new Label();
             _animalSpecies.Text = species;
-            _animalSpecies.Dock = DockStyle.Fill;
-            _animalSpecies.BackColor = Color.LightGray;
-            _animalSpecies.Margin = Padding.Empty;
+            _labels.Add(_animalSpecies);
 
             _animalHabitat = new Label();
             _animalHabitat.Text = habitat;
-            _animalHabitat.Dock = DockStyle.Fill;
-            _animalHabitat.BackColor = Color.LightGray;
-            _animalHabitat.Margin = Padding.Empty;
+            _labels.Add(_animalHabitat);
 
             _animalZone = new Label();
             _animalZone.Text = zone;
-            _animalZone.Dock = DockStyle.Fill;
-            _animalZone.BackColor = Color.LightGray;
-            _animalZone.Margin = Padding.Empty;
+            _labels.Add(_animalZone);
+
+            foreach (Label _label in _labels)
+            {
+                _label.Dock = DockStyle.Fill;
+                _label.BackColor = Color.LightGray;
+                _label.Margin = Padding.Empty;
+                _label.TextAlign = ContentAlignment.MiddleLeft;
+            }
 
             _animalMoreInfo = new Button();
             _animalMoreInfo.Text = "...";
@@ -46,6 +49,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             _animalMoreInfo.TextAlign = ContentAlignment.MiddleCenter;
             _animalMoreInfo.Font = new Font("Calibri", 14, FontStyle.Bold);
             _animalMoreInfo.Margin = Padding.Empty;
+            _animalMoreInfo.TextAlign = ContentAlignment.MiddleCenter;
 
             //properties
             Dock = DockStyle.Fill;

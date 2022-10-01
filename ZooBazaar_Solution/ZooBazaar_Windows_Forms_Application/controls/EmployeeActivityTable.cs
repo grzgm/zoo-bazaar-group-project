@@ -2,9 +2,9 @@
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
-    internal class emptyTable : TableLayoutPanel
+    internal class EmployeeActivityTable : TableLayoutPanel
     {
-        public emptyTable()
+        public EmployeeActivityTable()
         {
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;

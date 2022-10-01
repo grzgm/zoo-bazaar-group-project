@@ -11,7 +11,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         //controls
         private AnimalNavBarTable _AnimalNavBarTable;
         private AnimalTable _AnimalScheduleTable;
-        private emptyTable empty;
+        private EmployeeActivityTable empty;
 
 
 
@@ -21,7 +21,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             //controls
             _AnimalNavBarTable = new AnimalNavBarTable();
             _AnimalScheduleTable = new AnimalTable();
-            empty = new emptyTable();
+            empty = new EmployeeActivityTable();
 
 
 
