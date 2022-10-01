@@ -8,12 +8,17 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 {
     internal class ScheduleTable : TableLayoutPanel
     {
+        private MainScheduleTable MainScheduleTable;
+
         private string[] weekDays;
         private DayTable[] _DayTables;
         private TimeTable _TimeTable;
 
-        public ScheduleTable()
+        public ScheduleTable(MainScheduleTable mainScheduleTable)
         {
+            this.MainScheduleTable = mainScheduleTable;
+
+
             //assigning variables
             weekDays = new string[7] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 
@@ -22,7 +27,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             _DayTables = new DayTable[7];
             for (int i = 0; i < 7; i++)
             {
-                _DayTables[i] = new DayTable();
+                _DayTables[i] = new DayTable(mainScheduleTable, i);
             }
 
 

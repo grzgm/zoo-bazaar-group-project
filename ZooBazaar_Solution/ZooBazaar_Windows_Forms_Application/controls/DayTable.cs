@@ -8,14 +8,21 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 {
     internal class DayTable : TableLayoutPanel
     {
+        private MainScheduleTable mainScheduleTable;
+
+        private int id;
+
         private BlockButton[] _BlockButton;
-        public DayTable()
+        public DayTable(MainScheduleTable mainScheduleTable, int id)
         {
+            this.mainScheduleTable = mainScheduleTable;
+            this.id = id;
+
             //assigning controls
             _BlockButton = new BlockButton[24];
             for (int i = 0; i < _BlockButton.Length; i++)
             {
-                _BlockButton[i] = new BlockButton();
+                _BlockButton[i] = new BlockButton(mainScheduleTable, this.id,  i);
             }
 
 

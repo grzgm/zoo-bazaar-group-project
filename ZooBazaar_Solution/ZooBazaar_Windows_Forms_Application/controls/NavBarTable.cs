@@ -8,38 +8,36 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 {
     internal class NavBarTable : TableLayoutPanel
     {
+        private MainScheduleTable mainScheduleTable;
+
 
         private ComboBox _TypeComboBox;
         private ComboBox _ComboBox;
 
-        private Button _PreviousButton;
-        private Button _TodayButton;
-        private Button _NextButton;
+        private PreviousWeekButton _PreviousButton;
+        private CurrentWeekButton _CurrentButton;
+        private NextWeekButton _NextButton;
 
-        private Button _NewScheduleButton;
+        private NewScheduleButton _NewScheduleButton;
 
 
-        public NavBarTable()
+        public NavBarTable(MainScheduleTable mainScheduleTable)
         {
+            //fields
+            this.mainScheduleTable = mainScheduleTable;
+
             //assigning controls
             _TypeComboBox = new ComboBox();
             _TypeComboBox.Dock = DockStyle.Fill;
             _ComboBox = new ComboBox();
             _ComboBox.Dock = DockStyle.Fill;
 
-            _PreviousButton = new Button();
-            _PreviousButton.Text = "<";
-            _PreviousButton.Dock = DockStyle.Fill;
-            _TodayButton = new Button();
-            _TodayButton.Text = "Today";
-            _TodayButton.Dock = DockStyle.Fill;
-            _NextButton = new Button();
-            _NextButton.Text = ">";
-            _NextButton.Dock = DockStyle.Fill;
+            _PreviousButton = new PreviousWeekButton(mainScheduleTable);
+            _CurrentButton = new CurrentWeekButton(mainScheduleTable);
+            _NextButton = new NextWeekButton(mainScheduleTable);
+   
 
-            _NewScheduleButton = new Button();
-            _NewScheduleButton.Text = "New schedule";
-            _NewScheduleButton.Dock = DockStyle.Fill;
+            _NewScheduleButton = new NewScheduleButton();
 
             //properties
             Dock = DockStyle.Fill;
@@ -63,11 +61,86 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Controls.Add(_TypeComboBox, 0, 0);
             Controls.Add(_ComboBox, 1, 0);
             Controls.Add(_PreviousButton, 3, 0);
-            Controls.Add(_TodayButton, 4, 0);
+            Controls.Add(_CurrentButton, 4, 0);
             Controls.Add(_NextButton, 5, 0);
             Controls.Add(_NewScheduleButton, 6,0);
 
         }
 
+    }
+
+    internal class NewScheduleButton : Button
+    {
+        public NewScheduleButton()
+        {
+            Dock = DockStyle.Fill;
+            Text = "New schedule";
+        }
+    }
+
+    internal class NextWeekButton : Button
+    {
+        private MainScheduleTable _mainScheduleTable;
+        public NextWeekButton(MainScheduleTable mainScheduleTable)
+        {
+            //fields
+            this._mainScheduleTable = mainScheduleTable;
+
+            //properties
+            Dock = DockStyle.Fill;
+            Text = ">";
+
+            //events
+            this.Click += new System.EventHandler(this.NextWeekButton_Click);
+        }
+        
+        private void NextWeekButton_Click(object? sender, EventArgs e)
+        {
+            _mainScheduleTable.LoadNextWeek();
+        }
+    }
+
+    internal class PreviousWeekButton : Button
+    {
+        private MainScheduleTable _mainScheduleTable;
+        public PreviousWeekButton(MainScheduleTable mainScheduleTable)
+        {
+            //fields
+            this._mainScheduleTable = mainScheduleTable;
+
+            //properties
+            Dock = DockStyle.Fill;
+            Text = "<";
+
+            //events
+            this.Click += new System.EventHandler(this.PreviousWeekButton_Click);
+        }
+
+        private void PreviousWeekButton_Click(object? sender, EventArgs e)
+        {
+            _mainScheduleTable.LoadPreviousWeek();
+        }
+    }
+
+    internal class CurrentWeekButton : Button
+    {
+        private MainScheduleTable _mainScheduleTable;
+        public CurrentWeekButton(MainScheduleTable mainScheduleTable)
+        {
+            //fields
+            this._mainScheduleTable = mainScheduleTable;
+
+            //properties
+            Dock = DockStyle.Fill;
+            Text = "Today";
+
+            //events
+            this.Click += new System.EventHandler(this.CurrentWeekButton_Click);
+        }
+
+        private void CurrentWeekButton_Click(object? sender, EventArgs e)
+        {
+            _mainScheduleTable.LoadCurrentWeek();
+        }
     }
 }

@@ -8,14 +8,32 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 {
     internal class BlockButton : Button
     {
-        public BlockButton()
+        private MainScheduleTable mainScheduleTable;
+
+
+        int timeID;
+        int dayID;
+        public BlockButton(MainScheduleTable mainScheduleTable, int parentDayTableID, int timeID)
         {
+            this.timeID = timeID;
+            this.dayID = parentDayTableID;
+
+            this.mainScheduleTable = mainScheduleTable;
+
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 1;
             FlatAppearance.BorderColor = Color.White;
             BackColor = Color.LightGray;
+
+            this.Click += new System.EventHandler(this.BlockButton_Click);
         }
+
+        private void BlockButton_Click(object? sender, System.EventArgs e)
+        {
+            mainScheduleTable.LoadActivityTable(dayID, timeID);
+        }
+
     }
 }

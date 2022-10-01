@@ -8,6 +8,18 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 {
     internal class MainScheduleTable : TableLayoutPanel
     {
+
+
+        /*
+         * this class needs to be able to get the schedule by week.
+         * 
+         */
+
+        //fields
+        private int weekNr;
+
+
+
         //controls
         private NavBarTable _NavBarTable;
         private Label _WeekLabel;
@@ -20,10 +32,11 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         public MainScheduleTable()
         {
             //controls
-            _NavBarTable = new NavBarTable();
+            _NavBarTable = new NavBarTable(this);
             _WeekLabel = new Label();
-            _ScheduleTable = new ScheduleTable();
-            _ActivityTable = new ActivityTable();
+            _WeekLabel.Text = "week 10";
+            _ScheduleTable = new ScheduleTable(this);
+            _ActivityTable = new ActivityTable(99 ,99);
 
 
 
@@ -41,14 +54,69 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 
             Controls.Add(_NavBarTable, 0, 0);
+            Controls.Add(_WeekLabel, 0, 1);
             Controls.Add(_ScheduleTable, 0, 2);
-            /*debug
-            Panel testpanel = new Panel();
-            testpanel.Dock = DockStyle.Fill;
-            testpanel.BackColor = Color.Red;
-            testpanel.Margin = Padding.Empty;
-            Controls.Add(testpanel, 0, 2);
-            */
+            Controls.Add(_ActivityTable, 0, 3);
+        }
+
+        public void LoadNextWeek() 
+        {
+            ClearScheduleTable();
+            _ScheduleTable = new ScheduleTable(this);
+
+            weekNr++; // get week nr from database where the week nuber is 1 more than current week loaded { weeknr = Calledfuntion(); }
+            UpdateWeekLabel();
+
+            Controls.Add(_ScheduleTable, 0, 2);
+
+        }
+        public void LoadPreviousWeek() 
+        {
+            ClearScheduleTable();
+            _ScheduleTable = new ScheduleTable(this);
+
+            weekNr--; // get week nr from database where the week nuber is 1 less than current week loaded  { weeknr = Calledfuntion(); }
+            UpdateWeekLabel();
+
+            Controls.Add(_ScheduleTable, 0, 2);
+
+        }
+        public void LoadCurrentWeek()
+        {
+            ClearScheduleTable();
+            _ScheduleTable = new ScheduleTable(this);
+
+            weekNr = 10; // get week nr from database which includes todays date  { weeknr = Calledfuntion(); }
+            UpdateWeekLabel();
+
+            Controls.Add(_ScheduleTable, 0, 2);
+
+
+        }
+        public void LoadUpcommingWeek()
+        {
+            ClearScheduleTable();
+
+        }
+        private void ClearScheduleTable()
+        {
+            Controls.Remove(GetControlFromPosition(0, 2));
+        }
+        private void ClearActivityTable()
+        {
+            Controls.Remove(GetControlFromPosition(0, 3));
+        }
+
+        public void LoadActivityTable(int dayID, int timeID)
+        {
+            ClearActivityTable();
+            _ActivityTable = new ActivityTable(dayID, timeID);
+            Controls.Add(_ActivityTable, 0, 3);
+        }
+
+        private void UpdateWeekLabel()
+        {
+            _WeekLabel.Text = String.Format("Week {0}", weekNr);
         }
     }
 }
