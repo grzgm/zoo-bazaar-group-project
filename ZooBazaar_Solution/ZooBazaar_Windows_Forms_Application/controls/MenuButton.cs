@@ -31,11 +31,6 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             this.Click += new System.EventHandler(this.MenuButton_Click);
         }
 
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> GrzegorzUI
         private void MenuButton_Click(object? sender, EventArgs e)
         {
             mainMenuTable.ButtonClick(this);

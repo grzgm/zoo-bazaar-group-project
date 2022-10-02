@@ -14,11 +14,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
         //Controls
         private MainScheduleTable mainScheduleTable;
-<<<<<<< HEAD
-=======
         private MainEmployeeTable mainEmployeeTable;
         private MainAnimalTable mainAnimalTable;
->>>>>>> GrzegorzUI
         private MenuButton[] menuButtons;
         private Panel buttonPanel;
 
@@ -32,21 +29,15 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //Controls
             mainScheduleTable = new MainScheduleTable();
-<<<<<<< HEAD
-=======
             mainEmployeeTable = new MainEmployeeTable();
             mainAnimalTable = new MainAnimalTable();
->>>>>>> GrzegorzUI
             menuButtons = new MenuButton[3];
 
             buttonPanel = new Panel();
             buttonPanel.Dock = DockStyle.Fill;
             buttonPanel.Padding = Padding.Empty;
-<<<<<<< HEAD
             Controls.Add(buttonPanel, 0,1);
-=======
             Controls.Add(buttonPanel, 0, 1);
->>>>>>> GrzegorzUI
 
 
 
@@ -57,13 +48,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
                 menuButtons[i] = menuButton;
                 buttonPanel.Controls.Add(menuButton);
             }
-<<<<<<< HEAD
-=======
 
             //Debug Employees fast render
             //Controls.Add(mainEmployeeTable, 2, 1);
             Controls.Add(mainAnimalTable, 2, 1);
->>>>>>> GrzegorzUI
 
 
             //Properties
@@ -103,16 +91,11 @@ namespace ZooBazaar_Windows_Forms_Application.controls
                             Controls.Add(mainScheduleTable, 2, 1);
                             break;
                         case 1:
-<<<<<<< HEAD
-                            break;
-                        case 2:
-=======
                             Controls.Add(mainEmployeeTable, 2, 1);
                             break;
                         case 2:
                             Controls.Add(mainAnimalTable, 2, 1);
->>>>>>> GrzegorzUI
-                            break;
+                             break;
                     }
                 }
             }

@@ -9,8 +9,6 @@ namespace ZooBazaar_Windows_Forms_Application.controls
     internal class MainScheduleTable : TableLayoutPanel
     {
 
-<<<<<<< HEAD
-
         /*
          * this class needs to be able to get the schedule by week.
          * 
@@ -119,7 +117,5 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         {
             _WeekLabel.Text = String.Format("Week {0}", weekNr);
         }
-=======
->>>>>>> GrzegorzUI
     }
 }
