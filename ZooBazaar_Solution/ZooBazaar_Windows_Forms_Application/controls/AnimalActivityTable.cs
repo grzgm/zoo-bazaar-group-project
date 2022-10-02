@@ -48,7 +48,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         }
         public void ButtonClick(AnimalButton buttonClicked)
         {
-
+            Form aa = new EmployeeAdd();
+            aa.Show();
         }
     }
 }
