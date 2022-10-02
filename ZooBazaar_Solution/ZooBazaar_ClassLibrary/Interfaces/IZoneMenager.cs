@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,9 @@ namespace ZooBazaar_ClassLibrary.Interfaces
 {
     public interface IZoneMenager
     {
-        Zone NewZone(ZoneDTO zoneDTO);
+        Zone GetZone(int id);
+        void NewZone(ZoneDTO zoneDTO);
 
-        Zone RemoveZone(int id);
+        void RemoveZone(int id);
     }
 }

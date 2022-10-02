@@ -10,9 +10,9 @@ using ZooBazaar_Repositories.Interfaces;
 
 namespace ZooBazaar_ClassLibrary.Menagers
 {
-    internal class EmployeeManager : IEmployeeMenager
+    public class EmployeeManager : IEmployeeMenager
     {
-        IEmployeeRepositroty _employeeRepositroty;
+        private readonly IEmployeeRepositroty _employeeRepositroty;
         public EmployeeManager(IEmployeeRepositroty employeeRepositroty)
         {
             this._employeeRepositroty = employeeRepositroty;
@@ -30,22 +30,22 @@ namespace ZooBazaar_ClassLibrary.Menagers
 
         public Employee GetEmployee(int id)
         {
-            throw new NotImplementedException();
+            return new Employee(_employeeRepositroty.GetByEmployeeId(id));
         }
 
-        public Employee NewEmployee(EmployeeDTO employeeDTO)
+        public void NewEmployee(EmployeeDTO employeeDTO)
         {
-            throw new NotImplementedException();
+            _employeeRepositroty.AddNewEmployee(employeeDTO);
         }
 
-        public Employee RemoveEmployee(int id)
+        public void RemoveEmployee(int id)
         {
-            throw new NotImplementedException();
+            _employeeRepositroty.Delete(id);
         }
 
-        public Employee UpdateEmployee(EmployeeDTO employeeDTO)
+        public void UpdateEmployee(EmployeeDTO employeeDTO)
         {
-            throw new NotImplementedException();
+            _employeeRepositroty.Update(employeeDTO);
         }
     }
 }
