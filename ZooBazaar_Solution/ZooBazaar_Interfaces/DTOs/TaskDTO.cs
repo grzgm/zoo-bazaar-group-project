@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ZooBazaar_DTO.DTOs
 {
-    public class EmployeeDTO
+    public class TaskDTO
     {
-        public int Id { get; set; }
+        public int ID { get; set; } 
         public string Name { get; set; }
-        public string Role { get; set; }
-        public int TimePreferenceID { get; set; }
-
-  
+        public int AnimalID { get; set; }
+        public int HabitatID { get; set; }
+        public int ZoneID { get; set; }
     }
 }

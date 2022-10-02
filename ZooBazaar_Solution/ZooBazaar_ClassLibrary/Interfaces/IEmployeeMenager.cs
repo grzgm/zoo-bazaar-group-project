@@ -7,8 +7,12 @@ using ZooBazaar_DomainModels.Models;
 
 namespace ZooBazaar_ClassLibrary.Interfaces
 {
-    internal interface IEmployeeMenager
+    public interface IEmployeeMenager
     {
-        Employee employee { get; set; }
+        Employee GetEmployee(int id);
+        List<Employee> GetAll();
+
+
+       
     }
 }

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZooBazaar_DomainModels.Models
+namespace ZooBazaar_ClassLibrary.Menagers
 {
-    internal class Schedule
+    internal class TaskMenager
     {
     }
 }

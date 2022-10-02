@@ -8,5 +8,9 @@ namespace ZooBazaar_DTO.DTOs
 {
     public class HabitatDTO
     {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Task { get; set; }
+        
     }
 }
