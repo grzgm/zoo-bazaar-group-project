@@ -13,8 +13,8 @@ namespace ZooBazaar_DomainModels.Models
         private int _id;
         private string _name;
         private int _age;
-        private DateOnly _dateOfBirth;
-        private string _sex;
+        private DateTime _dateOfBirth;
+        private bool _sex;
         private string _species;
         private string _speciesType;
         private string _diet;

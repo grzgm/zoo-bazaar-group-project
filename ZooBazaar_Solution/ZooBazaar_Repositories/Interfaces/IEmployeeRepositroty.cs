@@ -11,5 +11,10 @@ namespace ZooBazaar_Repositories.Interfaces
     {
         public List<EmployeeDTO> GetAllEmployees();
         public void AddNewEmployee(EmployeeDTO employeeDTO);
+        EmployeeDTO GetByEmployeeId(int ID);
+        void Insert(EmployeeDTO dto);
+        void Update(EmployeeDTO dto);
+        void Delete(EmployeeDTO dto);
+        int nextID();
     }
 }
