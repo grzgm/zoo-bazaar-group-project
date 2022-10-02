@@ -10,7 +10,7 @@ namespace ZooBazaar_Repositories.Interfaces
     public interface ITimeBlockRepository
     {
         IEnumerable<TimeBlockDTO> GetAll();
-        TimeBlockDTO GetByHabitatId(int ID);
+        TimeBlockDTO GetByTimeblockId(int ID);
         void Insert(TimeBlockDTO dto);
         void Update(TimeBlockDTO dto);
         void Delete(TimeBlockDTO dto);

@@ -30,28 +30,30 @@ namespace ZooBazaar_ClassLibrary.Menagers
            
            foreach(AnimalDTO dto in _animalRepository.GetAll())
             {
-                animals.Add(new Animal())
+                animals.Add(new Animal(dto, _timeBlockRepository.GetByTimeblockId(dto.FeedingTimeID), _zoneRepository.GetByZoneId(dto.ZoneID), _habitatRepository.GetByHabitatId(dto.HabitatID)));
             }
+            return animals;
         }
 
         public Animal GetAnimal(int id)
         {
-            throw new NotImplementedException();
+            AnimalDTO dto = _animalRepository.GetByAnimalId(id);
+            return new Animal(dto, _timeBlockRepository.GetByTimeblockId(dto.FeedingTimeID), _zoneRepository.GetByZoneId(dto.ZoneID), _habitatRepository.GetByHabitatId(dto.HabitatID));
         }
 
-        public Animal NewAnimal(AnimalDTO animalDTO)
+        public void NewAnimal(AnimalDTO animalDTO)
         {
-            throw new NotImplementedException();
+            _animalRepository.Insert(animalDTO);
         }
 
-        public Animal RemoveAnimal(int id)
+        public void RemoveAnimal(int id)
         {
-            throw new NotImplementedException();
+            _animalRepository.Delete(_animalRepository.GetByAnimalId(id));
         }
 
-        public Animal UpdateAnimal(AnimalDTO animalDTO)
+        public void UpdateAnimal(AnimalDTO animalDTO)
         {
-            throw new NotImplementedException();
+           _animalRepository.Update(animalDTO);
         }
     }
 }
