@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
-    internal class MenuButton : Button
+    internal class AnimalButton : Button
     {
         private int id;
-        private MainMenuTable mainMenuTable;
+        private AnimalActivityTable animalActivityTable;
 
-        public MenuButton(int id, string t, MainMenuTable mainMenuTable)
+        public AnimalButton(int id, string t, AnimalActivityTable animalActivityTable)
         {
             //fields
             this.id = id;
-            this.mainMenuTable = mainMenuTable;
+            this.animalActivityTable = animalActivityTable;
 
             //properties
             Dock = DockStyle.Top;
@@ -25,20 +25,17 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Text = t.ToUpper();
             TextAlign = ContentAlignment.MiddleCenter;
             Font = new Font("Calibri", 14, FontStyle.Bold);
+            BackColor = Color.White;
 
 
             //events
-            this.Click += new System.EventHandler(this.MenuButton_Click);
+            this.Click += new System.EventHandler(this.AnimalButton_Click);
         }
 
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> GrzegorzUI
-        private void MenuButton_Click(object? sender, EventArgs e)
+        private void AnimalButton_Click(object? sender, EventArgs e)
         {
-            mainMenuTable.ButtonClick(this);
+            animalActivityTable.ButtonClick(this);
         }
     }
 }
