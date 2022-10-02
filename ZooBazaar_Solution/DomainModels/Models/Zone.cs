@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZooBazaar_Repositories
+namespace ZooBazaar_DomainModels.Models
 {
-    internal class ZoneRepository
+    internal class Zone
     {
     }
 }

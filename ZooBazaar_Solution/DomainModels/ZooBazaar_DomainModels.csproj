@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ZooBazaar_Interfaces\ZooBazaar_DTO.csproj" />
   </ItemGroup>
 

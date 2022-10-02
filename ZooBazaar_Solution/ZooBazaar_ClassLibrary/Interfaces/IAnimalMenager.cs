@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZooBazaar_DTO.DTOs
+namespace ZooBazaar_ClassLibrary.Interfaces
 {
-    public class TimeBlockDTO
+    public interface IAnimalMenager
     {
     }
 }

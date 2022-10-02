@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZooBazaar_Interfaces.Interfaces
+namespace ZooBazaar_ClassLibrary.Interfaces
 {
-    internal interface IEmployeeRepositroty
+    internal interface ITimeBlockMenager
     {
     }
 }

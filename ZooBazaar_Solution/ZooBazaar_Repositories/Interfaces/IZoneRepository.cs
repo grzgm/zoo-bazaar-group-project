@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZooBazaar_Interfaces.Interfaces
+namespace ZooBazaar_Repositories.Interfaces
 {
-    internal interface IZoneMenager
+    internal interface IZoneRepository
     {
     }
 }

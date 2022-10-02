@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooBazaar_Interfaces.DTOs;
 
-namespace ZooBazaar_Interfaces.Interfaces
+namespace ZooBazaar_Repositories.Interfaces
 {
     internal interface IAnimalRepository
     {

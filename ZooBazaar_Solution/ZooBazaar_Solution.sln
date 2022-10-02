@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooBazaar_ASP_NET", "ZooBaz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooBazaar_Windows_Forms_Application", "ZooBazaar_Windows_Forms_Application\ZooBazaar_Windows_Forms_Application.csproj", "{8026D775-067D-4223-8B41-6C67CCB71975}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooBazaar_Repositories", "ZooBazaar_Repositories\ZooBazaar_Repositories.csproj", "{348151C7-74F5-40A7-A95C-425433B7C5E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooBazaar_Repositories", "ZooBazaar_Repositories\ZooBazaar_Repositories.csproj", "{348151C7-74F5-40A7-A95C-425433B7C5E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooBazaar_Interfaces", "ZooBazaar_Interfaces\ZooBazaar_Interfaces.csproj", "{7159D057-E800-4A3E-A08F-8497736BE8BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooBazaar_DTO", "ZooBazaar_Interfaces\ZooBazaar_DTO.csproj", "{7159D057-E800-4A3E-A08F-8497736BE8BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooBazaar_DomainModels", "DomainModels\ZooBazaar_DomainModels.csproj", "{C862A6FA-8A01-4057-B974-1CDC568615DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{7159D057-E800-4A3E-A08F-8497736BE8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7159D057-E800-4A3E-A08F-8497736BE8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7159D057-E800-4A3E-A08F-8497736BE8BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C862A6FA-8A01-4057-B974-1CDC568615DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C862A6FA-8A01-4057-B974-1CDC568615DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C862A6FA-8A01-4057-B974-1CDC568615DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C862A6FA-8A01-4057-B974-1CDC568615DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

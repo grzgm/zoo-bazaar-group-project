@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZooBazaar_Repositories
+namespace ZooBazaar_Repositories.Interfaces
 {
-    internal class HabitatRepository
+    public interface ITimeBlockRepository
     {
     }
 }
