@@ -10,7 +10,7 @@ namespace ZooBazaar_DTO.DTOs
     {
         public int ID { get; set; } 
         public string Name { get; set; }
-        public int AnimalID { get; set; }
+        public int? AnimalID { get; set; }
         public int HabitatID { get; set; }
         public int ZoneID { get; set; }
     }

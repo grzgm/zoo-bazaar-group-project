@@ -10,7 +10,7 @@ namespace ZooBazaar_DomainModels.Models
 {
 
 
-    public   class Habitat
+    public class Habitat
     {
         private int _id;
         private string _name;

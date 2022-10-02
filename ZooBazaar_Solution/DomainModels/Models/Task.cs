@@ -11,7 +11,7 @@ namespace ZooBazaar_DomainModels.Models
     {
         private int _id;
         private string _name;
-        private Animal _animal;
+        private Animal? _animal;
         private Habitat _habitat;
         private Zone _zone;
 
@@ -23,15 +23,21 @@ namespace ZooBazaar_DomainModels.Models
             _habitat = habitat;
             _zone = zone;
         }
-        public Task(TaskDTO TaskDTO, AnimalDTO animalDTO,HabitatDTO habitatDTO ,ZoneDTO zoneDTO)
+        public Task(TaskDTO TaskDTO, AnimalDTO animalDTO, TimeBlockDTO timeBlockOfAnimalDTO, HabitatDTO habitatDTO ,ZoneDTO zoneDTO)
         {
             this._id = TaskDTO.ID;
             this._name = TaskDTO.Name;
-            this._animal = new Animal(animalDTO);
+            this._animal = new Animal(animalDTO, timeBlockOfAnimalDTO, zoneDTO, habitatDTO);
             this._habitat = new Habitat(habitatDTO);
             this._zone = new Zone(zoneDTO);
-
-
+        }
+        public Task(TaskDTO TaskDTO, HabitatDTO habitatDTO, ZoneDTO zoneDTO)
+        {
+            this._id = TaskDTO.ID;
+            this._name = TaskDTO.Name;
+            this._animal = null;
+            this._habitat = new Habitat(habitatDTO);
+            this._zone = new Zone(zoneDTO);
         }
 
 

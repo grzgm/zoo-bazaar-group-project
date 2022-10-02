@@ -8,8 +8,13 @@ using ZooBazaar_DTO.DTOs;
 
 namespace ZooBazaar_DomainModels.Models
 {
-    internal class TimeBlock
+    public class TimeBlock
     {
-      
+
+
+      public TimeBlock(TimeBlockDTO timeBlockDTO)
+      {
+
+      }
     }
 }

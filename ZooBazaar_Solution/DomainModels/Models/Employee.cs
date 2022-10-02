@@ -37,8 +37,14 @@ namespace ZooBazaar_DomainModels.Models
         }
         public Employee(EmployeeDTO employeeDTO)
         {
-            employeeDTO.Id = employeeDTO.Id;
-            employeeDTO.
+            this._id = employeeDTO.Id;
+            this._firstName = employeeDTO.FirstName;
+            this._lastName = employeeDTO.LastName;
+            this._email = employeeDTO.Email;
+            this._phone = employeeDTO.Phone;
+            this._address = employeeDTO.Address;
+            this._role = Enum.Parse<ROLE>(employeeDTO.Role);
+
         }
     }
 }
