@@ -11,7 +11,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         //controls
         private AnimalNavBarTable _AnimalNavBarTable;
         private AnimalTable _AnimalScheduleTable;
-        private AnimalActivityTable activityTable;
+        private AnimalActivityTable _ActivityTable;
 
 
 
@@ -21,7 +21,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             //controls
             _AnimalNavBarTable = new AnimalNavBarTable();
             _AnimalScheduleTable = new AnimalTable();
-            activityTable = new AnimalActivityTable();
+            _ActivityTable = new AnimalActivityTable();
 
 
 
@@ -39,7 +39,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             Controls.Add(_AnimalNavBarTable, 0, 0);
             Controls.Add(_AnimalScheduleTable, 0, 1);
-            Controls.Add(activityTable, 0, 2);
+            Controls.Add(_ActivityTable, 0, 2);
             /*debug
             Panel testpanel = new Panel();
             testpanel.Dock = DockStyle.Fill;

@@ -39,7 +39,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             {
                 AnimalButton animalButton = new AnimalButton(i, animalButtonsText[i], this);
                 _AnimalButtons[i] = animalButton;
-                Controls.Add(animalButton, 0, i);
+                Controls.Add(animalButton, i, 0);
             }
 
             Dock = DockStyle.Fill;

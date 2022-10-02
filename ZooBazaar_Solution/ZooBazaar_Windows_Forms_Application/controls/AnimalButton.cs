@@ -25,6 +25,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Text = t.ToUpper();
             TextAlign = ContentAlignment.MiddleCenter;
             Font = new Font("Calibri", 14, FontStyle.Bold);
+            BackColor = Color.White;
 
 
             //events
