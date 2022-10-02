@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZooBazaar_Repositories.Interfaces
 {
-    internal interface ITaskRepository
+    public interface ITaskRepository
     {
     }
 }
