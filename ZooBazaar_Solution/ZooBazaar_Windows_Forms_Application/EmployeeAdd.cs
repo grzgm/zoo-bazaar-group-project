@@ -18,9 +18,9 @@ namespace ZooBazaar_Windows_Forms_Application
         public EmployeeAdd()
         {
             InitializeComponent();
-            mainMenutable = new MainMenuTable();
+            mainMenutable = new MainMenuTable(this);
 
-            Size = new Size(500, 780);
+            Size = new Size(600, 780);
         }
 
         private void EmployeeAdd_Load(object sender, EventArgs e)
