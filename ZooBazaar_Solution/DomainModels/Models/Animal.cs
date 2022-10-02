@@ -28,7 +28,7 @@ namespace ZooBazaar_DomainModels.Models
             this._id = animalDTO.Id;
             this._name = animalDTO.Name;
             this._age = animalDTO.Age;
-            this._dateOfBirth = animalDTO.DateOfBirth;
+            this._dateOfBirth = DateOnly.FromDateTime(animalDTO.DateOfBirth);
             this._sex = animalDTO.Sex;
             this._species = animalDTO.Species;
             this._speciesType = animalDTO.SpeciesType;

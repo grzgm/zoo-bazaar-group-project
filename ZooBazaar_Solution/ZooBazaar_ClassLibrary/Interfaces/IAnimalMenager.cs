@@ -13,13 +13,9 @@ namespace ZooBazaar_ClassLibrary.Interfaces
     public interface IAnimalMenager
     {
         Animal GetAnimal(int id);
-
         List<Animal> GetAll();
-
-        Animal NewAnimal(AnimalDTO animalDTO);
-
-        Animal RemoveAnimal(int id);
-
-        Animal UpdateAnimal(AnimalDTO animalDTO);
+        void NewAnimal(AnimalDTO animalDTO);
+        void RemoveAnimal(int id);
+        void UpdateAnimal(AnimalDTO animalDTO);
     }
 }
