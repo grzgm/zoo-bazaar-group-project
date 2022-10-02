@@ -7,7 +7,7 @@ using ZooBazaar_DTO.DTOs;
 
 namespace ZooBazaar_Repositories.Interfaces
 {
-    internal interface IAnimalRepository
+    public interface IAnimalRepository
     {
         IEnumerable<AnimalDTO> GetAll();
         AnimalDTO GetByAnimalId(int ID);

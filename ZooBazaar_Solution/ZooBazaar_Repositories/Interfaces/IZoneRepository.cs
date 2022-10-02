@@ -10,7 +10,7 @@ namespace ZooBazaar_Repositories.Interfaces
     public interface IZoneRepository
     {
         IEnumerable<ZoneDTO> GetAll();
-        ZoneDTO GetByHabitatId(int ID);
+        ZoneDTO GetByZoneId(int ID);
         void Insert(ZoneDTO dto);
         void Update(ZoneDTO dto);
         void Delete(ZoneDTO dto);

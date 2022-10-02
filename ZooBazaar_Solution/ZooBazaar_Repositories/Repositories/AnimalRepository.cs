@@ -151,12 +151,51 @@ namespace ZooBazaar_Repositories.Repositories
 
         int IAnimalRepository.nextID()
         {
-            throw new NotImplementedException();
+            int newID = 1;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string Query = "SELECT MAX(AccountID) FROM Animal";
+
+                using (SqlCommand command = new SqlCommand(Query, connection))
+                {
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (!reader.IsDBNull(0))
+                        {
+                            int id = reader.GetInt32(0);
+                            newID = id + 1;
+                        }
+                    }
+                }
+            }
+            return newID;
         }
 
         void IAnimalRepository.Update(AnimalDTO dto)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string Query = "UPDATE Animal SET Name=@Name,Age=@Age,DateOfBirth=@DateOfBirth,Sex=@Sex,Species=@Speies,SpeciesType=@SpeciesType,Diet=@Diet,FeedingTimeID=@FeedingTimeID,FeedingInterval=@FeedingInterval,ZoneID=@ZoneID,HabitatID=@HabitatID WHERE AnimalID=@AnimalID";
+
+                using (SqlCommand command = new SqlCommand(Query, connection))
+                {
+                    command.Parameters.AddWithValue("@AnimalID", dto.Id);
+                    command.Parameters.AddWithValue("@Age", dto.Age);
+                    command.Parameters.AddWithValue("@Sex", dto.Sex);
+                    command.Parameters.AddWithValue("@Species", dto.Species);
+                    command.Parameters.AddWithValue("@SpeciesType", dto.SpeciesType);
+                    command.Parameters.AddWithValue("@Diet", dto.Diet);
+                    command.Parameters.AddWithValue("@FeedingTimeID", dto.FeedingTimeID);
+                    command.Parameters.AddWithValue("@FeedingInterval", dto.FeedingInterval);
+                    command.Parameters.AddWithValue("@ZoneID", dto.Zone);
+                    command.Parameters.AddWithValue("@Habitat", dto.Habitat);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
