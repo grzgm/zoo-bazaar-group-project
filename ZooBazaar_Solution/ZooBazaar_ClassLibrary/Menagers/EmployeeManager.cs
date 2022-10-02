@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooBazaar_ClassLibrary.Interfaces;
-using ZooBazaar_Interfaces.Interfaces;
+using ZooBazaar_Repositories.Interfaces;
 
 namespace ZooBazaar_ClassLibrary.Menagers
 {
