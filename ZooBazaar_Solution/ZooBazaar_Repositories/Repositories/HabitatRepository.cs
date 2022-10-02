@@ -13,15 +13,15 @@ namespace ZooBazaar_Repositories.Repositories
     {
         private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi463992;User Id=dbi463992;Password=gogotpilon;";
 
-        void IHabitatRepository.Delete(HabitatDTO dto)
+        void IHabitatRepository.Delete(int id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string Query = "DELTE FROM Habitat WHERE HabitatID = @HabitatID";
+                string Query = "DELETE FROM Habitat WHERE HabitatID = @HabitatID";
 
                 using (SqlCommand command = new SqlCommand(Query, connection))
                 {
-                    command.Parameters.AddWithValue("@EmployeeID", dto.ID);
+                    command.Parameters.AddWithValue("@HabitatID", id);
 
                     connection.Open();
                     command.ExecuteNonQuery();

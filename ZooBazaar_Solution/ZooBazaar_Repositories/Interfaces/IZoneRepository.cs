@@ -13,7 +13,7 @@ namespace ZooBazaar_Repositories.Interfaces
         ZoneDTO GetByZoneId(int ID);
         void Insert(ZoneDTO dto);
         void Update(ZoneDTO dto);
-        void Delete(ZoneDTO dto);
+        void Delete(int id);
         int nextID();
     }
 }

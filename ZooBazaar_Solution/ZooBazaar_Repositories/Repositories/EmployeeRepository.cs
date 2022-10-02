@@ -33,15 +33,15 @@ namespace ZooBazaar_Repositories.Repositories
             }
         }
 
-        void IEmployeeRepositroty.Delete(EmployeeDTO dto)
+        void IEmployeeRepositroty.Delete(int id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string Query = "DELTE FROM Employee WHERE EmployeeID = @EmployeeID";
+                string Query = "DELETE FROM Employee WHERE EmployeeID = @EmployeeID";
 
                 using (SqlCommand command = new SqlCommand(Query, connection))
                 {
-                    command.Parameters.AddWithValue("@EmployeeID", dto.Id);
+                    command.Parameters.AddWithValue("@EmployeeID", id);
 
                     connection.Open();
                     command.ExecuteNonQuery();

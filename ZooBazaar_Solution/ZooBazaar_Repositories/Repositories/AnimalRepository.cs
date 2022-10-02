@@ -13,15 +13,15 @@ namespace ZooBazaar_Repositories.Repositories
     {
         private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi463992;User Id=dbi463992;Password=gogotpilon;";
 
-        void IAnimalRepository.Delete(AnimalDTO dto)
+        void IAnimalRepository.Delete(int id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string Query = "DELTE FROM Animal WHERE AnimalID = @AnimalID";
+                string Query = "DELETE FROM Animal WHERE AnimalID = @AnimalID";
 
                 using (SqlCommand command = new SqlCommand(Query, connection))
                 {
-                    command.Parameters.AddWithValue("@AnimalID", dto.Id);
+                    command.Parameters.AddWithValue("@AnimalID", id);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -67,8 +67,8 @@ namespace ZooBazaar_Repositories.Repositories
                             Diet = diet,
                             FeedingTimeID = feedingtimeID,
                             FeedingInterval = feedinginterval,
-                            Zone = zoneid,
-                            Habitat = habitatid,
+                            ZoneID = zoneid,
+                            HabitatID = habitatid,
                         });
                     }
                 }
@@ -115,8 +115,8 @@ namespace ZooBazaar_Repositories.Repositories
                             Diet = diet,
                             FeedingTimeID = feedingtimeID,
                             FeedingInterval = feedinginterval,
-                            Zone = zoneid,
-                            Habitat = habitatid,
+                            ZoneID = zoneid,
+                            HabitatID = habitatid,
                         };
                     }
                 }
@@ -140,8 +140,8 @@ namespace ZooBazaar_Repositories.Repositories
                     command.Parameters.AddWithValue("@Diet", dto.Diet);
                     command.Parameters.AddWithValue("@FeedingTimeID", dto.FeedingTimeID);
                     command.Parameters.AddWithValue("@FeedingInterval", dto.FeedingInterval);
-                    command.Parameters.AddWithValue("@ZoneID", dto.Zone);
-                    command.Parameters.AddWithValue("@Habitat", dto.Habitat);
+                    command.Parameters.AddWithValue("@ZoneID", dto.ZoneID);
+                    command.Parameters.AddWithValue("@Habitat", dto.HabitatID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -189,8 +189,8 @@ namespace ZooBazaar_Repositories.Repositories
                     command.Parameters.AddWithValue("@Diet", dto.Diet);
                     command.Parameters.AddWithValue("@FeedingTimeID", dto.FeedingTimeID);
                     command.Parameters.AddWithValue("@FeedingInterval", dto.FeedingInterval);
-                    command.Parameters.AddWithValue("@ZoneID", dto.Zone);
-                    command.Parameters.AddWithValue("@Habitat", dto.Habitat);
+                    command.Parameters.AddWithValue("@ZoneID", dto.ZoneID);
+                    command.Parameters.AddWithValue("@Habitat", dto.HabitatID);
 
                     connection.Open();
                     command.ExecuteNonQuery();

@@ -10,10 +10,10 @@ namespace ZooBazaar_Repositories.Interfaces
     public interface IScheduleRepository
     {
         IEnumerable<ScheduleDTO> GetAll();
-        HabitatDTO GetByHabitatId(int ID);
-        void Insert(HabitatDTO dto);
-        void Update(HabitatDTO dto);
-        void Delete(HabitatDTO dto);
+        ScheduleDTO GetByScheduleId(int ID);
+        void Insert(ScheduleDTO dto);
+        void Update(ScheduleDTO dto);
+        void Delete(int id);
         int nextID();
     }
 }
