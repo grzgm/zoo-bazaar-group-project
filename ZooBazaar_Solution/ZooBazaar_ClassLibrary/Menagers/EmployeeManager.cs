@@ -20,18 +20,30 @@ namespace ZooBazaar_ClassLibrary.Menagers
 
         public List<Employee> GetAll()
         {
-            List<Employee> employees = new List<Employee>();
-
+            List<Employee> employees = new List<Employee>();    
             foreach(EmployeeDTO dto in _employeeRepositroty.GetAllEmployees())
             {
                 employees.Add(new Employee(dto));
             }
-
             return employees;
-           
         }
 
         public Employee GetEmployee(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Employee NewEmployee(EmployeeDTO employeeDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Employee RemoveEmployee(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Employee UpdateEmployee(EmployeeDTO employeeDTO)
         {
             throw new NotImplementedException();
         }

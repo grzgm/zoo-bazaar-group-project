@@ -18,8 +18,8 @@ namespace ZooBazaar_DTO.DTOs
         public string Diet { get; set; }
         public int FeedingTimeID { get; set; }
         public int FeedingInterval { get; set; }
-        public string Zone { get; set; }
-        public string Habitat { get; set; }
+        public int ZoneID { get; set; }
+        public int HabitatID { get; set; }
 
     }
 }
