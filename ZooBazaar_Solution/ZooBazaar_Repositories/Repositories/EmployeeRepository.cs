@@ -13,6 +13,26 @@ namespace ZooBazaar_Repositories.Repositories
     {
         private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi463992;User Id=dbi463992;Password=gogotpilon;";
 
+        void IEmployeeRepositroty.AddNewEmployee(EmployeeDTO employeeDTO)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string insertQuery = "INSERT INTO Employee VALUES (@EmployeeID,@FirstName,@LastName,@Email,@Role)";
+
+                using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@EmployeeID", employeeDTO.Id);
+                    command.Parameters.AddWithValue("@FirstName", employeeDTO.FirstName);
+                    command.Parameters.AddWithValue("@LastName", employeeDTO.LastName);
+                    command.Parameters.AddWithValue("@Email", employeeDTO.Email);
+                    command.Parameters.AddWithValue("@Role", employeeDTO.Role);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         List<EmployeeDTO> IEmployeeRepositroty.GetAllEmployees()
         {
             List<EmployeeDTO> employeeDTOs = new List<EmployeeDTO>();
@@ -27,16 +47,18 @@ namespace ZooBazaar_Repositories.Repositories
                     while (reader.Read())
                     {
                         int employeeid = reader.GetInt32(0);
-                        string name = reader.GetString(1);
-                        string role = reader.GetString(2);
-                        int timepreferenceID = reader.GetInt32(3);
+                        string firstname = reader.GetString(1);
+                        string lastname = reader.GetString(2);
+                        string email = reader.GetString(3);
+                        string role = reader.GetString(4);
 
                         employeeDTOs.Add(new EmployeeDTO
                         {
                             Id = employeeid,
-                            Name = name,
-                            Role = role,
-                            TimePreferenceID = timepreferenceID
+                            FirstName = firstname,
+                            LastName = lastname,
+                            Email = email,
+                            Role = role
                         });
                     }
                 }

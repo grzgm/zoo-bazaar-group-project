@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using ZooBazaar_Interfaces.DTOs;
+using ZooBazaar_DTO.DTOs;
 
 namespace ZooBazaar_DomainModels.Models
 {

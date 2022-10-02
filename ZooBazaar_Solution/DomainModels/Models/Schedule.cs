@@ -4,12 +4,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZooBazaar_Interfaces.DTOs;
-using ZooBazaar_Interfaces.Interfaces;
+using ZooBazaar_DTO.DTOs;
 
 namespace ZooBazaar_DomainModels.Models
 {
-    internal class Schedule
+    public class Schedule
     {
     }
 }
