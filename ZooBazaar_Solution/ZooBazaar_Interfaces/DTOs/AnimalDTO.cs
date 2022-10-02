@@ -20,7 +20,5 @@ namespace ZooBazaar_Interfaces.DTOs
         public string Zone { get; set; }
         public string Habitat { get; set; }
 
-
-
     }
 }
