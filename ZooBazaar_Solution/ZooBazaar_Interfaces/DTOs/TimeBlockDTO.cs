@@ -8,5 +8,8 @@ namespace ZooBazaar_DTO.DTOs
 {
     public class TimeBlockDTO
     {
+        public int ID { get; set; }
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }
     }
 }

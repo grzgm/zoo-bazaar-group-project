@@ -12,7 +12,7 @@ namespace ZooBazaar_DTO.DTOs
         public string Name { get; set; }
         public int Age { get; set; }
         public DateOnly DateOfBirth { get; set; }
-        public string Sex { get; set; }
+        public bool Sex { get; set; }
         public string Species { get; set; }
         public string SpeciesType { get; set; }
         public string Diet { get; set; }
