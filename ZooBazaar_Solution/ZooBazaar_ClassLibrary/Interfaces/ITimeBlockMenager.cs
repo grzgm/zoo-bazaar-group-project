@@ -8,7 +8,7 @@ using ZooBazaar_DTO.DTOs;
 
 namespace ZooBazaar_ClassLibrary.Interfaces
 {
-    internal interface ITimeBlockMenager
+    public interface ITimeBlockMenager
     {
         List<TimeBlock> GetAll();
     }

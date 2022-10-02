@@ -14,7 +14,6 @@ namespace ZooBazaar_Repositories.Interfaces
         void Insert(AnimalDTO dto);
         void Update(AnimalDTO dto);
         void Delete(AnimalDTO dto);
-        void Save();
         int nextID();
     }
 }
