@@ -132,8 +132,9 @@ namespace ZooBazaar_Repositories.Repositories
 
                 using (SqlCommand command = new SqlCommand(Query, connection))
                 {
-                    command.Parameters.AddWithValue("@Name", dto.Id);
+                    command.Parameters.AddWithValue("@Name", dto.Name);
                     command.Parameters.AddWithValue("@Age", dto.Age);
+                    command.Parameters.AddWithValue("@DateOfBirth", dto.DateOfBirth);
                     command.Parameters.AddWithValue("@Sex", dto.Sex);
                     command.Parameters.AddWithValue("@Species", dto.Species);
                     command.Parameters.AddWithValue("@SpeciesType", dto.SpeciesType);
@@ -154,7 +155,7 @@ namespace ZooBazaar_Repositories.Repositories
             int newID = 1;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string Query = "SELECT MAX(AccountID) FROM Animal";
+                string Query = "SELECT MAX(AnimalID) FROM Animal";
 
                 using (SqlCommand command = new SqlCommand(Query, connection))
                 {
@@ -182,7 +183,9 @@ namespace ZooBazaar_Repositories.Repositories
                 using (SqlCommand command = new SqlCommand(Query, connection))
                 {
                     command.Parameters.AddWithValue("@AnimalID", dto.Id);
+                    command.Parameters.AddWithValue("@Name", dto.Name);
                     command.Parameters.AddWithValue("@Age", dto.Age);
+                    command.Parameters.AddWithValue("@DateOfBirth", dto.DateOfBirth);
                     command.Parameters.AddWithValue("@Sex", dto.Sex);
                     command.Parameters.AddWithValue("@Species", dto.Species);
                     command.Parameters.AddWithValue("@SpeciesType", dto.SpeciesType);
