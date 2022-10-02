@@ -10,5 +10,6 @@ namespace ZooBazaar_Repositories.Interfaces
     public interface IEmployeeRepositroty
     {
         public List<EmployeeDTO> GetAllEmployees();
+        public void AddNewEmployee(EmployeeDTO employeeDTO);
     }
 }

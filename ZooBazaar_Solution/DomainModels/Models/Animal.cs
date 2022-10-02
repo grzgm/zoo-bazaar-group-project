@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZooBazaar_DTO;
 using ZooBazaar_DTO.DTOs;
 
 namespace ZooBazaar_DomainModels.Models
@@ -16,8 +15,9 @@ namespace ZooBazaar_DomainModels.Models
         private DateOnly _dateOfBirth;
         private string _sex;
         private string _species;
+        private string _speciesType;
         private string _diet;
-        private TimeSpan _feedingTime;
+        private int _feedingTimeID;
         private int _feedingInterval;
         private Zone _zone;
         private Habitat _habitat;
