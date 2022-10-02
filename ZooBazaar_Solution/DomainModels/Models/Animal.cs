@@ -13,7 +13,7 @@ namespace ZooBazaar_DomainModels.Models
         private int _id;
         private string _name;
         private int _age;
-        private DateTime _dateOfBirth;
+        private DateOnly _dateOfBirth;
         private bool _sex;
         private string _species;
         private string _speciesType;
@@ -36,7 +36,7 @@ namespace ZooBazaar_DomainModels.Models
             this._timeBlock = new TimeBlock(timeBlockDTO);
             this._feedingInterval = animalDTO.FeedingInterval;
             this._zone = new Zone(zoneDTO);
-            this._habitat = new Habitat(habitatDTO);
+            this._habitat = new Habitat(habitatDTO,zoneDTO);
         }
   
 

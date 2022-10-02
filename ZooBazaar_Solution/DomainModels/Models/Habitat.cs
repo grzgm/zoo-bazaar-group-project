@@ -15,9 +15,14 @@ namespace ZooBazaar_DomainModels.Models
         private int _id;
         private string _name;
         private int _capacity;
+        private Zone _zone;
 
-        public Habitat(HabitatDTO habitatDTO)
+        public Habitat(HabitatDTO habitatDTO, ZoneDTO zoneDTO)
         {
+            this._id = habitatDTO.ID;
+            this._name = habitatDTO.Name;
+            this._capacity = habitatDTO.Capacity;
+            this._zone = new Zone(zoneDTO);
 
         }
 

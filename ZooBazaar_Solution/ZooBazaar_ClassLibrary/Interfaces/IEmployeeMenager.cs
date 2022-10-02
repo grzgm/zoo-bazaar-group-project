@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooBazaar_DomainModels.Models;
+using ZooBazaar_DTO.DTOs;
 
 namespace ZooBazaar_ClassLibrary.Interfaces
 {
@@ -11,9 +12,9 @@ namespace ZooBazaar_ClassLibrary.Interfaces
     {
         Employee GetEmployee(int id);
         List<Employee> GetAll();
-        Employee NewEmployee(int id, string firstNane, string lastName, string email, string phone, string adress, ROLE role);
+        Employee NewEmployee(EmployeeDTO employeeDTO);
         Employee RemoveEmployee(int id);
-        Employee UpdateEmployee(); //WHAT THE FUCK TO I PASS? A FUCKING AnimalDTO OR RA DATA?
+        Employee UpdateEmployee(EmployeeDTO employeeDTO);
 
 
     }

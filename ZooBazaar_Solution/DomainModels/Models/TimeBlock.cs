@@ -10,11 +10,15 @@ namespace ZooBazaar_DomainModels.Models
 {
     public class TimeBlock
     {
-
+        private int _id;
+        private TimeOnly _startTime;
+        private TimeOnly _endTime;
 
       public TimeBlock(TimeBlockDTO timeBlockDTO)
       {
-
+            this._id = timeBlockDTO.ID;
+            this._startTime = timeBlockDTO.StartTime;
+            this._endTime = timeBlockDTO.EndTime;
       }
     }
 }

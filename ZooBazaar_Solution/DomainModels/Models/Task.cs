@@ -28,7 +28,7 @@ namespace ZooBazaar_DomainModels.Models
             this._id = TaskDTO.ID;
             this._name = TaskDTO.Name;
             this._animal = new Animal(animalDTO, timeBlockOfAnimalDTO, zoneDTO, habitatDTO);
-            this._habitat = new Habitat(habitatDTO);
+            this._habitat = new Habitat(habitatDTO, zoneDTO);
             this._zone = new Zone(zoneDTO);
         }
         public Task(TaskDTO TaskDTO, HabitatDTO habitatDTO, ZoneDTO zoneDTO)
@@ -36,7 +36,7 @@ namespace ZooBazaar_DomainModels.Models
             this._id = TaskDTO.ID;
             this._name = TaskDTO.Name;
             this._animal = null;
-            this._habitat = new Habitat(habitatDTO);
+            this._habitat = new Habitat(habitatDTO, zoneDTO);
             this._zone = new Zone(zoneDTO);
         }
 
