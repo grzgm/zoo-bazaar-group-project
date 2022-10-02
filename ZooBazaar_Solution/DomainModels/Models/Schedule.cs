@@ -26,7 +26,7 @@ namespace ZooBazaar_DomainModels.Models
         }
         public Schedule(ScheduleDTO scheduleDTO, TimeBlockDTO timeBlockDTO, EmployeeDTO employeeDTO, TaskDTO taskDTO, HabitatDTO habitatDTO, ZoneDTO zoneDTO)
         {
-            this._id = scheduleDTO.ID;
+            this._id = scheduleDTO.Id;
             this._date = new DateOnly(scheduleDTO.Year, scheduleDTO.Day, scheduleDTO.Day);
             this._timeBlock = new TimeBlock(timeBlockDTO);
             this._employee = new Employee(employeeDTO);
