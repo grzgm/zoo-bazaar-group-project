@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZooBazaar_Windows_Forms_Application.DTO
+namespace ZooBazaar_DTO.DTOs
 {
-    internal class AnimalAddDTO
+    public class AnimalAddDTO
     {
         public string Name { get; set; }
         public int Age { get; set; }
