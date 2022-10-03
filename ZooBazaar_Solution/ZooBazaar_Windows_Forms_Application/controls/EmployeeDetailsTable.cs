@@ -69,6 +69,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Controls.Add(_employeeFunction, 1, 0);
             Controls.Add(_employeeWorkZone, 2, 0);
             Controls.Add(_employeeMoreInfo, 3, 0);
+
         }
     }
 }
