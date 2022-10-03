@@ -9,6 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DomainModels\ZooBazaar_DomainModels.csproj" />
+    <ProjectReference Include="..\ZooBazaar_ClassLibrary\ZooBazaar_ClassLibrary.csproj" />
+    <ProjectReference Include="..\ZooBazaar_Interfaces\ZooBazaar_DTO.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AnimalAddControls\AddAnimalButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="AnimalAddControls\MainMenuTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="controls\AnimalActivityTable.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
-namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
+namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
 {
-    internal class AddButton : Button
+    public class AddAnimalButton : Button
     {
         private MainMenuTable mainMenuTable;
 
-        public AddButton(MainMenuTable mainMenuTable)
+        public AddAnimalButton(MainMenuTable mainMenuTable)
         {
             //fields
             this.mainMenuTable = mainMenuTable;

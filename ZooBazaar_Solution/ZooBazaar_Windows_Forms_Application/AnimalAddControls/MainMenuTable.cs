@@ -10,13 +10,21 @@ using ZooBazaar_DTO.DTOs;
 using ZooBazaar_ClassLibrary;
 using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_ClassLibrary.Menagers;
+using ZooBazaar_Repositories.Interfaces;
+using ZooBazaar_Repositories.Repositories;
+using ZooBazaar_DomainModels.Models;
 
-namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
+namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
 {
-    internal class MainMenuTable : TableLayoutPanel
+    public class MainMenuTable : TableLayoutPanel
     {
+        private IAnimalRepository animalRepository = new AnimalRepository();
+        private IZoneRepository zoneRepository = new ZoneRepository();
+        private IHabitatRepository habitatRepository = new HabitatRepository();
+        private ITimeBlockRepository timeBlockRepository = new TimeblockRepository();
+        private IAnimalMenager animalMenager;
         //Fields
-        private AnimalAdd employeeAdd;
+        private AnimalAdd animalAdd;
         private Label[] labels;
         private TextBox[] textboxes;
         private NumericUpDown[] numericupdowns;
@@ -25,7 +33,7 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
         private string[] radioButtonsText;
 
         //Controls
-        private AddEmployeeButton btAdd;
+        private AddAnimalButton btAdd;
         private DateTimePicker dateTimePicker;
         private TableLayoutPanel radioButtonsTable;
         //private Label lbName;
@@ -55,9 +63,9 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
         //Color
         SolidBrush highlightBrush;
 
-        public MainMenuTable(AnimalAdd employeeAdd)
+        public MainMenuTable(AnimalAdd animalAdd)
         {
-            this.employeeAdd = employeeAdd;
+            this.animalAdd = animalAdd;
             //Fields
             labels = new Label[11];
             textboxes = new TextBox[4];
@@ -121,7 +129,7 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
             }
 
 
-            btAdd = new AddEmployeeButton(this);
+            btAdd = new AddAnimalButton(this);
 
             //Properties
             Dock = DockStyle.Fill;
@@ -168,7 +176,7 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
             {
                 Name = textboxes[0].Text,
                 Age = (int)numericupdowns[0].Value,
-                DateOfBirth = new DateTime(),
+                DateOfBirth = dateTimePicker.Value,
                 //Sex = isMale,
                 Sex = radioButtons[0].Checked,
                 Species = textboxes[1].Text,
@@ -180,10 +188,11 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
                 HabitatID = (int)numericupdowns[4].Value
             };
 
-            //IAnimalMenager animalMenager = new AnimalManager();
+            IAnimalMenager animalMenager = new AnimalManager(animalRepository, zoneRepository, habitatRepository, timeBlockRepository);
 
+            animalMenager.NewAnimal(animalAddDTO);
 
-            employeeAdd.Close();
+            animalAdd.Close();
         }
 
 
