@@ -54,7 +54,6 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
 
 
-
             //controls -> buttons
             for (int i = menuButtonsText.Length - 1; i >= 0; i--)
             {
