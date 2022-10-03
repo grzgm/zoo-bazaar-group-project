@@ -50,6 +50,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             _employeeMoreInfo.TextAlign = ContentAlignment.MiddleCenter;
 
 
+
             //properties
             Dock = DockStyle.Fill;
             Margin = new Padding(5, 0, 5, 5);
