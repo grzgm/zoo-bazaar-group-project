@@ -10,8 +10,8 @@ namespace ZooBazaar_DomainModels.Models
 {
     public enum ROLE
     {
-        OFFICE,
-        CARETAKER
+        Office,
+        Caretaker
     }
 
 
