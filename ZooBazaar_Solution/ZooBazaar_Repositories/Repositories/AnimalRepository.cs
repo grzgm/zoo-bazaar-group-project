@@ -124,7 +124,7 @@ namespace ZooBazaar_Repositories.Repositories
             return animalDTO;
         }
 
-        void IAnimalRepository.Insert(AnimalDTO dto)
+        void IAnimalRepository.Insert(AnimalAddDTO dto)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

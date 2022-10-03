@@ -41,9 +41,9 @@ namespace ZooBazaar_ClassLibrary.Menagers
             return new Animal(dto, _timeBlockRepository.GetByTimeBlockId(dto.FeedingTimeID), _zoneRepository.GetByZoneId(dto.ZoneID), _habitatRepository.GetByHabitatId(dto.HabitatID));
         }
 
-        public void NewAnimal(AnimalDTO animalDTO)
+        public void NewAnimal(AnimalAddDTO animalAddDTO)
         {
-            _animalRepository.Insert(animalDTO);
+            _animalRepository.Insert(animalAddDTO);
         }
 
         public void RemoveAnimal(int id)

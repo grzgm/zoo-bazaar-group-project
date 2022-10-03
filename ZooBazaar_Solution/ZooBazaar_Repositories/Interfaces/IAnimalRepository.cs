@@ -11,7 +11,7 @@ namespace ZooBazaar_Repositories.Interfaces
     {
         IEnumerable<AnimalDTO> GetAll();
         AnimalDTO GetByAnimalId(int ID);
-        void Insert(AnimalDTO dto);
+        void Insert(AnimalAddDTO dto);
         void Update(AnimalDTO dto);
         void Delete(int id);
         int nextID();
