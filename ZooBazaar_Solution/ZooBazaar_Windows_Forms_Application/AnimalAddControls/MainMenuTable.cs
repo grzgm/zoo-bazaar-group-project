@@ -12,6 +12,7 @@ using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_ClassLibrary.Menagers;
 using ZooBazaar_Repositories.Interfaces;
 using ZooBazaar_Repositories.Repositories;
+using ZooBazaar_DomainModels.Models;
 
 namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
 {
@@ -188,8 +189,6 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             };
 
             IAnimalMenager animalMenager = new AnimalManager(animalRepository, zoneRepository, habitatRepository, timeBlockRepository);
-
-            animalMenager.GetAnimal(4);
 
             animalMenager.NewAnimal(animalAddDTO);
 
