@@ -35,6 +35,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
                 _label.TextAlign = ContentAlignment.MiddleLeft;
             }
 
+            //More info
             _employeeMoreInfo = new Button();
             _employeeMoreInfo.Text = "...";
             _employeeMoreInfo.Dock = DockStyle.Fill;
@@ -46,6 +47,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             _employeeMoreInfo.Font = new Font("Calibri", 14, FontStyle.Bold);
             _employeeMoreInfo.Margin = Padding.Empty;
             _employeeMoreInfo.TextAlign = ContentAlignment.MiddleCenter;
+
 
             //properties
             Dock = DockStyle.Fill;
