@@ -22,7 +22,7 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
             Height = 120;
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 0;
-            Text = "Add New Animal";
+            Text = "Add New Employee";
             TextAlign = ContentAlignment.MiddleCenter;
             Font = new Font("Calibri", 14, FontStyle.Bold);
             BackColor = Color.White;

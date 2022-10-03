@@ -60,9 +60,6 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
         //private TextBox tbHabitat;
         //private Panel buttonPanel;
 
-        //Color
-        SolidBrush highlightBrush;
-
         public MainMenuTable(AnimalAdd animalAdd)
         {
             this.animalAdd = animalAdd;
@@ -188,27 +185,11 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
                 HabitatID = (int)numericupdowns[4].Value
             };
 
-            IAnimalMenager animalMenager = new AnimalManager(animalRepository, zoneRepository, habitatRepository, timeBlockRepository);
+            animalMenager = new AnimalManager(animalRepository, zoneRepository, habitatRepository, timeBlockRepository);
 
             animalMenager.NewAnimal(animalAddDTO);
 
             animalAdd.Close();
         }
-
-
-        private void TableLayoutPanel_CellPaint(object? sender, TableLayoutCellPaintEventArgs e)
-        {
-            if (e.Row == 0 && e.Column == 2)
-            {
-                e.Graphics.FillRectangle(highlightBrush, e.CellBounds);
-            }
-
-
-            if (e.Column == 1)
-            {
-                e.Graphics.FillRectangle(highlightBrush, e.CellBounds);
-            }
-        }
-
     }
 }
