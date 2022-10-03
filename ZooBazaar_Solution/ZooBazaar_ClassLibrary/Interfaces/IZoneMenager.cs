@@ -12,7 +12,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
     public interface IZoneMenager
     {
         Zone GetZone(int id);
-        void NewZone(ZoneDTO zoneDTO);
+        void NewZone(ZoneAddDTO zoneDTO);
 
         void RemoveZone(int id);
     }

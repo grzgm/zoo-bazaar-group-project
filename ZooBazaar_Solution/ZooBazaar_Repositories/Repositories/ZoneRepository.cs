@@ -88,7 +88,7 @@ namespace ZooBazaar_Repositories.Repositories
             return zoneDTO;
         }
 
-        void IZoneRepository.Insert(ZoneDTO dto)
+        void IZoneRepository.Insert(ZoneAddDTO dto)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

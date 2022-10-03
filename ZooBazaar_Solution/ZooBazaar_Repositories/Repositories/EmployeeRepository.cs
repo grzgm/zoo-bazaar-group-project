@@ -13,25 +13,6 @@ namespace ZooBazaar_Repositories.Repositories
     {
         private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi463992;User Id=dbi463992;Password=gogotpilon;";
 
-        void IEmployeeRepositroty.AddNewEmployee(EmployeeDTO employeeDTO)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string insertQuery = "INSERT INTO Employee VALUES (@EmployeeID,@FirstName,@LastName,@Email,@Role)";
-
-                using (SqlCommand command = new SqlCommand(insertQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@EmployeeID", employeeDTO.Id);
-                    command.Parameters.AddWithValue("@FirstName", employeeDTO.FirstName);
-                    command.Parameters.AddWithValue("@LastName", employeeDTO.LastName);
-                    command.Parameters.AddWithValue("@Email", employeeDTO.Email);
-                    command.Parameters.AddWithValue("@Role", employeeDTO.Role);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
 
         void IEmployeeRepositroty.Delete(int id)
         {

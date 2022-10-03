@@ -11,7 +11,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
     public interface IHabitatMenager
     {
         Habitat GetHabitat(int id);
-        void NewHabitat(HabitatDTO habitatDTO);
+        void NewHabitat(HabitatAddDTO habitatDTO);
         void RemoveHabitat(int id);
 
     }

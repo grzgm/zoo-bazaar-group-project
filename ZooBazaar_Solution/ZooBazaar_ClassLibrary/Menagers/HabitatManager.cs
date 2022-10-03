@@ -27,7 +27,7 @@ namespace ZooBazaar_ClassLibrary.Menagers
             return new Habitat(dto, _zoneRepository.GetByZoneId(dto.ZoneID));
         }
 
-        public void NewHabitat(HabitatDTO habitatDTO)
+        public void NewHabitat(HabitatAddDTO habitatDTO)
         {
             _habitatRepository.Insert(habitatDTO);
         }

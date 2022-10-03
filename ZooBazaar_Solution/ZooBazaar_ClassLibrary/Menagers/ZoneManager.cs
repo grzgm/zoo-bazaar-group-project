@@ -24,7 +24,7 @@ namespace ZooBazaar_ClassLibrary.Menagers
             return new Zone(_zoneRepository.GetByZoneId(id));
         }
 
-        public void NewZone(ZoneDTO zoneDTO)
+        public void NewZone(ZoneAddDTO zoneDTO)
         {
             _zoneRepository.Insert(zoneDTO);
 

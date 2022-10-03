@@ -11,7 +11,7 @@ namespace ZooBazaar_Repositories.Interfaces
     {
         IEnumerable<HabitatDTO> GetAll();
         HabitatDTO GetByHabitatId(int ID);
-        void Insert(HabitatDTO dto);
+        void Insert(HabitatAddDTO dto);
         void Update(HabitatDTO dto);
         void Delete(int id);
         int nextID();

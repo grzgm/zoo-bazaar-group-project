@@ -92,7 +92,7 @@ namespace ZooBazaar_Repositories.Repositories
             return habitatDTO;
         }
 
-        void IHabitatRepository.Insert(HabitatDTO dto)
+        void IHabitatRepository.Insert(HabitatAddDTO dto)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
