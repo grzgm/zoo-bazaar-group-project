@@ -10,9 +10,8 @@ namespace ZooBazaar_Repositories.Interfaces
     public interface IEmployeeRepositroty
     {
         public List<EmployeeDTO> GetAllEmployees();
-        public void AddNewEmployee(EmployeeDTO employeeDTO);
         EmployeeDTO GetByEmployeeId(int ID);
-        void Insert(EmployeeDTO dto);
+        void Insert(EmployeeAddDTO dto);
         void Update(EmployeeDTO dto);
         void Delete(int id);
         int nextID();

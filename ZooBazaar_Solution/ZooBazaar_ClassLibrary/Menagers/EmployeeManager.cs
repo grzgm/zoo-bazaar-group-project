@@ -33,9 +33,9 @@ namespace ZooBazaar_ClassLibrary.Menagers
             return new Employee(_employeeRepositroty.GetByEmployeeId(id));
         }
 
-        public void NewEmployee(EmployeeDTO employeeDTO)
+        public void NewEmployee(EmployeeAddDTO employeeDTO)
         {
-            _employeeRepositroty.AddNewEmployee(employeeDTO);
+            _employeeRepositroty.Insert(employeeDTO);
         }
 
         public void RemoveEmployee(int id)

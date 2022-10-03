@@ -12,7 +12,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
     {
         Employee GetEmployee(int id);
         List<Employee> GetAll();
-        void NewEmployee(EmployeeDTO employeeDTO);
+        void NewEmployee(EmployeeAddDTO employeeDTO);
         void RemoveEmployee(int id);
         void UpdateEmployee(EmployeeDTO employeeDTO);
 

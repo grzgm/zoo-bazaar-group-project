@@ -120,7 +120,7 @@ namespace ZooBazaar_Repositories.Repositories
             return employeeDTO;
         }
 
-        void IEmployeeRepositroty.Insert(EmployeeDTO dto)
+        void IEmployeeRepositroty.Insert(EmployeeAddDTO dto)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
