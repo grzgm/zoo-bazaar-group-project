@@ -22,6 +22,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             {
                 employeeDetailsTable.Add(new EmployeeDetailsTable("Employee", "Employee", "Employee"));
             }
+            employeeDetailsTable.Add(new EmployeeDetailsTable("Employee", "Employee", "Employee"));
 
 
 
@@ -35,7 +36,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             for (int i = 0; i < employeeDetailsTable.Count; i++)
             {
-                RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+                RowStyles.Add(new RowStyle(SizeType.Absolute, 55));
             }
 
             ColumnCount = 1;
@@ -45,7 +46,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             //adding controls
 
             // -1 cuz last employee is streched ikd why
-            for (int i = 0; i < employeeDetailsTable.Count-1; i++)
+            for (int i = 0; i < employeeDetailsTable.Count - 1; i++)
             {
                 Controls.Add(employeeDetailsTable[i], 0, i);
             }

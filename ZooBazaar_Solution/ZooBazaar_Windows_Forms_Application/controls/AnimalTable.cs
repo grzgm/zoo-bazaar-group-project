@@ -22,7 +22,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             {
                 animalDetailsTable.Add(new AnimalDetailsTable("Animal", "Animal", "Animal", "Animal"));
             }
-
+            animalDetailsTable.Add(new AnimalDetailsTable("Animal", "Animal", "Animal", "Animal"));
 
 
             //properties
@@ -35,7 +35,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             for (int i = 0; i < animalDetailsTable.Count; i++)
             {
-                RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+                RowStyles.Add(new RowStyle(SizeType.Absolute, 55));
             }
 
             ColumnCount = 1;
@@ -45,7 +45,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             //adding controls
 
             // -1 cuz last animal is streched ikd why
-            for (int i = 0; i < animalDetailsTable.Count-1; i++)
+            for (int i = 0; i < animalDetailsTable.Count - 1; i++)
             {
                 Controls.Add(animalDetailsTable[i], 0, i);
             }

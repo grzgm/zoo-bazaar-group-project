@@ -35,9 +35,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             foreach (Label _label in _labels)
             {
+                _label.Height = 50;
                 _label.Dock = DockStyle.Fill;
                 _label.BackColor = Color.LightGray;
-                _label.Margin = Padding.Empty;
+                _label.Margin = new Padding(0, 0, 1, 0);
                 _label.TextAlign = ContentAlignment.MiddleLeft;
             }
 
@@ -56,6 +57,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             //properties
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
+            Margin = new Padding(5, 0, 5, 5);
 
 
             //Table styles
