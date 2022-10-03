@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooBazaar_Windows_Forms_Application.Theme;
+
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
@@ -19,7 +21,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //properties
             Dock = DockStyle.Top;
-            Height = 120;
+            Height = 100;
+            Width = 100;
+            Margin = Padding.Empty;
+            BackColor = ThemeColors.primaryColor;
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 0;
             Text = t.ToUpper();

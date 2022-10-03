@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using ZooBazaar_Windows_Forms_Application.Theme;
+
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
@@ -37,7 +39,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             _employeeMoreInfo.Text = "...";
             _employeeMoreInfo.Dock = DockStyle.Fill;
             _employeeMoreInfo.Height = 50;
-            _employeeMoreInfo.BackColor = Color.Green;
+            _employeeMoreInfo.BackColor = ThemeColors.highlightColor;
             _employeeMoreInfo.FlatStyle = FlatStyle.Flat;
             _employeeMoreInfo.FlatAppearance.BorderSize = 0;
             _employeeMoreInfo.TextAlign = ContentAlignment.MiddleCenter;

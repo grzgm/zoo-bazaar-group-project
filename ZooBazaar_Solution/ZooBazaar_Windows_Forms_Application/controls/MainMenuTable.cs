@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using ZooBazaar_Windows_Forms_Application.Theme;
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
@@ -18,8 +19,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private MainAnimalTable mainAnimalTable;
         private MenuButton[] menuButtons;
         private Panel buttonPanel;
+        private Label tabLabel;
 
         //Color
+        SolidBrush primaryBrush;
         SolidBrush highlightBrush;
 
         public MainMenuTable()
@@ -36,8 +39,19 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             buttonPanel = new Panel();
             buttonPanel.Dock = DockStyle.Fill;
             buttonPanel.Padding = Padding.Empty;
-            Controls.Add(buttonPanel, 0,1);
             Controls.Add(buttonPanel, 0, 1);
+
+            tabLabel = new Label();
+            tabLabel.Dock = DockStyle.Fill;
+            tabLabel.Padding = Padding.Empty;
+            tabLabel.BackColor = ThemeColors.highlightColor;
+            tabLabel.TextAlign = ContentAlignment.MiddleLeft;
+            tabLabel.Font = new Font("Calibri", 14, FontStyle.Bold);
+            tabLabel.Text = "Test";
+
+            Controls.Add(tabLabel, 2, 0);
+
+
 
 
 
@@ -56,8 +70,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //Properties
             Dock = DockStyle.Fill;
-            //Padding = Padding.Empty;
-            //Margin = Padding.Empty;
+            Padding = Padding.Empty;
+            Margin = Padding.Empty;
             ColumnCount = 3;
             ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
             ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10));
@@ -71,7 +85,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
 
             //Colors
-            highlightBrush = new SolidBrush(Color.Green);
+            primaryBrush = new SolidBrush(ThemeColors.primaryColor);
+            highlightBrush = new SolidBrush(ThemeColors.highlightColor);
 
             //Events
             this.CellPaint += TableLayoutPanel_CellPaint;
@@ -80,23 +95,34 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
         public void ButtonClick(MenuButton buttonClicked)
         {
+            
             Controls.Remove(GetControlFromPosition(2, 1));
             for (int i = 0; i < menuButtons.Length; i++)
             {
                 if (menuButtons[i] == buttonClicked)
                 {
+
+                    menuButtons[i].BackColor = ThemeColors.highlightColor;
+
                     switch (i)
                     {
                         case 0:
                             Controls.Add(mainScheduleTable, 2, 1);
+                            tabLabel.Text = "Schedule";
                             break;
                         case 1:
                             Controls.Add(mainEmployeeTable, 2, 1);
+                            tabLabel.Text = "Employees";
                             break;
                         case 2:
                             Controls.Add(mainAnimalTable, 2, 1);
-                             break;
+                            tabLabel.Text = "Animals";
+                            break;
                     }
+                }
+                else
+                {
+                    menuButtons[i].BackColor = ThemeColors.primaryColor;
                 }
             }
         }
@@ -108,11 +134,13 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             {
                 e.Graphics.FillRectangle(highlightBrush, e.CellBounds);
             }
-
-
-            if (e.Column == 1)
+            else if (e.Column == 1)
             {
                 e.Graphics.FillRectangle(highlightBrush, e.CellBounds);
+            }
+            else
+            {
+                e.Graphics.FillRectangle(primaryBrush, e.CellBounds);
             }
         }
 

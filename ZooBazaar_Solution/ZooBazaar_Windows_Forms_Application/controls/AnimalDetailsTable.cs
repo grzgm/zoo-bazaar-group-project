@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using ZooBazaar_Windows_Forms_Application.Theme;
+
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
@@ -43,7 +45,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             _animalMoreInfo.Text = "...";
             _animalMoreInfo.Dock = DockStyle.Fill;
             _animalMoreInfo.Height = 50;
-            _animalMoreInfo.BackColor = Color.Green;
+            _animalMoreInfo.BackColor = ThemeColors.highlightColor;
             _animalMoreInfo.FlatStyle = FlatStyle.Flat;
             _animalMoreInfo.FlatAppearance.BorderSize = 0;
             _animalMoreInfo.TextAlign = ContentAlignment.MiddleCenter;
