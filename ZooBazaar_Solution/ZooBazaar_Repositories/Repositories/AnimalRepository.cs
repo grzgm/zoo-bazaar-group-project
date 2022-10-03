@@ -128,7 +128,7 @@ namespace ZooBazaar_Repositories.Repositories
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string Query = "INSERT INTO Animal VALUES (@Name,@Age,@DateOfBirth,@Sex,@Speies,@SpeciesType,@Diet,@FeedingTimeID,@FeedingInterval,@ZoneID,@HabitatID)";
+                string Query = "INSERT INTO Animal VALUES (@Name,@Age,@DateOfBirth,@Sex,@Species,@SpeciesType,@Diet,@FeedingTimeID,@FeedingInterval,@ZoneID,@HabitatID)";
 
                 using (SqlCommand command = new SqlCommand(Query, connection))
                 {
@@ -142,7 +142,7 @@ namespace ZooBazaar_Repositories.Repositories
                     command.Parameters.AddWithValue("@FeedingTimeID", dto.FeedingTimeID);
                     command.Parameters.AddWithValue("@FeedingInterval", dto.FeedingInterval);
                     command.Parameters.AddWithValue("@ZoneID", dto.ZoneID);
-                    command.Parameters.AddWithValue("@Habitat", dto.HabitatID);
+                    command.Parameters.AddWithValue("@HabitatID", dto.HabitatID);
 
                     connection.Open();
                     command.ExecuteNonQuery();

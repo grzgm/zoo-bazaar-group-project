@@ -1,6 +1,6 @@
 ﻿namespace ZooBazaar_Windows_Forms_Application
 {
-    partial class EmployeeAdd
+    partial class AnimalAdd
     {
         /// <summary>
         /// Required designer variable.

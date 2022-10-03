@@ -7,20 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ZooBazaar_Windows_Forms_Application.EmployeeAddControls;
+using ZooBazaar_Windows_Forms_Application.AnimalAddControls;
 
 namespace ZooBazaar_Windows_Forms_Application
 {
-    public partial class EmployeeAdd : Form
+    public partial class AnimalAdd : Form
     {
         private MainMenuTable mainMenutable;
 
-        public EmployeeAdd()
+        public AnimalAdd()
         {
             InitializeComponent();
             mainMenutable = new MainMenuTable(this);
 
-            Size = new Size(600, 780);
+            Size = new Size(650, 780);
         }
 
         private void EmployeeAdd_Load(object sender, EventArgs e)
