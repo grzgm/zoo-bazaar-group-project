@@ -33,7 +33,12 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             //controls
             _NavBarTable = new NavBarTable(this);
             _WeekLabel = new Label();
-            _WeekLabel.Text = "week 10";
+            _WeekLabel.Text = "Week 10";
+            _WeekLabel.TextAlign = ContentAlignment.MiddleCenter;
+            _WeekLabel.Height = 40;
+            _WeekLabel.Width = 200;
+            //_WeekLabel.BackColor = Color.RebeccaPurple;
+            _WeekLabel.Font = new Font("Calibri", 14, FontStyle.Bold);
             _ScheduleTable = new ScheduleTable(this);
             _ActivityTable = new ActivityTable(99 ,99);
 
@@ -44,8 +49,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Margin = Padding.Empty;
 
             RowCount = 4;
-            RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
             RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+            RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
             RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             RowStyles.Add(new RowStyle(SizeType.Absolute, 200));
 
