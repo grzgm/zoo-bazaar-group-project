@@ -18,20 +18,20 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private Label _employeeWorkZone;
         private List<Label> _labels;
         private InformationButton _employeeMoreInfo;
-        public EmployeeDetailsTable(string name, string function, string workZone)
+        public EmployeeDetailsTable(Employee employee)
         {
             //assigning controls
             _labels = new List<Label>();
             _employeeName = new Label();
-            _employeeName.Text = name;
+            _employeeName.Text = employee.FirstName;
             _labels.Add(_employeeName);
 
             _employeeFunction = new Label();
-            _employeeFunction.Text = function;
+            _employeeFunction.Text = employee.LastName;
             _labels.Add(_employeeFunction);
 
             _employeeWorkZone = new Label();
-            _employeeWorkZone.Text = workZone;
+            _employeeWorkZone.Text = employee.Role.ToString();
             _labels.Add(_employeeWorkZone);
 
             foreach (Label _label in _labels)
@@ -44,7 +44,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             }
 
             //More info
-            _employeeMoreInfo = new InformationButton();
+            _employeeMoreInfo = new InformationButton(employee);
             
 
 
@@ -74,11 +74,12 @@ namespace ZooBazaar_Windows_Forms_Application.controls
     public class InformationButton : Button
     {
         private EmployeeInformationForm employeeForm;
+        private Employee currentEmployee;
 
-        public InformationButton()
+        public InformationButton(Employee employee)
         {
             
-
+            currentEmployee = employee;
 
             //properties
             Text = "...";
@@ -100,7 +101,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
         private void InformationButton_Click(object? sender, EventArgs e)
         {
-            employeeForm = new EmployeeInformationForm();
+            employeeForm = new EmployeeInformationForm(currentEmployee);
             employeeForm.Show();
         }
     }

@@ -31,21 +31,9 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             
             foreach (Employee employee in Employees)
             {
-                employeeDetailsTable.Add(new EmployeeDetailsTable(employee.FirstName, employee.LastName, employee.Role.ToString()));
+                employeeDetailsTable.Add(new EmployeeDetailsTable(employee));
             }
-            
-            /*
-            //assigning variables
-
-            //assigning controls
-            for (int i = 0; i < 5; i++)
-            {
-                
-            }
-
-            */
-            employeeDetailsTable.Add(new EmployeeDetailsTable("Jesper", "Caretaker", "Lol"));
-            employeeDetailsTable.Add(new EmployeeDetailsTable("empty", "empty", "empty"));
+           
 
             //properties
             Dock = DockStyle.Fill;
@@ -65,15 +53,11 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
 
             //adding controls
-
             // -1 cuz last employee is streched ikd why
             for (int i = 0; i < employeeDetailsTable.Count - 1; i++)
             {
                 Controls.Add(employeeDetailsTable[i], 0, i);
             }
-
-            //debug
-            //BackColor = Color.Blue;
         }
     }
 }
