@@ -31,7 +31,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             
             foreach (Employee employee in Employees)
             {
-                employeeDetailsTable.Add(new EmployeeDetailsTable(employee._firstName, employee._role.ToString(), employee._role.ToString()));
+                employeeDetailsTable.Add(new EmployeeDetailsTable(employee.FirstName, employee.LastName, employee.Role.ToString()));
             }
             
             /*
