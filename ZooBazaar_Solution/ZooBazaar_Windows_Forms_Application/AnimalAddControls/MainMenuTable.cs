@@ -26,8 +26,10 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
         private TextBox[] textboxes;
         private NumericUpDown[] numericupdowns;
         private RadioButton[] radioButtons;
+        private ComboBox comboBox;
         private string[] labelText;
         private string[] radioButtonsText;
+        private string[] comboBoxText;
 
         //Controls
         private AddAnimalButton btAdd;
@@ -63,11 +65,13 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             this.animalAdd = animalAdd;
             //Fields
             labels = new Label[11];
-            textboxes = new TextBox[4];
+            textboxes = new TextBox[3];
             numericupdowns = new NumericUpDown[5];
             radioButtons = new RadioButton[2];
+            comboBox = new ComboBox();
             labelText = new string[] { "Name", "Age", "DateOfBirth", "Sex", "Species", "SpeciesType", "Diet", "FeedingTime", "FeedingInterval", "Zone", "Habitat" };
             radioButtonsText = new string[] { "Male", "notMale"};
+            comboBoxText = new string[] { "Mammals", "Fish", "Birds", "Reptiles", "Amphibians"};
 
             //Controls
             for (int i = 0; i < labels.Length; i++)
@@ -123,6 +127,17 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
                 radioButtonsTable.Controls.Add(radioButtons[i], i, 0);
             }
 
+            comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox.Font = new Font("Calibri", 21, FontStyle.Regular);
+            comboBox.Dock = DockStyle.Fill;
+            comboBox.Margin = new Padding(0, 0, 0, 1);
+            foreach (string text in comboBoxText)
+            {
+
+                comboBox.Items.Add(text);
+            }
+            comboBox.SelectedIndex = 0;
+
 
             btAdd = new AddAnimalButton(this);
 
@@ -147,8 +162,8 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             Controls.Add(dateTimePicker, 1, 2);
             Controls.Add(radioButtonsTable, 1, 3);
             Controls.Add(textboxes[1], 1, 4);
-            Controls.Add(textboxes[2], 1, 5);
-            Controls.Add(textboxes[3], 1, 6);
+            Controls.Add(comboBox, 1, 5);
+            Controls.Add(textboxes[2], 1, 6);
             Controls.Add(numericupdowns[1], 1, 7);
             Controls.Add(numericupdowns[2], 1, 8);
             Controls.Add(numericupdowns[3], 1, 9);
@@ -175,8 +190,8 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
                 //Sex = isMale,
                 Sex = radioButtons[0].Checked,
                 Species = textboxes[1].Text,
-                SpeciesType = textboxes[2].Text,
-                Diet = textboxes[3].Text,
+                SpeciesType = comboBox.SelectedItem.ToString(),
+                Diet = textboxes[2].Text,
                 FeedingTimeID = (int)numericupdowns[1].Value,
                 FeedingInterval = (int)numericupdowns[2].Value,
                 ZoneID = (int)numericupdowns[3].Value,
