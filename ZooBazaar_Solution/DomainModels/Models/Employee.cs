@@ -43,7 +43,7 @@ namespace ZooBazaar_DomainModels.Models
             this._email = employeeDTO.Email;
             this._phone = employeeDTO.Phone;
             this._address = employeeDTO.Address;
-            this._role = Enum.Parse<ROLE>(employeeDTO.Role);
+            this._role = Enum.Parse<ROLE>(employeeDTO.Role, true);
 
         }
 
