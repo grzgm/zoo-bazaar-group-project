@@ -20,7 +20,10 @@ namespace ZooBazaar_Windows_Forms_Application
         public EmployeeInformationForm()
         {
             InitializeComponent();
-            _StaticInformationTable = new StaticInformationTable();
+            Size = new Size(1920, 1080);
+            Text = null;
+            ControlBox = false;
+            _StaticInformationTable = new StaticInformationTable(this);
             Controls.Add(_StaticInformationTable);
         }
     }

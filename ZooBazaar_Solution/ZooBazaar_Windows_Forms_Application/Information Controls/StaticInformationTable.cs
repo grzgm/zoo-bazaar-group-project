@@ -3,25 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooBazaar_Windows_Forms_Application.Theme;
+using ZooBazaar_Windows_Forms_Application.Information_Controls;
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
     internal class StaticInformationTable : TableLayoutPanel
     {
+        private EmployeeInformationForm employeeInformationForm;
 
         //fields
         private SolidBrush highLightBrush;
         
         //conrols
-        private Button closeButton;
+        private CloseButton CloseButton;
+        private Panel ButtonPanel;
+        private EmployeeInformationTable employeeInformationTable;
 
-        public StaticInformationTable()
+        public StaticInformationTable(EmployeeInformationForm parent)
         {
+            employeeInformationForm = parent;
+
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
 
 
-            //tble style
+            //table style
             ColumnCount = 3;
             ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
             ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10));
@@ -29,6 +36,21 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             RowCount = 1;
             RowStyles.Add(new RowStyle(SizeType.Percent));
+
+            //controls
+            //EmployeeInformationTable
+            employeeInformationTable = new EmployeeInformationTable();
+            Controls.Add(employeeInformationTable, 2, 0);
+            //ButtonPanel
+            ButtonPanel = new Panel();
+            ButtonPanel.Dock = DockStyle.Fill;
+            ButtonPanel.Margin = Padding.Empty;
+            Controls.Add(ButtonPanel,0,0);
+
+            
+            //CloseButton
+            CloseButton = new CloseButton(parent);
+            ButtonPanel.Controls.Add(CloseButton);
 
 
             //events
@@ -40,12 +62,12 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         {
             if(e.Column == 0)
             {
-                highLightBrush = new SolidBrush(Color.Gray);
+                highLightBrush = new SolidBrush(ThemeColors.primaryColor);
                 e.Graphics.FillRectangle(highLightBrush, e.CellBounds);
             }
             else if(e.Column == 1)
             {
-                highLightBrush = new SolidBrush(Color.Green);
+                highLightBrush = new SolidBrush(ThemeColors.highlightColor);
                 e.Graphics.FillRectangle(highLightBrush, e.CellBounds);
             }
 
