@@ -47,7 +47,9 @@ namespace ZooBazaar_Repositories.Repositories
                         string firstname = reader.GetString(1);
                         string lastname = reader.GetString(2);
                         string email = reader.GetString(3);
-                        string role = reader.GetString(4);
+                        string phone = reader.GetString(4);
+                        string address = reader.GetString(5);
+                        string role = reader.GetString(6);
 
                         employeeDTOs.Add(new EmployeeDTO
                         {
@@ -55,6 +57,8 @@ namespace ZooBazaar_Repositories.Repositories
                             FirstName = firstname,
                             LastName = lastname,
                             Email = email,
+                            Phone = phone,
+                            Address = address,
                             Role = role
                         });
                     }
