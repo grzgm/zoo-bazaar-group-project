@@ -21,7 +21,9 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
         private EmployeeAdd employeeAdd;
         private Label[] labels;
         private TextBox[] textboxes;
+        private ComboBox comboBox;
         private string[] labelText;
+        private string[] comboBoxText;
 
         //Controls
         private AddEmployeeButton btAdd;
@@ -31,8 +33,10 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
             this.employeeAdd = employeeAdd;
             //Fields
             labels = new Label[6];
-            textboxes = new TextBox[6];
+            textboxes = new TextBox[5];
             labelText = new string[] { "FirstName", "LastName", "Email", "Phone", "Address", "Role"};
+            comboBox = new ComboBox();
+            comboBoxText = new string[] { "Caretaker", "Office" };
 
             //Controls
             for (int i = 0; i < labels.Length; i++)
@@ -54,13 +58,24 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
                 textboxes[i].Margin = new Padding(0, 0, 0, 1);
             }
 
+            comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox.Font = new Font("Calibri", 21, FontStyle.Regular);
+            comboBox.Dock = DockStyle.Fill;
+            comboBox.Margin = new Padding(0, 0, 0, 1);
+            foreach (string text in comboBoxText)
+            {
+
+                comboBox.Items.Add(text);
+            }
+            comboBox.SelectedIndex = 0;
+
             btAdd = new AddEmployeeButton(this);
 
             //Properties
             Dock = DockStyle.Fill;
             Padding = Padding.Empty;
             Margin = Padding.Empty;
-            BackColor = Color.RebeccaPurple;
+            //BackColor = Color.RebeccaPurple;
 
             ColumnCount = 2;
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
@@ -79,7 +94,7 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
                     Controls.Add(textboxes[i], 1, i);
             }
 
-            Controls.Add(textboxes[5], 1, 5);
+            Controls.Add(comboBox, 1, 5);
 
             for (int i = 0; i < labels.Length; i++)
             {
@@ -97,25 +112,10 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
             PropertyInfo[] properties = typeof(EmployeeAddDTO).GetProperties();
             for (int i = 0; i < properties.Length; i++)
             {
-                properties[i].SetValue(employeeAddDTO, textboxes[i].Text);
+                if (i != 5)
+                    properties[i].SetValue(employeeAddDTO, textboxes[i].Text);
             }
-
-
-            //EmployeeAddDTO employeeAddDTO = new EmployeeAddDTO()
-            //{
-            //    Name = textboxes[0].Text,
-            //    Age = (int)numericupdowns[0].Value,
-            //    DateOfBirth = new DateTime(),
-            //    //Sex = isMale,
-            //    Sex = radioButtons[0].Checked,
-            //    Species = textboxes[1].Text,
-            //    SpeciesType = textboxes[2].Text,
-            //    Diet = textboxes[3].Text,
-            //    FeedingTimeID = (int)numericupdowns[1].Value,
-            //    FeedingInterval = (int)numericupdowns[2].Value,
-            //    ZoneID = (int)numericupdowns[3].Value,
-            //    HabitatID = (int)numericupdowns[4].Value
-            //};
+            employeeAddDTO.Role = comboBox.SelectedItem.ToString();
 
             IEmployeeRepositroty employeeRepositroty = new EmployeeRepository();
 
