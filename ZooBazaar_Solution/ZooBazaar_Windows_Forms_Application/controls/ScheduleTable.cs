@@ -39,7 +39,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //table style
             RowCount = 2;
-            RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
+            RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
             RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             
             ColumnCount = 8;
