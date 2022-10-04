@@ -46,5 +46,23 @@ namespace ZooBazaar_DomainModels.Models
             this._role = Enum.Parse<ROLE>(employeeDTO.Role);
 
         }
+
+
+        public int ID { get { return _id; } }
+        public string FirstName { get { return _firstName; } }
+
+        public string LastName { get { return _lastName; } }
+
+        public string Email { get { return _email; } }  
+
+        public string Phone { get { return _phone; } }
+
+        public string Address { get { return _address; } }
+
+        public ROLE Role { get { return _role; } }
+
+
+
+
     }
 }

@@ -39,7 +39,28 @@ namespace ZooBazaar_DomainModels.Models
             this._habitat = new Habitat(habitatDTO,zoneDTO);
         }
   
+        public int ID { get { return _id; } }
+        public string Name { get { return _name; } }
 
+        public int Age { get { return _age; } }
+
+        public DateOnly DateOnly { get { return _dateOfBirth; } }
+
+        public bool Sex { get { return _sex; } }
+
+        public string Species { get { return _species; } }  
+
+        public string SpeciesType { get { return _speciesType; } }
+
+        public string Diet { get { return _diet; } }
+
+        public TimeBlock TimeBlock { get { return _timeBlock; } }
+
+        public int FeedingInterval { get { return _feedingInterval; } } 
+
+        public Zone Zone { get { return _zone; } }
+
+        public Habitat Habitat { get { return _habitat; } }
 
 
 
