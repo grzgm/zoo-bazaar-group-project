@@ -6,25 +6,46 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
+using ZooBazaar_DTO.DTOs;
+using ZooBazaar_ClassLibrary.Interfaces;
+using ZooBazaar_ClassLibrary.Menagers;
+using ZooBazaar_Repositories.Interfaces;
+using ZooBazaar_Repositories.Repositories;
+using ZooBazaar_DomainModels.Models;
+
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
     internal class EmployeeTable : TableLayoutPanel
     {
+        
         private List<EmployeeDetailsTable> employeeDetailsTable;
 
         public EmployeeTable()
         {
+            
+            IEmployeeRepositroty employeeRepositroty = new EmployeeRepository();
+            IEmployeeMenager employeeMenager = new EmployeeManager(employeeRepositroty);
+            List<Employee> Employees = employeeMenager.GetAll();
+            
+            employeeDetailsTable = new List<EmployeeDetailsTable>();
+            
+            foreach (Employee employee in Employees)
+            {
+                employeeDetailsTable.Add(new EmployeeDetailsTable(employee._firstName, employee._role.ToString(), employee._role.ToString()));
+            }
+            
+            /*
             //assigning variables
 
             //assigning controls
-            employeeDetailsTable = new List<EmployeeDetailsTable>();
             for (int i = 0; i < 5; i++)
             {
-                employeeDetailsTable.Add(new EmployeeDetailsTable("Employee", "Employee", "Employee"));
+                
             }
-            employeeDetailsTable.Add(new EmployeeDetailsTable("Employee", "Employee", "Employee"));
 
-
+            */
+            employeeDetailsTable.Add(new EmployeeDetailsTable("Jesper", "Caretaker", "Lol"));
+            employeeDetailsTable.Add(new EmployeeDetailsTable("empty", "empty", "empty"));
 
             //properties
             Dock = DockStyle.Fill;

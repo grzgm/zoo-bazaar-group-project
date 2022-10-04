@@ -1,5 +1,12 @@
 ﻿using System.Drawing;
+using ZooBazaar_DTO.DTOs;
+using ZooBazaar_ClassLibrary;
+using ZooBazaar_ClassLibrary.Interfaces;
+using ZooBazaar_ClassLibrary.Menagers;
+using ZooBazaar_Repositories.Interfaces;
+using ZooBazaar_Repositories.Repositories;
 using ZooBazaar_Windows_Forms_Application.Theme;
+using ZooBazaar_DomainModels.Models;
 
 
 namespace ZooBazaar_Windows_Forms_Application.controls
@@ -10,7 +17,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private Label _employeeFunction;
         private Label _employeeWorkZone;
         private List<Label> _labels;
-        private Button _employeeMoreInfo;
+        private InformationButton _employeeMoreInfo;
         public EmployeeDetailsTable(string name, string function, string workZone)
         {
             //assigning controls
@@ -37,18 +44,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             }
 
             //More info
-            _employeeMoreInfo = new Button();
-            _employeeMoreInfo.Text = "...";
-            _employeeMoreInfo.Dock = DockStyle.Fill;
-            _employeeMoreInfo.Height = 50;
-            _employeeMoreInfo.BackColor = ThemeColors.highlightColor;
-            _employeeMoreInfo.FlatStyle = FlatStyle.Flat;
-            _employeeMoreInfo.FlatAppearance.BorderSize = 0;
-            _employeeMoreInfo.TextAlign = ContentAlignment.MiddleCenter;
-            _employeeMoreInfo.Font = new Font("Calibri", 14, FontStyle.Bold);
-            _employeeMoreInfo.Margin = Padding.Empty;
-            _employeeMoreInfo.TextAlign = ContentAlignment.MiddleCenter;
-
+            _employeeMoreInfo = new InformationButton();
+            
 
 
             //properties
@@ -71,6 +68,40 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Controls.Add(_employeeFunction, 1, 0);
             Controls.Add(_employeeWorkZone, 2, 0);
             Controls.Add(_employeeMoreInfo, 3, 0);
+        }
+    }
+
+    public class InformationButton : Button
+    {
+        private EmployeeInformationForm employeeForm;
+
+        public InformationButton()
+        {
+            
+
+
+            //properties
+            Text = "...";
+            Dock = DockStyle.Fill;
+            Height = 50;
+            BackColor = ThemeColors.highlightColor;
+            FlatStyle = FlatStyle.Flat;
+            FlatAppearance.BorderSize = 0;
+            TextAlign = ContentAlignment.MiddleCenter;
+            Font = new Font("Calibri", 14, FontStyle.Bold);
+            Margin = Padding.Empty;
+
+
+            //events
+            this.Click += new System.EventHandler(this.InformationButton_Click);
+
+
+        }
+
+        private void InformationButton_Click(object? sender, EventArgs e)
+        {
+            employeeForm = new EmployeeInformationForm();
+            employeeForm.Show();
         }
     }
 }
