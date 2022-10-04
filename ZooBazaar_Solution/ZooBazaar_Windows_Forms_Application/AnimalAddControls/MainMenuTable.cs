@@ -18,10 +18,7 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
 {
     public class MainMenuTable : TableLayoutPanel
     {
-        private IAnimalRepository animalRepository = new AnimalRepository();
-        private IZoneRepository zoneRepository = new ZoneRepository();
-        private IHabitatRepository habitatRepository = new HabitatRepository();
-        private ITimeBlockRepository timeBlockRepository = new TimeblockRepository();
+
         private IAnimalMenager animalMenager;
         //Fields
         private AnimalAdd animalAdd;
@@ -62,6 +59,7 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
 
         public MainMenuTable(AnimalAdd animalAdd)
         {
+            this.animalMenager = Program.GetService<IAnimalMenager>();
             this.animalAdd = animalAdd;
             //Fields
             labels = new Label[11];
@@ -184,8 +182,6 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
                 ZoneID = (int)numericupdowns[3].Value,
                 HabitatID = (int)numericupdowns[4].Value
             };
-
-            animalMenager = new AnimalManager(animalRepository, zoneRepository, habitatRepository, timeBlockRepository);
 
             animalMenager.NewAnimal(animalAddDTO);
 

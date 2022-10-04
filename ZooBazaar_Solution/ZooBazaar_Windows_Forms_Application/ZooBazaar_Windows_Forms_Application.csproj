@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DomainModels\ZooBazaar_DomainModels.csproj" />
     <ProjectReference Include="..\ZooBazaar_ClassLibrary\ZooBazaar_ClassLibrary.csproj" />
     <ProjectReference Include="..\ZooBazaar_Interfaces\ZooBazaar_DTO.csproj" />
