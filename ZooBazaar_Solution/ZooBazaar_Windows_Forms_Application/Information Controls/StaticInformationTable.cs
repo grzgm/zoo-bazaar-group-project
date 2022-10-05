@@ -5,6 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooBazaar_Windows_Forms_Application.Theme;
 using ZooBazaar_Windows_Forms_Application.Information_Controls;
+using ZooBazaar_DTO.DTOs;
+using ZooBazaar_ClassLibrary;
+using ZooBazaar_ClassLibrary.Interfaces;
+using ZooBazaar_ClassLibrary.Menagers;
+using ZooBazaar_Repositories.Interfaces;
+using ZooBazaar_Repositories.Repositories;
+using ZooBazaar_Windows_Forms_Application.Theme;
+using ZooBazaar_DomainModels.Models;
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
@@ -20,9 +28,9 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private Panel ButtonPanel;
         private EmployeeInformationTable employeeInformationTable;
 
-        public StaticInformationTable(EmployeeInformationForm parent)
+        public StaticInformationTable(EmployeeInformationForm parentForm, Employee employee)
         {
-            employeeInformationForm = parent;
+            employeeInformationForm = parentForm;
 
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
@@ -39,7 +47,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //controls
             //EmployeeInformationTable
-            employeeInformationTable = new EmployeeInformationTable();
+            employeeInformationTable = new EmployeeInformationTable(parentForm, employee);
             Controls.Add(employeeInformationTable, 2, 0);
             //ButtonPanel
             ButtonPanel = new Panel();
@@ -49,7 +57,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             
             //CloseButton
-            CloseButton = new CloseButton(parent);
+            CloseButton = new CloseButton(parentForm);
             ButtonPanel.Controls.Add(CloseButton);
 
 
