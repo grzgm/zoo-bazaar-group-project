@@ -13,6 +13,47 @@ namespace ZooBazaar_Repositories.Repositories
     {
         private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi463992;User Id=dbi463992;Password=gogotpilon;";
 
+        ScheduleDTO IScheduleRepository.GetByDateAndEmployeeId(DateOnly date, int employeeId)
+        {
+            ScheduleDTO scheduleDTO = null;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string selectQuery = "SELECT * FROM Schedule WHERE Day = @Day AND Month = @Month AND Year = @Year AND EmployeeID = @EmployeeID";
+
+                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@Day", date.Day);
+                    command.Parameters.AddWithValue("@Month", date.Month);
+                    command.Parameters.AddWithValue("@Year", date.Year);
+                    command.Parameters.AddWithValue("@EmployeeID", employeeId);
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        int scheduleid = reader.GetInt32(0);
+                        int day = reader.GetInt32(1);
+                        int month = reader.GetInt32(2);
+                        int year = reader.GetInt32(3);
+                        int timeblockid = reader.GetInt32(4);
+                        int employeeid = reader.GetInt32(5);
+                        int taskid = reader.GetInt32(6);
+
+                        scheduleDTO = new ScheduleDTO
+                        {
+                            Id = scheduleid,
+                            Day = day,
+                            Month = month,
+                            Year = year,
+                            TimeblockID = timeblockid,
+                            EmployeeID = employeeid,
+                            TaskID = taskid
+                        };
+                    }
+                }
+            }
+            return scheduleDTO;
+        }
+
         void IScheduleRepository.Delete(int id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))

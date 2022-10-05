@@ -33,5 +33,8 @@ namespace ZooBazaar_DomainModels.Models
             this._task = new Task(taskDTO, habitatDTO, zoneDTO);
         }
 
+        public int timeBlockId { get { return _timeBlock.ID; } }
+        public string taskName { get { return _task.taskName; } }
+
     }
 }

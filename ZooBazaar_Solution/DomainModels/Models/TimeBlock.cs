@@ -21,5 +21,7 @@ namespace ZooBazaar_DomainModels.Models
             this._endTime = TimeOnly.FromTimeSpan(timeBlockDTO.EndTime);
 
         }
+
+        public int ID { get { return _id; } }
     }
 }

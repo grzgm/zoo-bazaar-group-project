@@ -50,7 +50,7 @@ namespace ZooBazaar_DomainModels.Models
             this._zone = new Zone(zoneDTO);
         }
 
-
+        public string taskName { get { return _name.ToString(); } }
 
     }
 }
