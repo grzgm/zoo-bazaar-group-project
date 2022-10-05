@@ -20,6 +20,12 @@ namespace ZooBazaar_DomainModels.Models
             this._startTime = TimeOnly.FromTimeSpan(timeBlockDTO.StartTime);
             this._endTime = TimeOnly.FromTimeSpan(timeBlockDTO.EndTime);
 
+      }
+        public override string ToString()
+        {
+            return _startTime.ToString() + "  " + _endTime.ToString();
         }
+
+
     }
 }

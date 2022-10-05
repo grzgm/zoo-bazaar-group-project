@@ -19,7 +19,12 @@ namespace ZooBazaar_DomainModels.Models
             this._name = zoneDTO.Name;
             this._capacity = zoneDTO.Capacity;
         }
-        
+
+        public override string ToString()
+        {
+            return _name;
+        }
+
 
     }
 }

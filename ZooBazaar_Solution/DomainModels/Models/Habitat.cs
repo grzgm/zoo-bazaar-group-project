@@ -25,6 +25,10 @@ namespace ZooBazaar_DomainModels.Models
             this._zone = new Zone(zoneDTO);
 
         }
+        public override string ToString()
+        {
+            return _name;
+        }
 
     }
 }
