@@ -22,6 +22,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
         public EmployeeTable()
         {
+
+            //Filling table with content
+            UpdateTableContent();
+            UpdateTable();
             //properties
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
@@ -37,9 +41,6 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             ColumnCount = 1;
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 
-            //Filling table with content
-            UpdateTableContent();
-            UpdateTable();
 
         }
 
@@ -47,10 +48,11 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private void UpdateTable()
         {
             Controls.Clear();
-            for (int i = 0; i < employeeDetailsTable.Count - 1; i++)
+            for (int i = 0; i < employeeDetailsTable.Count; i++)
             {
                 Controls.Add(employeeDetailsTable[i], 0, i);
             }
+            Controls.Add(new Panel());
         }
 
         //refreshes employee List

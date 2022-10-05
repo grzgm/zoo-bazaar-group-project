@@ -48,8 +48,6 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             //More info
             _employeeMoreInfo = new InformationButton(employee, employeeTable);
             
-
-
             //properties
             Dock = DockStyle.Fill;
             Margin = new Padding(5, 0, 5, 5);

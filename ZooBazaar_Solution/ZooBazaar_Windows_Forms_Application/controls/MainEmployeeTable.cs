@@ -38,13 +38,6 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Controls.Add(_EmployeeNavBarTable, 0, 0);
             Controls.Add(_EmployeeScheduleTable, 0, 1);
             Controls.Add(_ActivityTable, 0, 2);
-            /*debug
-            Panel testpanel = new Panel();
-            testpanel.Dock = DockStyle.Fill;
-            testpanel.BackColor = Color.Red;
-            testpanel.Margin = Padding.Empty;
-            Controls.Add(testpanel, 0, 2);
-            */
         }
     }
 }

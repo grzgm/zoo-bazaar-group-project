@@ -18,6 +18,9 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
 {
     public class EmployeeInformationTable : TableLayoutPanel
     {
+        private EmployeeInformationForm EmployeeInformationForm;
+        private Employee Employee;
+
         private string[] labelStrings;
         private string[] employeeStrings;
 
@@ -26,10 +29,12 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
 
         private TextBox[] EditTextBoxes;
 
-        public EmployeeInformationTable(Employee employee)
+        public EmployeeInformationTable(EmployeeInformationForm parentForm, Employee employee)
         {
 
             //variables
+            EmployeeInformationForm = parentForm;
+            Employee = employee;
             labelStrings = new string[7] { "ID", "First name", "Last name", "Email", "Phone", "Adress", "Role" };
             employeeStrings = new string[7] {employee.ID.ToString(),employee.FirstName, employee.LastName, employee.Email, employee.Phone, employee.Address, employee.Role.ToString()};
             EditMode = true;
@@ -83,26 +88,17 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
             UpdateControls();
 
             //Adding buttons
-            Panel panel = new Panel();
-            panel.Dock = DockStyle.Top;
-            panel.Padding = new Padding(0,5,0,5);
-            panel.Height = 100;
+            Panel ButtonPanel = new Panel();
+            ButtonPanel.Dock = DockStyle.Top;
+            ButtonPanel.Padding = new Padding(0,5,0,5);
+            ButtonPanel.Height = 100;
 
-            Button FireButton = new Button();
-            FireButton.Dock = DockStyle.Right;
-            FireButton.Height = 100;
-            FireButton.Width = 200;
-            FireButton.Margin = new Padding(5);
-            FireButton.Text = "Fire";
-            FireButton.FlatStyle = FlatStyle.Flat;
-            FireButton.FlatAppearance.BorderSize = 0;
-            FireButton.BackColor = ThemeColors.secondaryColor;
-
+            RemoveButton RemoveButton = new RemoveButton(this);
             EditButton EditButton = new EditButton(this);
-            
-            panel.Controls.Add(EditButton);
-            panel.Controls.Add(FireButton);
-            Controls.Add(panel,1,16);
+
+            ButtonPanel.Controls.Add(EditButton);
+            ButtonPanel.Controls.Add(RemoveButton);
+            Controls.Add(ButtonPanel, 1,16);
 
             //events
             this.CellPaint += TableLayoutPanel_CellPaint;
@@ -183,6 +179,13 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
 
 
         }
+        public void RemoveEmployee()
+        {
+            IEmployeeRepositroty employeeRepositroty = new EmployeeRepository();
+            IEmployeeMenager employeeMenager = new EmployeeManager(employeeRepositroty);
+            employeeMenager.RemoveEmployee(Employee.ID);
+            EmployeeInformationForm.Close();
+        }
 
         private void TableLayoutPanel_CellPaint(object? sender, TableLayoutCellPaintEventArgs e)
         {
@@ -251,6 +254,44 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 this.Click += new System.EventHandler(EditButton_Click);
 
             }
+        }
+    }
+
+    public class RemoveButton : Button
+    {
+        EmployeeInformationTable EmployeeInformationTable;
+        public RemoveButton(EmployeeInformationTable employeeInformationTable)
+        {
+
+            EmployeeInformationTable = employeeInformationTable;
+
+            //properties
+            Dock = DockStyle.Right;
+            Height = 100;
+            Width = 200;
+            Margin = new Padding(5);
+            Text = "Remove";
+            FlatStyle = FlatStyle.Flat;
+            FlatAppearance.BorderSize = 0;
+            BackColor = ThemeColors.secondaryColor;
+
+            //event
+            this.Click += new System.EventHandler(RemoveButton_Click);
+        }
+
+        private void RemoveButton_Click(object? sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to remove this employee?", "Remove", MessageBoxButtons.YesNo);
+            if(dialogResult == DialogResult.Yes)
+            {
+                EmployeeInformationTable.RemoveEmployee();
+
+            }
+            else
+            {
+                return;
+            }
+
         }
     }
 }

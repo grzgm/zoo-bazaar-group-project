@@ -28,9 +28,9 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private Panel ButtonPanel;
         private EmployeeInformationTable employeeInformationTable;
 
-        public StaticInformationTable(EmployeeInformationForm parent, Employee employee)
+        public StaticInformationTable(EmployeeInformationForm parentForm, Employee employee)
         {
-            employeeInformationForm = parent;
+            employeeInformationForm = parentForm;
 
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
@@ -47,7 +47,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //controls
             //EmployeeInformationTable
-            employeeInformationTable = new EmployeeInformationTable(employee);
+            employeeInformationTable = new EmployeeInformationTable(parentForm, employee);
             Controls.Add(employeeInformationTable, 2, 0);
             //ButtonPanel
             ButtonPanel = new Panel();
@@ -57,7 +57,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             
             //CloseButton
-            CloseButton = new CloseButton(parent);
+            CloseButton = new CloseButton(parentForm);
             ButtonPanel.Controls.Add(CloseButton);
 
 
