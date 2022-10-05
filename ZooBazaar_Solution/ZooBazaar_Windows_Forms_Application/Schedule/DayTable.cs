@@ -13,7 +13,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
         private int id;
 
         private BlockButton[] _BlockButton;
-        public DayTable(MainScheduleTable mainScheduleTable, int id, int day, int month, int year, int entityId)
+        public DayTable(MainScheduleTable mainScheduleTable, int id)
         {
             this.mainScheduleTable = mainScheduleTable;
             this.id = id;

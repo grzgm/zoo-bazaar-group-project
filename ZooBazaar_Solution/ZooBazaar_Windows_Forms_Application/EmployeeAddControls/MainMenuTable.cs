@@ -13,6 +13,7 @@ using ZooBazaar_ClassLibrary.Menagers;
 using ZooBazaar_Repositories.Interfaces;
 using ZooBazaar_Repositories.Repositories;
 using ZooBazaar_DomainModels.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
 {
@@ -114,6 +115,18 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
                     properties[i].SetValue(employeeAddDTO, textboxes[i].Text);
             }
             employeeAddDTO.Role = comboBox.SelectedItem.ToString();
+
+            ValidationContext context = new ValidationContext(employeeAddDTO, null, null);
+            IList<ValidationResult> errors = new List<ValidationResult>();
+
+            if (!Validator.TryValidateObject(employeeAddDTO, context, errors, true))
+            {
+                foreach (ValidationResult result in errors)
+                {
+                    MessageBox.Show(result.ErrorMessage);
+                    return;
+                }
+            }
 
             employeeMenager.NewEmployee(employeeAddDTO);
 

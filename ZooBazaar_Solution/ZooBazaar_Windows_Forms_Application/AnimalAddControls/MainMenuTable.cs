@@ -13,6 +13,7 @@ using ZooBazaar_ClassLibrary.Menagers;
 using ZooBazaar_Repositories.Interfaces;
 using ZooBazaar_Repositories.Repositories;
 using ZooBazaar_DomainModels.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
 {
@@ -188,6 +189,18 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
                 ZoneID = (int)numericupdowns[3].Value,
                 HabitatID = (int)numericupdowns[4].Value
             };
+
+            ValidationContext context = new ValidationContext(animalAddDTO, null, null);
+            IList<ValidationResult> errors = new List<ValidationResult>();
+
+            if (!Validator.TryValidateObject(animalAddDTO, context, errors, true))
+            {
+                foreach (ValidationResult result in errors)
+                {
+                    MessageBox.Show(result.ErrorMessage);
+                    return;
+                }
+            }
 
             animalMenager.NewAnimal(animalAddDTO);
 
