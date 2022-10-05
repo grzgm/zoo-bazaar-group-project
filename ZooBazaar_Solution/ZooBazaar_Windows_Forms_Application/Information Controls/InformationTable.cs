@@ -138,26 +138,37 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
             y = 2;
 
             //Removes current controls showed
-            for (int i = 1; i < 15; i++)
+            for (int i = 1; i < LabelStrings.Length * 2; i++)
             {
                 Controls.Remove(GetControlFromPosition(1, i));
             }
 
             if (EditMode)
             {
-                /*
+                
                 if (IsEmployee)
                 {
+                    EditControls = new Control[LabelStrings.Length - 1];
                     for (int i = 1; i < LabelStrings.Length; i++)
                     {
-                        TextBox InformationTextBox = new TextBox();
-                        EditControls[i - 1] = InformationTextBox;
-                        InformationTextBox.Text = InformationStrings[i];
-                        InformationTextBox.Dock = DockStyle.Fill;
-                        InformationTextBox.Margin = new Padding(0, 15, 0, 15);
-                        InformationTextBox.Font = new Font("Calibri", 12, FontStyle.Regular);
+                        Control InformationControl;
+                        if (i == LabelStrings.Length -1)
+                        {
+                            InformationControl = new ComboBox();
+                            //need to store enum types in this combobox
+                        }
+                        else
+                        {
+                            InformationControl = new TextBox();
 
-                        Controls.Add(InformationTextBox, 1, y);
+                        }
+                        EditControls[i - 1] = InformationControl;
+                        InformationControl.Text = InformationStrings[i];
+                        InformationControl.Dock = DockStyle.Fill;
+                        InformationControl.Margin = new Padding(0, 15, 0, 15);
+                        InformationControl.Font = new Font("Calibri", 12, FontStyle.Regular);
+
+                        Controls.Add(InformationControl, 1, y);
                         y += 2;
                     }
                 }
@@ -165,13 +176,10 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 {
                     EditControls = new Control[LabelStrings.Length + 1];
                     EditControls[1] = new TextBox(); //name
-                    EditControls[1].Text = InformationStrings[1];
 
                     EditControls[2] = new NumericUpDown(); //age
-                    EditControls[2].Text = InformationStrings[2];
 
                     EditControls[3] = new DateTimePicker(); //date of birth
-                    EditControls[3].Text = InformationStrings[3];
 
 
                     EditControls[4] = new RadioButton(); //sex
@@ -190,7 +198,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
 
 
                 }
-                */
+                
             }
             else
             {
