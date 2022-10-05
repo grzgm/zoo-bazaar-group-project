@@ -52,7 +52,8 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
         {
             this.AnimalMenager = Program.GetService<IAnimalMenager>();
             LabelStrings = new string[] { "ID", "Name", "Age", "Date of birth", "Sex", "Species", "Species type", "Diet", "Feeding time","Feeding interval", "Zone", "Habitat" };
-            InformationStrings = new string[] { animal.ID.ToString(), animal.Name, animal.Age.ToString(), animal.DateOnly.ToString(), animal.Sex.ToString(), animal.Species, animal.SpeciesType.ToString(), animal.Diet, animal.TimeBlock.ToString(), animal.FeedingInterval.ToString(), animal.Zone.ToString(), animal.Habitat.ToString() };
+            InformationStrings = new string[] { animal.ID.ToString(), animal.Name, animal.Age.ToString(), animal.DateOnly.ToString(), animal.Sex.ToString(), animal.Species, animal.SpeciesType.ToString(), animal.Diet.ToString(), animal.TimeBlock.ToString(), animal.FeedingInterval.ToString(), animal.Zone.ToString(), animal.Habitat.ToString() };
+            //feeding time zone and habitat display as Zoobazaar_DomainModels.Model... NEEDS TO BE FIXED
             AnimalInformationForm = parentForm;
             Animal = animal;
             IsEmployee = false;
@@ -125,7 +126,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
         public void UpdateControls()
         {
             EditMode = !EditMode;
-            int y = 0;
+            int row = 0;
             //Add ID Label
             Label IDLabel = new Label();
             IDLabel.Text = InformationStrings[0];
@@ -133,9 +134,9 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
             IDLabel.Margin = Padding.Empty;
             IDLabel.Font = new Font("Calibri", 12, FontStyle.Regular);
             IDLabel.TextAlign = ContentAlignment.MiddleLeft;
-            Controls.Add(IDLabel, 1, y);
+            Controls.Add(IDLabel, 1, row);
 
-            y = 2;
+            row = 2;
 
             //Removes current controls showed
             for (int i = 1; i < LabelStrings.Length * 2; i++)
@@ -148,11 +149,11 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 
                 if (IsEmployee)
                 {
-                    EditControls = new Control[LabelStrings.Length - 1];
+                    EditControls = new Control[LabelStrings.Length];
                     for (int i = 1; i < LabelStrings.Length; i++)
                     {
                         Control InformationControl;
-                        if (i == LabelStrings.Length -1)
+                        if (i == LabelStrings.Length)
                         {
                             InformationControl = new ComboBox();
                             //need to store enum types in this combobox
@@ -162,38 +163,76 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                             InformationControl = new TextBox();
 
                         }
-                        EditControls[i - 1] = InformationControl;
+                        EditControls[i] = InformationControl;
                         InformationControl.Text = InformationStrings[i];
                         InformationControl.Dock = DockStyle.Fill;
                         InformationControl.Margin = new Padding(0, 15, 0, 15);
                         InformationControl.Font = new Font("Calibri", 12, FontStyle.Regular);
 
-                        Controls.Add(InformationControl, 1, y);
-                        y += 2;
+                        Controls.Add(InformationControl, 1, row);
+                        row += 2;
                     }
                 }
                 else if (!IsEmployee)
                 {
-                    EditControls = new Control[LabelStrings.Length + 1];
+                    EditControls = new Control[LabelStrings.Length];
                     EditControls[1] = new TextBox(); //name
-
+                    EditControls[1].Text = InformationStrings[1];
+                    
                     EditControls[2] = new NumericUpDown(); //age
-
-                    EditControls[3] = new DateTimePicker(); //date of birth
-
-
-                    EditControls[4] = new RadioButton(); //sex
-                    EditControls[5] = new RadioButton(); //sex
-                    EditControls[6] = new TextBox(); //species
-                    EditControls[7] = new ComboBox(); //species type
-                    EditControls[8] = new TextBox(); //diet
-                    EditControls[9] = new NumericUpDown(); //feedingtimeID
-                    EditControls[10] = new NumericUpDown(); //feeding interval
-                    EditControls[11] = new NumericUpDown(); //zoneid
-                    EditControls[12] = new NumericUpDown(); //habitatid
+                    EditControls[2].Text = InformationStrings[2];
 
                     
+                    DateTimePicker DateControl = new DateTimePicker();
+                    DateControl.Value = DateTime.Parse(InformationStrings[3]);
+                    EditControls[3] = DateControl; //Date of birth;
 
+                    EditControls[4] = new Panel(); //sex
+                    RadioButton maleRadioButton = new RadioButton(); 
+                    maleRadioButton.Text = "Male";
+                    maleRadioButton.Dock = DockStyle.Left;
+                    RadioButton femaleRadioButton = new RadioButton(); 
+                    femaleRadioButton.Text = "Female";
+                    femaleRadioButton.Dock = DockStyle.Left;
+                    if(InformationStrings[4] == "True" || InformationStrings[4] == "Male")
+                    {
+                        maleRadioButton.Checked = true;
+                    }
+                    else { femaleRadioButton.Checked = true; }
+
+                    EditControls[4].Controls.Add(maleRadioButton);
+                    EditControls[4].Controls.Add(femaleRadioButton);
+
+                    
+                    EditControls[5] = new TextBox(); //species
+                    EditControls[5].Text = InformationStrings[6];
+
+                    EditControls[6] = new ComboBox(); //species type
+                    EditControls[6].Text = InformationStrings[6];
+                    
+                    EditControls[7] = new TextBox(); //diet
+                    EditControls[7].Text = InformationStrings[7];
+                    
+                    
+                    EditControls[8] = new NumericUpDown(); //feedingtimeID
+                    EditControls[8].Text = InformationStrings[8];
+
+                    EditControls[9] = new NumericUpDown(); //feeding interval
+                    EditControls[9].Text = InformationStrings[9];
+
+                    EditControls[10] = new NumericUpDown(); //zoneid
+                    EditControls[10].Text = InformationStrings[10];
+
+                    EditControls[11] = new NumericUpDown(); //habitatid
+                    EditControls[11].Text = InformationStrings[11];
+
+                    
+                    for (int i = 1; i < EditControls.Length; i++)
+                    {
+
+                        Controls.Add(EditControls[i], 1, row);
+                        row += 2;
+                    }
 
 
 
@@ -211,8 +250,8 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                     InformationLabel.Font = new Font("Calibri", 12, FontStyle.Regular);
                     InformationLabel.TextAlign = ContentAlignment.MiddleLeft;
 
-                    Controls.Add(InformationLabel, 1, y);
-                    y += 2;
+                    Controls.Add(InformationLabel, 1, row);
+                    row += 2;
                 }
             }
         }
@@ -227,12 +266,14 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
         }
         public void EditInformation()
         {
-            for (int i = 1; i < InformationStrings.Length; i++)
-            {
-                InformationStrings[i] = EditControls[i - 1].Text;
-            }
+            
             if (IsEmployee)
             {
+                for (int i = 1; i < InformationStrings.Length; i++)
+                {
+                    InformationStrings[i] = EditControls[i].Text;
+                }
+
                 EmployeeDTO employeeDTO = new EmployeeDTO();
                 employeeDTO.Id = Int32.Parse(InformationStrings[0]);
                 employeeDTO.FirstName = InformationStrings[1];
@@ -246,22 +287,47 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
             }
             else if (!IsEmployee)
             {
-                /*
+                for (int i = 1; i < InformationStrings.Length; i++)
+                {
+                    if (i == 4)
+                    {
+                        RadioButton checkedRadioButton = EditControls[i].Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
+                        InformationStrings[i] = checkedRadioButton.Text;
+                        //fix display of sex
+                        /*
+                         panel has 2 radio buttons, check which one is checked and return text 
+                         
+                         */
+
+                    }
+                    else
+                    {
+                        InformationStrings[i] = EditControls[i].Text;
+                    }
+                }
+                
                 AnimalDTO animalDTO = new AnimalDTO();
                 animalDTO.Id = Int32.Parse(InformationStrings[0]);
                 animalDTO.Name = InformationStrings[1];
                 animalDTO.Age = Int32.Parse(InformationStrings[2]);
-                animalDTO.DateOfBirth = 
-                animalDTO.Sex = 
-                animalDTO.Species =
-                animalDTO.SpeciesType =
-                animalDTO.Diet =
-                animalDTO.FeedingTimeID =
-                animalDTO.FeedingInterval =
-                animalDTO.ZoneID =
-                animalDTO.HabitatID =
+                animalDTO.DateOfBirth = DateTime.Parse(InformationStrings[3]);
+                if(InformationStrings[4] == "True" || InformationStrings[4] == "Male")
+                {
+                    animalDTO.Sex = true;
+                }
+                else
+                {
+                    animalDTO.Sex = false;
+                }
+                animalDTO.Species = InformationStrings[5];
+                animalDTO.SpeciesType = InformationStrings[6];
+                animalDTO.Diet = InformationStrings[7];
+                animalDTO.FeedingTimeID = Int32.Parse(InformationStrings[8]);
+                animalDTO.FeedingInterval = Int32.Parse(InformationStrings[9]);
+                animalDTO.ZoneID = Int32.Parse(InformationStrings[10]);
+                animalDTO.HabitatID = Int32.Parse(InformationStrings[11]);
 
-                AnimalMenager.UpdateAnimal(animalDTO);*/
+                AnimalMenager.UpdateAnimal(animalDTO);
             }
         }
 

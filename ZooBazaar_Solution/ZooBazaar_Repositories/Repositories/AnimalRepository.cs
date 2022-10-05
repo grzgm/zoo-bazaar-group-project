@@ -178,7 +178,7 @@ namespace ZooBazaar_Repositories.Repositories
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string Query = "UPDATE Animal SET Name=@Name,Age=@Age,DateOfBirth=@DateOfBirth,Sex=@Sex,Species=@Speies,SpeciesType=@SpeciesType,Diet=@Diet,FeedingTimeID=@FeedingTimeID,FeedingInterval=@FeedingInterval,ZoneID=@ZoneID,HabitatID=@HabitatID WHERE AnimalID=@AnimalID";
+                string Query = "UPDATE Animal SET Name=@Name,Age=@Age,DateOfBirth=@DateOfBirth,Sex=@Sex,Species=@Species,SpeciesType=@SpeciesType,Diet=@Diet,FeedingTimeID=@FeedingTimeID,FeedingInterval=@FeedingInterval,ZoneID=@ZoneID,HabitatID=@HabitatID WHERE AnimalID=@AnimalID";
 
                 using (SqlCommand command = new SqlCommand(Query, connection))
                 {
@@ -193,7 +193,7 @@ namespace ZooBazaar_Repositories.Repositories
                     command.Parameters.AddWithValue("@FeedingTimeID", dto.FeedingTimeID);
                     command.Parameters.AddWithValue("@FeedingInterval", dto.FeedingInterval);
                     command.Parameters.AddWithValue("@ZoneID", dto.ZoneID);
-                    command.Parameters.AddWithValue("@Habitat", dto.HabitatID);
+                    command.Parameters.AddWithValue("@HabitatID", dto.HabitatID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
