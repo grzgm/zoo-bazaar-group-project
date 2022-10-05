@@ -36,6 +36,27 @@
     <Compile Update="EmployeeAddControls\MainMenuTable.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Schedule\ActivityTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Schedule\BlockButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Schedule\DayTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Schedule\MainScheduleTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Schedule\NavBarTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Schedule\ScheduleTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Schedule\TimeTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

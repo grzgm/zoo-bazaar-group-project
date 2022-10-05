@@ -12,31 +12,33 @@ using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_ClassLibrary.Menagers;
 using ZooBazaar_Repositories.Interfaces;
 using ZooBazaar_Repositories.Repositories;
+using ZooBazaar_DomainModels.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
 {
     internal class MainMenuTable : TableLayoutPanel
     {
+        private IEmployeeMenager employeeMenager;
         //Fields
         private EmployeeAdd employeeAdd;
         private Label[] labels;
         private TextBox[] textboxes;
         private ComboBox comboBox;
         private string[] labelText;
-        private string[] comboBoxText;
 
         //Controls
         private AddEmployeeButton btAdd;
 
         public MainMenuTable(EmployeeAdd employeeAdd)
         {
+            this.employeeMenager = Program.GetService<IEmployeeMenager>();
             this.employeeAdd = employeeAdd;
             //Fields
             labels = new Label[6];
             textboxes = new TextBox[5];
             labelText = new string[] { "FirstName", "LastName", "Email", "Phone", "Address", "Role"};
             comboBox = new ComboBox();
-            comboBoxText = new string[] { "Caretaker", "Office" };
 
             //Controls
             for (int i = 0; i < labels.Length; i++)
@@ -62,12 +64,9 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
             comboBox.Font = new Font("Calibri", 21, FontStyle.Regular);
             comboBox.Dock = DockStyle.Fill;
             comboBox.Margin = new Padding(0, 0, 0, 1);
-            foreach (string text in comboBoxText)
-            {
+            comboBox.DataSource = Enum.GetValues(typeof(ROLE));
 
-                comboBox.Items.Add(text);
-            }
-            comboBox.SelectedIndex = 0;
+            comboBox.SelectedItem = ROLE.Caretaker;
 
             btAdd = new AddEmployeeButton(this);
 
@@ -117,9 +116,17 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
             }
             employeeAddDTO.Role = comboBox.SelectedItem.ToString();
 
-            IEmployeeRepositroty employeeRepositroty = new EmployeeRepository();
+            ValidationContext context = new ValidationContext(employeeAddDTO, null, null);
+            IList<ValidationResult> errors = new List<ValidationResult>();
 
-            IEmployeeMenager employeeMenager = new EmployeeManager(employeeRepositroty);
+            if (!Validator.TryValidateObject(employeeAddDTO, context, errors, true))
+            {
+                foreach (ValidationResult result in errors)
+                {
+                    MessageBox.Show(result.ErrorMessage);
+                    return;
+                }
+            }
 
             employeeMenager.NewEmployee(employeeAddDTO);
 

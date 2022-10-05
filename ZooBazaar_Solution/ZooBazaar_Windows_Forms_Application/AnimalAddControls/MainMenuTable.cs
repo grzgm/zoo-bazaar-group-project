@@ -13,12 +13,12 @@ using ZooBazaar_ClassLibrary.Menagers;
 using ZooBazaar_Repositories.Interfaces;
 using ZooBazaar_Repositories.Repositories;
 using ZooBazaar_DomainModels.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
 {
     public class MainMenuTable : TableLayoutPanel
     {
-
         private IAnimalMenager animalMenager;
         //Fields
         private AnimalAdd animalAdd;
@@ -29,7 +29,6 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
         private ComboBox comboBox;
         private string[] labelText;
         private string[] radioButtonsText;
-        private string[] comboBoxText;
 
         //Controls
         private AddAnimalButton btAdd;
@@ -70,8 +69,7 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             radioButtons = new RadioButton[2];
             comboBox = new ComboBox();
             labelText = new string[] { "Name", "Age", "DateOfBirth", "Sex", "Species", "SpeciesType", "Diet", "FeedingTime", "FeedingInterval", "Zone", "Habitat" };
-            radioButtonsText = new string[] { "Male", "notMale"};
-            comboBoxText = new string[] { "Mammals", "Fish", "Birds", "Reptiles", "Amphibians"};
+            radioButtonsText = new string[] { "Male", "Female"};
 
             //Controls
             for (int i = 0; i < labels.Length; i++)
@@ -131,12 +129,9 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             comboBox.Font = new Font("Calibri", 21, FontStyle.Regular);
             comboBox.Dock = DockStyle.Fill;
             comboBox.Margin = new Padding(0, 0, 0, 1);
-            foreach (string text in comboBoxText)
-            {
+            comboBox.DataSource = Enum.GetValues(typeof(SPECIESTYPE));
 
-                comboBox.Items.Add(text);
-            }
-            comboBox.SelectedIndex = 0;
+            comboBox.SelectedItem = SPECIESTYPE.Mammals;
 
 
             btAdd = new AddAnimalButton(this);
@@ -180,14 +175,11 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
 
         public void ButtonClick()
         {
-            bool isMale= radioButtons[0].Checked;
-
             AnimalAddDTO animalAddDTO = new AnimalAddDTO()
             {
                 Name = textboxes[0].Text,
                 Age = (int)numericupdowns[0].Value,
                 DateOfBirth = dateTimePicker.Value,
-                //Sex = isMale,
                 Sex = radioButtons[0].Checked,
                 Species = textboxes[1].Text,
                 SpeciesType = comboBox.SelectedItem.ToString(),
@@ -197,6 +189,18 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
                 ZoneID = (int)numericupdowns[3].Value,
                 HabitatID = (int)numericupdowns[4].Value
             };
+
+            ValidationContext context = new ValidationContext(animalAddDTO, null, null);
+            IList<ValidationResult> errors = new List<ValidationResult>();
+
+            if (!Validator.TryValidateObject(animalAddDTO, context, errors, true))
+            {
+                foreach (ValidationResult result in errors)
+                {
+                    MessageBox.Show(result.ErrorMessage);
+                    return;
+                }
+            }
 
             animalMenager.NewAnimal(animalAddDTO);
 

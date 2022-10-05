@@ -15,42 +15,20 @@ using ZooBazaar_DomainModels.Models;
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
-    internal class EmployeeTable : TableLayoutPanel
+    public class EmployeeTable : TableLayoutPanel
     {
         
         private List<EmployeeDetailsTable> employeeDetailsTable;
 
         public EmployeeTable()
         {
-            
-            IEmployeeRepositroty employeeRepositroty = new EmployeeRepository();
-            IEmployeeMenager employeeMenager = new EmployeeManager(employeeRepositroty);
-            List<Employee> Employees = employeeMenager.GetAll();
-            
-            employeeDetailsTable = new List<EmployeeDetailsTable>();
-            
-            foreach (Employee employee in Employees)
-            {
-                employeeDetailsTable.Add(new EmployeeDetailsTable(employee.FirstName, employee.LastName, employee.Role.ToString()));
-            }
-            
-            /*
-            //assigning variables
 
-            //assigning controls
-            for (int i = 0; i < 5; i++)
-            {
-                
-            }
-
-            */
-            employeeDetailsTable.Add(new EmployeeDetailsTable("Jesper", "Caretaker", "Lol"));
-            employeeDetailsTable.Add(new EmployeeDetailsTable("empty", "empty", "empty"));
-
+            //Filling table with content
+            UpdateTableContent();
+            UpdateTable();
             //properties
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
-
 
             //table style
             RowCount = employeeDetailsTable.Count;
@@ -64,16 +42,33 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 
 
-            //adding controls
+        }
 
-            // -1 cuz last employee is streched ikd why
-            for (int i = 0; i < employeeDetailsTable.Count - 1; i++)
+        //updates Table content
+        private void UpdateTable()
+        {
+            Controls.Clear();
+            for (int i = 0; i < employeeDetailsTable.Count; i++)
             {
                 Controls.Add(employeeDetailsTable[i], 0, i);
             }
+            Controls.Add(new Panel());
+        }
 
-            //debug
-            //BackColor = Color.Blue;
+        //refreshes employee List
+        public void UpdateTableContent()
+        {
+            IEmployeeRepositroty employeeRepositroty = new EmployeeRepository();
+            IEmployeeMenager employeeMenager = new EmployeeManager(employeeRepositroty);
+            List<Employee> Employees = employeeMenager.GetAll();
+
+            employeeDetailsTable = new List<EmployeeDetailsTable>();
+
+            foreach (Employee employee in Employees)
+            {
+                employeeDetailsTable.Add(new EmployeeDetailsTable(employee, this));
+            }
+            UpdateTable();
         }
     }
 }
