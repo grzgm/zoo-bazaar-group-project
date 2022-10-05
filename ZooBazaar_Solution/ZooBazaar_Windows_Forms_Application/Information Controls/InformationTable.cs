@@ -53,7 +53,8 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
             this.AnimalMenager = Program.GetService<IAnimalMenager>();
             LabelStrings = new string[] { "ID", "Name", "Age", "Date of birth", "Sex", "Species", "Species type", "Diet", "Feeding time","Feeding interval", "Zone", "Habitat" };
             InformationStrings = new string[] { animal.ID.ToString(), animal.Name, animal.Age.ToString(), animal.DateOnly.ToString(), animal.Sex.ToString(), animal.Species, animal.SpeciesType.ToString(), animal.Diet, animal.TimeBlock.ToString(), animal.FeedingInterval.ToString(), animal.Zone.ToString(), animal.Habitat.ToString() };
-
+            AnimalInformationForm = parentForm;
+            Animal = animal;
             IsEmployee = false;
             SetTableStyle();
 
@@ -64,7 +65,8 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
             this.EmployeeMenager = Program.GetService<IEmployeeMenager>();
             LabelStrings = new string[] { "ID", "First name", "Last name", "Email", "Phone", "Adress", "Role" };
             InformationStrings = new string[] { employee.ID.ToString(), employee.FirstName, employee.LastName, employee.Email, employee.Phone, employee.Address, employee.Role.ToString() };
-
+            EmployeeInformationForm = parentForm;
+            Employee = employee;
             IsEmployee = true;
             SetTableStyle();
 
@@ -260,10 +262,12 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
             if (IsEmployee)
             {
                 EmployeeMenager.RemoveEmployee(Employee.ID);
+                EmployeeInformationForm.Close();
             }
             else if (!IsEmployee)
             {
                 AnimalMenager.RemoveAnimal(Animal.ID);
+                AnimalInformationForm.Close();
             }
         }
     }

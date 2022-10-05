@@ -86,7 +86,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             {
 
                 CurrentAnimal = animal;
-                this.AnimalTable = AnimalTable;
+                this.AnimalTable = animalTable;
 
                 //properties
                 Text = "...";

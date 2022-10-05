@@ -39,7 +39,7 @@ namespace ZooBazaar_Windows_Forms_Application
 
         private void EmployeeInformationForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            EmployeeTable.UpdateTableContent();
+            this.EmployeeTable.UpdateTableContent();
         }
     }
 }

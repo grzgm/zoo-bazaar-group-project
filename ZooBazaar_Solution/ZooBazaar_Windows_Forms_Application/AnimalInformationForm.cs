@@ -34,5 +34,10 @@ namespace ZooBazaar_Windows_Forms_Application
             this.AnimalTable = animalTable;
             Controls.Add(_StaticInformationTable);
         }
+
+        private void AnimalInformationForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.AnimalTable.UpdateTableContent();
+        }
     }
 }

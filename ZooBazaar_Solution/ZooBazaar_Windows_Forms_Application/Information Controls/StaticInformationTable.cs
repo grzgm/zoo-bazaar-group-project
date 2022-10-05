@@ -28,7 +28,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private CloseButton CloseButton;
         private Panel ButtonPanel;
 
-        private EmployeeInformationTable employeeInformationTable;
+        private InformationTable employeeInformationTable;
         private InformationTable animalInformationTable;
 
         public StaticInformationTable(Form parentForm)
@@ -70,7 +70,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         {
             employeeInformationForm = parentForm;
             //EmployeeInformationTable
-            employeeInformationTable = new EmployeeInformationTable(parentForm, employee);
+            employeeInformationTable = new InformationTable(parentForm, employee);
             Controls.Add(employeeInformationTable, 2, 0);
         }
         public StaticInformationTable(Animal animal, AnimalInformationForm parentForm) : this(parentForm)
