@@ -23,8 +23,6 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             _EmployeeScheduleTable = new EmployeeTable();
             _ActivityTable = new EmployeeActivityTable();
 
-
-
             //properties
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;

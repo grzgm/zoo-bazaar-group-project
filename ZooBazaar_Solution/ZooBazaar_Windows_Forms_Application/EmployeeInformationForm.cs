@@ -24,15 +24,22 @@ namespace ZooBazaar_Windows_Forms_Application
     {
 
         private StaticInformationTable _StaticInformationTable;
+        private EmployeeTable EmployeeTable;
 
-        public EmployeeInformationForm(Employee employee)
+        public EmployeeInformationForm(Employee employee, EmployeeTable employeeTable)
         {
             InitializeComponent();
             Size = new Size(1920, 1080);
             Text = null;
             ControlBox = false;
             _StaticInformationTable = new StaticInformationTable(this, employee);
+            EmployeeTable = employeeTable;
             Controls.Add(_StaticInformationTable);
+        }
+
+        private void EmployeeInformationForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            EmployeeTable.UpdateTableContent();
         }
     }
 }

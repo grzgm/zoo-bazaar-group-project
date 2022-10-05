@@ -13,13 +13,15 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 {
     internal class EmployeeDetailsTable : TableLayoutPanel
     {
+
         private Label _employeeName;
         private Label _employeeFunction;
         private Label _employeeWorkZone;
         private List<Label> _labels;
         private InformationButton _employeeMoreInfo;
-        public EmployeeDetailsTable(Employee employee)
+        public EmployeeDetailsTable(Employee employee, EmployeeTable employeeTable)
         {
+
             //assigning controls
             _labels = new List<Label>();
             _employeeName = new Label();
@@ -44,7 +46,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             }
 
             //More info
-            _employeeMoreInfo = new InformationButton(employee);
+            _employeeMoreInfo = new InformationButton(employee, employeeTable);
             
 
 
@@ -73,13 +75,15 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
     public class InformationButton : Button
     {
-        private EmployeeInformationForm employeeForm;
-        private Employee currentEmployee;
+        private EmployeeInformationForm EmployeeForm;
+        private Employee CurrentEmployee;
+        private EmployeeTable EmployeeTable;
 
-        public InformationButton(Employee employee)
+        public InformationButton(Employee employee, EmployeeTable employeeTable)
         {
             
-            currentEmployee = employee;
+            CurrentEmployee = employee;
+            EmployeeTable = employeeTable;
 
             //properties
             Text = "...";
@@ -101,8 +105,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
         private void InformationButton_Click(object? sender, EventArgs e)
         {
-            employeeForm = new EmployeeInformationForm(currentEmployee);
-            employeeForm.Show();
+            EmployeeForm = new EmployeeInformationForm(CurrentEmployee, EmployeeTable);
+            EmployeeForm.Show();
         }
     }
 }
