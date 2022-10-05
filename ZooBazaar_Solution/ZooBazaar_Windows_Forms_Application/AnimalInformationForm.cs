@@ -17,29 +17,22 @@ using ZooBazaar_Repositories.Repositories;
 using ZooBazaar_Windows_Forms_Application.Theme;
 using ZooBazaar_DomainModels.Models;
 
-
 namespace ZooBazaar_Windows_Forms_Application
 {
-    public partial class EmployeeInformationForm : Form
+    public partial class AnimalInformationForm : Form
     {
 
         private StaticInformationTable _StaticInformationTable;
-        private EmployeeTable EmployeeTable;
-
-        public EmployeeInformationForm(Employee employee, EmployeeTable employeeTable)
+        private AnimalTable AnimalTable;
+        public AnimalInformationForm(Animal animal, AnimalTable animalTable)
         {
             InitializeComponent();
             Size = new Size(1920, 1080);
             Text = null;
             ControlBox = false;
-            _StaticInformationTable = new StaticInformationTable(employee, this);
-            this.EmployeeTable = employeeTable;
+            _StaticInformationTable = new StaticInformationTable(animal, this);
+            this.AnimalTable = animalTable;
             Controls.Add(_StaticInformationTable);
-        }
-
-        private void EmployeeInformationForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            EmployeeTable.UpdateTableContent();
         }
     }
 }
