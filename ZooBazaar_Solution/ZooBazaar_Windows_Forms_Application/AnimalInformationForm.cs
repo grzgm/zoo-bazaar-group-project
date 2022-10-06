@@ -17,10 +17,13 @@ using ZooBazaar_Repositories.Repositories;
 using ZooBazaar_Windows_Forms_Application.Theme;
 using ZooBazaar_DomainModels.Models;
 
+
 namespace ZooBazaar_Windows_Forms_Application
 {
     public partial class AnimalInformationForm : Form
     {
+
+
 
         private StaticInformationTable _StaticInformationTable;
         private AnimalTable AnimalTable;
@@ -29,7 +32,6 @@ namespace ZooBazaar_Windows_Forms_Application
             InitializeComponent();
             Size = new Size(1920, 1080);
             Text = null;
-            ControlBox = false;
             _StaticInformationTable = new StaticInformationTable(animal, this);
             this.AnimalTable = animalTable;
             Controls.Add(_StaticInformationTable);
