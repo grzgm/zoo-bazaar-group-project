@@ -1,5 +1,12 @@
 ﻿using System.Drawing;
+using ZooBazaar_DTO.DTOs;
+using ZooBazaar_ClassLibrary;
+using ZooBazaar_ClassLibrary.Interfaces;
+using ZooBazaar_ClassLibrary.Menagers;
+using ZooBazaar_Repositories.Interfaces;
+using ZooBazaar_Repositories.Repositories;
 using ZooBazaar_Windows_Forms_Application.Theme;
+using ZooBazaar_DomainModels.Models;
 
 
 namespace ZooBazaar_Windows_Forms_Application.controls
@@ -12,25 +19,25 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private Label _animalZone;
         private List<Label> _labels;
         private Button _animalMoreInfo;
-        public AnimalDetailsTable(string name, string species, string habitat, string zone)
+        public AnimalDetailsTable(Animal animal, AnimalTable animalTable)
         {
             //assigning controls
             _labels = new List<Label>();
 
             _animalName = new Label();
-            _animalName.Text = name;
+            _animalName.Text = animal.Name;
             _labels.Add(_animalName);
 
             _animalSpecies = new Label();
-            _animalSpecies.Text = species;
+            _animalSpecies.Text = animal.Species;
             _labels.Add(_animalSpecies);
 
             _animalHabitat = new Label();
-            _animalHabitat.Text = habitat;
+            _animalHabitat.Text = animal.Habitat.ToString();
             _labels.Add(_animalHabitat);
 
             _animalZone = new Label();
-            _animalZone.Text = zone;
+            _animalZone.Text = animal.Zone.ToString();
             _labels.Add(_animalZone);
 
             foreach (Label _label in _labels)
@@ -42,17 +49,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
                 _label.TextAlign = ContentAlignment.MiddleLeft;
             }
 
-            _animalMoreInfo = new Button();
-            _animalMoreInfo.Text = "...";
-            _animalMoreInfo.Dock = DockStyle.Fill;
-            _animalMoreInfo.Height = 50;
-            _animalMoreInfo.BackColor = ThemeColors.highlightColor;
-            _animalMoreInfo.FlatStyle = FlatStyle.Flat;
-            _animalMoreInfo.FlatAppearance.BorderSize = 0;
-            _animalMoreInfo.TextAlign = ContentAlignment.MiddleCenter;
-            _animalMoreInfo.Font = new Font("Calibri", 14, FontStyle.Bold);
-            _animalMoreInfo.Margin = Padding.Empty;
-            _animalMoreInfo.TextAlign = ContentAlignment.MiddleCenter;
+            _animalMoreInfo = new aInformationButton(animal, animalTable);
 
             //properties
             Dock = DockStyle.Fill;
@@ -77,6 +74,43 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Controls.Add(_animalHabitat, 2, 0);
             Controls.Add(_animalZone, 3, 0);
             Controls.Add(_animalMoreInfo, 4, 0);
+        }
+
+        public class aInformationButton : Button
+        {
+            private AnimalInformationForm animalForm;
+            private Animal CurrentAnimal;
+            private AnimalTable AnimalTable;
+
+            public aInformationButton(Animal animal, AnimalTable animalTable)
+            {
+
+                CurrentAnimal = animal;
+                this.AnimalTable = animalTable;
+
+                //properties
+                Text = "...";
+                Dock = DockStyle.Fill;
+                Height = 50;
+                BackColor = ThemeColors.highlightColor;
+                FlatStyle = FlatStyle.Flat;
+                FlatAppearance.BorderSize = 0;
+                TextAlign = ContentAlignment.MiddleCenter;
+                Font = new Font("Calibri", 14, FontStyle.Bold);
+                Margin = Padding.Empty;
+
+
+                //events
+                this.Click += new System.EventHandler(this.InformationButton_Click);
+
+
+            }
+
+            private void InformationButton_Click(object? sender, EventArgs e)
+            {
+                animalForm = new AnimalInformationForm(CurrentAnimal, AnimalTable);
+                animalForm.Show();
+            }
         }
     }
 }

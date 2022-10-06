@@ -9,10 +9,10 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
 {
     internal class CloseButton : Button
     {
-        private EmployeeInformationForm employeeInformationForm;
-        public CloseButton(EmployeeInformationForm parent)
+        private Form InformationForm;
+        public CloseButton(Form parent)
         {
-            employeeInformationForm = parent;
+            InformationForm = parent;
 
             Dock = DockStyle.Top;
             Margin = Padding.Empty;
@@ -29,7 +29,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
 
         private void CloseButton_Click(object? sender, EventArgs e)
         {
-            employeeInformationForm.Close();
+            InformationForm.Close();
         }
     }
 }

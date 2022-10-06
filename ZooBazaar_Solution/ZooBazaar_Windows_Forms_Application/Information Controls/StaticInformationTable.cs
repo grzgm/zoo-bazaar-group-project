@@ -19,6 +19,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
     internal class StaticInformationTable : TableLayoutPanel
     {
         private EmployeeInformationForm employeeInformationForm;
+        private AnimalInformationForm animalInformationForm;
 
         //fields
         private SolidBrush highLightBrush;
@@ -26,11 +27,13 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         //conrols
         private CloseButton CloseButton;
         private Panel ButtonPanel;
-        private EmployeeInformationTable employeeInformationTable;
 
-        public StaticInformationTable(EmployeeInformationForm parentForm, Employee employee)
+        private InformationTable employeeInformationTable;
+        private InformationTable animalInformationTable;
+
+        public StaticInformationTable(Form parentForm)
         {
-            employeeInformationForm = parentForm;
+            
 
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
@@ -46,9 +49,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             RowStyles.Add(new RowStyle(SizeType.Percent));
 
             //controls
-            //EmployeeInformationTable
-            employeeInformationTable = new EmployeeInformationTable(parentForm, employee);
-            Controls.Add(employeeInformationTable, 2, 0);
+            
             //ButtonPanel
             ButtonPanel = new Panel();
             ButtonPanel.Dock = DockStyle.Fill;
@@ -63,6 +64,21 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //events
             this.CellPaint += TableLayoutPanel_CellPaint;
+        }
+
+        public StaticInformationTable(Employee employee, EmployeeInformationForm parentForm) : this(parentForm)
+        {
+            employeeInformationForm = parentForm;
+            //EmployeeInformationTable
+            employeeInformationTable = new InformationTable(parentForm, employee);
+            Controls.Add(employeeInformationTable, 2, 0);
+        }
+        public StaticInformationTable(Animal animal, AnimalInformationForm parentForm) : this(parentForm)
+        {
+            animalInformationForm = parentForm;
+            //EmployeeInformationTable
+            animalInformationTable = new InformationTable(parentForm, animal);
+            Controls.Add(animalInformationTable, 2, 0);
         }
 
 

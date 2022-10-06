@@ -5,25 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using ZooBazaar_DTO.DTOs;
+using ZooBazaar_ClassLibrary.Interfaces;
+using ZooBazaar_ClassLibrary.Menagers;
+using ZooBazaar_Repositories.Interfaces;
+using ZooBazaar_Repositories.Repositories;
+using ZooBazaar_DomainModels.Models;
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
-    internal class AnimalTable : TableLayoutPanel
+    public class AnimalTable : TableLayoutPanel
     {
+        private IAnimalMenager animalMeneger;
+
         private List<AnimalDetailsTable> animalDetailsTable;
 
         public AnimalTable()
         {
-            //assigning variables
-
-            //assigning controls
-            animalDetailsTable = new List<AnimalDetailsTable>();
-            for (int i = 0; i < 5; i++)
-            {
-                animalDetailsTable.Add(new AnimalDetailsTable("Animal", "Animal", "Animal", "Animal"));
-            }
-            animalDetailsTable.Add(new AnimalDetailsTable("Animal", "Animal", "Animal", "Animal"));
-
+            this.animalMeneger = Program.GetService<IAnimalMenager>();
+            //Filling table with content
+            UpdateTableContent();
+            UpdateTable();
 
             //properties
             Dock = DockStyle.Fill;
@@ -40,18 +42,31 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             ColumnCount = 1;
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        }
 
-
-            //adding controls
-
-            // -1 cuz last animal is streched ikd why
-            for (int i = 0; i < animalDetailsTable.Count - 1; i++)
+        //updates Table content
+        private void UpdateTable()
+        {
+            Controls.Clear();
+            for (int i = 0; i < animalDetailsTable.Count; i++)
             {
                 Controls.Add(animalDetailsTable[i], 0, i);
             }
+            Controls.Add(new Panel());
+        }
 
-            //debug
-            //BackColor = Color.Blue;
+        //refreshes employee List
+        public void UpdateTableContent()
+        {
+            List<Animal> Animals = animalMeneger.GetAll();
+
+            animalDetailsTable = new List<AnimalDetailsTable>();
+
+            foreach (Animal animal in Animals)
+            {
+                animalDetailsTable.Add(new AnimalDetailsTable(animal, this));
+            }
+            UpdateTable();
         }
     }
 }
