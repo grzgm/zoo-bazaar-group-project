@@ -26,7 +26,16 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
         private TextBox[] textboxes;
         private NumericUpDown[] numericupdowns;
         private RadioButton[] radioButtons;
-        private ComboBox comboBox;
+        private ComboBox comboBoxSpeciesType;
+
+
+        private ITimeBlockMenager TimeBlockMenager;
+        private List<TimeBlock> Timeblocks;
+        private IHabitatMenager HabitatMenager;
+        private List<Habitat> Habitats;
+        private IZoneMenager ZoneMenager;
+        private List<Zone> Zones;
+
         private string[] labelText;
         private string[] radioButtonsText;
 
@@ -67,9 +76,18 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             textboxes = new TextBox[3];
             numericupdowns = new NumericUpDown[5];
             radioButtons = new RadioButton[2];
-            comboBox = new ComboBox();
+            comboBoxSpeciesType = new ComboBox();
             labelText = new string[] { "Name", "Age", "DateOfBirth", "Sex", "Species", "SpeciesType", "Diet", "FeedingTime", "FeedingInterval", "Zone", "Habitat" };
             radioButtonsText = new string[] { "Male", "Female"};
+
+
+            this.TimeBlockMenager = Program.GetService<ITimeBlockMenager>();
+            this.Timeblocks = new List<TimeBlock>(TimeBlockMenager.GetAll());
+            this.HabitatMenager = Program.GetService<IHabitatMenager>();
+            this.Habitats = new List<Habitat>(HabitatMenager.GetAll());
+            this.ZoneMenager = Program.GetService<IZoneMenager>();
+            this.Zones = new List<Zone>(ZoneMenager.GetAll());
+
 
             //Controls
             for (int i = 0; i < labels.Length; i++)
@@ -86,7 +104,7 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             for (int i = 0; i < textboxes.Length; i++)
             {
                 textboxes[i] = new TextBox();
-                textboxes[i].Font = new Font("Calibri", 21, FontStyle.Regular);
+                //textboxes[i].Font = new Font("Calibri", 21, FontStyle.Regular);
                 textboxes[i].Dock = DockStyle.Fill;
                 textboxes[i].Margin = new Padding(0, 0, 0, 1);
             }
@@ -94,13 +112,15 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             for (int i = 0; i < numericupdowns.Length; i++)
             {
                 numericupdowns[i] = new NumericUpDown();
-                numericupdowns[i].Font = new Font("Calibri", 21, FontStyle.Regular);
+                //numericupdowns[i].Font = new Font("Calibri", 21, FontStyle.Regular);
                 numericupdowns[i].Dock = DockStyle.Fill;
                 numericupdowns[i].Margin = new Padding(0, 0, 0, 1);
             }
+            numericupdowns[1].Minimum = 1;
+            numericupdowns[1].Maximum = 24;
 
             dateTimePicker = new DateTimePicker();
-            dateTimePicker.Font = new Font("Calibri", 21, FontStyle.Regular);
+            //dateTimePicker.Font = new Font("Calibri", 21, FontStyle.Regular);
             dateTimePicker.Dock = DockStyle.Fill;
             dateTimePicker.Margin = new Padding(0, 0, 0, 1);
 
@@ -108,7 +128,7 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             {
                 radioButtons[i] = new RadioButton();
                 radioButtons[i].Text = radioButtonsText[i];
-                radioButtons[i].Font = new Font("Calibri", 21, FontStyle.Regular);
+                //radioButtons[i].Font = new Font("Calibri", 21, FontStyle.Regular);
                 radioButtons[i].Dock = DockStyle.Fill;
                 radioButtons[i].Margin = new Padding(0, 0, 0, 1);
             }
@@ -125,13 +145,40 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
                 radioButtonsTable.Controls.Add(radioButtons[i], i, 0);
             }
 
-            comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox.Font = new Font("Calibri", 21, FontStyle.Regular);
-            comboBox.Dock = DockStyle.Fill;
-            comboBox.Margin = new Padding(0, 0, 0, 1);
-            comboBox.DataSource = Enum.GetValues(typeof(SPECIESTYPE));
+            comboBoxSpeciesType.DropDownStyle = ComboBoxStyle.DropDownList;
+            //comboBoxSpeciesType.Font = new Font("Calibri", 21, FontStyle.Regular);
+            comboBoxSpeciesType.Dock = DockStyle.Fill;
+            comboBoxSpeciesType.Margin = new Padding(0, 0, 0, 1);
+            comboBoxSpeciesType.DataSource = Enum.GetValues(typeof(SPECIESTYPE));
 
-            comboBox.SelectedItem = SPECIESTYPE.Mammals;
+            comboBoxSpeciesType.SelectedItem = SPECIESTYPE.Mammals;
+
+            //feedingtimeID
+            ComboBox TimeBlockInformationComboBox = new ComboBox();
+            foreach (TimeBlock timeBlock in Timeblocks)
+            {
+                TimeBlockInformationComboBox.Items.Add(timeBlock.ToString());
+            }
+            TimeBlockInformationComboBox.SelectedIndex = 1; // HOW DO I GET THE DEFAULT VALUE OF WHICH TIMEBLOCK CURRENTLY IS SELECTED?
+            TimeBlockInformationComboBox.Dock = DockStyle.Fill;
+
+            //zoneid
+            ComboBox ZoneInformationComboBox = new ComboBox();
+            foreach (Zone zone in Zones)
+            {
+                ZoneInformationComboBox.Items.Add(zone.ToString());
+            }
+            ZoneInformationComboBox.SelectedIndex = 1; // HOW DO I GET THE DEFAULT VALUE OF WHICH ZONE CURRENTLY IS SELECTED?
+            ZoneInformationComboBox.Dock = DockStyle.Fill;
+
+            //habitatid
+            ComboBox HabitatInformationComboBox = new ComboBox();
+            foreach (Habitat habitat in Habitats)
+            {
+                HabitatInformationComboBox.Items.Add(habitat.ToString());
+            }
+            HabitatInformationComboBox.SelectedIndex = 1; // HOW DO I GET THE DEFAULT VALUE OF WHICH HABITAT CURRENTLY IS SELECTED?
+            HabitatInformationComboBox.Dock = DockStyle.Fill;
 
 
             btAdd = new AddAnimalButton(this);
@@ -157,12 +204,12 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             Controls.Add(dateTimePicker, 1, 2);
             Controls.Add(radioButtonsTable, 1, 3);
             Controls.Add(textboxes[1], 1, 4);
-            Controls.Add(comboBox, 1, 5);
+            Controls.Add(comboBoxSpeciesType, 1, 5);
             Controls.Add(textboxes[2], 1, 6);
-            Controls.Add(numericupdowns[1], 1, 7);
-            Controls.Add(numericupdowns[2], 1, 8);
-            Controls.Add(numericupdowns[3], 1, 9);
-            Controls.Add(numericupdowns[4], 1, 10);
+            Controls.Add(TimeBlockInformationComboBox, 1, 7);
+            Controls.Add(numericupdowns[1], 1, 8);
+            Controls.Add(ZoneInformationComboBox, 1, 9);
+            Controls.Add(HabitatInformationComboBox, 1, 10);
 
             for (int i = 0; i < labels.Length; i++)
             {
@@ -182,7 +229,7 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
                 DateOfBirth = dateTimePicker.Value,
                 Sex = radioButtons[0].Checked,
                 Species = textboxes[1].Text,
-                SpeciesType = comboBox.SelectedItem.ToString(),
+                SpeciesType = comboBoxSpeciesType.SelectedItem.ToString(),
                 Diet = textboxes[2].Text,
                 FeedingTimeID = (int)numericupdowns[1].Value,
                 FeedingInterval = (int)numericupdowns[2].Value,
