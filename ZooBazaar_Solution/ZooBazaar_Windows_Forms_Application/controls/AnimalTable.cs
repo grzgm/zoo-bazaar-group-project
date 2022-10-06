@@ -68,5 +68,17 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             }
             UpdateTable();
         }
+        public void UpdateTableContentBasedOnSpecies(SPECIESTYPE sPECIESTYPE)
+        {
+            IEnumerable<Animal> Animals = animalMeneger.GetAll().Where(species => species.SpeciesType == sPECIESTYPE);
+
+            animalDetailsTable = new List<AnimalDetailsTable>();
+
+            foreach (Animal animal in Animals)
+            {
+                animalDetailsTable.Add(new AnimalDetailsTable(animal, this));
+            }
+            UpdateTable();
+        }
     }
 }

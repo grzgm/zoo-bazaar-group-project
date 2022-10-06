@@ -19,8 +19,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             _NameComboBox = new ComboBox();
             _NameComboBox.Dock = DockStyle.Fill;
             _FunctionComboBox = new ComboBox();
+            _FunctionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             _FunctionComboBox.Dock = DockStyle.Fill;
             _WorkZoneComboBox = new ComboBox();
+            _WorkZoneComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             _WorkZoneComboBox.Dock = DockStyle.Fill;
 
             //properties

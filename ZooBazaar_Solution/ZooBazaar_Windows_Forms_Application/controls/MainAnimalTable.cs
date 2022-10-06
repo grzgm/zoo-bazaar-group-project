@@ -19,10 +19,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         public MainAnimalTable()
         {
             //controls
-            _AnimalNavBarTable = new AnimalNavBarTable();
+           
             _AnimalTable = new AnimalTable();
             _ActivityTable = new AnimalActivityTable(_AnimalTable);
-
+            _AnimalNavBarTable = new AnimalNavBarTable(_AnimalTable);
 
 
             //properties

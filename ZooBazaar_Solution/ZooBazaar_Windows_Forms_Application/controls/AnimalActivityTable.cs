@@ -15,10 +15,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //Fields
             this.animalTable = animalTable;
-            animalButtonsText = new string[] { "Add New Animal", "test", "test" };
+            animalButtonsText = new string[] { "Add New Animal" };
 
             //Controls
-            _AnimalButtons = new AnimalButton[3];
+            _AnimalButtons = new AnimalButton[1];
 
             //Properties
             Dock = DockStyle.Fill;
