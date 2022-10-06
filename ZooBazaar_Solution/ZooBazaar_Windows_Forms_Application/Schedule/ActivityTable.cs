@@ -18,7 +18,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             this.timeID = timeID;
 
             Dock = DockStyle.Fill;
-            BackColor = Color.Yellow;
+            //BackColor = Color.Yellow;
 
             debug.Text = String.Format("day: {0} - time: {1}", dayID, timeID);
             Controls.Add(debug);

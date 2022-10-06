@@ -51,7 +51,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             //properties
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
-            BackColor = Color.Blue;
+            //BackColor = Color.Blue;
 
 
             //Table styles

@@ -26,7 +26,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             FlatAppearance.BorderSize = 1;
             FlatAppearance.BorderColor = Color.White;
             BackColor = Color.LightGray;
-            BackColor = Color.Pink;
+            //BackColor = Color.Pink;
 
             this.Click += new System.EventHandler(this.BlockButton_Click);
         }

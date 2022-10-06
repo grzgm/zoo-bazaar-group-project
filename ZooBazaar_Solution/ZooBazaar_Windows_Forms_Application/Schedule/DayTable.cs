@@ -32,7 +32,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             //properties
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
-            BackColor = Color.Purple;
+            //BackColor = Color.Purple;
 
 
 

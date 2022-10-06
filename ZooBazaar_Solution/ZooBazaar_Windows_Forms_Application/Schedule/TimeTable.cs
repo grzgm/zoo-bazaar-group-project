@@ -12,7 +12,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
         {
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
-            BackColor = Color.Green;
+            //BackColor = Color.Green;
 
             RowCount = 25;
             for (int i = 0; i < RowCount; i++)

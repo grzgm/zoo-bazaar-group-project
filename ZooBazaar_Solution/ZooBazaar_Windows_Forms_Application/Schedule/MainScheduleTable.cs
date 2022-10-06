@@ -47,7 +47,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             //properties
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;
-            BackColor = Color.Red;
+            //BackColor = Color.Red;
 
             RowCount = 4;
             RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
