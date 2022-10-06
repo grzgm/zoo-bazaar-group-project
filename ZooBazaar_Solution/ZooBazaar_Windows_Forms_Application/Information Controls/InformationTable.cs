@@ -20,6 +20,12 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
         private AnimalInformationForm AnimalInformationForm;
         private Animal Animal;
         private IAnimalMenager AnimalMenager;
+        private ITimeBlockMenager TimeBlockMenager;
+        private List<TimeBlock> Timeblocks;
+        private IHabitatMenager HabitatMenager;
+        private List<Habitat> Habitats;
+        private IZoneMenager ZoneMenager;
+        private List<Zone> Zones;
 
         //Employee variables
         private EmployeeInformationForm EmployeeInformationForm;
@@ -51,6 +57,13 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
         public InformationTable(AnimalInformationForm parentForm, Animal animal) : this()
         {
             this.AnimalMenager = Program.GetService<IAnimalMenager>();
+            this.TimeBlockMenager = Program.GetService<ITimeBlockMenager>();
+            this.Timeblocks = new List<TimeBlock>(TimeBlockMenager.GetAll());
+            this.HabitatMenager = Program.GetService<IHabitatMenager>();
+            this.Habitats = new List<Habitat>(HabitatMenager.GetAll());
+            this.ZoneMenager = Program.GetService<IZoneMenager>();
+            this.Zones = new List<Zone>(ZoneMenager.GetAll());
+            
             LabelStrings = new string[] { "ID", "Name", "Age", "Date of birth", "Sex", "Species", "Species type", "Diet", "Feeding time","Feeding interval", "Zone", "Habitat" };
             InformationStrings = new string[] { animal.ID.ToString(), animal.Name, animal.Age.ToString(), animal.DateOnly.ToString(), animal.Sex.ToString(), animal.Species, animal.SpeciesType.ToString(), animal.Diet.ToString(), animal.TimeBlock.ToString(), animal.FeedingInterval.ToString(), animal.Zone.ToString(), animal.Habitat.ToString() };
             //feeding time zone and habitat display as Zoobazaar_DomainModels.Model... NEEDS TO BE FIXED
@@ -153,10 +166,12 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                     for (int i = 1; i < LabelStrings.Length; i++)
                     {
                         Control InformationControl;
-                        if (i == LabelStrings.Length)
+                        if (i == LabelStrings.Length - 1)
                         {
-                            InformationControl = new ComboBox();
-                            //need to store enum types in this combobox
+                            ComboBox InformationComboBox = new ComboBox();
+                            InformationComboBox.DataSource = Enum.GetValues(typeof(ROLE));
+
+                            InformationControl = InformationComboBox;
                         }
                         else
                         {
@@ -176,18 +191,22 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 else if (!IsEmployee)
                 {
                     EditControls = new Control[LabelStrings.Length];
-                    EditControls[1] = new TextBox(); //name
-                    EditControls[1].Text = InformationStrings[1];
                     
-                    EditControls[2] = new NumericUpDown(); //age
+                    //name
+                    EditControls[1] = new TextBox();
+                    EditControls[1].Text = InformationStrings[1];
+
+                    //age
+                    EditControls[2] = new NumericUpDown(); 
                     EditControls[2].Text = InformationStrings[2];
 
-                    
+                    //Date of birth;
                     DateTimePicker DateControl = new DateTimePicker();
                     DateControl.Value = DateTime.Parse(InformationStrings[3]);
-                    EditControls[3] = DateControl; //Date of birth;
+                    EditControls[3] = DateControl; 
 
-                    EditControls[4] = new Panel(); //sex
+                    //sex
+                    EditControls[4] = new Panel(); 
                     RadioButton maleRadioButton = new RadioButton(); 
                     maleRadioButton.Text = "Male";
                     maleRadioButton.Dock = DockStyle.Left;
@@ -203,41 +222,57 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                     EditControls[4].Controls.Add(maleRadioButton);
                     EditControls[4].Controls.Add(femaleRadioButton);
 
-                    
-                    EditControls[5] = new TextBox(); //species
+                    //species
+                    EditControls[5] = new TextBox(); 
                     EditControls[5].Text = InformationStrings[6];
 
-                    EditControls[6] = new ComboBox(); //species type
+                    //species type
+                    EditControls[6] = new ComboBox(); 
                     EditControls[6].Text = InformationStrings[6];
-                    
-                    EditControls[7] = new TextBox(); //diet
+
+                    //diet
+                    EditControls[7] = new TextBox(); 
                     EditControls[7].Text = InformationStrings[7];
-                    
-                    
-                    EditControls[8] = new NumericUpDown(); //feedingtimeID
+
+                    //feedingtimeID
+                    ComboBox TimeBlockInformationComboBox = new ComboBox();
+                    foreach(TimeBlock timeBlock in Timeblocks)
+                    {
+                        TimeBlockInformationComboBox.Items.Add(timeBlock.ToString());
+                    }
+                    EditControls[8] = TimeBlockInformationComboBox; 
                     EditControls[8].Text = InformationStrings[8];
 
-                    EditControls[9] = new NumericUpDown(); //feeding interval
+                    //feeding interval
+                    EditControls[9] = new NumericUpDown(); 
                     EditControls[9].Text = InformationStrings[9];
-
-                    EditControls[10] = new NumericUpDown(); //zoneid
+                    
+                    //zoneid
+                    ComboBox ZoneInformationComboBox = new ComboBox();
+                    foreach (Zone zone in Zones)
+                    {
+                        ZoneInformationComboBox.Items.Add(zone.ToString());
+                    }
+                    EditControls[10] = ZoneInformationComboBox; 
                     EditControls[10].Text = InformationStrings[10];
 
-                    EditControls[11] = new NumericUpDown(); //habitatid
+                    //habitatid
+                    ComboBox HabitatInformationComboBox = new ComboBox();
+                    foreach (Habitat habitat in Habitats)
+                    {
+                        HabitatInformationComboBox.Items.Add(habitat.ToString());
+                    }
+                    EditControls[11] = HabitatInformationComboBox; 
                     EditControls[11].Text = InformationStrings[11];
 
-                    
+                    //Adding controls
                     for (int i = 1; i < EditControls.Length; i++)
                     {
 
                         Controls.Add(EditControls[i], 1, row);
                         row += 2;
                     }
-
-
-
-                }
-                
+                }   
             }
             else
             {
@@ -293,12 +328,11 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                     {
                         RadioButton checkedRadioButton = EditControls[i].Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
                         InformationStrings[i] = checkedRadioButton.Text;
-                        //fix display of sex
-                        /*
-                         panel has 2 radio buttons, check which one is checked and return text 
-                         
-                         */
-
+                    }
+                    else if(i == 8 || i == 10 || i == 11)
+                    {
+                        ComboBox currentComboBox = (ComboBox)EditControls[i];
+                        InformationStrings[i] = currentComboBox.SelectedIndex.ToString();
                     }
                     else
                     {
