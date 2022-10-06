@@ -19,10 +19,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         public MainEmployeeTable()
         {
             //controls
-            _EmployeeNavBarTable = new EmployeeNavBarTable();
+            
             _EmployeeTable = new EmployeeTable();
             _ActivityTable = new EmployeeActivityTable(_EmployeeTable);
-
+            _EmployeeNavBarTable = new EmployeeNavBarTable(_EmployeeTable);
             //properties
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;

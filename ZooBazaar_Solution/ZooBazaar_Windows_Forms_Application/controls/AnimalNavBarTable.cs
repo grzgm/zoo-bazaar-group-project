@@ -56,13 +56,18 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //debug
             //BackColor = Color.Red;
-        _SpeciesComboBox.SelectedIndexChanged += new System.EventHandler(ComboBox1_SelectedIndexChanged);  
+        _SpeciesComboBox.SelectedIndexChanged += new System.EventHandler(_SpeciesComboBox_SelectedIndexChanged);
+        _HabitatComboBox.SelectedIndexChanged += new System.EventHandler(_HabitatComboBox_SelectedIndexChanged);
 
         }
-        private void ComboBox1_SelectedIndexChanged(object sender,
+        private void _SpeciesComboBox_SelectedIndexChanged(object sender,
         System.EventArgs e)
         {
             _AnimalTable.UpdateTableContentBasedOnSpecies((SPECIESTYPE)_SpeciesComboBox.SelectedItem);
+        }
+        private void _HabitatComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

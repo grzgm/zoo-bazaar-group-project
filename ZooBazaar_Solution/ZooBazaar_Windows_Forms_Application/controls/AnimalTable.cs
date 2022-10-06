@@ -80,5 +80,9 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             }
             UpdateTable();
         }
+        public void UpdateTableContentBasedOnHabitat(SPECIESTYPE sPECIESTYPE)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
