@@ -224,7 +224,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
 
                     //species
                     EditControls[5] = new TextBox(); 
-                    EditControls[5].Text = InformationStrings[6];
+                    EditControls[5].Text = InformationStrings[5];
 
                     //species type
                     EditControls[6] = new ComboBox(); 
@@ -335,7 +335,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                     else if(i == 8 || i == 10 || i == 11)
                     {
                         ComboBox currentComboBox = (ComboBox)EditControls[i];
-                        InformationStrings[i] = currentComboBox.SelectedIndex.ToString();
+                        InformationStrings[i] = (currentComboBox.SelectedIndex+1).ToString();
                     }
                     else
                     {
