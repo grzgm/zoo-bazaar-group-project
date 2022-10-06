@@ -34,5 +34,16 @@ namespace ZooBazaar_ClassLibrary.Menagers
         {
             _zoneRepository.Delete(id);
         }
+
+        public List<Zone> GetAll()
+        {
+            List<Zone> zones = new List<Zone>();
+
+            foreach(ZoneDTO zone in _zoneRepository.GetAll())
+            {
+                zones.Add(new Zone(zone));
+            }
+            return zones;
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
         Habitat GetHabitat(int id);
         void NewHabitat(HabitatAddDTO habitatDTO);
         void RemoveHabitat(int id);
+        List<Habitat> GetAll();
 
     }
 }

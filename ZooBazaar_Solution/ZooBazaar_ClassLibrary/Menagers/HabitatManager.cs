@@ -36,5 +36,17 @@ namespace ZooBazaar_ClassLibrary.Menagers
         {
             _habitatRepository.Delete(id);
         }
+        public List<Habitat> GetAll()
+        {
+            List<Habitat> habitats = new List<Habitat>();
+
+            foreach(HabitatDTO habitatDTO in _habitatRepository.GetAll())
+            {
+                habitats.Add(new Habitat(habitatDTO, _zoneRepository.GetByZoneId(habitatDTO.ZoneID)));
+            }
+
+            return habitats;
+
+        }
     }
 }
