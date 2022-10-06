@@ -55,7 +55,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Controls.Add(new Panel());
         }
 
-        //refreshes employee List
+        //refreshes animal List
         public void UpdateTableContent()
         {
             List<Animal> Animals = animalMeneger.GetAll();

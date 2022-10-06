@@ -10,18 +10,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_Windows_Forms_Application.AnimalAddControls;
+using ZooBazaar_Windows_Forms_Application.controls;
 
 namespace ZooBazaar_Windows_Forms_Application
 {
     public partial class AnimalAdd : Form
     {
-        private MainMenuTable mainMenutable;
+        private AnimalAddControls.MainMenuTable mainMenutable;
+        private AnimalTable animalTable;
 
 
-        public AnimalAdd()
+        public AnimalAdd(AnimalTable animalTable)
         {
+            this.animalTable = animalTable;
             InitializeComponent();
-            mainMenutable = new MainMenuTable(this);
+            mainMenutable = new AnimalAddControls.MainMenuTable(this);
 
             Size = new Size(650, 780);
         }
@@ -29,6 +32,11 @@ namespace ZooBazaar_Windows_Forms_Application
         private void EmployeeAdd_Load(object sender, EventArgs e)
         {
             Controls.Add(mainMenutable);
+        }
+
+        private void AnimalAdd_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.animalTable.UpdateTableContent();
         }
     }
 }

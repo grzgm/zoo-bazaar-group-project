@@ -10,7 +10,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
     {
         //controls
         private EmployeeNavBarTable _EmployeeNavBarTable;
-        private EmployeeTable _EmployeeScheduleTable;
+        private EmployeeTable _EmployeeTable;
         private EmployeeActivityTable _ActivityTable;
 
 
@@ -20,8 +20,8 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         {
             //controls
             _EmployeeNavBarTable = new EmployeeNavBarTable();
-            _EmployeeScheduleTable = new EmployeeTable();
-            _ActivityTable = new EmployeeActivityTable();
+            _EmployeeTable = new EmployeeTable();
+            _ActivityTable = new EmployeeActivityTable(_EmployeeTable);
 
             //properties
             Dock = DockStyle.Fill;
@@ -36,7 +36,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 
             Controls.Add(_EmployeeNavBarTable, 0, 0);
-            Controls.Add(_EmployeeScheduleTable, 0, 1);
+            Controls.Add(_EmployeeTable, 0, 1);
             Controls.Add(_ActivityTable, 0, 2);
         }
     }

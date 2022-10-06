@@ -14,7 +14,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private string[] menuButtonsText;
 
         //Controls
-        //private Schedule.MainScheduleTable mainScheduleTable;
+        private Schedule.MainScheduleTable mainScheduleTable;
         private MainEmployeeTable mainEmployeeTable;
         private MainAnimalTable mainAnimalTable;
         private MenuButton[] menuButtons;
@@ -31,7 +31,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             menuButtonsText = new string[] { "s", "e", "a" };
 
             //Controls
-            //mainScheduleTable = new Schedule.MainScheduleTable();
+            mainScheduleTable = new Schedule.MainScheduleTable();
             mainEmployeeTable = new MainEmployeeTable();
             mainAnimalTable = new MainAnimalTable();
             menuButtons = new MenuButton[3];
@@ -63,7 +63,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             }
 
             //Debug Employees fast render
-            //Controls.Add(mainScheduleTable, 2, 1);
+            Controls.Add(mainScheduleTable, 2, 1);
             //Controls.Add(mainEmployeeTable, 2, 1);
             //Controls.Add(mainAnimalTable, 2, 1);
 

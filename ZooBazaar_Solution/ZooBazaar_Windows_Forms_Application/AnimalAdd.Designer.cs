@@ -30,13 +30,14 @@
         {
             this.SuspendLayout();
             // 
-            // EmployeeAdd
+            // AnimalAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "EmployeeAdd";
+            this.Name = "AnimalAdd";
             this.Text = "EmployeeAdd";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AnimalAdd_FormClosing);
             this.Load += new System.EventHandler(this.EmployeeAdd_Load);
             this.ResumeLayout(false);
 

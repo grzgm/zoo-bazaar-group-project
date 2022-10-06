@@ -6,13 +6,15 @@ namespace ZooBazaar_Windows_Forms_Application.controls
     {
         //Fields
         private string[] employeeButtonsText;
+        private EmployeeTable employeeTable;
 
         //Controls
         private EmployeeButton[] _EmployeeButtons;
-        public EmployeeActivityTable()
+        public EmployeeActivityTable(EmployeeTable employeeTable)
         {
 
             //Fields
+            this.employeeTable = employeeTable;
             employeeButtonsText = new string[] { "Add New Employee", "test", "test" };
 
             //Controls
@@ -48,7 +50,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         }
         public void ButtonClick(EmployeeButton buttonClicked)
         {
-            EmployeeAdd employeeAdd = new EmployeeAdd();
+            EmployeeAdd employeeAdd = new EmployeeAdd(employeeTable);
             employeeAdd.Show();
         }
     }
