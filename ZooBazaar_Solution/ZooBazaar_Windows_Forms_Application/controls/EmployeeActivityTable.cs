@@ -15,10 +15,10 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //Fields
             this.employeeTable = employeeTable;
-            employeeButtonsText = new string[] { "Add New Employee", "test", "test" };
+            employeeButtonsText = new string[] { "Add New Employee"};
 
             //Controls
-            _EmployeeButtons = new EmployeeButton[3];
+            _EmployeeButtons = new EmployeeButton[1];
 
             //Properties
             Dock = DockStyle.Fill;

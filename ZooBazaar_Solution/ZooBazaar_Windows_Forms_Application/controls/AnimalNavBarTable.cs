@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooBazaar_DomainModels.Models;
 
 namespace ZooBazaar_Windows_Forms_Application.controls
 {
@@ -13,17 +14,23 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private ComboBox _SpeciesComboBox;
         private ComboBox _HabitatComboBox;
         private ComboBox _ZoneComboBox;
+        private AnimalTable _AnimalTable;
 
-        public AnimalNavBarTable()
+        public AnimalNavBarTable(AnimalTable animalTable)
         {
+            _AnimalTable = animalTable;
             //assigning controls
             _NameComboBox = new ComboBox();
             _NameComboBox.Dock = DockStyle.Fill;
             _SpeciesComboBox = new ComboBox();
             _SpeciesComboBox.Dock = DockStyle.Fill;
+            _SpeciesComboBox.DataSource = Enum.GetValues(typeof(SPECIESTYPE));
+            _SpeciesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             _HabitatComboBox = new ComboBox();
+            _HabitatComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             _HabitatComboBox.Dock = DockStyle.Fill;
             _ZoneComboBox = new ComboBox();
+            _ZoneComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             _ZoneComboBox.Dock = DockStyle.Fill;
 
             //properties
@@ -49,7 +56,18 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
             //debug
             //BackColor = Color.Red;
-        }
+        _SpeciesComboBox.SelectedIndexChanged += new System.EventHandler(_SpeciesComboBox_SelectedIndexChanged);
+        _HabitatComboBox.SelectedIndexChanged += new System.EventHandler(_HabitatComboBox_SelectedIndexChanged);
 
+        }
+        private void _SpeciesComboBox_SelectedIndexChanged(object sender,
+        System.EventArgs e)
+        {
+            _AnimalTable.UpdateTableContentBasedOnSpecies((SPECIESTYPE)_SpeciesComboBox.SelectedItem);
+        }
+        private void _HabitatComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

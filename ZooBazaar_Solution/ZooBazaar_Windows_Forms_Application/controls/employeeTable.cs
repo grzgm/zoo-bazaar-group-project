@@ -19,9 +19,11 @@ namespace ZooBazaar_Windows_Forms_Application.controls
     {
         
         private List<EmployeeDetailsTable> employeeDetailsTable;
+        private IEmployeeMenager _employeeMenager;
 
         public EmployeeTable()
         {
+            _employeeMenager = Program.GetService<IEmployeeMenager>();
 
             //Filling table with content
             UpdateTableContent();
@@ -58,13 +60,23 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         //refreshes employee List
         public void UpdateTableContent()
         {
-            IEmployeeRepositroty employeeRepositroty = new EmployeeRepository();
-            IEmployeeMenager employeeMenager = new EmployeeManager(employeeRepositroty);
-            List<Employee> Employees = employeeMenager.GetAll();
+            List<Employee> Employees = _employeeMenager.GetAll();
 
             employeeDetailsTable = new List<EmployeeDetailsTable>();
 
             foreach (Employee employee in Employees)
+            {
+                employeeDetailsTable.Add(new EmployeeDetailsTable(employee, this));
+            }
+            UpdateTable();
+        }
+        public void UpdateTableContentBasedOnRole(ROLE rOLE)
+        {
+            IEnumerable<Employee> employees = _employeeMenager.GetAll().Where(role => role.Role == rOLE);
+
+            employeeDetailsTable = new List<EmployeeDetailsTable>();
+
+            foreach (Employee employee in employees)
             {
                 employeeDetailsTable.Add(new EmployeeDetailsTable(employee, this));
             }
