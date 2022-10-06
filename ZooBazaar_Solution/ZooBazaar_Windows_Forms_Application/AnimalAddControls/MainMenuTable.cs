@@ -28,6 +28,10 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
         private RadioButton[] radioButtons;
         private ComboBox comboBoxSpeciesType;
 
+        private ComboBox TimeBlockInformationComboBox;
+        private ComboBox ZoneInformationComboBox;
+        private ComboBox HabitatInformationComboBox;
+
 
         private ITimeBlockMenager TimeBlockMenager;
         private List<TimeBlock> Timeblocks;
@@ -154,30 +158,33 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
             comboBoxSpeciesType.SelectedItem = SPECIESTYPE.Mammals;
 
             //feedingtimeID
-            ComboBox TimeBlockInformationComboBox = new ComboBox();
+            TimeBlockInformationComboBox = new ComboBox();
             foreach (TimeBlock timeBlock in Timeblocks)
             {
                 TimeBlockInformationComboBox.Items.Add(timeBlock.ToString());
             }
-            TimeBlockInformationComboBox.SelectedIndex = 1; // HOW DO I GET THE DEFAULT VALUE OF WHICH TIMEBLOCK CURRENTLY IS SELECTED?
+            TimeBlockInformationComboBox.SelectedIndex = 0; // HOW DO I GET THE DEFAULT VALUE OF WHICH TIMEBLOCK CURRENTLY IS SELECTED?
+            TimeBlockInformationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             TimeBlockInformationComboBox.Dock = DockStyle.Fill;
 
             //zoneid
-            ComboBox ZoneInformationComboBox = new ComboBox();
+            ZoneInformationComboBox = new ComboBox();
             foreach (Zone zone in Zones)
             {
                 ZoneInformationComboBox.Items.Add(zone.ToString());
             }
-            ZoneInformationComboBox.SelectedIndex = 1; // HOW DO I GET THE DEFAULT VALUE OF WHICH ZONE CURRENTLY IS SELECTED?
+            ZoneInformationComboBox.SelectedIndex = 0; // HOW DO I GET THE DEFAULT VALUE OF WHICH ZONE CURRENTLY IS SELECTED?
+            ZoneInformationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             ZoneInformationComboBox.Dock = DockStyle.Fill;
 
             //habitatid
-            ComboBox HabitatInformationComboBox = new ComboBox();
+            HabitatInformationComboBox = new ComboBox();
             foreach (Habitat habitat in Habitats)
             {
                 HabitatInformationComboBox.Items.Add(habitat.ToString());
             }
-            HabitatInformationComboBox.SelectedIndex = 1; // HOW DO I GET THE DEFAULT VALUE OF WHICH HABITAT CURRENTLY IS SELECTED?
+            HabitatInformationComboBox.SelectedIndex = 0; // HOW DO I GET THE DEFAULT VALUE OF WHICH HABITAT CURRENTLY IS SELECTED?
+            HabitatInformationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             HabitatInformationComboBox.Dock = DockStyle.Fill;
 
 
@@ -231,10 +238,10 @@ namespace ZooBazaar_Windows_Forms_Application.AnimalAddControls
                 Species = textboxes[1].Text,
                 SpeciesType = comboBoxSpeciesType.SelectedItem.ToString(),
                 Diet = textboxes[2].Text,
-                FeedingTimeID = (int)numericupdowns[1].Value,
-                FeedingInterval = (int)numericupdowns[2].Value,
-                ZoneID = (int)numericupdowns[3].Value,
-                HabitatID = (int)numericupdowns[4].Value
+                FeedingTimeID = TimeBlockInformationComboBox.SelectedIndex + 1,
+                FeedingInterval = (int)numericupdowns[1].Value,
+                ZoneID = ZoneInformationComboBox.SelectedIndex + 1,
+                HabitatID = HabitatInformationComboBox.SelectedIndex + 1
             };
 
             ValidationContext context = new ValidationContext(animalAddDTO, null, null);

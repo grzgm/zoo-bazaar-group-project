@@ -55,13 +55,13 @@ namespace ZooBazaar_Windows_Forms_Application.EmployeeAddControls
             for (int i = 0; i < textboxes.Length; i++)
             {
                 textboxes[i] = new TextBox();
-                textboxes[i].Font = new Font("Calibri", 21, FontStyle.Regular);
+                //textboxes[i].Font = new Font("Calibri", 21, FontStyle.Regular);
                 textboxes[i].Dock = DockStyle.Fill;
                 textboxes[i].Margin = new Padding(0, 0, 0, 1);
             }
 
             comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox.Font = new Font("Calibri", 21, FontStyle.Regular);
+            //comboBox.Font = new Font("Calibri", 21, FontStyle.Regular);
             comboBox.Dock = DockStyle.Fill;
             comboBox.Margin = new Padding(0, 0, 0, 1);
             comboBox.DataSource = Enum.GetValues(typeof(ROLE));
