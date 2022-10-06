@@ -40,7 +40,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             ITaskRepository taskRepository = new TaskRepository();
             IScheduleManager scheduleManager = new ScheduleManager(scheduleRepository, employeeRepositroty, timeBlockRepository, zoneRepository, habitatRepository, taskRepository);
 
-            ZooBazaar_DomainModels.Models.Schedule test = scheduleManager.GetDayScheduleEmployee(new DateOnly(2022, 10, 5), 2);
+            ZooBazaar_DomainModels.Models.Schedule test = scheduleManager.GetDayScheduleEmployee(new DateOnly(2022, 10, 5), 3);
 
             taskArray[test.timeBlockId] = test.taskName;
 

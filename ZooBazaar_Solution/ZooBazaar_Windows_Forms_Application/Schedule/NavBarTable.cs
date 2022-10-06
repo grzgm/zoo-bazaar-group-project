@@ -13,7 +13,11 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
 
 
         private ComboBox _AnimalEmployeeComboBox;
-        private ComboBox _TypeComboBox;
+        //private ComboBox _TypeComboBox;
+        private ComboBox _EntityComboBox;
+
+        private List<Employee> employees;
+        private List<Animal> animals;
 
         private PreviousWeekButton _PreviousButton;
         private CurrentWeekButton _CurrentButton;
@@ -34,12 +38,19 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             _AnimalEmployeeComboBox.Items.Add("Employees");
             _AnimalEmployeeComboBox.Items.Add("Animals");
             _AnimalEmployeeComboBox.SelectedIndex = 0;
-            _TypeComboBox = new ComboBox();
-            _TypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            _TypeComboBox.Dock = DockStyle.Fill;
-            _TypeComboBox.DataSource = Enum.GetValues(typeof(ROLE));
+            this._AnimalEmployeeComboBox.SelectedIndexChanged +=
+                new System.EventHandler(this.AnimalEmployeeComboBox_SelectedIndexChanged);
 
-            _TypeComboBox.SelectedItem = ROLE.Caretaker;
+            //_TypeComboBox = new ComboBox();
+            //_TypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            //_TypeComboBox.Dock = DockStyle.Fill;
+            //_TypeComboBox.DataSource = Enum.GetValues(typeof(ROLE));
+            //_TypeComboBox.SelectedItem = ROLE.Caretaker;
+
+            _EntityComboBox = new ComboBox();
+            _EntityComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            _EntityComboBox.Dock = DockStyle.Fill;
+            _EntityComboBox.Enabled = false;
 
             _PreviousButton = new PreviousWeekButton(mainScheduleTable);
             _CurrentButton = new CurrentWeekButton(mainScheduleTable);
@@ -69,12 +80,21 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
 
             //Adding controls
             Controls.Add(_AnimalEmployeeComboBox, 0, 0);
-            Controls.Add(_TypeComboBox, 1, 0);
+            //Controls.Add(_TypeComboBox, 1, 0);
+            Controls.Add(_EntityComboBox, 1, 0);
             Controls.Add(_PreviousButton, 3, 0);
             Controls.Add(_CurrentButton, 4, 0);
             Controls.Add(_NextButton, 5, 0);
             Controls.Add(_NewScheduleButton, 6,0);
 
+        }
+        public void AnimalEmployeeComboBox_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            _EntityComboBox.Enabled = true;
+            if(_AnimalEmployeeComboBox.SelectedIndex == 0)
+            {
+
+            }
         }
 
     }
@@ -153,4 +173,5 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             _mainScheduleTable.LoadCurrentWeek();
         }
     }
+
 }
