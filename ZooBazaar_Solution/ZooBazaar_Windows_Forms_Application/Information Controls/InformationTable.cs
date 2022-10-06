@@ -240,6 +240,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                     {
                         TimeBlockInformationComboBox.Items.Add(timeBlock.ToString());
                     }
+                    TimeBlockInformationComboBox.SelectedIndex = 1; // HOW DO I GET THE DEFAULT VALUE OF WHICH TIMEBLOCK CURRENTLY IS SELECTED?
                     EditControls[8] = TimeBlockInformationComboBox; 
                     EditControls[8].Text = InformationStrings[8];
 
@@ -253,6 +254,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                     {
                         ZoneInformationComboBox.Items.Add(zone.ToString());
                     }
+                    ZoneInformationComboBox.SelectedIndex = 1; // HOW DO I GET THE DEFAULT VALUE OF WHICH ZONE CURRENTLY IS SELECTED?
                     EditControls[10] = ZoneInformationComboBox; 
                     EditControls[10].Text = InformationStrings[10];
 
@@ -262,6 +264,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                     {
                         HabitatInformationComboBox.Items.Add(habitat.ToString());
                     }
+                    HabitatInformationComboBox.SelectedIndex = 1; // HOW DO I GET THE DEFAULT VALUE OF WHICH HABITAT CURRENTLY IS SELECTED?
                     EditControls[11] = HabitatInformationComboBox; 
                     EditControls[11].Text = InformationStrings[11];
 
