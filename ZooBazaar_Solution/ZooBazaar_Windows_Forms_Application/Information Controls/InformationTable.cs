@@ -11,6 +11,7 @@ using ZooBazaar_Repositories.Interfaces;
 using ZooBazaar_Repositories.Repositories;
 using ZooBazaar_Windows_Forms_Application.Theme;
 using ZooBazaar_DomainModels.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZooBazaar_Windows_Forms_Application.Information_Controls
 {
@@ -302,7 +303,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 e.Graphics.FillRectangle(brush, e.CellBounds);
             }
         }
-        public void EditInformation()
+        public bool EditInformation()
         {
             
             if (IsEmployee)
@@ -321,9 +322,24 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 employeeDTO.Address = InformationStrings[5];
                 employeeDTO.Role = InformationStrings[6];
 
+
+
+                ValidationContext context = new ValidationContext(employeeDTO, null, null);
+                IList<ValidationResult> errors = new List<ValidationResult>();
+
+                if (!Validator.TryValidateObject(employeeDTO, context, errors, true))
+                {
+                    foreach (ValidationResult result in errors)
+                    {
+                        MessageBox.Show(result.ErrorMessage);
+                        return false;
+                    }
+                }
+
                 EmployeeMenager.UpdateEmployee(employeeDTO);
+                return true;
             }
-            else if (!IsEmployee)
+            else
             {
                 for (int i = 1; i < InformationStrings.Length; i++)
                 {
@@ -364,7 +380,22 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 animalDTO.ZoneID = Int32.Parse(InformationStrings[10]);
                 animalDTO.HabitatID = Int32.Parse(InformationStrings[11]);
 
+
+
+                ValidationContext context = new ValidationContext(animalDTO, null, null);
+                IList<ValidationResult> errors = new List<ValidationResult>();
+
+                if (!Validator.TryValidateObject(animalDTO, context, errors, true))
+                {
+                    foreach (ValidationResult result in errors)
+                    {
+                        MessageBox.Show(result.ErrorMessage);
+                        return false;
+                    }
+                }
+
                 AnimalMenager.UpdateAnimal(animalDTO);
+                return true;
             }
         }
 
@@ -417,13 +448,14 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
 
         private void EditButton_Save_Click(object? sender, EventArgs e)
         {
-
-            parentTable.EditInformation();
-            parentTable.UpdateControls();
-            this.Click -= new System.EventHandler(EditButton_Save_Click);
-            UpdateButton();
-
-
+            bool check = false;
+            check = parentTable.EditInformation();
+            if(check)
+            {
+                parentTable.UpdateControls();
+                this.Click -= new System.EventHandler(EditButton_Save_Click);
+                UpdateButton();
+            }
         }
 
         private void UpdateButton()

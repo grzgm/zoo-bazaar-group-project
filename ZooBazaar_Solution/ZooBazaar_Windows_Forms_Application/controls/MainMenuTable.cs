@@ -107,7 +107,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
                     switch (i)
                     {
                         case 0:
-                            //Controls.Add(mainScheduleTable, 2, 1);
+                            Controls.Add(mainScheduleTable, 2, 1);
                             tabLabel.Text = "Schedule";
                             break;
                         case 1:
