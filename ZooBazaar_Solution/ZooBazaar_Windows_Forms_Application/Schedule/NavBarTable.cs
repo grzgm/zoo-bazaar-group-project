@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooBazaar_DomainModels.Models;
+using ZooBazaar_ClassLibrary.Interfaces;
+using ZooBazaar_ClassLibrary.Menagers;
+using ZooBazaar_Repositories.Repositories;
+using ZooBazaar_Repositories.Interfaces;
 
 namespace ZooBazaar_Windows_Forms_Application.Schedule
 {
@@ -16,6 +20,10 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
         //private ComboBox _TypeComboBox;
         private ComboBox _EntityComboBox;
 
+
+
+        IEmployeeMenager employeeMenager;
+        IAnimalMenager animalMenager;
         private List<Employee> employees;
         private List<Animal> animals;
 
@@ -30,6 +38,12 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
         {
             //fields
             this.mainScheduleTable = mainScheduleTable;
+
+
+            animalMenager = Program.GetService<IAnimalMenager>();
+            employeeMenager = Program.GetService<IEmployeeMenager>();
+
+            employees = employeeMenager.GetAll();
 
             //assigning controls
             _AnimalEmployeeComboBox = new ComboBox();
@@ -93,7 +107,27 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             _EntityComboBox.Enabled = true;
             if(_AnimalEmployeeComboBox.SelectedIndex == 0)
             {
-
+                List<string> employeeNames = new List<string>();
+                foreach (Employee employee in employees)
+                {
+                    employeeNames.Add((employee.FirstName + " " + employee.LastName));
+                }
+                foreach (string name in employeeNames)
+                {
+                    _EntityComboBox.Items.Add(name);
+                }
+            }
+            else if (_AnimalEmployeeComboBox.SelectedIndex == 1)
+            {
+                List<string> animalNames = new List<string>();
+                foreach (Animal animal in animals)
+                {
+                    animalNames.Add(animal.Name);
+                }
+                foreach (string name in animalNames)
+                {
+                    _EntityComboBox.Items.Add(name);
+                }
             }
         }
 
