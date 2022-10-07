@@ -10,7 +10,7 @@ namespace ZooBazaar_Windows_Forms_Application
         {
             InitializeComponent();
             mainMenutable = new MainMenuTable();
-
+            Text = "Menager";
             Size = new Size(1920 , 1080);
 
         }

@@ -25,7 +25,7 @@ namespace ZooBazaar_Windows_Forms_Application
             this.animalTable = animalTable;
             InitializeComponent();
             mainMenutable = new AnimalAddControls.MainMenuTable(this);
-
+            Text = "AnimalAdd";
             Size = new Size(650, 780);
         }
 
