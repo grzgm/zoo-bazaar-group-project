@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,15 +20,34 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             this.id = id;
             this.mainMenuTable = mainMenuTable;
 
+            //set icon
+            switch (id)
+            {
+                case 0:
+                    this.BackgroundImage = Image.FromFile(@"C:\Users\jespe\Documents\Fontys\Course Based\Semester 2\s2_prj_zoobazaar\ZooBazaar_Solution\ZooBazaar_Windows_Forms_Application\Icons\ScheduleIcon.png");
+                    break;
+                case 1:
+                    this.BackgroundImage = Image.FromFile(@"C:\Users\jespe\Documents\Fontys\Course Based\Semester 2\s2_prj_zoobazaar\ZooBazaar_Solution\ZooBazaar_Windows_Forms_Application\Icons\EmployeesIcon.png");
+                    break;
+                case 2:
+                    this.BackgroundImage = Image.FromFile(@"C:\Users\jespe\Documents\Fontys\Course Based\Semester 2\s2_prj_zoobazaar\ZooBazaar_Solution\ZooBazaar_Windows_Forms_Application\Icons\AnimalsIcon.png");
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+            }
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
+
             //properties
             Dock = DockStyle.Top;
-            Height = 100;
-            Width = 100;
-            Margin = Padding.Empty;
-            BackColor = ThemeColors.primaryColor;
+            Height = 80;
+            Width = 80;
+            BackColor = ThemeColors.menuButtonColor;
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 0;
-            Text = t.ToUpper();
+            //Text = t.ToUpper();
             TextAlign = ContentAlignment.MiddleCenter;
             Font = new Font("Calibri", 14, FontStyle.Bold);
 
@@ -39,6 +59,28 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private void MenuButton_Click(object? sender, EventArgs e)
         {
             mainMenuTable.ButtonClick(this);
+        }
+
+        private GraphicsPath GetFigurePath(RectangleF rect, float radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+            path.StartFigure();
+            path.AddArc(rect.X, rect.Y, radius, radius, 180, 90);
+            path.AddArc(rect.Width - radius, rect.Y, radius, radius, 270, 90);
+            path.AddArc(rect.Width - radius, rect.Height - radius, radius, radius, 0, 90);
+            path.AddArc(rect.X, rect.Height - radius, radius, radius, 90, 90);
+            path.CloseFigure();
+
+            return path;
+        }
+
+        protected override void OnPaint(PaintEventArgs pevent)
+        {
+            //pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            GraphicsPath path = new GraphicsPath();
+            path.AddEllipse(0,0,ClientSize.Width,ClientSize.Height);
+            this.Region = new System.Drawing.Region(path);
+            base.OnPaint(pevent);
         }
     }
 }
