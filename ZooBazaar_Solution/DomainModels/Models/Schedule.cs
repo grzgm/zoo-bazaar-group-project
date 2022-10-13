@@ -16,6 +16,11 @@ namespace ZooBazaar_DomainModels.Models
         private Employee _employee;
         private Task _task;
 
+        public Schedule()
+        {
+
+        }
+
         public Schedule(int id, DateOnly date, TimeBlock timeBlock, Employee employee, Task task)
         {
             _id = id;

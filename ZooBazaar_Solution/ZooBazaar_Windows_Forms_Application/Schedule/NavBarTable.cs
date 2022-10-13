@@ -8,6 +8,7 @@ using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_ClassLibrary.Menagers;
 using ZooBazaar_Repositories.Repositories;
 using ZooBazaar_Repositories.Interfaces;
+using ZooBazaar_Windows_Forms_Application.controls;
 
 namespace ZooBazaar_Windows_Forms_Application.Schedule
 {
@@ -18,14 +19,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
 
         private ComboBox _AnimalEmployeeComboBox;
         //private ComboBox _TypeComboBox;
-        private ComboBox _EntityComboBox;
-
-
-
-        IEmployeeMenager employeeMenager;
-        IAnimalMenager animalMenager;
-        private List<Employee> employees;
-        private List<Animal> animals;
+        public ComboBox _EntityComboBox;
 
         private PreviousWeekButton _PreviousButton;
         private CurrentWeekButton _CurrentButton;
@@ -38,12 +32,6 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
         {
             //fields
             this.mainScheduleTable = mainScheduleTable;
-
-
-            animalMenager = Program.GetService<IAnimalMenager>();
-            employeeMenager = Program.GetService<IEmployeeMenager>();
-
-            employees = employeeMenager.GetAll();
 
             //assigning controls
             _AnimalEmployeeComboBox = new ComboBox();
@@ -65,6 +53,8 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             _EntityComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             _EntityComboBox.Dock = DockStyle.Fill;
             _EntityComboBox.Enabled = false;
+            this._EntityComboBox.SelectedIndexChanged +=
+                new System.EventHandler(this.EntityComboBox_SelectedIndexChanged);
 
             _PreviousButton = new PreviousWeekButton(mainScheduleTable);
             _CurrentButton = new CurrentWeekButton(mainScheduleTable);
@@ -105,10 +95,12 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
         public void AnimalEmployeeComboBox_SelectedIndexChanged(object? sender, EventArgs e)
         {
             _EntityComboBox.Enabled = true;
-            if(_AnimalEmployeeComboBox.SelectedIndex == 0)
+            _EntityComboBox.Items.Clear();
+            if (_AnimalEmployeeComboBox.SelectedIndex == 0)
             {
+                mainScheduleTable.selectedEntity = 0;
                 List<string> employeeNames = new List<string>();
-                foreach (Employee employee in employees)
+                foreach (Employee employee in mainScheduleTable.employees)
                 {
                     employeeNames.Add((employee.FirstName + " " + employee.LastName));
                 }
@@ -119,8 +111,9 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             }
             else if (_AnimalEmployeeComboBox.SelectedIndex == 1)
             {
+                mainScheduleTable.selectedEntity = 1;
                 List<string> animalNames = new List<string>();
-                foreach (Animal animal in animals)
+                foreach (Animal animal in mainScheduleTable.animals)
                 {
                     animalNames.Add(animal.Name);
                 }
@@ -128,6 +121,21 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
                 {
                     _EntityComboBox.Items.Add(name);
                 }
+            }
+        }
+        public void EntityComboBox_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (_AnimalEmployeeComboBox.SelectedIndex == 0)
+            {
+                mainScheduleTable.selectedEmployee = mainScheduleTable.employees[_EntityComboBox.SelectedIndex];
+                mainScheduleTable._ScheduleTable = new ScheduleTable(mainScheduleTable);
+                mainScheduleTable.LoadCurrentWeek();
+            }
+            else if (_AnimalEmployeeComboBox.SelectedIndex == 1)
+            {
+                mainScheduleTable.selectedAnimal = mainScheduleTable.animals[_EntityComboBox.SelectedIndex];
+                mainScheduleTable._ScheduleTable = new ScheduleTable(mainScheduleTable);
+                mainScheduleTable.LoadCurrentWeek();
             }
         }
 

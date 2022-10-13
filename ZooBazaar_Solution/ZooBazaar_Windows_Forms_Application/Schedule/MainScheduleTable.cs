@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooBazaar_ClassLibrary.Interfaces;
+using ZooBazaar_DomainModels.Models;
 
 namespace ZooBazaar_Windows_Forms_Application.Schedule
 {
@@ -16,13 +18,21 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
 
         //fields
         private int weekNr;
+        IEmployeeMenager employeeMenager;
+        IAnimalMenager animalMenager;
+        public List<Employee> employees;
+        public List<Animal> animals;
+        // employee = 0, animal = 1;
+        public int selectedEntity = -1;
+        public Employee selectedEmployee;
+        public Animal selectedAnimal;
 
 
 
         //controls
         private NavBarTable _NavBarTable;
         private Label _WeekLabel;
-        private ScheduleTable _ScheduleTable;
+        public ScheduleTable _ScheduleTable;
         private ActivityTable _ActivityTable;
         
 
@@ -30,6 +40,15 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
 
         public MainScheduleTable()
         {
+            //fields
+
+            animalMenager = Program.GetService<IAnimalMenager>();
+            employeeMenager = Program.GetService<IEmployeeMenager>();
+
+            employees = employeeMenager.GetAll();
+            animals = animalMenager.GetAll();
+
+
             //controls
             _NavBarTable = new NavBarTable(this);
             _WeekLabel = new Label();

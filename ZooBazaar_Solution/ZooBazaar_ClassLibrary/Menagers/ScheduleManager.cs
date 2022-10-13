@@ -32,8 +32,12 @@ namespace ZooBazaar_ClassLibrary.Menagers
         public Schedule GetDayScheduleEmployee(DateOnly date, int employeeId)
         {
             ScheduleDTO dto = _scheduleRepository.GetByDateAndEmployeeId(date, employeeId);
-            TaskDTO taskDTO = _taskRepository.GetByTaskId(dto.TaskID);
-            return new Schedule(dto, _timeBlockRepository.GetByTimeBlockId(dto.TimeblockID), _employeeRepositroty.GetByEmployeeId(employeeId), taskDTO, _habitatRepository.GetByHabitatId(taskDTO.HabitatID), _zoneRepository.GetByZoneId(taskDTO.ZoneID));
+            if(dto != null)
+            {
+                TaskDTO taskDTO = _taskRepository.GetByTaskId(dto.TaskID);
+                return new Schedule(dto, _timeBlockRepository.GetByTimeBlockId(dto.TimeblockID), _employeeRepositroty.GetByEmployeeId(employeeId), taskDTO, _habitatRepository.GetByHabitatId(taskDTO.HabitatID), _zoneRepository.GetByZoneId(taskDTO.ZoneID));
+            }
+            return null;
         }
     }
 }
