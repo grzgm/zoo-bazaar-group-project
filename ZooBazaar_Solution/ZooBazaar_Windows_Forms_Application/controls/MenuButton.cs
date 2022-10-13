@@ -24,13 +24,13 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             switch (id)
             {
                 case 0:
-                    this.BackgroundImage = Image.FromFile(@"C:\Users\jespe\Documents\Fontys\Course Based\Semester 2\s2_prj_zoobazaar\ZooBazaar_Solution\ZooBazaar_Windows_Forms_Application\Icons\ScheduleIcon.png");
+                    this.BackgroundImage = Properties.Resources.ScheduleIcon;
                     break;
                 case 1:
-                    this.BackgroundImage = Image.FromFile(@"C:\Users\jespe\Documents\Fontys\Course Based\Semester 2\s2_prj_zoobazaar\ZooBazaar_Solution\ZooBazaar_Windows_Forms_Application\Icons\EmployeesIcon.png");
+                    this.BackgroundImage = Properties.Resources.EmployeesIcon;
                     break;
                 case 2:
-                    this.BackgroundImage = Image.FromFile(@"C:\Users\jespe\Documents\Fontys\Course Based\Semester 2\s2_prj_zoobazaar\ZooBazaar_Solution\ZooBazaar_Windows_Forms_Application\Icons\AnimalsIcon.png");
+                    this.BackgroundImage = Properties.Resources.AnimalsIcon;
                     break;
                 case 3:
                     break;
