@@ -33,7 +33,7 @@ namespace ZooBazaar_DomainModels.Models
 
         public Animal(AnimalDTO animalDTO, TimeBlockDTO timeBlockDTO, ZoneDTO zoneDTO, HabitatDTO habitatDTO)
         {
-            this._id = animalDTO.Id;
+            this._id = animalDTO.AnimalId;
             this._name = animalDTO.Name;
             this._age = animalDTO.Age;
             this._dateOfBirth = DateOnly.FromDateTime(animalDTO.DateOfBirth);

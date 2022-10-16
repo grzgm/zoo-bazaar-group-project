@@ -11,7 +11,7 @@ namespace ZooBazaar_DTO.DTOs
 {
     public class EmployeeDTO
     {
-        public int Id { get; set; }
+        public int EmployeeID { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "All fields are required")]
         //Why is it colon not Equals sign

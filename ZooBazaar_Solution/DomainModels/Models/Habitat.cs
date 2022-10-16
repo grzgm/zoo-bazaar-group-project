@@ -19,7 +19,7 @@ namespace ZooBazaar_DomainModels.Models
 
         public Habitat(HabitatDTO habitatDTO, ZoneDTO zoneDTO)
         {
-            this._id = habitatDTO.ID;
+            this._id = habitatDTO.HabitatID;
             this._name = habitatDTO.Name;
             this._capacity = habitatDTO.Capacity;
             this._zone = new Zone(zoneDTO);

@@ -13,15 +13,9 @@ namespace ZooBazaar_ClassLibrary.Menagers
     public class AnimalManager : IAnimalMenager
     {
         private readonly IAnimalRepository _animalRepository;
-        private readonly IZoneRepository _zoneRepository;
-        private readonly IHabitatRepository _habitatRepository;
-        private readonly ITimeBlockRepository _timeBlockRepository;
-        public AnimalManager(IAnimalRepository animalRepository, IZoneRepository zoneRepository,IHabitatRepository habitatRepository , ITimeBlockRepository timeBlockRepository)
+        public AnimalManager(IAnimalRepository animalRepository)
         {
             _animalRepository = animalRepository;
-            _zoneRepository = zoneRepository;
-            _habitatRepository = habitatRepository;
-            _timeBlockRepository = timeBlockRepository;
         }
 
         public List<Animal> GetAll()
@@ -30,7 +24,28 @@ namespace ZooBazaar_ClassLibrary.Menagers
            
            foreach(AnimalDTO dto in _animalRepository.GetAll())
             {
-                animals.Add(new Animal(dto, _timeBlockRepository.GetByTimeBlockId(dto.FeedingTimeID), _zoneRepository.GetByZoneId(dto.ZoneID), _habitatRepository.GetByHabitatId(dto.HabitatID)));
+                TimeBlockDTO timeBlockDTO = new TimeBlockDTO
+                {
+                    TimeblockID = dto.FeedingTimeID,
+                    StartingTime = dto.StartTime,
+                    EndingTime = dto.EndTime
+                };
+
+                ZoneDTO zoneDTO = new ZoneDTO
+                {
+                    ZoneID = dto.ZoneID,
+                    Name = dto.ZoneName,
+                    Capacity = dto.ZoneCapacity
+                };
+
+                HabitatDTO habitatDTO = new HabitatDTO
+                {
+                    HabitatID = dto.HabitatID,
+                    Name = dto.Name,
+                    Capacity = dto.HabitatCapacity,
+                    ZoneID = dto.ZoneID
+                };
+                animals.Add(new Animal(dto, timeBlockDTO, zoneDTO, habitatDTO));
             }
             return animals;
         }
@@ -38,7 +53,28 @@ namespace ZooBazaar_ClassLibrary.Menagers
         public Animal GetAnimal(int id)
         {
             AnimalDTO dto = _animalRepository.GetByAnimalId(id);
-            return new Animal(dto, _timeBlockRepository.GetByTimeBlockId(dto.FeedingTimeID), _zoneRepository.GetByZoneId(dto.ZoneID), _habitatRepository.GetByHabitatId(dto.HabitatID));
+            TimeBlockDTO timeBlockDTO = new TimeBlockDTO
+            {
+                TimeblockID = dto.FeedingTimeID,
+                StartingTime = dto.StartTime,
+                EndingTime = dto.EndTime
+            };
+
+            ZoneDTO zoneDTO = new ZoneDTO
+            {
+                ZoneID = dto.ZoneID,
+                Name = dto.ZoneName,
+                Capacity = dto.ZoneCapacity
+            };
+
+            HabitatDTO habitatDTO = new HabitatDTO
+            {
+                HabitatID = dto.HabitatID,
+                Name = dto.Name,
+                Capacity = dto.HabitatCapacity,
+                ZoneID = dto.ZoneID
+            };
+            return new Animal(dto, timeBlockDTO, zoneDTO, habitatDTO);
         }
 
         public void NewAnimal(AnimalAddDTO animalAddDTO)

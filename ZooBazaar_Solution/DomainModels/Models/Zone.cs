@@ -15,7 +15,7 @@ namespace ZooBazaar_DomainModels.Models
 
         public Zone(ZoneDTO zoneDTO)
         {
-            this._id = zoneDTO.ID;
+            this._id = zoneDTO.ZoneID;
             this._name = zoneDTO.Name;
             this._capacity = zoneDTO.Capacity;
         }

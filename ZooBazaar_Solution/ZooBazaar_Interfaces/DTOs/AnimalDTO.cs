@@ -9,7 +9,7 @@ namespace ZooBazaar_DTO.DTOs
 {
     public class AnimalDTO
     {
-        public int Id { get; set; }
+        public int AnimalId { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "All fields are required")]
         //Why is it colon not Equals sign
@@ -37,15 +37,20 @@ namespace ZooBazaar_DTO.DTOs
 
         [Required(ErrorMessage = "All fields are required")]
         public int FeedingTimeID { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
 
         [Required(ErrorMessage = "All fields are required")]
         public int FeedingInterval { get; set; }
 
         [Required(ErrorMessage = "All fields are required")]
         public int ZoneID { get; set; }
+        public string ZoneName { get; set; }
+        public int ZoneCapacity { get; set; }
 
         [Required(ErrorMessage = "All fields are required")]
         public int HabitatID { get; set; }
-
+        public string HabitatName { get; set; }
+        public int HabitatCapacity { get; set; }
     }
 }

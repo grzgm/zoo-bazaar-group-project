@@ -16,9 +16,9 @@ namespace ZooBazaar_DomainModels.Models
 
       public TimeBlock(TimeBlockDTO timeBlockDTO)
       {
-            this._id = timeBlockDTO.ID;
-            this._startTime = TimeOnly.FromTimeSpan(timeBlockDTO.StartTime);
-            this._endTime = TimeOnly.FromTimeSpan(timeBlockDTO.EndTime);
+            this._id = timeBlockDTO.TimeblockID;
+            this._startTime = TimeOnly.FromTimeSpan(timeBlockDTO.StartingTime);
+            this._endTime = TimeOnly.FromTimeSpan(timeBlockDTO.EndingTime);
 
       }
         public override string ToString()

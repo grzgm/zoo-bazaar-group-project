@@ -9,196 +9,42 @@ using ZooBazaar_Repositories.Interfaces;
 
 namespace ZooBazaar_Repositories.Repositories
 {
-    public class AnimalRepository : IAnimalRepository
+    public class AnimalRepository : DapperBaseRepository, IAnimalRepository
     {
-        private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi463992;User Id=dbi463992;Password=gogotpilon;";
-
         void IAnimalRepository.Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string Query = "DELETE FROM Animal WHERE AnimalID = @AnimalID";
-
-                using (SqlCommand command = new SqlCommand(Query, connection))
-                {
-                    command.Parameters.AddWithValue("@AnimalID", id);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
+            string Query = "DELETE FROM Animal WHERE AnimalID = @AnimalID";
+            Execute(Query, new { AnimalID = id });
         }
 
         IEnumerable<AnimalDTO> IAnimalRepository.GetAll()
         {
-            List<AnimalDTO> animalDTOs = new List<AnimalDTO>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string selectQuery = "SELECT * FROM Animal";
-
-                using (SqlCommand command = new SqlCommand(selectQuery, connection))
-                {
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int animalid = reader.GetInt32(0);
-                        string name = reader.GetString(1);
-                        int age = reader.GetInt32(2);
-                        DateTime dateofbirth = reader.GetDateTime(3);
-                        bool sex = reader.GetBoolean(4);
-                        string species = reader.GetString(5);
-                        string speciesType = reader.GetString(6);
-                        string diet = reader.GetString(7);
-                        int feedingtimeID = reader.GetInt32(8);
-                        int feedinginterval = reader.GetInt32(9);
-                        int zoneid = reader.GetInt32(10);
-                        int habitatid = reader.GetInt32(11);
-
-                        animalDTOs.Add(new AnimalDTO
-                        {
-                            Id = animalid,
-                            Name = name,
-                            Age = age,
-                            DateOfBirth = dateofbirth,
-                            Sex = sex,
-                            Species = species,
-                            SpeciesType = speciesType,
-                            Diet = diet,
-                            FeedingTimeID = feedingtimeID,
-                            FeedingInterval = feedinginterval,
-                            ZoneID = zoneid,
-                            HabitatID = habitatid,
-                        });
-                    }
-                }
-            }
-            return animalDTOs;
+            string selectQuery = "SELECT A.*, T.StartingTime,T.EndingTime, Z.Name AS ZoneName, Z.Capacity AS ZoneCapacity, H.Name AS HabitatName, H.Capacity AS HabitatCapacity FROM Animal A JOIN Timeblock T ON A.FeedingTimeID = T.TimeblockID JOIN Zone Z ON A.ZoneID = Z.ZoneID JOIN Habitat H ON A.HabitatID = H.HabitatID";
+            return Query<AnimalDTO>(selectQuery);
         }
 
         AnimalDTO IAnimalRepository.GetByAnimalId(int ID)
         {
-            AnimalDTO animalDTO = null;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string selectQuery = "SELECT * FROM Animal WHERE AnimalID = @ID";
-
-                using (SqlCommand command = new SqlCommand(selectQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@ID", ID);
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int animalid = reader.GetInt32(0);
-                        string name = reader.GetString(1);
-                        int age = reader.GetInt32(2);
-                        DateTime dateofbirth = reader.GetDateTime(3);
-                        bool sex = reader.GetBoolean(4);
-                        string species = reader.GetString(5);
-                        string speciesType = reader.GetString(6);
-                        string diet = reader.GetString(7);
-                        int feedingtimeID = reader.GetInt32(8);
-                        int feedinginterval = reader.GetInt32(9);
-                        int zoneid = reader.GetInt32(10);
-                        int habitatid = reader.GetInt32(11);
-
-                        animalDTO = new AnimalDTO
-                        {
-                            Id = animalid,
-                            Name = name,
-                            Age = age,
-                            DateOfBirth = dateofbirth,
-                            Sex = sex,
-                            Species = species,
-                            SpeciesType = speciesType,
-                            Diet = diet,
-                            FeedingTimeID = feedingtimeID,
-                            FeedingInterval = feedinginterval,
-                            ZoneID = zoneid,
-                            HabitatID = habitatid,
-                        };
-                    }
-                }
-            }
-            return animalDTO;
+            string selectQuery = "SELECT A.*, T.StartingTime,T.EndingTime, Z.Name AS ZoneName, Z.Capacity AS ZoneCapacity, H.Name AS HabitatName, H.Capacity AS HabitatCapacity FROM Animal A JOIN Timeblock T ON A.FeedingTimeID = T.TimeblockID JOIN Zone Z ON A.ZoneID = Z.ZoneID JOIN Habitat H ON A.HabitatID = H.HabitatID WHERE AnimalID = @ID";
+            return QuerySingle<AnimalDTO>(selectQuery, new {ID = ID});
         }
 
         void IAnimalRepository.Insert(AnimalAddDTO dto)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string Query = "INSERT INTO Animal VALUES (@Name,@Age,@DateOfBirth,@Sex,@Species,@SpeciesType,@Diet,@FeedingTimeID,@FeedingInterval,@ZoneID,@HabitatID)";
-
-                using (SqlCommand command = new SqlCommand(Query, connection))
-                {
-                    command.Parameters.AddWithValue("@Name", dto.Name);
-                    command.Parameters.AddWithValue("@Age", dto.Age);
-                    command.Parameters.AddWithValue("@DateOfBirth", dto.DateOfBirth);
-                    command.Parameters.AddWithValue("@Sex", dto.Sex);
-                    command.Parameters.AddWithValue("@Species", dto.Species);
-                    command.Parameters.AddWithValue("@SpeciesType", dto.SpeciesType);
-                    command.Parameters.AddWithValue("@Diet", dto.Diet);
-                    command.Parameters.AddWithValue("@FeedingTimeID", dto.FeedingTimeID);
-                    command.Parameters.AddWithValue("@FeedingInterval", dto.FeedingInterval);
-                    command.Parameters.AddWithValue("@ZoneID", dto.ZoneID);
-                    command.Parameters.AddWithValue("@HabitatID", dto.HabitatID);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
+            string Query = "INSERT INTO Animal VALUES (@Name,@Age,@DateOfBirth,@Sex,@Species,@SpeciesType,@Diet,@FeedingTimeID,@FeedingInterval,@ZoneID,@HabitatID)";
+            Execute(Query, new { Name = dto.Name, Age = dto.Age, DateOfBirth = dto.DateOfBirth, Sex = dto.Sex, Species = dto.Species, SpeciesType = dto.SpeciesType, Diet = dto.Diet, FeedingTimeID = dto.FeedingTimeID, FeedingInterval = dto.FeedingInterval, ZoneID = dto.ZoneID, HabitatID = dto.HabitatID });
         }
 
         int IAnimalRepository.nextID()
         {
-            int newID = 1;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string Query = "SELECT MAX(AnimalID) FROM Animal";
-
-                using (SqlCommand command = new SqlCommand(Query, connection))
-                {
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        if (!reader.IsDBNull(0))
-                        {
-                            int id = reader.GetInt32(0);
-                            newID = id + 1;
-                        }
-                    }
-                }
-            }
-            return newID;
+            string Query = "SELECT MAX(AnimalID) FROM Animal";
+            return QuerySingle<int>(Query);
         }
 
         void IAnimalRepository.Update(AnimalDTO dto)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string Query = "UPDATE Animal SET Name=@Name,Age=@Age,DateOfBirth=@DateOfBirth,Sex=@Sex,Species=@Species,SpeciesType=@SpeciesType,Diet=@Diet,FeedingTimeID=@FeedingTimeID,FeedingInterval=@FeedingInterval,ZoneID=@ZoneID,HabitatID=@HabitatID WHERE AnimalID=@AnimalID";
-
-                using (SqlCommand command = new SqlCommand(Query, connection))
-                {
-                    command.Parameters.AddWithValue("@AnimalID", dto.Id);
-                    command.Parameters.AddWithValue("@Name", dto.Name);
-                    command.Parameters.AddWithValue("@Age", dto.Age);
-                    command.Parameters.AddWithValue("@DateOfBirth", dto.DateOfBirth);
-                    command.Parameters.AddWithValue("@Sex", dto.Sex);
-                    command.Parameters.AddWithValue("@Species", dto.Species);
-                    command.Parameters.AddWithValue("@SpeciesType", dto.SpeciesType);
-                    command.Parameters.AddWithValue("@Diet", dto.Diet);
-                    command.Parameters.AddWithValue("@FeedingTimeID", dto.FeedingTimeID);
-                    command.Parameters.AddWithValue("@FeedingInterval", dto.FeedingInterval);
-                    command.Parameters.AddWithValue("@ZoneID", dto.ZoneID);
-                    command.Parameters.AddWithValue("@HabitatID", dto.HabitatID);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
+            string Query = "UPDATE Animal SET Name=@Name,Age=@Age,DateOfBirth=@DateOfBirth,Sex=@Sex,Species=@Species,SpeciesType=@SpeciesType,Diet=@Diet,FeedingTimeID=@FeedingTimeID,FeedingInterval=@FeedingInterval,ZoneID=@ZoneID,HabitatID=@HabitatID WHERE AnimalID=@AnimalID";
+            Execute(Query, new { AnimalID = dto.AnimalId, Name = dto.Name, Age = dto.Age, DateOfBirth = dto.DateOfBirth, Sex = dto.Sex, Species = dto.Species, SpeciesType = dto.SpeciesType, Diet = dto.Diet, FeedingTimeID = dto.FeedingTimeID, FeedingInterval = dto.FeedingInterval ,ZoneID = dto.ZoneID, HabitatID = dto.HabitatID });
         }
     }
 }

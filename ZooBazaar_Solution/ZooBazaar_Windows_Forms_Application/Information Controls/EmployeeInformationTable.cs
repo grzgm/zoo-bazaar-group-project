@@ -163,7 +163,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
             }
 
             EmployeeDTO employeeDTO = new EmployeeDTO();
-            employeeDTO.Id = Int32.Parse(employeeStrings[0]);
+            employeeDTO.EmployeeID = Int32.Parse(employeeStrings[0]);
             employeeDTO.FirstName = employeeStrings[1];
             employeeDTO.LastName = employeeStrings[2];
             employeeDTO.Email = employeeStrings[3];

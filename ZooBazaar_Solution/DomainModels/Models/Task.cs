@@ -35,7 +35,7 @@ namespace ZooBazaar_DomainModels.Models
         }
         public Task(TaskDTO TaskDTO, AnimalDTO animalDTO, TimeBlockDTO timeBlockOfAnimalDTO, HabitatDTO habitatDTO ,ZoneDTO zoneDTO)
         {
-            this._id = TaskDTO.ID;
+            this._id = TaskDTO.TaskID;
             this._name = Enum.Parse<TASKNAME>(TaskDTO.Name, true);
             this._animal = new Animal(animalDTO, timeBlockOfAnimalDTO, zoneDTO, habitatDTO);
             this._habitat = new Habitat(habitatDTO, zoneDTO);
@@ -43,7 +43,7 @@ namespace ZooBazaar_DomainModels.Models
         }
         public Task(TaskDTO TaskDTO, HabitatDTO habitatDTO, ZoneDTO zoneDTO)
         {
-            this._id = TaskDTO.ID;
+            this._id = TaskDTO.TaskID;
             this._name = Enum.Parse<TASKNAME>(TaskDTO.Name, true);
             this._animal = null;
             this._habitat = new Habitat(habitatDTO, zoneDTO);
