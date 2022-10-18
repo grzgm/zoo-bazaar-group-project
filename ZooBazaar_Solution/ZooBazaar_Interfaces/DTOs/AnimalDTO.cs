@@ -35,22 +35,11 @@ namespace ZooBazaar_DTO.DTOs
         [Required(ErrorMessage = "All fields are required")]
         public string Diet { get; set; }
 
-        [Required(ErrorMessage = "All fields are required")]
-        public int FeedingTimeID { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan EndTime { get; set; }
+        public TimeBlockDTO TimeBlockDTO { get; set; }
 
         [Required(ErrorMessage = "All fields are required")]
         public int FeedingInterval { get; set; }
 
-        [Required(ErrorMessage = "All fields are required")]
-        public int ZoneID { get; set; }
-        public string ZoneName { get; set; }
-        public int ZoneCapacity { get; set; }
-
-        [Required(ErrorMessage = "All fields are required")]
-        public int HabitatID { get; set; }
-        public string HabitatName { get; set; }
-        public int HabitatCapacity { get; set; }
+        public HabitatDTO HabitatDTO { get; set; }
     }
 }

@@ -375,11 +375,9 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 animalDTO.Species = InformationStrings[5];
                 animalDTO.SpeciesType = InformationStrings[6];
                 animalDTO.Diet = InformationStrings[7];
-                animalDTO.FeedingTimeID = Int32.Parse(InformationStrings[8]);
+                animalDTO.TimeBlockDTO = new TimeBlockDTO { TimeblockID = Int32.Parse(InformationStrings[8]) };
                 animalDTO.FeedingInterval = Int32.Parse(InformationStrings[9]);
-                animalDTO.ZoneID = Int32.Parse(InformationStrings[10]);
-                animalDTO.HabitatID = Int32.Parse(InformationStrings[11]);
-
+                animalDTO.HabitatDTO = new HabitatDTO { HabitatID = Int32.Parse(InformationStrings[11]) , ZoneDTO = new ZoneDTO { ZoneID = Int32.Parse(InformationStrings[10]) } };
 
 
                 ValidationContext context = new ValidationContext(animalDTO, null, null);
