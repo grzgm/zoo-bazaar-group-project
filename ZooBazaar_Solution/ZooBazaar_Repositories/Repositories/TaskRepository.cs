@@ -50,7 +50,7 @@ namespace ZooBazaar_Repositories.Repositories
                     TimeSpan animalstartingtime = reader.GetTimeSpan(11);
                     TimeSpan animalendingtime = reader.GetTimeSpan(12);
                     int animalfeedinginterval = reader.GetInt32(13);
-
+                    
                     int habitatid = reader.GetInt32(14);
                     string habitatname = reader.GetString(15);
                     int habitatcapacity = reader.GetInt32(16);
@@ -58,6 +58,7 @@ namespace ZooBazaar_Repositories.Repositories
                     int zoneid = reader.GetInt32(17);
                     string zonename = reader.GetString(18);
                     int zonecapacity = reader.GetInt32(19);
+
 
                     taskDTOs.Add(new TaskDTO
                     {
