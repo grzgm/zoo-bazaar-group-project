@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooBazaar_ClassLibrary.Interfaces;
+using ZooBazaar_ClassLibrary.Menagers;
+using ZooBazaar_Repositories.Interfaces;
+using ZooBazaar_Repositories.Repositories;
+using ZooBazaar_DomainModels.Models;
 
 namespace ZooBazaar_Windows_Forms_Application.Schedule
 {
@@ -19,12 +24,55 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             this.id = id;
 
             // Here we will retrive info form Database for every TIMEBLOCK that maches parameters(DAY MONTH YEAR for ENTITYID) and to every BLOCKBUTTON we will send at least TASK.ToString()
+            //int timeblockId = 5;
+            //string task = "Cleaning";
+            string[] taskArray = new string[24];
+            //taskArray[timeblockId] = task;
 
-            //assigning controls
-            _BlockButton = new BlockButton[24];
-            for (int i = 0; i < _BlockButton.Length; i++)
+
+
+
+            IScheduleRepository scheduleRepository = new ScheduleRepository();
+            IEmployeeRepositroty employeeRepositroty = new EmployeeRepository();
+            ITimeBlockRepository timeBlockRepository = new TimeblockRepository();
+            IZoneRepository zoneRepository = new ZoneRepository();
+            IHabitatRepository habitatRepository = new HabitatRepository();
+            ITaskRepository taskRepository = new TaskRepository();
+            IScheduleManager scheduleManager = new ScheduleManager(scheduleRepository, employeeRepositroty, timeBlockRepository, zoneRepository, habitatRepository, taskRepository);
+
+
+            ZooBazaar_DomainModels.Models.Schedule test = scheduleManager.GetDayScheduleEmployee(new DateOnly(2022, 10, 5), 15);
+
+            if (mainScheduleTable.selectedEntity == 0)
             {
-                _BlockButton[i] = new BlockButton(mainScheduleTable, this.id,  i);
+                test = scheduleManager.GetDayScheduleEmployee(new DateOnly(2022, 10, 5), mainScheduleTable.selectedEmployee.ID);
+            }
+
+            if(test != null)
+            {
+                taskArray[test.timeBlockId] = test.taskName;
+
+                //assigning controls
+                _BlockButton = new BlockButton[24];
+                for (int i = 0; i < _BlockButton.Length; i++)
+                {
+                    if (taskArray[i] != String.Empty)
+                    {
+                        _BlockButton[i] = new BlockButton(mainScheduleTable, this.id, i, taskArray[i]);
+                    }
+                    else
+                    {
+                        _BlockButton[i] = new BlockButton(mainScheduleTable, this.id, i);
+                    }
+                }
+            }
+            else
+            {
+                _BlockButton = new BlockButton[24];
+                for (int i = 0; i < _BlockButton.Length; i++)
+                {
+                    _BlockButton[i] = new BlockButton(mainScheduleTable, this.id, i);
+                }
             }
 
 

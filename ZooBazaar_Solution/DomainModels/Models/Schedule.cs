@@ -16,6 +16,11 @@ namespace ZooBazaar_DomainModels.Models
         private Employee _employee;
         private Task _task;
 
+        public Schedule()
+        {
+
+        }
+
         public Schedule(int id, DateOnly date, TimeBlock timeBlock, Employee employee, Task task)
         {
             _id = id;
@@ -32,6 +37,9 @@ namespace ZooBazaar_DomainModels.Models
             this._employee = new Employee(scheduleDTO.EmployeeDTO);
             this._task = new Task(scheduleDTO.TaskDTO);
         }
+
+        public int timeBlockId { get { return _timeBlock.ID; } }
+        public string taskName { get { return _task.taskName; } }
 
     }
 }

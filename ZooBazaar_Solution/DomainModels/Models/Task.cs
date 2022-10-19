@@ -42,7 +42,7 @@ namespace ZooBazaar_DomainModels.Models
             this._zone = new Zone(taskDTO.HabitatDTO.ZoneDTO);
         }
 
-
+        public string taskName { get { return _name.ToString(); } }
 
     }
 }
