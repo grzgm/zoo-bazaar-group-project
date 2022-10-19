@@ -19,13 +19,10 @@ namespace ZooBazaar_DomainModels.Models
             _timeblocks = new List<TimeBlock>();
         }
 
-        public TimePreference(TimePreferenceDTO timePreferenceDTO, EmployeeDTO employeeDTO, List<TimeBlockDTO> timeBlockDTOs)
+        public TimePreference(TimePreferenceDTO timePreferenceDTO)
         {
-            this._employee = new Employee(employeeDTO);
-            foreach(TimeBlockDTO dto in timeBlockDTOs)
-            {
-                this._timeblocks.Add(new TimeBlock(dto));
-            }
+            this._employee = new Employee(timePreferenceDTO.EmployeeDTO);
+            
         }
     }
 }

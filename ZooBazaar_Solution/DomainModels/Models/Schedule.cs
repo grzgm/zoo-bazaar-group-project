@@ -24,13 +24,13 @@ namespace ZooBazaar_DomainModels.Models
             _employee = employee;
             _task = task;
         }
-        public Schedule(ScheduleDTO scheduleDTO, TimeBlockDTO timeBlockDTO, EmployeeDTO employeeDTO, TaskDTO taskDTO, HabitatDTO habitatDTO, ZoneDTO zoneDTO)
+        public Schedule(ScheduleDTO scheduleDTO)
         {
             this._id = scheduleDTO.ScheduleID;
             this._date = new DateOnly(scheduleDTO.Year, scheduleDTO.Day, scheduleDTO.Day);
-            this._timeBlock = new TimeBlock(timeBlockDTO);
-            this._employee = new Employee(employeeDTO);
-            this._task = new Task(taskDTO, habitatDTO, zoneDTO);
+            this._timeBlock = new TimeBlock(scheduleDTO.TimeBlockDTO);
+            this._employee = new Employee(scheduleDTO.EmployeeDTO);
+            this._task = new Task(scheduleDTO.TaskDTO);
         }
 
     }

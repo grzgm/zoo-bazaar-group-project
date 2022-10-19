@@ -22,7 +22,7 @@ namespace ZooBazaar_ClassLibrary.Menagers
         public Habitat GetHabitat(int id)
         {
             HabitatDTO dto = _habitatRepository.GetByHabitatId(id);
-            return new Habitat(dto, dto.ZoneDTO);
+            return new Habitat(dto);
         }
 
         public void NewHabitat(HabitatAddDTO habitatDTO)
@@ -40,7 +40,7 @@ namespace ZooBazaar_ClassLibrary.Menagers
 
             foreach(HabitatDTO habitatDTO in _habitatRepository.GetAll())
             {
-                habitats.Add(new Habitat(habitatDTO, habitatDTO.ZoneDTO));
+                habitats.Add(new Habitat(habitatDTO));
             }
 
             return habitats;

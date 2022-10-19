@@ -24,7 +24,7 @@ namespace ZooBazaar_ClassLibrary.Menagers
            
            foreach(AnimalDTO dto in _animalRepository.GetAll())
             {
-                animals.Add(new Animal(dto, dto.TimeBlockDTO, dto.HabitatDTO.ZoneDTO, dto.HabitatDTO));
+                animals.Add(new Animal(dto));
             }
             return animals;
         }
@@ -32,7 +32,7 @@ namespace ZooBazaar_ClassLibrary.Menagers
         public Animal GetAnimal(int id)
         {
             AnimalDTO dto = _animalRepository.GetByAnimalId(id);
-            return new Animal(dto, dto.TimeBlockDTO, dto.HabitatDTO.ZoneDTO, dto.HabitatDTO);
+            return new Animal(dto);
         }
 
         public void NewAnimal(AnimalAddDTO animalAddDTO)
