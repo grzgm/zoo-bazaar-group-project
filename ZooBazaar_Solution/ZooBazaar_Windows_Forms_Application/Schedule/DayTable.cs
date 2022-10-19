@@ -38,7 +38,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             IZoneRepository zoneRepository = new ZoneRepository();
             IHabitatRepository habitatRepository = new HabitatRepository();
             ITaskRepository taskRepository = new TaskRepository();
-            IScheduleManager scheduleManager = new ScheduleManager(scheduleRepository, employeeRepositroty, timeBlockRepository, zoneRepository, habitatRepository, taskRepository);
+            IScheduleManager scheduleManager = new ScheduleManager(scheduleRepository, taskRepository);
 
 
             ZooBazaar_DomainModels.Models.Schedule test = scheduleManager.GetDayScheduleEmployee(new DateOnly(2022, 10, 5), 15);

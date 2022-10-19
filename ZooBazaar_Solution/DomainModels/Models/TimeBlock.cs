@@ -14,18 +14,18 @@ namespace ZooBazaar_DomainModels.Models
         private TimeOnly _startTime;
         private TimeOnly _endTime;
 
-      public TimeBlock(TimeBlockDTO timeBlockDTO)
-      {
+        public TimeBlock(TimeBlockDTO timeBlockDTO)
+        {
             this._id = timeBlockDTO.TimeblockID;
             this._startTime = TimeOnly.FromTimeSpan(timeBlockDTO.StartingTime);
             this._endTime = TimeOnly.FromTimeSpan(timeBlockDTO.EndingTime);
 
-      }
+        }
         public override string ToString()
         {
             return _startTime.ToString() + "  " + _endTime.ToString();
         }
 
-
+        public int ID { get { return _id; } }
     }
 }

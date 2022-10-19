@@ -27,7 +27,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             _DayTables = new DayTable[7];
             for (int i = 0; i < 7; i++)
             {
-                _DayTables[i] = new DayTable(mainScheduleTable, i, 3,3,3);
+                _DayTables[i] = new DayTable(mainScheduleTable, i);
             }
 
 

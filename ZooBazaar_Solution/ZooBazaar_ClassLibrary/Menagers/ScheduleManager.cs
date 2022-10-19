@@ -13,12 +13,12 @@ namespace ZooBazaar_ClassLibrary.Menagers
     public class ScheduleManager : IScheduleManager
     {
         private readonly IScheduleRepository _scheduleRepository;
+        private readonly ITaskRepository _taskRepository;
 
-
-        public ScheduleManager(IScheduleRepository scheduleRepository)
+        public ScheduleManager(IScheduleRepository scheduleRepository, ITaskRepository taskRepository)
         {
             this._scheduleRepository = scheduleRepository;
-
+            this._taskRepository = taskRepository;
         }
 
         public Schedule GetDayScheduleEmployee(DateOnly date, int employeeId)
@@ -26,8 +26,8 @@ namespace ZooBazaar_ClassLibrary.Menagers
             ScheduleDTO dto = _scheduleRepository.GetByDateAndEmployeeId(date, employeeId);
             if(dto != null)
             {
-                TaskDTO taskDTO = _taskRepository.GetByTaskId(dto.TaskID);
-                return new Schedule(dto, _timeBlockRepository.GetByTimeBlockId(dto.TimeblockID), _employeeRepositroty.GetByEmployeeId(employeeId), taskDTO, _habitatRepository.GetByHabitatId(taskDTO.HabitatID), _zoneRepository.GetByZoneId(taskDTO.ZoneID));
+                TaskDTO taskDTO = _taskRepository.GetByTaskId(dto.TaskDTO.TaskID);
+                return new Schedule(dto);
             }
             return null;
         }
