@@ -41,7 +41,7 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
             IScheduleManager scheduleManager = new ScheduleManager(scheduleRepository, taskRepository);
 
 
-            ZooBazaar_DomainModels.Models.Schedule test = scheduleManager.GetDayScheduleEmployee(new DateOnly(2022, 10, 5), 15);
+            ZooBazaar_DomainModels.Models.Schedule test = scheduleManager.GetDayScheduleEmployee(new DateOnly(2022, 10, 5), 9);
 
             if (mainScheduleTable.selectedEntity == 0)
             {

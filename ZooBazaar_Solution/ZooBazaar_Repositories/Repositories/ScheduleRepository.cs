@@ -35,37 +35,37 @@ namespace ZooBazaar_Repositories.Repositories
                     TimeSpan schstartingtime = reader.GetTimeSpan(5);
                     TimeSpan schendingtime = reader.GetTimeSpan(6);
 
-                    int employeeid = reader.GetInt32(5);
-                    string empfirstname = reader.GetString(6);
-                    string emplastname = reader.GetString(7);
-                    string empemail = reader.GetString(8);
-                    string empphone = reader.GetString(9);
-                    string empaddress = reader.GetString(10);
-                    string emprole = reader.GetString(11);
+                    int employeeid = reader.GetInt32(7);
+                    string empfirstname = reader.GetString(8);
+                    string emplastname = reader.GetString(9);
+                    string empemail = reader.GetString(10);
+                    string empphone = reader.GetString(11);
+                    string empaddress = reader.GetString(12);
+                    string emprole = reader.GetString(13);
 
-                    int taskid = reader.GetInt32(12);
-                    string taskname = reader.GetString(13);
+                    int taskid = reader.GetInt32(14);
+                    string taskname = reader.GetString(15);
 
-                    int animalid = reader.GetInt32(14);
-                    string animalname = reader.GetString(15);
-                    int animalage = reader.GetInt32(16);
-                    DateTime animaldateofbirth = reader.GetDateTime(17);
-                    bool animalsex = reader.GetBoolean(18);
-                    string animalspecies = reader.GetString(19);
-                    string animalspeciestype = reader.GetString(20);
-                    string animaldiet = reader.GetString(21);
-                    int animalfeedingtimeid = reader.GetInt32(22);
-                    TimeSpan animalstartingtime = reader.GetTimeSpan(23);
-                    TimeSpan animalendingtime = reader.GetTimeSpan(24);
-                    int animalfeedinginterval = reader.GetInt32(25);
+                    int animalid = reader.GetInt32(16);
+                    string animalname = reader.GetString(17);
+                    int animalage = reader.GetInt32(18);
+                    DateTime animaldateofbirth = reader.GetDateTime(19);
+                    bool animalsex = reader.GetBoolean(20);
+                    string animalspecies = reader.GetString(21);
+                    string animalspeciestype = reader.GetString(22);
+                    string animaldiet = reader.GetString(23);
+                    int animalfeedingtimeid = reader.GetInt32(24);
+                    TimeSpan animalstartingtime = reader.GetTimeSpan(25);
+                    TimeSpan animalendingtime = reader.GetTimeSpan(26);
+                    int animalfeedinginterval = reader.GetInt32(27);
 
-                    int habitatid = reader.GetInt32(26);
-                    string habitatname = reader.GetString(27);
-                    int habitatcapacity = reader.GetInt32(28);
+                    int habitatid = reader.GetInt32(28);
+                    string habitatname = reader.GetString(29);
+                    int habitatcapacity = reader.GetInt32(30);
 
-                    int zoneid = reader.GetInt32(29);
-                    string zonename = reader.GetString(30);
-                    int zonecapacity = reader.GetInt32(31);
+                    int zoneid = reader.GetInt32(31);
+                    string zonename = reader.GetString(32);
+                    int zonecapacity = reader.GetInt32(33);
 
                     scheduleDTO = (new ScheduleDTO
                     {
@@ -175,37 +175,37 @@ namespace ZooBazaar_Repositories.Repositories
                     TimeSpan schstartingtime = reader.GetTimeSpan(5);
                     TimeSpan schendingtime = reader.GetTimeSpan(6);
 
-                    int employeeid = reader.GetInt32(5);
-                    string empfirstname = reader.GetString(6);
-                    string emplastname = reader.GetString(7);
-                    string empemail = reader.GetString(8);
-                    string empphone = reader.GetString(9);
-                    string empaddress = reader.GetString(10);
-                    string emprole = reader.GetString(11);
+                    int employeeid = reader.GetInt32(7);
+                    string empfirstname = reader.GetString(8);
+                    string emplastname = reader.GetString(9);
+                    string empemail = reader.GetString(10);
+                    string empphone = reader.GetString(11);
+                    string empaddress = reader.GetString(12);
+                    string emprole = reader.GetString(13);
 
-                    int taskid = reader.GetInt32(12);
-                    string taskname = reader.GetString(13);
+                    int taskid = reader.GetInt32(14);
+                    string taskname = reader.GetString(15);
 
-                    int animalid = reader.GetInt32(14);
-                    string animalname = reader.GetString(15);
-                    int animalage = reader.GetInt32(16);
-                    DateTime animaldateofbirth = reader.GetDateTime(17);
-                    bool animalsex = reader.GetBoolean(18);
-                    string animalspecies = reader.GetString(19);
-                    string animalspeciestype = reader.GetString(20);
-                    string animaldiet = reader.GetString(21);
-                    int animalfeedingtimeid = reader.GetInt32(22);
-                    TimeSpan animalstartingtime = reader.GetTimeSpan(23);
-                    TimeSpan animalendingtime = reader.GetTimeSpan(24);
-                    int animalfeedinginterval = reader.GetInt32(25);
+                    int animalid = reader.GetInt32(16);
+                    string animalname = reader.GetString(17);
+                    int animalage = reader.GetInt32(18);
+                    DateTime animaldateofbirth = reader.GetDateTime(19);
+                    bool animalsex = reader.GetBoolean(20);
+                    string animalspecies = reader.GetString(21);
+                    string animalspeciestype = reader.GetString(22);
+                    string animaldiet = reader.GetString(23);
+                    int animalfeedingtimeid = reader.GetInt32(24);
+                    TimeSpan animalstartingtime = reader.GetTimeSpan(25);
+                    TimeSpan animalendingtime = reader.GetTimeSpan(26);
+                    int animalfeedinginterval = reader.GetInt32(27);
 
-                    int habitatid = reader.GetInt32(26);
-                    string habitatname = reader.GetString(27);
-                    int habitatcapacity = reader.GetInt32(28);
+                    int habitatid = reader.GetInt32(28);
+                    string habitatname = reader.GetString(29);
+                    int habitatcapacity = reader.GetInt32(30);
 
-                    int zoneid = reader.GetInt32(29);
-                    string zonename = reader.GetString(30);
-                    int zonecapacity = reader.GetInt32(31);
+                    int zoneid = reader.GetInt32(31);
+                    string zonename = reader.GetString(32);
+                    int zonecapacity = reader.GetInt32(33);
 
                     scheduleDTOs.Add(new ScheduleDTO
                     {
@@ -302,37 +302,38 @@ namespace ZooBazaar_Repositories.Repositories
                     TimeSpan schstartingtime = reader.GetTimeSpan(5);
                     TimeSpan schendingtime = reader.GetTimeSpan(6);
 
-                    int employeeid = reader.GetInt32(5);
-                    string empfirstname = reader.GetString(6);
-                    string emplastname = reader.GetString(7);
-                    string empemail = reader.GetString(8);
-                    string empphone = reader.GetString(9);
-                    string empaddress = reader.GetString(10);
-                    string emprole = reader.GetString(11);
+                    int employeeid = reader.GetInt32(7);
+                    string empfirstname = reader.GetString(8);
+                    string emplastname = reader.GetString(9);
+                    string empemail = reader.GetString(10);
+                    string empphone = reader.GetString(11);
+                    string empaddress = reader.GetString(12);
+                    string emprole = reader.GetString(13);
 
-                    int taskid = reader.GetInt32(12);
-                    string taskname = reader.GetString(13);
+                    int taskid = reader.GetInt32(14);
+                    string taskname = reader.GetString(15);
 
-                    int animalid = reader.GetInt32(14);
-                    string animalname = reader.GetString(15);
-                    int animalage = reader.GetInt32(16);
-                    DateTime animaldateofbirth = reader.GetDateTime(17);
-                    bool animalsex = reader.GetBoolean(18);
-                    string animalspecies = reader.GetString(19);
-                    string animalspeciestype = reader.GetString(20);
-                    string animaldiet = reader.GetString(21);
-                    int animalfeedingtimeid = reader.GetInt32(22);
-                    TimeSpan animalstartingtime = reader.GetTimeSpan(23);
-                    TimeSpan animalendingtime = reader.GetTimeSpan(24);
-                    int animalfeedinginterval = reader.GetInt32(25);
+                    int animalid = reader.GetInt32(16);
+                    string animalname = reader.GetString(17);
+                    int animalage = reader.GetInt32(18);
+                    DateTime animaldateofbirth = reader.GetDateTime(19);
+                    bool animalsex = reader.GetBoolean(20);
+                    string animalspecies = reader.GetString(21);
+                    string animalspeciestype = reader.GetString(22);
+                    string animaldiet = reader.GetString(23);
+                    int animalfeedingtimeid = reader.GetInt32(24);
+                    TimeSpan animalstartingtime = reader.GetTimeSpan(25);
+                    TimeSpan animalendingtime = reader.GetTimeSpan(26);
+                    int animalfeedinginterval = reader.GetInt32(27);
 
-                    int habitatid = reader.GetInt32(26);
-                    string habitatname = reader.GetString(27);
-                    int habitatcapacity = reader.GetInt32(28);
+                    int habitatid = reader.GetInt32(28);
+                    string habitatname = reader.GetString(29);
+                    int habitatcapacity = reader.GetInt32(30);
 
-                    int zoneid = reader.GetInt32(29);
-                    string zonename = reader.GetString(30);
-                    int zonecapacity = reader.GetInt32(31);
+                    int zoneid = reader.GetInt32(31);
+                    string zonename = reader.GetString(32);
+                    int zonecapacity = reader.GetInt32(33);
+
 
                     scheduleDTO = (new ScheduleDTO
                     {

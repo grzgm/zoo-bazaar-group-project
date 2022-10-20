@@ -26,7 +26,7 @@ namespace ZooBazaar_ClassLibrary.Menagers
             ScheduleDTO dto = _scheduleRepository.GetByDateAndEmployeeId(date, employeeId);
             if(dto != null)
             {
-                TaskDTO taskDTO = _taskRepository.GetByTaskId(dto.TaskDTO.TaskID);
+                TaskDTO taskDTO = dto.TaskDTO;
                 return new Schedule(dto);
             }
             return null;

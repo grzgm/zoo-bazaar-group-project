@@ -15,7 +15,12 @@ namespace ZooBazaar_DomainModels.Models
         Feeding, 
         VetCheckup, 
         SpecialCare, 
-        None
+        None,
+        AddSupplies,
+        PlayTime,
+        GuestTour,
+        WaterRefill,
+        TicketSale
     }
     public class Task
     {
