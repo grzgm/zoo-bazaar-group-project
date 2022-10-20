@@ -68,7 +68,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             }
             UpdateTable();
         }
-        public void UpdateTableContentBasedOnSpecies(SPECIESTYPE sPECIESTYPE)
+        public void UpdateTableContentBasedOnSpecies(string sPECIESTYPE)
         {
             IEnumerable<Animal> Animals = animalMeneger.GetAll().Where(species => species.SpeciesType == sPECIESTYPE);
 

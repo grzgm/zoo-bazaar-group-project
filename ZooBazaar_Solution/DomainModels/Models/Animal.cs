@@ -25,7 +25,7 @@ namespace ZooBazaar_DomainModels.Models
         private DateOnly _dateOfBirth;
         private bool _sex;
         private string _species;
-        private SPECIESTYPE _speciesType;
+        private string _speciesType;
         private string _diet;
         private TimeBlock _timeBlock;
         private int _feedingInterval;
@@ -40,7 +40,7 @@ namespace ZooBazaar_DomainModels.Models
             this._dateOfBirth = DateOnly.FromDateTime(animalDTO.DateOfBirth);
             this._sex = animalDTO.Sex;
             this._species = animalDTO.Species;
-            this._speciesType = Enum.Parse<SPECIESTYPE>(animalDTO.SpeciesType, true);
+            this._speciesType = animalDTO.SpeciesType;
             this._diet = animalDTO.Diet;
             this._timeBlock = new TimeBlock(animalDTO.TimeBlockDTO);
             this._feedingInterval = animalDTO.FeedingInterval;
@@ -59,7 +59,7 @@ namespace ZooBazaar_DomainModels.Models
 
         public string Species { get { return _species; } }  
 
-        public SPECIESTYPE SpeciesType { get { return _speciesType; } }
+        public string SpeciesType { get { return _speciesType; } }
 
         public string Diet { get { return _diet; } }
 

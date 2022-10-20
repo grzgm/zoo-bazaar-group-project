@@ -63,7 +63,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         private void _SpeciesComboBox_SelectedIndexChanged(object sender,
         System.EventArgs e)
         {
-            _AnimalTable.UpdateTableContentBasedOnSpecies((SPECIESTYPE)_SpeciesComboBox.SelectedItem);
+            _AnimalTable.UpdateTableContentBasedOnSpecies(_SpeciesComboBox.SelectedItem.ToString());
         }
         private void _HabitatComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
