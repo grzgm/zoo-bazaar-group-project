@@ -1,0 +1,5 @@
+﻿#container {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 40px 20px min(70%) auto;
+}
