@@ -17,12 +17,12 @@ namespace ZooBazaar_DomainModels.Models
         private int _capacity;
         private Zone _zone;
 
-        public Habitat(HabitatDTO habitatDTO, ZoneDTO zoneDTO)
+        public Habitat(HabitatDTO habitatDTO)
         {
-            this._id = habitatDTO.ID;
+            this._id = habitatDTO.HabitatID;
             this._name = habitatDTO.Name;
             this._capacity = habitatDTO.Capacity;
-            this._zone = new Zone(zoneDTO);
+            this._zone = new Zone(habitatDTO.ZoneDTO);
 
         }
         public override string ToString()

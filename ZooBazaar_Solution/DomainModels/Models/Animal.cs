@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,27 +25,27 @@ namespace ZooBazaar_DomainModels.Models
         private DateOnly _dateOfBirth;
         private bool _sex;
         private string _species;
-        private SPECIESTYPE _speciesType;
+        private string _speciesType;
         private string _diet;
         private TimeBlock _timeBlock;
         private int _feedingInterval;
         private Zone _zone;
         private Habitat _habitat;
 
-        public Animal(AnimalDTO animalDTO, TimeBlockDTO timeBlockDTO, ZoneDTO zoneDTO, HabitatDTO habitatDTO)
+        public Animal(AnimalDTO animalDTO)
         {
-            this._id = animalDTO.Id;
+            this._id = animalDTO.AnimalId;
             this._name = animalDTO.Name;
             this._age = animalDTO.Age;
             this._dateOfBirth = DateOnly.FromDateTime(animalDTO.DateOfBirth);
             this._sex = animalDTO.Sex;
             this._species = animalDTO.Species;
-            this._speciesType = Enum.Parse<SPECIESTYPE>(animalDTO.SpeciesType, true);
+            this._speciesType = animalDTO.SpeciesType;
             this._diet = animalDTO.Diet;
-            this._timeBlock = new TimeBlock(timeBlockDTO);
+            this._timeBlock = new TimeBlock(animalDTO.TimeBlockDTO);
             this._feedingInterval = animalDTO.FeedingInterval;
-            this._zone = new Zone(zoneDTO);
-            this._habitat = new Habitat(habitatDTO,zoneDTO);
+            this._zone  = new Zone(animalDTO.HabitatDTO.ZoneDTO);
+            this._habitat = new Habitat(animalDTO.HabitatDTO);
         }
   
         public int ID { get { return _id; } }
@@ -58,7 +59,7 @@ namespace ZooBazaar_DomainModels.Models
 
         public string Species { get { return _species; } }  
 
-        public SPECIESTYPE SpeciesType { get { return _speciesType; } }
+        public string SpeciesType { get { return _speciesType; } }
 
         public string Diet { get { return _diet; } }
 

@@ -314,7 +314,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 }
 
                 EmployeeDTO employeeDTO = new EmployeeDTO();
-                employeeDTO.Id = Int32.Parse(InformationStrings[0]);
+                employeeDTO.EmployeeID = Int32.Parse(InformationStrings[0]);
                 employeeDTO.FirstName = InformationStrings[1];
                 employeeDTO.LastName = InformationStrings[2];
                 employeeDTO.Email = InformationStrings[3];
@@ -360,7 +360,7 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 }
                 
                 AnimalDTO animalDTO = new AnimalDTO();
-                animalDTO.Id = Int32.Parse(InformationStrings[0]);
+                animalDTO.AnimalId = Int32.Parse(InformationStrings[0]);
                 animalDTO.Name = InformationStrings[1];
                 animalDTO.Age = Int32.Parse(InformationStrings[2]);
                 animalDTO.DateOfBirth = DateTime.Parse(InformationStrings[3]);
@@ -375,11 +375,9 @@ namespace ZooBazaar_Windows_Forms_Application.Information_Controls
                 animalDTO.Species = InformationStrings[5];
                 animalDTO.SpeciesType = InformationStrings[6];
                 animalDTO.Diet = InformationStrings[7];
-                animalDTO.FeedingTimeID = Int32.Parse(InformationStrings[8]);
+                animalDTO.TimeBlockDTO = new TimeBlockDTO { TimeblockID = Int32.Parse(InformationStrings[8]) };
                 animalDTO.FeedingInterval = Int32.Parse(InformationStrings[9]);
-                animalDTO.ZoneID = Int32.Parse(InformationStrings[10]);
-                animalDTO.HabitatID = Int32.Parse(InformationStrings[11]);
-
+                animalDTO.HabitatDTO = new HabitatDTO { HabitatID = Int32.Parse(InformationStrings[11]) , ZoneDTO = new ZoneDTO { ZoneID = Int32.Parse(InformationStrings[10]) } };
 
 
                 ValidationContext context = new ValidationContext(animalDTO, null, null);

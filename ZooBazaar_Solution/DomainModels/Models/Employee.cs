@@ -37,7 +37,7 @@ namespace ZooBazaar_DomainModels.Models
         }
         public Employee(EmployeeDTO employeeDTO)
         {
-            this._id = employeeDTO.Id;
+            this._id = employeeDTO.EmployeeID;
             this._firstName = employeeDTO.FirstName;
             this._lastName = employeeDTO.LastName;
             this._email = employeeDTO.Email;

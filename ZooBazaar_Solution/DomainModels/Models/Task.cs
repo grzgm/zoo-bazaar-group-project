@@ -15,7 +15,12 @@ namespace ZooBazaar_DomainModels.Models
         Feeding, 
         VetCheckup, 
         SpecialCare, 
-        None
+        None,
+        AddSupplies,
+        PlayTime,
+        GuestTour,
+        WaterRefill,
+        TicketSale
     }
     public class Task
     {
@@ -33,24 +38,16 @@ namespace ZooBazaar_DomainModels.Models
             _habitat = habitat;
             _zone = zone;
         }
-        public Task(TaskDTO TaskDTO, AnimalDTO animalDTO, TimeBlockDTO timeBlockOfAnimalDTO, HabitatDTO habitatDTO ,ZoneDTO zoneDTO)
+        public Task(TaskDTO taskDTO)
         {
-            this._id = TaskDTO.ID;
-            this._name = Enum.Parse<TASKNAME>(TaskDTO.Name, true);
-            this._animal = new Animal(animalDTO, timeBlockOfAnimalDTO, zoneDTO, habitatDTO);
-            this._habitat = new Habitat(habitatDTO, zoneDTO);
-            this._zone = new Zone(zoneDTO);
-        }
-        public Task(TaskDTO TaskDTO, HabitatDTO habitatDTO, ZoneDTO zoneDTO)
-        {
-            this._id = TaskDTO.ID;
-            this._name = Enum.Parse<TASKNAME>(TaskDTO.Name, true);
-            this._animal = null;
-            this._habitat = new Habitat(habitatDTO, zoneDTO);
-            this._zone = new Zone(zoneDTO);
+            this._id = taskDTO.TaskID;
+            this._name = Enum.Parse<TASKNAME>(taskDTO.Name, true);
+            this._animal = new Animal(taskDTO.AnimalDTO);
+            this._habitat = new Habitat(taskDTO.HabitatDTO);
+            this._zone = new Zone(taskDTO.HabitatDTO.ZoneDTO);
         }
 
-
+        public string taskName { get { return _name.ToString(); } }
 
     }
 }

@@ -8,12 +8,13 @@ namespace ZooBazaar_DTO.DTOs
 {
     public class ScheduleDTO
     {
-        public int Id { get; set; } 
+        public int ScheduleID { get; set; } 
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
-        public int TimeblockID { get; set; }
-        public int EmployeeID { get; set; }
-        public int TaskID { get; set; }
+
+        public TimeBlockDTO TimeBlockDTO { get; set; }
+        public EmployeeDTO EmployeeDTO { get; set; }
+        public TaskDTO TaskDTO { get; set; }
     }
 }

@@ -9,48 +9,63 @@ using ZooBazaar_Repositories.Interfaces;
 
 namespace ZooBazaar_Repositories.Repositories
 {
-    public class TimePreferenceRepository : ITimePreferenceRepository
+    public class TimePreferenceRepository : BaseRepository, ITimePreferenceRepository
     {
-        private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi463992;User Id=dbi463992;Password=gogotpilon;";
-
         void ITimePreferenceRepository.Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            string Query = "DELETE FROM Timepreference WHERE EmployeeID = @ID";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
             {
-                string Query = "DELETE FROM Timepreference WHERE EmployeeID = @ID";
+                command.Parameters.AddWithValue("@ID", id);
 
-                using (SqlCommand command = new SqlCommand(Query, connection))
-                {
-                    command.Parameters.AddWithValue("@ID", id);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
+                connection.Open();
+                command.ExecuteNonQuery();
             }
         }
 
         IEnumerable<TimePreferenceDTO> ITimePreferenceRepository.GetAll()
         {
             List<TimePreferenceDTO> timepreferenceDTOs = new List<TimePreferenceDTO>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            string selectQuery = "SELECT E.*, TB.* FROM Timepreference T JOIN Employee E ON T.EmployeeID = E.EmployeeID JOIN Timeblock TB ON T.TimeblockID = TB.TimeblockID";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(selectQuery, connection))
             {
-                string selectQuery = "SELECT * FROM Timepreference";
-
-                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int employeeid = reader.GetInt32(1);
-                        int timeblockid = reader.GetInt32(2);
+                    int employeeid = reader.GetInt32(0);
+                    string firstname = reader.GetString(1);
+                    string lastname = reader.GetString(2);
+                    string email = reader.GetString(3);
+                    string phone = reader.GetString(4);
+                    string address = reader.GetString(5);
+                    string role = reader.GetString(6);
 
-                        timepreferenceDTOs.Add(new TimePreferenceDTO
+                    int timeblockid = reader.GetInt32(7);
+                    TimeSpan startingtime = reader.GetTimeSpan(8);
+                    TimeSpan endingtime = reader.GetTimeSpan(9);
+
+                    timepreferenceDTOs.Add(new TimePreferenceDTO
+                    {
+                        EmployeeDTO = new EmployeeDTO
                         {
-                            employeeID = employeeid,
-                            TimeblockID = timeblockid
-                        });
-                    }
+                            EmployeeID = employeeid,
+                            FirstName = firstname,
+                            LastName = lastname,
+                            Email = email,
+                            Phone = phone,
+                            Address = address,
+                            Role = role
+                        },
+                        TimeBlockDTO = new TimeBlockDTO
+                        {
+                            TimeblockID = timeblockid,
+                            StartingTime = startingtime,
+                            EndingTime = endingtime
+                        }
+                    });
                 }
             }
             return timepreferenceDTOs;
@@ -59,26 +74,46 @@ namespace ZooBazaar_Repositories.Repositories
         IEnumerable<TimePreferenceDTO> ITimePreferenceRepository.GetByEmployeeId(int ID)
         {
             List<TimePreferenceDTO> timepreferenceDTOs = new List<TimePreferenceDTO>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            string selectQuery = "SELECT E.*, TB.* FROM Timepreference T JOIN Employee E ON T.EmployeeID = E.EmployeeID JOIN Timeblock TB ON T.TimeblockID = TB.TimeblockID WHERE EmployeeID = @ID";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(selectQuery, connection))
             {
-                string selectQuery = "SELECT * FROM Timepreference WHERE EmployeeID = @id";
-
-                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                command.Parameters.AddWithValue("@ID", ID);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    command.Parameters.AddWithValue("@ID", ID);
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int employeeid = reader.GetInt32(1);
-                        int timeblockid = reader.GetInt32(2);
+                    int employeeid = reader.GetInt32(0);
+                    string firstname = reader.GetString(1);
+                    string lastname = reader.GetString(2);
+                    string email = reader.GetString(3);
+                    string phone = reader.GetString(4);
+                    string address = reader.GetString(5);
+                    string role = reader.GetString(6);
 
-                        timepreferenceDTOs.Add(new TimePreferenceDTO
+                    int timeblockid = reader.GetInt32(7);
+                    TimeSpan startingtime = reader.GetTimeSpan(8);
+                    TimeSpan endingtime = reader.GetTimeSpan(9);
+
+                    timepreferenceDTOs.Add(new TimePreferenceDTO
+                    {
+                        EmployeeDTO = new EmployeeDTO
                         {
-                            employeeID = employeeid,
-                            TimeblockID = timeblockid
-                        });
-                    }
+                            EmployeeID = employeeid,
+                            FirstName = firstname,
+                            LastName = lastname,
+                            Email = email,
+                            Phone = phone,
+                            Address = address,
+                            Role = role
+                        },
+                        TimeBlockDTO = new TimeBlockDTO
+                        {
+                            TimeblockID = timeblockid,
+                            StartingTime = startingtime,
+                            EndingTime = endingtime
+                        }
+                    });
                 }
             }
             return timepreferenceDTOs;
@@ -86,18 +121,16 @@ namespace ZooBazaar_Repositories.Repositories
 
         void ITimePreferenceRepository.Insert(TimePreferenceDTO dto)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            string Query = "INSERT INTO Timepreference VALUES (@EmployeeID,@TimeblockID)";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
             {
-                string Query = "INSERT INTO Timepreference VALUES (@EmployeeID,@TimeblockID)";
-
-                using (SqlCommand command = new SqlCommand(Query, connection))
-                {
-                    command.Parameters.AddWithValue("@EmployeeID", dto.employeeID);
-                    command.Parameters.AddWithValue("@TimeblockID", dto.TimeblockID);
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
+                command.Parameters.AddWithValue("@EmployeeID", dto.EmployeeDTO.EmployeeID);
+                command.Parameters.AddWithValue("@TimeblockID", dto.TimeBlockDTO.TimeblockID);
+                connection.Open();
+                command.ExecuteNonQuery();
             }
+
         }
     }
 }

@@ -30,6 +30,24 @@ namespace ZooBazaar_Windows_Forms_Application.Schedule
 
             this.Click += new System.EventHandler(this.BlockButton_Click);
         }
+        public BlockButton(MainScheduleTable mainScheduleTable, int parentDayTableID, int timeID, string task)
+        {
+            this.timeID = timeID;
+            this.dayID = parentDayTableID;
+
+            this.mainScheduleTable = mainScheduleTable;
+
+            Dock = DockStyle.Fill;
+            Margin = Padding.Empty;
+            FlatStyle = FlatStyle.Flat;
+            FlatAppearance.BorderSize = 1;
+            FlatAppearance.BorderColor = Color.White;
+            Text = task;
+            BackColor = Color.LightGray;
+            BackColor = Color.Pink;
+
+            this.Click += new System.EventHandler(this.BlockButton_Click);
+        }
 
         private void BlockButton_Click(object? sender, System.EventArgs e)
         {

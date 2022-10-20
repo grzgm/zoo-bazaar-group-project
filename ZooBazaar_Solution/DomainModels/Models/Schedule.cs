@@ -16,6 +16,11 @@ namespace ZooBazaar_DomainModels.Models
         private Employee _employee;
         private Task _task;
 
+        public Schedule()
+        {
+
+        }
+
         public Schedule(int id, DateOnly date, TimeBlock timeBlock, Employee employee, Task task)
         {
             _id = id;
@@ -24,14 +29,17 @@ namespace ZooBazaar_DomainModels.Models
             _employee = employee;
             _task = task;
         }
-        public Schedule(ScheduleDTO scheduleDTO, TimeBlockDTO timeBlockDTO, EmployeeDTO employeeDTO, TaskDTO taskDTO, HabitatDTO habitatDTO, ZoneDTO zoneDTO)
+        public Schedule(ScheduleDTO scheduleDTO)
         {
-            this._id = scheduleDTO.Id;
+            this._id = scheduleDTO.ScheduleID;
             this._date = new DateOnly(scheduleDTO.Year, scheduleDTO.Day, scheduleDTO.Day);
-            this._timeBlock = new TimeBlock(timeBlockDTO);
-            this._employee = new Employee(employeeDTO);
-            this._task = new Task(taskDTO, habitatDTO, zoneDTO);
+            this._timeBlock = new TimeBlock(scheduleDTO.TimeBlockDTO);
+            this._employee = new Employee(scheduleDTO.EmployeeDTO);
+            this._task = new Task(scheduleDTO.TaskDTO);
         }
+
+        public int timeBlockId { get { return _timeBlock.ID; } }
+        public string taskName { get { return _task.taskName; } }
 
     }
 }

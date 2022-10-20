@@ -9,141 +9,124 @@ using System.Data.SqlClient;
 
 namespace ZooBazaar_Repositories.Repositories
 {
-    public class EmployeeRepository : IEmployeeRepositroty
+    public class EmployeeRepository : BaseRepository,IEmployeeRepositroty
     {
-        private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi463992;User Id=dbi463992;Password=gogotpilon;";
-
 
         void IEmployeeRepositroty.Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            string Query = "DELETE FROM Employee WHERE EmployeeID = @EmployeeID";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
             {
-                string Query = "DELETE FROM Employee WHERE EmployeeID = @EmployeeID";
+                command.Parameters.AddWithValue("@EmployeeID", id);
 
-                using (SqlCommand command = new SqlCommand(Query, connection))
-                {
-                    command.Parameters.AddWithValue("@EmployeeID", id);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
+                connection.Open();
+                command.ExecuteNonQuery();
             }
         }
 
         List<EmployeeDTO> IEmployeeRepositroty.GetAllEmployees()
         {
             List<EmployeeDTO> employeeDTOs = new List<EmployeeDTO>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            string Query = "SELECT * FROM Employee";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
             {
-                string selectQuery = "SELECT * FROM Employee";
-
-                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
+                    int employeeid = reader.GetInt32(0);
+                    string firstname = reader.GetString(1);
+                    string lastname = reader.GetString(2);
+                    string email = reader.GetString(3);
+                    string phone = reader.GetString(4);
+                    string address = reader.GetString(5);
+                    string role = reader.GetString(6);
+
+                    employeeDTOs.Add(new EmployeeDTO
                     {
-                        int employeeid = reader.GetInt32(0);
-                        string firstname = reader.GetString(1);
-                        string lastname = reader.GetString(2);
-                        string email = reader.GetString(3);
-                        string phone = reader.GetString(4);
-                        string address = reader.GetString(5);
-                        string role = reader.GetString(6);
-
-                        employeeDTOs.Add(new EmployeeDTO
-                        {
-                            Id = employeeid,
-                            FirstName = firstname,
-                            LastName = lastname,
-                            Email = email,
-                            Phone = phone,
-                            Address = address,
-                            Role = role
-                        });
-                    }
+                        EmployeeID = employeeid,
+                        FirstName = firstname,
+                        LastName = lastname,
+                        Email = email,
+                        Phone = phone,
+                        Address = address,
+                        Role = role
+                    });
                 }
+                return employeeDTOs;
             }
-            return employeeDTOs;
         }
-
         EmployeeDTO IEmployeeRepositroty.GetByEmployeeId(int ID)
         {
-            EmployeeDTO employeeDTO = null;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            EmployeeDTO employeeDTO = new EmployeeDTO();
+            string Query = "SELECT * FROM Employee WHERE EmployeeID = @ID";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
             {
-                string selectQuery = "SELECT * FROM Employee WHERE EmployeeID = @ID";
+                command.Parameters.AddWithValue("@ID", ID);
 
-                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    command.Parameters.AddWithValue("@ID", ID);
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int employeeid = reader.GetInt32(0);
-                        string firstname = reader.GetString(1);
-                        string lastName = reader.GetString(2);
-                        string email = reader.GetString(3);
-                        string phone = reader.GetString(4);
-                        string address = reader.GetString(5);
-                        string role = reader.GetString(6);
+                    int employeeid = reader.GetInt32(0);
+                    string firstname = reader.GetString(1);
+                    string lastname = reader.GetString(2);
+                    string email = reader.GetString(3);
+                    string phone = reader.GetString(4);
+                    string address = reader.GetString(5);
+                    string role = reader.GetString(6);
 
-                        employeeDTO = new EmployeeDTO
-                        {
-                            Id = employeeid,
-                            FirstName = firstname,
-                            LastName = lastName,
-                            Email = email,
-                            Phone = phone,
-                            Address = address,
-                            Role = role
-                        };
-                    }
+                    employeeDTO = (new EmployeeDTO
+                    {
+                        EmployeeID = employeeid,
+                        FirstName = firstname,
+                        LastName = lastname,
+                        Email = email,
+                        Phone = phone,
+                        Address = address,
+                        Role = role
+                    });
                 }
+                return employeeDTO;
             }
-            return employeeDTO;
         }
 
         void IEmployeeRepositroty.Insert(EmployeeAddDTO dto)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            string Query = "INSERT INTO Employee VALUES (@FirstName,@LastName,@Email,@Phone,@Address,@Role)";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
             {
-                string Query = "INSERT INTO Employee VALUES (@FirstName,@LastName,@Email,@Phone,@Address,@Role)";
+                command.Parameters.AddWithValue("@FirstName", dto.FirstName);
+                command.Parameters.AddWithValue("@LastName", dto.LastName);
+                command.Parameters.AddWithValue("@Email", dto.Email);
+                command.Parameters.AddWithValue("@Phone", dto.Phone);
+                command.Parameters.AddWithValue("@Address", dto.Address);
+                command.Parameters.AddWithValue("@Role", dto.Role);
 
-                using (SqlCommand command = new SqlCommand(Query, connection))
-                {
-                    command.Parameters.AddWithValue("@FirstName", dto.FirstName);
-                    command.Parameters.AddWithValue("@LastName", dto.LastName);
-                    command.Parameters.AddWithValue("@Email", dto.Email);
-                    command.Parameters.AddWithValue("@Phone", dto.Phone);
-                    command.Parameters.AddWithValue("@Address", dto.Address);
-                    command.Parameters.AddWithValue("@Role", dto.Role);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
+                connection.Open();
+                command.ExecuteNonQuery();
             }
         }
 
         int IEmployeeRepositroty.nextID()
         {
             int newID = 1;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            string Query = "SELECT MAX(EmployeeID) FROM Employee";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
             {
-                string Query = "SELECT MAX(EmployeeID) FROM Employee";
-
-                using (SqlCommand command = new SqlCommand(Query, connection))
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
+                    if (!reader.IsDBNull(0))
                     {
-                        if (!reader.IsDBNull(0))
-                        {
-                            int id = reader.GetInt32(0);
-                            newID = id + 1;
-                        }
+                        int id = reader.GetInt32(0);
+                        newID = id + 1;
                     }
                 }
             }
@@ -152,23 +135,20 @@ namespace ZooBazaar_Repositories.Repositories
 
         void IEmployeeRepositroty.Update(EmployeeDTO dto)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            string Query = "UPDATE Employee SET FirstName=@FirstName,LastName=@LastName,Email=@Email,Phone=@Phone,Address=@Address,Role=@Role WHERE EmployeeID=@EmployeeID";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
             {
-                string Query = "UPDATE Employee SET FirstName=@FirstName,LastName=@LastName,Email=@Email,Phone=@Phone,Address=@Address,Role=@Role WHERE EmployeeID=@EmployeeID";
+                command.Parameters.AddWithValue("@EmployeeID", dto.EmployeeID);
+                command.Parameters.AddWithValue("@FirstName", dto.FirstName);
+                command.Parameters.AddWithValue("@LastName", dto.LastName);
+                command.Parameters.AddWithValue("@Email", dto.Email);
+                command.Parameters.AddWithValue("@Phone", dto.Phone);
+                command.Parameters.AddWithValue("@Address", dto.Address);
+                command.Parameters.AddWithValue("@Role", dto.Role);
 
-                using (SqlCommand command = new SqlCommand(Query, connection))
-                {
-                    command.Parameters.AddWithValue("@EmployeeID", dto.Id);
-                    command.Parameters.AddWithValue("@FirstName", dto.FirstName);
-                    command.Parameters.AddWithValue("@LastName", dto.LastName);
-                    command.Parameters.AddWithValue("@Email", dto.Email);
-                    command.Parameters.AddWithValue("@Phone", dto.Phone);
-                    command.Parameters.AddWithValue("@Address", dto.Address);
-                    command.Parameters.AddWithValue("@Role", dto.Role);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
+                connection.Open();
+                command.ExecuteNonQuery();
             }
         }
     }
