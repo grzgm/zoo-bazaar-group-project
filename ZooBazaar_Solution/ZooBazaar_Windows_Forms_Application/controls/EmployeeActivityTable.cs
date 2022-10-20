@@ -37,12 +37,14 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
 
             //controls -> buttons
+            /*
             for (int i = employeeButtonsText.Length - 1; i >= 0; i--)
             {
                 EmployeeButton employeeButton = new EmployeeButton(i, employeeButtonsText[i], this);
                 _EmployeeButtons[i] = employeeButton;
                 Controls.Add(employeeButton, i, 0);
-            }
+            }*/
+            Controls.Add(new AddButton());
 
             Dock = DockStyle.Fill;
             Margin = Padding.Empty;

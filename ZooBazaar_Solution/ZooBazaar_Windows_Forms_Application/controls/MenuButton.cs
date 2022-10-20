@@ -76,7 +76,6 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            //pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             GraphicsPath path = new GraphicsPath();
             path.AddEllipse(0,0,ClientSize.Width,ClientSize.Height);
             this.Region = new System.Drawing.Region(path);
