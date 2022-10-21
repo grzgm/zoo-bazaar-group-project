@@ -3,3 +3,60 @@
     display: grid;
     grid-template-rows: 40px 20px min(70%) auto;
 }
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.navigation button {
+    padding: 0 5px;
+}
+
+.dropdowns {
+    width: 20%;
+    min-width: 250px;
+}
+
+/*#animalEmployeeComboBox {
+    width: 20%;
+    min-width: 250px;
+}
+
+#entityComboBox {
+    width: 20%;
+    min-width: 250px;
+}*/
+
+.week{
+    text-align: center;
+}
+
+.schedule{
+    display: grid;
+    grid-template-columns: 100px repeat(7, 1fr);
+    grid-gap: 5px;
+    margin: 5px;
+}
+
+.hour {
+    height: 30px;
+    margin: 5px 0;
+    line-height: 30px;
+    text-align: center;
+}
+
+.day{
+
+}
+
+.timeBlock {
+    min-width: 120px;
+    height: 30px;
+    background-color: #d3d3d3;
+    margin: 5px 0;
+}
+    .timeBlock:hover {
+        background-color: #4C6674;
+        cursor: pointer;
+    }
