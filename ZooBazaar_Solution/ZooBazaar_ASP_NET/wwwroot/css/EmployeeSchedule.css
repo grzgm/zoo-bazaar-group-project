@@ -1,7 +1,7 @@
 ﻿#container {
     height: 100%;
     display: grid;
-    grid-template-rows: 40px 20px min(70%) auto;
+    grid-template-rows: 40px 20px auto auto;
 }
 
 .navigation {
@@ -35,13 +35,13 @@
 .schedule{
     display: grid;
     grid-template-columns: 100px repeat(7, 1fr);
-    grid-gap: 5px;
+    grid-gap: 2px;
     margin: 5px;
 }
 
 .hour {
     height: 30px;
-    margin: 5px 0;
+    margin: 2px 0;
     line-height: 30px;
     text-align: center;
 }
@@ -54,7 +54,7 @@
     min-width: 120px;
     height: 30px;
     background-color: #d3d3d3;
-    margin: 5px 0;
+    margin: 2px 0;
 }
     .timeBlock:hover {
         background-color: #4C6674;
