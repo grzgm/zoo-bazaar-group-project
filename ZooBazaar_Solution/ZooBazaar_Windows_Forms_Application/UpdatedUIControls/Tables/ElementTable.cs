@@ -22,6 +22,7 @@ namespace ZooBazaar_Windows_Forms_Application.UpdatedUIControls.Tables
         private int entityId;
         private int listCount;
         private List<EmployeeElementTable> employeeElements;
+        private List<Employee> employees;
 
 
         public ElementTable()
@@ -62,43 +63,42 @@ namespace ZooBazaar_Windows_Forms_Application.UpdatedUIControls.Tables
             Controls.Clear();
         }
 
-        public static List<List<T>> Split<T>(IList<T> source, int chunkSize)
-        {
-            return source
-                .Select((x, i) => new { Index = i, Value = x})
-                .GroupBy(x => x.Index / chunkSize)
-                .Select(x => x.Select(v => v.Value).ToList())
-                .ToList();
-        }
 
         #endregion
 
         #region Employee related methods
         public void UpdateTable_ShowEmployees()
         {
+            ElementPanel[] elementPanels = new ElementPanel[employeeElements.Count];
+            Panel[] gap = new Panel[employeeElements.Count];
+            for (int i = 0; i < elementPanels.Length; i++)
+            {
+                elementPanels[i] = new ElementPanel();
+                gap[i] = new Panel();
+            }
+
             for (int i = 0; i < employeeElements.Count; i++)
             {
-                ElementPanel elementPanel = new ElementPanel();
-                elementPanel.Controls.Add(employeeElements[i]);
-                Panel gap = new Panel();
-                gap.Dock = DockStyle.Top;
-                gap.Height = 2;
-                Controls.Add(gap);
-                Controls.Add(elementPanel);
+                elementPanels[i].Controls.Add(employeeElements[i]);
+                
+                Controls.Add(gap[i]);
+                Controls.Add(elementPanels[i]);
             }
         }
         public void UpdateTable_AllEmployees()
         {
             ClearTable();
-            List<Employee> Employees = _employeeMenager.GetAll();
+            employees = _employeeMenager.GetAll();
+            /*
             Split<Employee>(Employees, 10);
 
             IEnumerable<Employee[]> chunks = Employees.Chunk(10);
             int count = chunks.Count();
+            //CONTINUE HERE */
 
             employeeElements = new List<EmployeeElementTable>();
 
-            foreach (Employee employee in Employees)
+            foreach (Employee employee in employees)
             {
                 employeeElements.Add(new EmployeeElementTable(employee, this));
             }

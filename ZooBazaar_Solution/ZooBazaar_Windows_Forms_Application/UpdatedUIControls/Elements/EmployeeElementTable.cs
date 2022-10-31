@@ -46,11 +46,11 @@ namespace ZooBazaar_Windows_Forms_Application.UpdatedUIControls.Elements
             }
 
             //More info
-            //_employeeMoreInfo = new InfoButton(employee, employeeTable);
+            _employeeMoreInfo = new InfoButton(elementTable, employee);
 
             //properties
             Dock = DockStyle.Fill;
-            Margin = new Padding(5, 0, 5, 5);
+            //Margin = new Padding(5, 0, 5, 5);
 
 
             //Table styles
@@ -61,13 +61,13 @@ namespace ZooBazaar_Windows_Forms_Application.UpdatedUIControls.Elements
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-            ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
+            ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 90));
 
             //Adding controls
             Controls.Add(_employeeName, 0, 0);
             Controls.Add(_employeeFunction, 1, 0);
             Controls.Add(_employeeWorkZone, 2, 0);
-            //Controls.Add(_employeeMoreInfo, 3, 0);
+            Controls.Add(_employeeMoreInfo, 3, 0);
 
             //event
             this.CellPaint += TableLayoutPanel_CellPaint;

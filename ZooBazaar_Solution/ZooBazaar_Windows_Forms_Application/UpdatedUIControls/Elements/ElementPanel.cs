@@ -22,6 +22,7 @@ namespace ZooBazaar_Windows_Forms_Application.UpdatedUIControls.Elements
             Dock = DockStyle.Top;
             BackColor = ThemeColors.elementColor;
             Padding = new Padding(5);
+            Height = 100;
 
             borderRadius = 10;
         }
