@@ -37,11 +37,7 @@ namespace ZooBazaar_ASP_NET.Pages
                     today = today.AddDays(3);
                 }
                 weekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-                CookieOptions cookieOptions = new CookieOptions
-                {
-                    Expires = DateTime.Now.AddDays(1)
-                };
-                Response.Cookies.Append("weekNumber", weekNumber.ToString(), cookieOptions);
+                Response.Cookies.Append("weekNumber", weekNumber.ToString());
             }
             else
             {
@@ -52,21 +48,13 @@ namespace ZooBazaar_ASP_NET.Pages
         public IActionResult OnPostPrevious()
         {
             weekNumber = int.Parse(Request.Cookies["weekNumber"]);
-            CookieOptions cookieOptions = new CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(1)
-            };
-            Response.Cookies.Append("weekNumber", (weekNumber - 1).ToString(), cookieOptions);
+            Response.Cookies.Append("weekNumber", (weekNumber - 1).ToString());
             return RedirectToPage("EmployeeSchedule");
         }
         public IActionResult OnPostNext()
         {
             weekNumber = int.Parse(Request.Cookies["weekNumber"]);
-            CookieOptions cookieOptions = new CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(1)
-            };
-            Response.Cookies.Append("weekNumber", (weekNumber + 1).ToString(), cookieOptions);
+            Response.Cookies.Append("weekNumber", (weekNumber + 1).ToString());
             return RedirectToPage("EmployeeSchedule");
         }
         public IActionResult OnPostNew()
