@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Globalization;
@@ -9,6 +10,7 @@ using ZooBazaar_Repositories.Repositories;
 
 namespace ZooBazaar_ASP_NET.Pages
 {
+    [Authorize]
     public class EmployeeScheduleModel : PageModel
     {
         private IScheduleRepository scheduleRepository;
