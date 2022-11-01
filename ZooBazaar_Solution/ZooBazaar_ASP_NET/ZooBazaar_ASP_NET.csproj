@@ -7,11 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="wwwroot\Images\ScheduleIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DomainModels\ZooBazaar_DomainModels.csproj" />
+    <ProjectReference Include="..\ZooBazaar_ClassLibrary\ZooBazaar_ClassLibrary.csproj" />
+    <ProjectReference Include="..\ZooBazaar_Interfaces\ZooBazaar_DTO.csproj" />
+    <ProjectReference Include="..\ZooBazaar_Repositories\ZooBazaar_Repositories.csproj" />
   </ItemGroup>
 
 </Project>

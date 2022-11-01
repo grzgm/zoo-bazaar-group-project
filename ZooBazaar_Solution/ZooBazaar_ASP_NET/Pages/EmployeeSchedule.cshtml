@@ -20,15 +20,15 @@
             <option></option>
         </select>
         </div>
-        <div>
-            <button>&#60;</button>
+        <form method="post" autocomplete="on">
+            <button asp-page-handler="previous">&#60;</button>
             <button>Today</button>
-            <button>></button>
-            <button>New schedule</button>
-        </div>
+            <button asp-page-handler="next">></button>
+            <button asp-page-handler="new">New schedule</button>
+        </form>
 
     </div>
-    <div class="week">Week 10</div>
+    <div class="week">Week @Model.weekNumber</div>
     <div class="schedule">
         @{
             <div>
@@ -45,7 +45,14 @@
                 @{
                 for (int j = 0; j < 16; j++)
                 {
-                    <div class="timeBlock"></div>
+                    if(Model.schedule.timeBlockId == j)
+                    {
+                        <div class="timeBlock">@Model.schedule.taskName</div>
+                    }
+                    else
+                    {
+                        <div class="timeBlock"></div>
+                    }
                 }
                 }
                 </div>
