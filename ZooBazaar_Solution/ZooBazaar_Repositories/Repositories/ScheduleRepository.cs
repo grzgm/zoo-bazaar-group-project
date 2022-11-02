@@ -13,6 +13,12 @@ namespace ZooBazaar_Repositories.Repositories
     {
         ScheduleDTO IScheduleRepository.GetByDateAndEmployeeId(DateOnly date, int employeeId)
         {
+            Dictionary<int, TimeBlockDTO> timeblocks = new Dictionary<int, TimeBlockDTO>();
+            Dictionary<int, EmployeeDTO> employees = new Dictionary<int, EmployeeDTO>();
+            Dictionary<int, TaskDTO> tasks = new Dictionary<int, TaskDTO>();
+            Dictionary<int, AnimalDTO> animals = new Dictionary<int, AnimalDTO>();
+            Dictionary<int, HabitatDTO> habitats = new Dictionary<int, HabitatDTO>();
+            Dictionary<int, ZoneDTO> zones = new Dictionary<int, ZoneDTO>();
             ScheduleDTO scheduleDTO = new ScheduleDTO();
             string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year AND S.EmployeeID = @EmployeeID";
             SqlConnection connection = GetConnection();
@@ -32,54 +38,26 @@ namespace ZooBazaar_Repositories.Repositories
                     int year = reader.GetInt32(3);
 
                     int schtimeblockid = reader.GetInt32(4);
-                    TimeSpan schstartingtime = reader.GetTimeSpan(5);
-                    TimeSpan schendingtime = reader.GetTimeSpan(6);
+                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    {
+                        TimeSpan schstartingtime = reader.GetTimeSpan(5);
+                        TimeSpan schendingtime = reader.GetTimeSpan(6);
+                        TimeBlockDTO newtimeblock = new TimeBlockDTO { TimeblockID = schtimeblockid, StartingTime = schstartingtime, EndingTime = schendingtime };
+
+                        timeblocks.Add(schtimeblockid, newtimeblock);
+                    }
 
                     int employeeid = reader.GetInt32(7);
-                    string empfirstname = reader.GetString(8);
-                    string emplastname = reader.GetString(9);
-                    string empemail = reader.GetString(10);
-                    string empphone = reader.GetString(11);
-                    string empaddress = reader.GetString(12);
-                    string emprole = reader.GetString(13);
-
-                    int taskid = reader.GetInt32(14);
-                    string taskname = reader.GetString(15);
-
-                    int animalid = reader.GetInt32(16);
-                    string animalname = reader.GetString(17);
-                    int animalage = reader.GetInt32(18);
-                    DateTime animaldateofbirth = reader.GetDateTime(19);
-                    bool animalsex = reader.GetBoolean(20);
-                    string animalspecies = reader.GetString(21);
-                    string animalspeciestype = reader.GetString(22);
-                    string animaldiet = reader.GetString(23);
-                    int animalfeedingtimeid = reader.GetInt32(24);
-                    TimeSpan animalstartingtime = reader.GetTimeSpan(25);
-                    TimeSpan animalendingtime = reader.GetTimeSpan(26);
-                    int animalfeedinginterval = reader.GetInt32(27);
-
-                    int habitatid = reader.GetInt32(28);
-                    string habitatname = reader.GetString(29);
-                    int habitatcapacity = reader.GetInt32(30);
-
-                    int zoneid = reader.GetInt32(31);
-                    string zonename = reader.GetString(32);
-                    int zonecapacity = reader.GetInt32(33);
-
-                    scheduleDTO = (new ScheduleDTO
+                    if (!employees.Keys.Contains(employeeid))
                     {
-                        ScheduleID = scheduleid,
-                        Day = day,
-                        Month = month,
-                        Year = year,
-                        TimeBlockDTO = new TimeBlockDTO
-                        {
-                            TimeblockID = schtimeblockid,
-                            StartingTime = schstartingtime,
-                            EndingTime = schendingtime
-                        },
-                        EmployeeDTO = new EmployeeDTO
+                        string empfirstname = reader.GetString(8);
+                        string emplastname = reader.GetString(9);
+                        string empemail = reader.GetString(10);
+                        string empphone = reader.GetString(11);
+                        string empaddress = reader.GetString(12);
+                        string emprole = reader.GetString(13);
+
+                        EmployeeDTO newemployee = new EmployeeDTO
                         {
                             EmployeeID = employeeid,
                             FirstName = empfirstname,
@@ -88,12 +66,75 @@ namespace ZooBazaar_Repositories.Repositories
                             Phone = empphone,
                             Address = empaddress,
                             Role = emprole
-                        },
-                        TaskDTO = new TaskDTO
+                        };
+                        employees.Add(employeeid, newemployee);
+                    }
+
+                    int taskid = reader.GetInt32(14);
+                    int animalid = reader.GetInt32(16);
+                    int habitatid = reader.GetInt32(28);
+                    int zoneid = reader.GetInt32(31);
+                    int animalfeedingtimeid = reader.GetInt32(24);
+
+
+                    if (!tasks.Keys.Contains(taskid))
+                    {
+                        string taskname = reader.GetString(15);
+
+                        if (!animals.Keys.Contains(animalid))
                         {
-                            TaskID = taskid,
-                            Name = taskname,
-                            AnimalDTO = new AnimalDTO
+                            string animalname = reader.GetString(17);
+                            int animalage = reader.GetInt32(18);
+                            DateTime animaldateofbirth = reader.GetDateTime(19);
+                            bool animalsex = reader.GetBoolean(20);
+                            string animalspecies = reader.GetString(21);
+                            string animalspeciestype = reader.GetString(22);
+                            string animaldiet = reader.GetString(23);
+                            int animalfeedinginterval = reader.GetInt32(27);
+
+                            if (!habitats.Keys.Contains(habitatid))
+                            {
+                                string habitatname = reader.GetString(29);
+                                int habitatcapacity = reader.GetInt32(30);
+
+                                if (!zones.Keys.Contains(zoneid))
+                                {
+                                    string zonename = reader.GetString(32);
+                                    int zonecapacity = reader.GetInt32(33);
+
+                                    ZoneDTO newzone = new ZoneDTO
+                                    {
+                                        ZoneID = zoneid,
+                                        Name = zonename,
+                                        Capacity = zonecapacity
+                                    };
+                                    zones.Add(zoneid, newzone);
+                                }
+
+                                HabitatDTO newhabitat = new HabitatDTO
+                                {
+                                    HabitatID = habitatid,
+                                    Name = habitatname,
+                                    Capacity = habitatcapacity,
+                                    ZoneDTO = zones[zoneid]
+                                };
+                            }
+
+                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            {
+                                TimeSpan animalstartingtime = reader.GetTimeSpan(25);
+                                TimeSpan animalendingtime = reader.GetTimeSpan(26);
+
+                                TimeBlockDTO newtimeblock = new TimeBlockDTO
+                                {
+                                    TimeblockID = animalfeedingtimeid,
+                                    StartingTime = animalstartingtime,
+                                    EndingTime = animalendingtime
+                                };
+                                timeblocks.Add(animalfeedingtimeid, newtimeblock);
+                            }
+
+                            AnimalDTO newanimal = new AnimalDTO
                             {
                                 AnimalId = animalid,
                                 Name = animalname,
@@ -104,38 +145,30 @@ namespace ZooBazaar_Repositories.Repositories
                                 SpeciesType = animalspeciestype,
                                 Diet = animaldiet,
                                 FeedingInterval = animalfeedinginterval,
-                                TimeBlockDTO = new TimeBlockDTO
-                                {
-                                    TimeblockID = animalfeedingtimeid,
-                                    StartingTime = animalstartingtime,
-                                    EndingTime = animalendingtime
-                                },
-                                HabitatDTO = new HabitatDTO
-                                {
-                                    HabitatID = habitatid,
-                                    Name = habitatname,
-                                    Capacity = habitatcapacity,
-                                    ZoneDTO = new ZoneDTO
-                                    {
-                                        ZoneID = zoneid,
-                                        Name = zonename,
-                                        Capacity = zonecapacity
-                                    }
-                                }
-                            },
-                            HabitatDTO = new HabitatDTO
-                            {
-                                HabitatID = habitatid,
-                                Name = habitatname,
-                                Capacity = habitatcapacity,
-                                ZoneDTO = new ZoneDTO
-                                {
-                                    ZoneID = zoneid,
-                                    Name = zonename,
-                                    Capacity = zonecapacity
-                                }
-                            }
+                                TimeBlockDTO = timeblocks[animalfeedingtimeid],
+                                HabitatDTO = habitats[habitatid]
+                            };
                         }
+
+                        TaskDTO newtask = new TaskDTO
+                        {
+                            TaskID = taskid,
+                            Name = taskname,
+                            AnimalDTO = animals[animalid],
+                            HabitatDTO = habitats[habitatid]
+                        };
+                        tasks.Add(taskid, newtask);
+                    }
+
+                    scheduleDTO = (new ScheduleDTO
+                    {
+                        ScheduleID = scheduleid,
+                        Day = day,
+                        Month = month,
+                        Year = year,
+                        TimeBlockDTO = timeblocks[schtimeblockid],
+                        EmployeeDTO = employees[employeeid],
+                        TaskDTO = tasks[taskid]
                     });
                 }
             }
@@ -157,6 +190,12 @@ namespace ZooBazaar_Repositories.Repositories
 
         IEnumerable<ScheduleDTO> IScheduleRepository.GetAll()
         {
+            Dictionary<int, TimeBlockDTO> timeblocks = new Dictionary<int, TimeBlockDTO>();
+            Dictionary<int, EmployeeDTO> employees = new Dictionary<int, EmployeeDTO>();
+            Dictionary<int, TaskDTO> tasks = new Dictionary<int, TaskDTO>();
+            Dictionary<int, AnimalDTO> animals = new Dictionary<int, AnimalDTO>();
+            Dictionary<int, HabitatDTO> habitats = new Dictionary<int, HabitatDTO>();
+            Dictionary<int ,ZoneDTO> zones = new Dictionary<int ,ZoneDTO>();
             List<ScheduleDTO> scheduleDTOs = new List<ScheduleDTO>();
             string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID";
             SqlConnection connection = GetConnection();
@@ -172,54 +211,26 @@ namespace ZooBazaar_Repositories.Repositories
                     int year = reader.GetInt32(3);
 
                     int schtimeblockid = reader.GetInt32(4);
-                    TimeSpan schstartingtime = reader.GetTimeSpan(5);
-                    TimeSpan schendingtime = reader.GetTimeSpan(6);
+                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    {
+                        TimeSpan schstartingtime = reader.GetTimeSpan(5);
+                        TimeSpan schendingtime = reader.GetTimeSpan(6);
+                        TimeBlockDTO newtimeblock = new TimeBlockDTO { TimeblockID = schtimeblockid, StartingTime = schstartingtime, EndingTime = schendingtime };
+
+                        timeblocks.Add(schtimeblockid, newtimeblock);
+                    }
 
                     int employeeid = reader.GetInt32(7);
-                    string empfirstname = reader.GetString(8);
-                    string emplastname = reader.GetString(9);
-                    string empemail = reader.GetString(10);
-                    string empphone = reader.GetString(11);
-                    string empaddress = reader.GetString(12);
-                    string emprole = reader.GetString(13);
-
-                    int taskid = reader.GetInt32(14);
-                    string taskname = reader.GetString(15);
-
-                    int animalid = reader.GetInt32(16);
-                    string animalname = reader.GetString(17);
-                    int animalage = reader.GetInt32(18);
-                    DateTime animaldateofbirth = reader.GetDateTime(19);
-                    bool animalsex = reader.GetBoolean(20);
-                    string animalspecies = reader.GetString(21);
-                    string animalspeciestype = reader.GetString(22);
-                    string animaldiet = reader.GetString(23);
-                    int animalfeedingtimeid = reader.GetInt32(24);
-                    TimeSpan animalstartingtime = reader.GetTimeSpan(25);
-                    TimeSpan animalendingtime = reader.GetTimeSpan(26);
-                    int animalfeedinginterval = reader.GetInt32(27);
-
-                    int habitatid = reader.GetInt32(28);
-                    string habitatname = reader.GetString(29);
-                    int habitatcapacity = reader.GetInt32(30);
-
-                    int zoneid = reader.GetInt32(31);
-                    string zonename = reader.GetString(32);
-                    int zonecapacity = reader.GetInt32(33);
-
-                    scheduleDTOs.Add(new ScheduleDTO
+                    if (!employees.Keys.Contains(employeeid))
                     {
-                        ScheduleID = scheduleid,
-                        Day = day,
-                        Month = month,
-                        Year = year,
-                        TimeBlockDTO = new TimeBlockDTO
-                        {
-                            TimeblockID = schtimeblockid,
-                            StartingTime = schstartingtime,
-                            EndingTime = schendingtime
-                        },
-                        EmployeeDTO = new EmployeeDTO
+                        string empfirstname = reader.GetString(8);
+                        string emplastname = reader.GetString(9);
+                        string empemail = reader.GetString(10);
+                        string empphone = reader.GetString(11);
+                        string empaddress = reader.GetString(12);
+                        string emprole = reader.GetString(13);
+
+                        EmployeeDTO newemployee = new EmployeeDTO
                         {
                             EmployeeID = employeeid,
                             FirstName = empfirstname,
@@ -228,12 +239,75 @@ namespace ZooBazaar_Repositories.Repositories
                             Phone = empphone,
                             Address = empaddress,
                             Role = emprole
-                        },
-                        TaskDTO = new TaskDTO
+                        };
+                        employees.Add(employeeid, newemployee);
+                    }
+
+                    int taskid = reader.GetInt32(14);
+                    int animalid = reader.GetInt32(16);
+                    int habitatid = reader.GetInt32(28);
+                    int zoneid = reader.GetInt32(31);
+                    int animalfeedingtimeid = reader.GetInt32(24);
+
+
+                    if (!tasks.Keys.Contains(taskid))
+                    {
+                        string taskname = reader.GetString(15);
+
+                        if (!animals.Keys.Contains(animalid))
                         {
-                            TaskID = taskid,
-                            Name = taskname,
-                            AnimalDTO = new AnimalDTO
+                            string animalname = reader.GetString(17);
+                            int animalage = reader.GetInt32(18);
+                            DateTime animaldateofbirth = reader.GetDateTime(19);
+                            bool animalsex = reader.GetBoolean(20);
+                            string animalspecies = reader.GetString(21);
+                            string animalspeciestype = reader.GetString(22);
+                            string animaldiet = reader.GetString(23);
+                            int animalfeedinginterval = reader.GetInt32(27);
+
+                            if (!habitats.Keys.Contains(habitatid))
+                            {
+                                string habitatname = reader.GetString(29);
+                                int habitatcapacity = reader.GetInt32(30);
+
+                                if (!zones.Keys.Contains(zoneid))
+                                {
+                                    string zonename = reader.GetString(32);
+                                    int zonecapacity = reader.GetInt32(33);
+
+                                    ZoneDTO newzone = new ZoneDTO
+                                    {
+                                        ZoneID = zoneid,
+                                        Name = zonename,
+                                        Capacity = zonecapacity
+                                    };
+                                    zones.Add(zoneid, newzone);
+                                }
+
+                                HabitatDTO newhabitat = new HabitatDTO
+                                {
+                                    HabitatID = habitatid,
+                                    Name = habitatname,
+                                    Capacity = habitatcapacity,
+                                    ZoneDTO = zones[zoneid]
+                                };
+                            }
+
+                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            {
+                                TimeSpan animalstartingtime = reader.GetTimeSpan(25);
+                                TimeSpan animalendingtime = reader.GetTimeSpan(26);
+
+                                TimeBlockDTO newtimeblock = new TimeBlockDTO
+                                {
+                                    TimeblockID = animalfeedingtimeid,
+                                    StartingTime = animalstartingtime,
+                                    EndingTime = animalendingtime
+                                };
+                                timeblocks.Add(animalfeedingtimeid, newtimeblock);
+                            }
+
+                            AnimalDTO newanimal = new AnimalDTO
                             {
                                 AnimalId = animalid,
                                 Name = animalname,
@@ -244,38 +318,30 @@ namespace ZooBazaar_Repositories.Repositories
                                 SpeciesType = animalspeciestype,
                                 Diet = animaldiet,
                                 FeedingInterval = animalfeedinginterval,
-                                TimeBlockDTO = new TimeBlockDTO
-                                {
-                                    TimeblockID = animalfeedingtimeid,
-                                    StartingTime = animalstartingtime,
-                                    EndingTime = animalendingtime
-                                },
-                                HabitatDTO = new HabitatDTO
-                                {
-                                    HabitatID = habitatid,
-                                    Name = habitatname,
-                                    Capacity = habitatcapacity,
-                                    ZoneDTO = new ZoneDTO
-                                    {
-                                        ZoneID = zoneid,
-                                        Name = zonename,
-                                        Capacity = zonecapacity
-                                    }
-                                }
-                            },
-                            HabitatDTO = new HabitatDTO
-                            {
-                                HabitatID = habitatid,
-                                Name = habitatname,
-                                Capacity = habitatcapacity,
-                                ZoneDTO = new ZoneDTO
-                                {
-                                    ZoneID = zoneid,
-                                    Name = zonename,
-                                    Capacity = zonecapacity
-                                }
-                            }
+                                TimeBlockDTO = timeblocks[animalfeedingtimeid],
+                                HabitatDTO = habitats[habitatid]
+                            };
                         }
+
+                        TaskDTO newtask = new TaskDTO
+                        {
+                            TaskID = taskid,
+                            Name = taskname,
+                            AnimalDTO = animals[animalid],
+                            HabitatDTO = habitats[habitatid]
+                        };
+                        tasks.Add(taskid, newtask);
+                    }
+
+                    scheduleDTOs.Add(new ScheduleDTO
+                    {
+                        ScheduleID = scheduleid,
+                        Day = day,
+                        Month = month,
+                        Year = year,
+                        TimeBlockDTO = timeblocks[schtimeblockid],
+                        EmployeeDTO = employees[employeeid],
+                        TaskDTO = tasks[taskid]
                     });
                 }
             }
@@ -283,6 +349,12 @@ namespace ZooBazaar_Repositories.Repositories
         }
         ScheduleDTO IScheduleRepository.GetByScheduleId(int ID)
         {
+            Dictionary<int, TimeBlockDTO> timeblocks = new Dictionary<int, TimeBlockDTO>();
+            Dictionary<int, EmployeeDTO> employees = new Dictionary<int, EmployeeDTO>();
+            Dictionary<int, TaskDTO> tasks = new Dictionary<int, TaskDTO>();
+            Dictionary<int, AnimalDTO> animals = new Dictionary<int, AnimalDTO>();
+            Dictionary<int, HabitatDTO> habitats = new Dictionary<int, HabitatDTO>();
+            Dictionary<int, ZoneDTO> zones = new Dictionary<int, ZoneDTO>();
             ScheduleDTO scheduleDTO = new ScheduleDTO();
             string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE ScheduleID = @ID";
             SqlConnection connection = GetConnection();
@@ -299,55 +371,26 @@ namespace ZooBazaar_Repositories.Repositories
                     int year = reader.GetInt32(3);
 
                     int schtimeblockid = reader.GetInt32(4);
-                    TimeSpan schstartingtime = reader.GetTimeSpan(5);
-                    TimeSpan schendingtime = reader.GetTimeSpan(6);
+                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    {
+                        TimeSpan schstartingtime = reader.GetTimeSpan(5);
+                        TimeSpan schendingtime = reader.GetTimeSpan(6);
+                        TimeBlockDTO newtimeblock = new TimeBlockDTO { TimeblockID = schtimeblockid, StartingTime = schstartingtime, EndingTime = schendingtime };
+
+                        timeblocks.Add(schtimeblockid, newtimeblock);
+                    }
 
                     int employeeid = reader.GetInt32(7);
-                    string empfirstname = reader.GetString(8);
-                    string emplastname = reader.GetString(9);
-                    string empemail = reader.GetString(10);
-                    string empphone = reader.GetString(11);
-                    string empaddress = reader.GetString(12);
-                    string emprole = reader.GetString(13);
-
-                    int taskid = reader.GetInt32(14);
-                    string taskname = reader.GetString(15);
-
-                    int animalid = reader.GetInt32(16);
-                    string animalname = reader.GetString(17);
-                    int animalage = reader.GetInt32(18);
-                    DateTime animaldateofbirth = reader.GetDateTime(19);
-                    bool animalsex = reader.GetBoolean(20);
-                    string animalspecies = reader.GetString(21);
-                    string animalspeciestype = reader.GetString(22);
-                    string animaldiet = reader.GetString(23);
-                    int animalfeedingtimeid = reader.GetInt32(24);
-                    TimeSpan animalstartingtime = reader.GetTimeSpan(25);
-                    TimeSpan animalendingtime = reader.GetTimeSpan(26);
-                    int animalfeedinginterval = reader.GetInt32(27);
-
-                    int habitatid = reader.GetInt32(28);
-                    string habitatname = reader.GetString(29);
-                    int habitatcapacity = reader.GetInt32(30);
-
-                    int zoneid = reader.GetInt32(31);
-                    string zonename = reader.GetString(32);
-                    int zonecapacity = reader.GetInt32(33);
-
-
-                    scheduleDTO = (new ScheduleDTO
+                    if (!employees.Keys.Contains(employeeid))
                     {
-                        ScheduleID = scheduleid,
-                        Day = day,
-                        Month = month,
-                        Year = year,
-                        TimeBlockDTO = new TimeBlockDTO
-                        {
-                            TimeblockID = schtimeblockid,
-                            StartingTime = schstartingtime,
-                            EndingTime = schendingtime
-                        },
-                        EmployeeDTO = new EmployeeDTO
+                        string empfirstname = reader.GetString(8);
+                        string emplastname = reader.GetString(9);
+                        string empemail = reader.GetString(10);
+                        string empphone = reader.GetString(11);
+                        string empaddress = reader.GetString(12);
+                        string emprole = reader.GetString(13);
+
+                        EmployeeDTO newemployee = new EmployeeDTO
                         {
                             EmployeeID = employeeid,
                             FirstName = empfirstname,
@@ -356,12 +399,75 @@ namespace ZooBazaar_Repositories.Repositories
                             Phone = empphone,
                             Address = empaddress,
                             Role = emprole
-                        },
-                        TaskDTO = new TaskDTO
+                        };
+                        employees.Add(employeeid, newemployee);
+                    }
+
+                    int taskid = reader.GetInt32(14);
+                    int animalid = reader.GetInt32(16);
+                    int habitatid = reader.GetInt32(28);
+                    int zoneid = reader.GetInt32(31);
+                    int animalfeedingtimeid = reader.GetInt32(24);
+
+
+                    if (!tasks.Keys.Contains(taskid))
+                    {
+                        string taskname = reader.GetString(15);
+
+                        if (!animals.Keys.Contains(animalid))
                         {
-                            TaskID = taskid,
-                            Name = taskname,
-                            AnimalDTO = new AnimalDTO
+                            string animalname = reader.GetString(17);
+                            int animalage = reader.GetInt32(18);
+                            DateTime animaldateofbirth = reader.GetDateTime(19);
+                            bool animalsex = reader.GetBoolean(20);
+                            string animalspecies = reader.GetString(21);
+                            string animalspeciestype = reader.GetString(22);
+                            string animaldiet = reader.GetString(23);
+                            int animalfeedinginterval = reader.GetInt32(27);
+
+                            if (!habitats.Keys.Contains(habitatid))
+                            {
+                                string habitatname = reader.GetString(29);
+                                int habitatcapacity = reader.GetInt32(30);
+
+                                if (!zones.Keys.Contains(zoneid))
+                                {
+                                    string zonename = reader.GetString(32);
+                                    int zonecapacity = reader.GetInt32(33);
+
+                                    ZoneDTO newzone = new ZoneDTO
+                                    {
+                                        ZoneID = zoneid,
+                                        Name = zonename,
+                                        Capacity = zonecapacity
+                                    };
+                                    zones.Add(zoneid, newzone);
+                                }
+
+                                HabitatDTO newhabitat = new HabitatDTO
+                                {
+                                    HabitatID = habitatid,
+                                    Name = habitatname,
+                                    Capacity = habitatcapacity,
+                                    ZoneDTO = zones[zoneid]
+                                };
+                            }
+
+                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            {
+                                TimeSpan animalstartingtime = reader.GetTimeSpan(25);
+                                TimeSpan animalendingtime = reader.GetTimeSpan(26);
+
+                                TimeBlockDTO newtimeblock = new TimeBlockDTO
+                                {
+                                    TimeblockID = animalfeedingtimeid,
+                                    StartingTime = animalstartingtime,
+                                    EndingTime = animalendingtime
+                                };
+                                timeblocks.Add(animalfeedingtimeid, newtimeblock);
+                            }
+
+                            AnimalDTO newanimal = new AnimalDTO
                             {
                                 AnimalId = animalid,
                                 Name = animalname,
@@ -372,38 +478,30 @@ namespace ZooBazaar_Repositories.Repositories
                                 SpeciesType = animalspeciestype,
                                 Diet = animaldiet,
                                 FeedingInterval = animalfeedinginterval,
-                                TimeBlockDTO = new TimeBlockDTO
-                                {
-                                    TimeblockID = animalfeedingtimeid,
-                                    StartingTime = animalstartingtime,
-                                    EndingTime = animalendingtime
-                                },
-                                HabitatDTO = new HabitatDTO
-                                {
-                                    HabitatID = habitatid,
-                                    Name = habitatname,
-                                    Capacity = habitatcapacity,
-                                    ZoneDTO = new ZoneDTO
-                                    {
-                                        ZoneID = zoneid,
-                                        Name = zonename,
-                                        Capacity = zonecapacity
-                                    }
-                                }
-                            },
-                            HabitatDTO = new HabitatDTO
-                            {
-                                HabitatID = habitatid,
-                                Name = habitatname,
-                                Capacity = habitatcapacity,
-                                ZoneDTO = new ZoneDTO
-                                {
-                                    ZoneID = zoneid,
-                                    Name = zonename,
-                                    Capacity = zonecapacity
-                                }
-                            }
+                                TimeBlockDTO = timeblocks[animalfeedingtimeid],
+                                HabitatDTO = habitats[habitatid]
+                            };
                         }
+
+                        TaskDTO newtask = new TaskDTO
+                        {
+                            TaskID = taskid,
+                            Name = taskname,
+                            AnimalDTO = animals[animalid],
+                            HabitatDTO = habitats[habitatid]
+                        };
+                        tasks.Add(taskid, newtask);
+                    }
+
+                    scheduleDTO = (new ScheduleDTO
+                    {
+                        ScheduleID = scheduleid,
+                        Day = day,
+                        Month = month,
+                        Year = year,
+                        TimeBlockDTO = timeblocks[schtimeblockid],
+                        EmployeeDTO = employees[employeeid],
+                        TaskDTO = tasks[taskid]
                     });
                 }
             }
@@ -466,6 +564,492 @@ namespace ZooBazaar_Repositories.Repositories
                 connection.Open();
                 command.ExecuteNonQuery();
             }
+        }
+
+        public IEnumerable<ScheduleDTO> GetByDate(DateOnly date)
+        {
+            Dictionary<int, TimeBlockDTO> timeblocks = new Dictionary<int, TimeBlockDTO>();
+            Dictionary<int, EmployeeDTO> employees = new Dictionary<int, EmployeeDTO>();
+            Dictionary<int, TaskDTO> tasks = new Dictionary<int, TaskDTO>();
+            Dictionary<int, AnimalDTO> animals = new Dictionary<int, AnimalDTO>();
+            Dictionary<int, HabitatDTO> habitats = new Dictionary<int, HabitatDTO>();
+            Dictionary<int, ZoneDTO> zones = new Dictionary<int, ZoneDTO>();
+            List<ScheduleDTO> scheduleDTOs = new List<ScheduleDTO>();
+            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
+            {
+                command.Parameters.AddWithValue("@Day", date.Day);
+                command.Parameters.AddWithValue("@Month", date.Month);
+                command.Parameters.AddWithValue("@Year", date.Year);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    int scheduleid = reader.GetInt32(0);
+                    int day = reader.GetInt32(1);
+                    int month = reader.GetInt32(2);
+                    int year = reader.GetInt32(3);
+
+                    int schtimeblockid = reader.GetInt32(4);
+                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    {
+                        TimeSpan schstartingtime = reader.GetTimeSpan(5);
+                        TimeSpan schendingtime = reader.GetTimeSpan(6);
+                        TimeBlockDTO newtimeblock = new TimeBlockDTO { TimeblockID = schtimeblockid, StartingTime = schstartingtime, EndingTime = schendingtime };
+
+                        timeblocks.Add(schtimeblockid, newtimeblock);
+                    }
+
+                    int employeeid = reader.GetInt32(7);
+                    if (!employees.Keys.Contains(employeeid))
+                    {
+                        string empfirstname = reader.GetString(8);
+                        string emplastname = reader.GetString(9);
+                        string empemail = reader.GetString(10);
+                        string empphone = reader.GetString(11);
+                        string empaddress = reader.GetString(12);
+                        string emprole = reader.GetString(13);
+
+                        EmployeeDTO newemployee = new EmployeeDTO
+                        {
+                            EmployeeID = employeeid,
+                            FirstName = empfirstname,
+                            LastName = emplastname,
+                            Email = empemail,
+                            Phone = empphone,
+                            Address = empaddress,
+                            Role = emprole
+                        };
+                        employees.Add(employeeid, newemployee);
+                    }
+
+                    int taskid = reader.GetInt32(14);
+                    int animalid = reader.GetInt32(16);
+                    int habitatid = reader.GetInt32(28);
+                    int zoneid = reader.GetInt32(31);
+                    int animalfeedingtimeid = reader.GetInt32(24);
+
+
+                    if (!tasks.Keys.Contains(taskid))
+                    {
+                        string taskname = reader.GetString(15);
+
+                        if (!animals.Keys.Contains(animalid))
+                        {
+                            string animalname = reader.GetString(17);
+                            int animalage = reader.GetInt32(18);
+                            DateTime animaldateofbirth = reader.GetDateTime(19);
+                            bool animalsex = reader.GetBoolean(20);
+                            string animalspecies = reader.GetString(21);
+                            string animalspeciestype = reader.GetString(22);
+                            string animaldiet = reader.GetString(23);
+                            int animalfeedinginterval = reader.GetInt32(27);
+
+                            if (!habitats.Keys.Contains(habitatid))
+                            {
+                                string habitatname = reader.GetString(29);
+                                int habitatcapacity = reader.GetInt32(30);
+
+                                if (!zones.Keys.Contains(zoneid))
+                                {
+                                    string zonename = reader.GetString(32);
+                                    int zonecapacity = reader.GetInt32(33);
+
+                                    ZoneDTO newzone = new ZoneDTO
+                                    {
+                                        ZoneID = zoneid,
+                                        Name = zonename,
+                                        Capacity = zonecapacity
+                                    };
+                                    zones.Add(zoneid, newzone);
+                                }
+
+                                HabitatDTO newhabitat = new HabitatDTO
+                                {
+                                    HabitatID = habitatid,
+                                    Name = habitatname,
+                                    Capacity = habitatcapacity,
+                                    ZoneDTO = zones[zoneid]
+                                };
+                            }
+
+                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            {
+                                TimeSpan animalstartingtime = reader.GetTimeSpan(25);
+                                TimeSpan animalendingtime = reader.GetTimeSpan(26);
+
+                                TimeBlockDTO newtimeblock = new TimeBlockDTO
+                                {
+                                    TimeblockID = animalfeedingtimeid,
+                                    StartingTime = animalstartingtime,
+                                    EndingTime = animalendingtime
+                                };
+                                timeblocks.Add(animalfeedingtimeid, newtimeblock);
+                            }
+
+                            AnimalDTO newanimal = new AnimalDTO
+                            {
+                                AnimalId = animalid,
+                                Name = animalname,
+                                Age = animalage,
+                                DateOfBirth = animaldateofbirth,
+                                Sex = animalsex,
+                                Species = animalspecies,
+                                SpeciesType = animalspeciestype,
+                                Diet = animaldiet,
+                                FeedingInterval = animalfeedinginterval,
+                                TimeBlockDTO = timeblocks[animalfeedingtimeid],
+                                HabitatDTO = habitats[habitatid]
+                            };
+                        }
+
+                        TaskDTO newtask = new TaskDTO
+                        {
+                            TaskID = taskid,
+                            Name = taskname,
+                            AnimalDTO = animals[animalid],
+                            HabitatDTO = habitats[habitatid]
+                        };
+                        tasks.Add(taskid, newtask);
+                    }
+
+                    scheduleDTOs.Add(new ScheduleDTO
+                    {
+                        ScheduleID = scheduleid,
+                        Day = day,
+                        Month = month,
+                        Year = year,
+                        TimeBlockDTO = timeblocks[schtimeblockid],
+                        EmployeeDTO = employees[employeeid],
+                        TaskDTO = tasks[taskid]
+                    });
+                }
+            }
+            return scheduleDTOs;
+
+        }
+
+        public IEnumerable<ScheduleDTO> GetByEmployeeId(int employeeId)
+        {
+            Dictionary<int, TimeBlockDTO> timeblocks = new Dictionary<int, TimeBlockDTO>();
+            Dictionary<int, EmployeeDTO> employees = new Dictionary<int, EmployeeDTO>();
+            Dictionary<int, TaskDTO> tasks = new Dictionary<int, TaskDTO>();
+            Dictionary<int, AnimalDTO> animals = new Dictionary<int, AnimalDTO>();
+            Dictionary<int, HabitatDTO> habitats = new Dictionary<int, HabitatDTO>();
+            Dictionary<int, ZoneDTO> zones = new Dictionary<int, ZoneDTO>();
+            List<ScheduleDTO> scheduleDTOs = new List<ScheduleDTO>();
+            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE S.EmployeeID = @EmployeeID";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
+            {
+                command.Parameters.AddWithValue("@EmployeeID", employeeId);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    int scheduleid = reader.GetInt32(0);
+                    int day = reader.GetInt32(1);
+                    int month = reader.GetInt32(2);
+                    int year = reader.GetInt32(3);
+
+                    int schtimeblockid = reader.GetInt32(4);
+                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    {
+                        TimeSpan schstartingtime = reader.GetTimeSpan(5);
+                        TimeSpan schendingtime = reader.GetTimeSpan(6);
+                        TimeBlockDTO newtimeblock = new TimeBlockDTO { TimeblockID = schtimeblockid, StartingTime = schstartingtime, EndingTime = schendingtime };
+
+                        timeblocks.Add(schtimeblockid, newtimeblock);
+                    }
+
+                    int employeeid = reader.GetInt32(7);
+                    if (!employees.Keys.Contains(employeeid))
+                    {
+                        string empfirstname = reader.GetString(8);
+                        string emplastname = reader.GetString(9);
+                        string empemail = reader.GetString(10);
+                        string empphone = reader.GetString(11);
+                        string empaddress = reader.GetString(12);
+                        string emprole = reader.GetString(13);
+
+                        EmployeeDTO newemployee = new EmployeeDTO
+                        {
+                            EmployeeID = employeeid,
+                            FirstName = empfirstname,
+                            LastName = emplastname,
+                            Email = empemail,
+                            Phone = empphone,
+                            Address = empaddress,
+                            Role = emprole
+                        };
+                        employees.Add(employeeid, newemployee);
+                    }
+
+                    int taskid = reader.GetInt32(14);
+                    int animalid = reader.GetInt32(16);
+                    int habitatid = reader.GetInt32(28);
+                    int zoneid = reader.GetInt32(31);
+                    int animalfeedingtimeid = reader.GetInt32(24);
+
+
+                    if (!tasks.Keys.Contains(taskid))
+                    {
+                        string taskname = reader.GetString(15);
+
+                        if (!animals.Keys.Contains(animalid))
+                        {
+                            string animalname = reader.GetString(17);
+                            int animalage = reader.GetInt32(18);
+                            DateTime animaldateofbirth = reader.GetDateTime(19);
+                            bool animalsex = reader.GetBoolean(20);
+                            string animalspecies = reader.GetString(21);
+                            string animalspeciestype = reader.GetString(22);
+                            string animaldiet = reader.GetString(23);
+                            int animalfeedinginterval = reader.GetInt32(27);
+
+                            if (!habitats.Keys.Contains(habitatid))
+                            {
+                                string habitatname = reader.GetString(29);
+                                int habitatcapacity = reader.GetInt32(30);
+
+                                if (!zones.Keys.Contains(zoneid))
+                                {
+                                    string zonename = reader.GetString(32);
+                                    int zonecapacity = reader.GetInt32(33);
+
+                                    ZoneDTO newzone = new ZoneDTO
+                                    {
+                                        ZoneID = zoneid,
+                                        Name = zonename,
+                                        Capacity = zonecapacity
+                                    };
+                                    zones.Add(zoneid, newzone);
+                                }
+
+                                HabitatDTO newhabitat = new HabitatDTO
+                                {
+                                    HabitatID = habitatid,
+                                    Name = habitatname,
+                                    Capacity = habitatcapacity,
+                                    ZoneDTO = zones[zoneid]
+                                };
+                            }
+
+                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            {
+                                TimeSpan animalstartingtime = reader.GetTimeSpan(25);
+                                TimeSpan animalendingtime = reader.GetTimeSpan(26);
+
+                                TimeBlockDTO newtimeblock = new TimeBlockDTO
+                                {
+                                    TimeblockID = animalfeedingtimeid,
+                                    StartingTime = animalstartingtime,
+                                    EndingTime = animalendingtime
+                                };
+                                timeblocks.Add(animalfeedingtimeid, newtimeblock);
+                            }
+
+                            AnimalDTO newanimal = new AnimalDTO
+                            {
+                                AnimalId = animalid,
+                                Name = animalname,
+                                Age = animalage,
+                                DateOfBirth = animaldateofbirth,
+                                Sex = animalsex,
+                                Species = animalspecies,
+                                SpeciesType = animalspeciestype,
+                                Diet = animaldiet,
+                                FeedingInterval = animalfeedinginterval,
+                                TimeBlockDTO = timeblocks[animalfeedingtimeid],
+                                HabitatDTO = habitats[habitatid]
+                            };
+                        }
+
+                        TaskDTO newtask = new TaskDTO
+                        {
+                            TaskID = taskid,
+                            Name = taskname,
+                            AnimalDTO = animals[animalid],
+                            HabitatDTO = habitats[habitatid]
+                        };
+                        tasks.Add(taskid, newtask);
+                    }
+
+                    scheduleDTOs.Add(new ScheduleDTO
+                    {
+                        ScheduleID = scheduleid,
+                        Day = day,
+                        Month = month,
+                        Year = year,
+                        TimeBlockDTO = timeblocks[schtimeblockid],
+                        EmployeeDTO = employees[employeeid],
+                        TaskDTO = tasks[taskid]
+                    });
+                }
+            }
+            return scheduleDTOs;
+        }
+
+        public IEnumerable<ScheduleDTO> GetByAnimalId(int animalId)
+        {
+            Dictionary<int, TimeBlockDTO> timeblocks = new Dictionary<int, TimeBlockDTO>();
+            Dictionary<int, EmployeeDTO> employees = new Dictionary<int, EmployeeDTO>();
+            Dictionary<int, TaskDTO> tasks = new Dictionary<int, TaskDTO>();
+            Dictionary<int, AnimalDTO> animals = new Dictionary<int, AnimalDTO>();
+            Dictionary<int, HabitatDTO> habitats = new Dictionary<int, HabitatDTO>();
+            Dictionary<int, ZoneDTO> zones = new Dictionary<int, ZoneDTO>();
+            List<ScheduleDTO> scheduleDTOs = new List<ScheduleDTO>();
+            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE T.AnimalID = @AnimalID";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
+            {
+                command.Parameters.AddWithValue("@AnimalID", animalId);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    int scheduleid = reader.GetInt32(0);
+                    int day = reader.GetInt32(1);
+                    int month = reader.GetInt32(2);
+                    int year = reader.GetInt32(3);
+
+                    int schtimeblockid = reader.GetInt32(4);
+                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    {
+                        TimeSpan schstartingtime = reader.GetTimeSpan(5);
+                        TimeSpan schendingtime = reader.GetTimeSpan(6);
+                        TimeBlockDTO newtimeblock = new TimeBlockDTO { TimeblockID = schtimeblockid, StartingTime = schstartingtime, EndingTime = schendingtime };
+
+                        timeblocks.Add(schtimeblockid, newtimeblock);
+                    }
+
+                    int employeeid = reader.GetInt32(7);
+                    if (!employees.Keys.Contains(employeeid))
+                    {
+                        string empfirstname = reader.GetString(8);
+                        string emplastname = reader.GetString(9);
+                        string empemail = reader.GetString(10);
+                        string empphone = reader.GetString(11);
+                        string empaddress = reader.GetString(12);
+                        string emprole = reader.GetString(13);
+
+                        EmployeeDTO newemployee = new EmployeeDTO
+                        {
+                            EmployeeID = employeeid,
+                            FirstName = empfirstname,
+                            LastName = emplastname,
+                            Email = empemail,
+                            Phone = empphone,
+                            Address = empaddress,
+                            Role = emprole
+                        };
+                        employees.Add(employeeid, newemployee);
+                    }
+
+                    int taskid = reader.GetInt32(14);
+                    int animalid = reader.GetInt32(16);
+                    int habitatid = reader.GetInt32(28);
+                    int zoneid = reader.GetInt32(31);
+                    int animalfeedingtimeid = reader.GetInt32(24);
+
+
+                    if (!tasks.Keys.Contains(taskid))
+                    {
+                        string taskname = reader.GetString(15);
+
+                        if (!animals.Keys.Contains(animalid))
+                        {
+                            string animalname = reader.GetString(17);
+                            int animalage = reader.GetInt32(18);
+                            DateTime animaldateofbirth = reader.GetDateTime(19);
+                            bool animalsex = reader.GetBoolean(20);
+                            string animalspecies = reader.GetString(21);
+                            string animalspeciestype = reader.GetString(22);
+                            string animaldiet = reader.GetString(23);
+                            int animalfeedinginterval = reader.GetInt32(27);
+
+                            if (!habitats.Keys.Contains(habitatid))
+                            {
+                                string habitatname = reader.GetString(29);
+                                int habitatcapacity = reader.GetInt32(30);
+
+                                if (!zones.Keys.Contains(zoneid))
+                                {
+                                    string zonename = reader.GetString(32);
+                                    int zonecapacity = reader.GetInt32(33);
+
+                                    ZoneDTO newzone = new ZoneDTO
+                                    {
+                                        ZoneID = zoneid,
+                                        Name = zonename,
+                                        Capacity = zonecapacity
+                                    };
+                                    zones.Add(zoneid, newzone);
+                                }
+
+                                HabitatDTO newhabitat = new HabitatDTO
+                                {
+                                    HabitatID = habitatid,
+                                    Name = habitatname,
+                                    Capacity = habitatcapacity,
+                                    ZoneDTO = zones[zoneid]
+                                };
+                            }
+
+                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            {
+                                TimeSpan animalstartingtime = reader.GetTimeSpan(25);
+                                TimeSpan animalendingtime = reader.GetTimeSpan(26);
+
+                                TimeBlockDTO newtimeblock = new TimeBlockDTO
+                                {
+                                    TimeblockID = animalfeedingtimeid,
+                                    StartingTime = animalstartingtime,
+                                    EndingTime = animalendingtime
+                                };
+                                timeblocks.Add(animalfeedingtimeid, newtimeblock);
+                            }
+
+                            AnimalDTO newanimal = new AnimalDTO
+                            {
+                                AnimalId = animalid,
+                                Name = animalname,
+                                Age = animalage,
+                                DateOfBirth = animaldateofbirth,
+                                Sex = animalsex,
+                                Species = animalspecies,
+                                SpeciesType = animalspeciestype,
+                                Diet = animaldiet,
+                                FeedingInterval = animalfeedinginterval,
+                                TimeBlockDTO = timeblocks[animalfeedingtimeid],
+                                HabitatDTO = habitats[habitatid]
+                            };
+                        }
+
+                        TaskDTO newtask = new TaskDTO
+                        {
+                            TaskID = taskid,
+                            Name = taskname,
+                            AnimalDTO = animals[animalid],
+                            HabitatDTO = habitats[habitatid]
+                        };
+                        tasks.Add(taskid, newtask);
+                    }
+
+                    scheduleDTOs.Add(new ScheduleDTO
+                    {
+                        ScheduleID = scheduleid,
+                        Day = day,
+                        Month = month,
+                        Year = year,
+                        TimeBlockDTO = timeblocks[schtimeblockid],
+                        EmployeeDTO = employees[employeeid],
+                        TaskDTO = tasks[taskid]
+                    });
+                }
+            }
+            return scheduleDTOs;
         }
     }
 }

@@ -12,6 +12,9 @@ namespace ZooBazaar_Repositories.Interfaces
         IEnumerable<ScheduleDTO> GetAll();
         ScheduleDTO GetByScheduleId(int ID);
         ScheduleDTO GetByDateAndEmployeeId(DateOnly date, int employeeId);
+        IEnumerable<ScheduleDTO> GetByDate(DateOnly date);
+        IEnumerable<ScheduleDTO> GetByEmployeeId(int employeeId);
+        IEnumerable<ScheduleDTO> GetByAnimalId(int animalId);
         void Insert(ScheduleDTO dto);
         void Update(ScheduleDTO dto);
         void Delete(int id);

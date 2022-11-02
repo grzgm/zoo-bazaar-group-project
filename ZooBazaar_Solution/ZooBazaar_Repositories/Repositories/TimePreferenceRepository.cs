@@ -43,9 +43,9 @@ namespace ZooBazaar_Repositories.Repositories
                     string address = reader.GetString(5);
                     string role = reader.GetString(6);
 
-                    int timeblockid = reader.GetInt32(7);
-                    TimeSpan startingtime = reader.GetTimeSpan(8);
-                    TimeSpan endingtime = reader.GetTimeSpan(9);
+                    int timeblockid = reader.GetInt32(8);
+                    TimeSpan startingtime = reader.GetTimeSpan(9);
+                    TimeSpan endingtime = reader.GetTimeSpan(10);
 
                     timepreferenceDTOs.Add(new TimePreferenceDTO
                     {
@@ -91,9 +91,9 @@ namespace ZooBazaar_Repositories.Repositories
                     string address = reader.GetString(5);
                     string role = reader.GetString(6);
 
-                    int timeblockid = reader.GetInt32(7);
-                    TimeSpan startingtime = reader.GetTimeSpan(8);
-                    TimeSpan endingtime = reader.GetTimeSpan(9);
+                    int timeblockid = reader.GetInt32(8);
+                    TimeSpan startingtime = reader.GetTimeSpan(9);
+                    TimeSpan endingtime = reader.GetTimeSpan(10);
 
                     timepreferenceDTOs.Add(new TimePreferenceDTO
                     {
