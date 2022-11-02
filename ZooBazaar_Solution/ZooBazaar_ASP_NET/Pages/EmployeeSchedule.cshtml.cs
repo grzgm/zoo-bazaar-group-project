@@ -16,10 +16,9 @@ namespace ZooBazaar_ASP_NET.Pages
         private IScheduleRepository scheduleRepository;
         private ITaskRepository taskRepository;
         private IScheduleManager scheduleManager;
-        public Schedule schedule;
 
-        [BindProperty(SupportsGet = true)]
-        [ViewData]
+        public DateOnly firstDayOfWeek;
+        public Schedule schedule;
         public int weekNumber { get; set; }
 
         public void OnGet()
@@ -40,28 +39,44 @@ namespace ZooBazaar_ASP_NET.Pages
                 }
                 weekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
                 Response.Cookies.Append("weekNumber", weekNumber.ToString());
+                firstDayOfWeek = FirstDayOfWeek(DateOnly.FromDateTime(DateTime.Now));
+                Response.Cookies.Append("firstDayOfWeek", firstDayOfWeek.ToString());
             }
             else
             {
                 weekNumber = int.Parse(Request.Cookies["weekNumber"]);
+                firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
             }
+
         }
 
         public IActionResult OnPostPrevious()
         {
             weekNumber = int.Parse(Request.Cookies["weekNumber"]);
             Response.Cookies.Append("weekNumber", (weekNumber - 1).ToString());
+            firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
+            Response.Cookies.Append("firstDayOfWeek", (firstDayOfWeek.AddDays(-7)).ToString());
             return RedirectToPage("EmployeeSchedule");
         }
         public IActionResult OnPostNext()
         {
             weekNumber = int.Parse(Request.Cookies["weekNumber"]);
             Response.Cookies.Append("weekNumber", (weekNumber + 1).ToString());
+            firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
+            Response.Cookies.Append("firstDayOfWeek", (firstDayOfWeek.AddDays(7)).ToString());
             return RedirectToPage("EmployeeSchedule");
         }
         public IActionResult OnPostNew()
         {
             return Page();
+        }
+        private DateOnly FirstDayOfWeek(DateOnly dt)
+        {
+            var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            var diff = dt.DayOfWeek - culture.DateTimeFormat.FirstDayOfWeek;
+            if (diff < 0)
+                diff += 7;
+            return dt.AddDays(-diff);
         }
     }
 }
