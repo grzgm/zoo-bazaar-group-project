@@ -38,7 +38,7 @@ namespace ZooBazaar_Repositories.Repositories
                     int year = reader.GetInt32(3);
 
                     int schtimeblockid = reader.GetInt32(4);
-                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    if (!timeblocks.ContainsKey(schtimeblockid))
                     {
                         TimeSpan schstartingtime = reader.GetTimeSpan(5);
                         TimeSpan schendingtime = reader.GetTimeSpan(6);
@@ -48,7 +48,7 @@ namespace ZooBazaar_Repositories.Repositories
                     }
 
                     int employeeid = reader.GetInt32(7);
-                    if (!employees.Keys.Contains(employeeid))
+                    if (!employees.ContainsKey(employeeid))
                     {
                         string empfirstname = reader.GetString(8);
                         string emplastname = reader.GetString(9);
@@ -77,11 +77,11 @@ namespace ZooBazaar_Repositories.Repositories
                     int animalfeedingtimeid = reader.GetInt32(24);
 
 
-                    if (!tasks.Keys.Contains(taskid))
+                    if (!tasks.ContainsKey(taskid))
                     {
                         string taskname = reader.GetString(15);
 
-                        if (!animals.Keys.Contains(animalid))
+                        if (!animals.ContainsKey(animalid))
                         {
                             string animalname = reader.GetString(17);
                             int animalage = reader.GetInt32(18);
@@ -92,12 +92,12 @@ namespace ZooBazaar_Repositories.Repositories
                             string animaldiet = reader.GetString(23);
                             int animalfeedinginterval = reader.GetInt32(27);
 
-                            if (!habitats.Keys.Contains(habitatid))
+                            if (!habitats.ContainsKey(habitatid))
                             {
                                 string habitatname = reader.GetString(29);
                                 int habitatcapacity = reader.GetInt32(30);
 
-                                if (!zones.Keys.Contains(zoneid))
+                                if (!zones.ContainsKey(zoneid))
                                 {
                                     string zonename = reader.GetString(32);
                                     int zonecapacity = reader.GetInt32(33);
@@ -118,9 +118,10 @@ namespace ZooBazaar_Repositories.Repositories
                                     Capacity = habitatcapacity,
                                     ZoneDTO = zones[zoneid]
                                 };
+                                habitats.Add(habitatid, newhabitat);
                             }
 
-                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            if (!timeblocks.ContainsKey(animalfeedingtimeid))
                             {
                                 TimeSpan animalstartingtime = reader.GetTimeSpan(25);
                                 TimeSpan animalendingtime = reader.GetTimeSpan(26);
@@ -148,6 +149,7 @@ namespace ZooBazaar_Repositories.Repositories
                                 TimeBlockDTO = timeblocks[animalfeedingtimeid],
                                 HabitatDTO = habitats[habitatid]
                             };
+                            animals.Add(animalid, newanimal);
                         }
 
                         TaskDTO newtask = new TaskDTO
@@ -211,7 +213,7 @@ namespace ZooBazaar_Repositories.Repositories
                     int year = reader.GetInt32(3);
 
                     int schtimeblockid = reader.GetInt32(4);
-                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    if (!timeblocks.ContainsKey(schtimeblockid))
                     {
                         TimeSpan schstartingtime = reader.GetTimeSpan(5);
                         TimeSpan schendingtime = reader.GetTimeSpan(6);
@@ -221,7 +223,7 @@ namespace ZooBazaar_Repositories.Repositories
                     }
 
                     int employeeid = reader.GetInt32(7);
-                    if (!employees.Keys.Contains(employeeid))
+                    if (!employees.ContainsKey(employeeid))
                     {
                         string empfirstname = reader.GetString(8);
                         string emplastname = reader.GetString(9);
@@ -250,11 +252,11 @@ namespace ZooBazaar_Repositories.Repositories
                     int animalfeedingtimeid = reader.GetInt32(24);
 
 
-                    if (!tasks.Keys.Contains(taskid))
+                    if (!tasks.ContainsKey(taskid))
                     {
                         string taskname = reader.GetString(15);
 
-                        if (!animals.Keys.Contains(animalid))
+                        if (!animals.ContainsKey(animalid))
                         {
                             string animalname = reader.GetString(17);
                             int animalage = reader.GetInt32(18);
@@ -265,12 +267,12 @@ namespace ZooBazaar_Repositories.Repositories
                             string animaldiet = reader.GetString(23);
                             int animalfeedinginterval = reader.GetInt32(27);
 
-                            if (!habitats.Keys.Contains(habitatid))
+                            if (!habitats.ContainsKey(habitatid))
                             {
                                 string habitatname = reader.GetString(29);
                                 int habitatcapacity = reader.GetInt32(30);
 
-                                if (!zones.Keys.Contains(zoneid))
+                                if (!zones.ContainsKey(zoneid))
                                 {
                                     string zonename = reader.GetString(32);
                                     int zonecapacity = reader.GetInt32(33);
@@ -291,9 +293,10 @@ namespace ZooBazaar_Repositories.Repositories
                                     Capacity = habitatcapacity,
                                     ZoneDTO = zones[zoneid]
                                 };
+                                habitats.Add(habitatid, newhabitat);
                             }
 
-                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            if (!timeblocks.ContainsKey(animalfeedingtimeid))
                             {
                                 TimeSpan animalstartingtime = reader.GetTimeSpan(25);
                                 TimeSpan animalendingtime = reader.GetTimeSpan(26);
@@ -321,6 +324,7 @@ namespace ZooBazaar_Repositories.Repositories
                                 TimeBlockDTO = timeblocks[animalfeedingtimeid],
                                 HabitatDTO = habitats[habitatid]
                             };
+                            animals.Add(animalid, newanimal);
                         }
 
                         TaskDTO newtask = new TaskDTO
@@ -371,7 +375,7 @@ namespace ZooBazaar_Repositories.Repositories
                     int year = reader.GetInt32(3);
 
                     int schtimeblockid = reader.GetInt32(4);
-                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    if (!timeblocks.ContainsKey(schtimeblockid))
                     {
                         TimeSpan schstartingtime = reader.GetTimeSpan(5);
                         TimeSpan schendingtime = reader.GetTimeSpan(6);
@@ -381,7 +385,7 @@ namespace ZooBazaar_Repositories.Repositories
                     }
 
                     int employeeid = reader.GetInt32(7);
-                    if (!employees.Keys.Contains(employeeid))
+                    if (!employees.ContainsKey(employeeid))
                     {
                         string empfirstname = reader.GetString(8);
                         string emplastname = reader.GetString(9);
@@ -410,11 +414,11 @@ namespace ZooBazaar_Repositories.Repositories
                     int animalfeedingtimeid = reader.GetInt32(24);
 
 
-                    if (!tasks.Keys.Contains(taskid))
+                    if (!tasks.ContainsKey(taskid))
                     {
                         string taskname = reader.GetString(15);
 
-                        if (!animals.Keys.Contains(animalid))
+                        if (!animals.ContainsKey(animalid))
                         {
                             string animalname = reader.GetString(17);
                             int animalage = reader.GetInt32(18);
@@ -425,12 +429,12 @@ namespace ZooBazaar_Repositories.Repositories
                             string animaldiet = reader.GetString(23);
                             int animalfeedinginterval = reader.GetInt32(27);
 
-                            if (!habitats.Keys.Contains(habitatid))
+                            if (!habitats.ContainsKey(habitatid))
                             {
                                 string habitatname = reader.GetString(29);
                                 int habitatcapacity = reader.GetInt32(30);
 
-                                if (!zones.Keys.Contains(zoneid))
+                                if (!zones.ContainsKey(zoneid))
                                 {
                                     string zonename = reader.GetString(32);
                                     int zonecapacity = reader.GetInt32(33);
@@ -451,9 +455,10 @@ namespace ZooBazaar_Repositories.Repositories
                                     Capacity = habitatcapacity,
                                     ZoneDTO = zones[zoneid]
                                 };
+                                habitats.Add(habitatid, newhabitat);
                             }
 
-                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            if (!timeblocks.ContainsKey(animalfeedingtimeid))
                             {
                                 TimeSpan animalstartingtime = reader.GetTimeSpan(25);
                                 TimeSpan animalendingtime = reader.GetTimeSpan(26);
@@ -481,6 +486,7 @@ namespace ZooBazaar_Repositories.Repositories
                                 TimeBlockDTO = timeblocks[animalfeedingtimeid],
                                 HabitatDTO = habitats[habitatid]
                             };
+                            animals.Add(animalid, newanimal);
                         }
 
                         TaskDTO newtask = new TaskDTO
@@ -592,7 +598,7 @@ namespace ZooBazaar_Repositories.Repositories
                     int year = reader.GetInt32(3);
 
                     int schtimeblockid = reader.GetInt32(4);
-                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    if (!timeblocks.ContainsKey(schtimeblockid))
                     {
                         TimeSpan schstartingtime = reader.GetTimeSpan(5);
                         TimeSpan schendingtime = reader.GetTimeSpan(6);
@@ -602,7 +608,7 @@ namespace ZooBazaar_Repositories.Repositories
                     }
 
                     int employeeid = reader.GetInt32(7);
-                    if (!employees.Keys.Contains(employeeid))
+                    if (!employees.ContainsKey(employeeid))
                     {
                         string empfirstname = reader.GetString(8);
                         string emplastname = reader.GetString(9);
@@ -631,11 +637,11 @@ namespace ZooBazaar_Repositories.Repositories
                     int animalfeedingtimeid = reader.GetInt32(24);
 
 
-                    if (!tasks.Keys.Contains(taskid))
+                    if (!tasks.ContainsKey(taskid))
                     {
                         string taskname = reader.GetString(15);
 
-                        if (!animals.Keys.Contains(animalid))
+                        if (!animals.ContainsKey(animalid))
                         {
                             string animalname = reader.GetString(17);
                             int animalage = reader.GetInt32(18);
@@ -646,12 +652,12 @@ namespace ZooBazaar_Repositories.Repositories
                             string animaldiet = reader.GetString(23);
                             int animalfeedinginterval = reader.GetInt32(27);
 
-                            if (!habitats.Keys.Contains(habitatid))
+                            if (!habitats.ContainsKey(habitatid))
                             {
                                 string habitatname = reader.GetString(29);
                                 int habitatcapacity = reader.GetInt32(30);
 
-                                if (!zones.Keys.Contains(zoneid))
+                                if (!zones.ContainsKey(zoneid))
                                 {
                                     string zonename = reader.GetString(32);
                                     int zonecapacity = reader.GetInt32(33);
@@ -672,9 +678,10 @@ namespace ZooBazaar_Repositories.Repositories
                                     Capacity = habitatcapacity,
                                     ZoneDTO = zones[zoneid]
                                 };
+                                habitats.Add(habitatid, newhabitat);
                             }
 
-                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            if (!timeblocks.ContainsKey(animalfeedingtimeid))
                             {
                                 TimeSpan animalstartingtime = reader.GetTimeSpan(25);
                                 TimeSpan animalendingtime = reader.GetTimeSpan(26);
@@ -702,6 +709,7 @@ namespace ZooBazaar_Repositories.Repositories
                                 TimeBlockDTO = timeblocks[animalfeedingtimeid],
                                 HabitatDTO = habitats[habitatid]
                             };
+                            animals.Add(animalid, newanimal);
                         }
 
                         TaskDTO newtask = new TaskDTO
@@ -754,7 +762,7 @@ namespace ZooBazaar_Repositories.Repositories
                     int year = reader.GetInt32(3);
 
                     int schtimeblockid = reader.GetInt32(4);
-                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    if (!timeblocks.ContainsKey(schtimeblockid))
                     {
                         TimeSpan schstartingtime = reader.GetTimeSpan(5);
                         TimeSpan schendingtime = reader.GetTimeSpan(6);
@@ -764,7 +772,7 @@ namespace ZooBazaar_Repositories.Repositories
                     }
 
                     int employeeid = reader.GetInt32(7);
-                    if (!employees.Keys.Contains(employeeid))
+                    if (!employees.ContainsKey(employeeid))
                     {
                         string empfirstname = reader.GetString(8);
                         string emplastname = reader.GetString(9);
@@ -793,11 +801,11 @@ namespace ZooBazaar_Repositories.Repositories
                     int animalfeedingtimeid = reader.GetInt32(24);
 
 
-                    if (!tasks.Keys.Contains(taskid))
+                    if (!tasks.ContainsKey(taskid))
                     {
                         string taskname = reader.GetString(15);
 
-                        if (!animals.Keys.Contains(animalid))
+                        if (!animals.ContainsKey(animalid))
                         {
                             string animalname = reader.GetString(17);
                             int animalage = reader.GetInt32(18);
@@ -808,12 +816,12 @@ namespace ZooBazaar_Repositories.Repositories
                             string animaldiet = reader.GetString(23);
                             int animalfeedinginterval = reader.GetInt32(27);
 
-                            if (!habitats.Keys.Contains(habitatid))
+                            if (!habitats.ContainsKey(habitatid))
                             {
                                 string habitatname = reader.GetString(29);
                                 int habitatcapacity = reader.GetInt32(30);
 
-                                if (!zones.Keys.Contains(zoneid))
+                                if (!zones.ContainsKey(zoneid))
                                 {
                                     string zonename = reader.GetString(32);
                                     int zonecapacity = reader.GetInt32(33);
@@ -834,9 +842,10 @@ namespace ZooBazaar_Repositories.Repositories
                                     Capacity = habitatcapacity,
                                     ZoneDTO = zones[zoneid]
                                 };
+                                habitats.Add(habitatid, newhabitat);
                             }
 
-                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            if (!timeblocks.ContainsKey(animalfeedingtimeid))
                             {
                                 TimeSpan animalstartingtime = reader.GetTimeSpan(25);
                                 TimeSpan animalendingtime = reader.GetTimeSpan(26);
@@ -864,6 +873,7 @@ namespace ZooBazaar_Repositories.Repositories
                                 TimeBlockDTO = timeblocks[animalfeedingtimeid],
                                 HabitatDTO = habitats[habitatid]
                             };
+                            animals.Add(animalid, newanimal);
                         }
 
                         TaskDTO newtask = new TaskDTO
@@ -915,7 +925,7 @@ namespace ZooBazaar_Repositories.Repositories
                     int year = reader.GetInt32(3);
 
                     int schtimeblockid = reader.GetInt32(4);
-                    if (!timeblocks.Keys.Contains(schtimeblockid))
+                    if (!timeblocks.ContainsKey(schtimeblockid))
                     {
                         TimeSpan schstartingtime = reader.GetTimeSpan(5);
                         TimeSpan schendingtime = reader.GetTimeSpan(6);
@@ -925,7 +935,7 @@ namespace ZooBazaar_Repositories.Repositories
                     }
 
                     int employeeid = reader.GetInt32(7);
-                    if (!employees.Keys.Contains(employeeid))
+                    if (!employees.ContainsKey(employeeid))
                     {
                         string empfirstname = reader.GetString(8);
                         string emplastname = reader.GetString(9);
@@ -954,11 +964,11 @@ namespace ZooBazaar_Repositories.Repositories
                     int animalfeedingtimeid = reader.GetInt32(24);
 
 
-                    if (!tasks.Keys.Contains(taskid))
+                    if (!tasks.ContainsKey(taskid))
                     {
                         string taskname = reader.GetString(15);
 
-                        if (!animals.Keys.Contains(animalid))
+                        if (!animals.ContainsKey(animalid))
                         {
                             string animalname = reader.GetString(17);
                             int animalage = reader.GetInt32(18);
@@ -969,12 +979,12 @@ namespace ZooBazaar_Repositories.Repositories
                             string animaldiet = reader.GetString(23);
                             int animalfeedinginterval = reader.GetInt32(27);
 
-                            if (!habitats.Keys.Contains(habitatid))
+                            if (!habitats.ContainsKey(habitatid))
                             {
                                 string habitatname = reader.GetString(29);
                                 int habitatcapacity = reader.GetInt32(30);
 
-                                if (!zones.Keys.Contains(zoneid))
+                                if (!zones.ContainsKey(zoneid))
                                 {
                                     string zonename = reader.GetString(32);
                                     int zonecapacity = reader.GetInt32(33);
@@ -995,9 +1005,10 @@ namespace ZooBazaar_Repositories.Repositories
                                     Capacity = habitatcapacity,
                                     ZoneDTO = zones[zoneid]
                                 };
+                                habitats.Add(habitatid, newhabitat);
                             }
 
-                            if (!timeblocks.Keys.Contains(animalfeedingtimeid))
+                            if (!timeblocks.ContainsKey(animalfeedingtimeid))
                             {
                                 TimeSpan animalstartingtime = reader.GetTimeSpan(25);
                                 TimeSpan animalendingtime = reader.GetTimeSpan(26);
@@ -1025,6 +1036,7 @@ namespace ZooBazaar_Repositories.Repositories
                                 TimeBlockDTO = timeblocks[animalfeedingtimeid],
                                 HabitatDTO = habitats[habitatid]
                             };
+                            animals.Add(animalid, newanimal);
                         }
 
                         TaskDTO newtask = new TaskDTO
