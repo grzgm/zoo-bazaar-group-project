@@ -18,7 +18,7 @@ namespace ZooBazaar_ASP_NET.Pages
         private IScheduleManager scheduleManager;
 
         public DateOnly firstDayOfWeek;
-        public Schedule schedule;
+        public Schedule[] schedule = new Schedule[7];
         public int weekNumber { get; set; }
 
         public void OnGet()
@@ -26,8 +26,6 @@ namespace ZooBazaar_ASP_NET.Pages
             scheduleRepository = new ScheduleRepository();
             taskRepository = new TaskRepository();
             scheduleManager = new ScheduleManager(scheduleRepository, taskRepository);
-
-            schedule = scheduleManager.GetDayScheduleEmployee(new DateOnly(2022, 10, 1), 129);
 
             if (!Request.Cookies.ContainsKey("weekNumber"))
             {
@@ -48,6 +46,7 @@ namespace ZooBazaar_ASP_NET.Pages
                 firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
             }
 
+            GetWeekSchedule();
         }
 
         public IActionResult OnPostPrevious()
@@ -77,6 +76,14 @@ namespace ZooBazaar_ASP_NET.Pages
             if (diff < 0)
                 diff += 7;
             return dt.AddDays(-diff);
+        }
+
+        private void GetWeekSchedule()
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                schedule[i] = scheduleManager.GetDayScheduleEmployee(firstDayOfWeek.AddDays(i), 129);
+            }
         }
     }
 }

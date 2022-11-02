@@ -1,7 +1,7 @@
 ﻿#container {
     height: 100%;
     display: grid;
-    grid-template-rows: 40px 20px 20px auto auto;
+    grid-template-rows: 40px 20px 40px auto auto;
 }
 
 .navigation {
