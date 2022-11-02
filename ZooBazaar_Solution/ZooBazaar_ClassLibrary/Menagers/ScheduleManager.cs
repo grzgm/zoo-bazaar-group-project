@@ -31,5 +31,15 @@ namespace ZooBazaar_ClassLibrary.Menagers
             }
             return null;
         }
+
+        public List<Schedule> GetDay(DateOnly date)
+        {
+            List<Schedule> schedules = new List<Schedule>();
+            foreach(ScheduleDTO dto in _scheduleRepository.GetByDate(date){
+                schedules.Add(new Schedule(dto));
+            }
+            return schedules;
+        }
+
     }
 }
