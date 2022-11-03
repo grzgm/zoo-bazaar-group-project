@@ -26,6 +26,7 @@ namespace ZooBazaar_Windows_Forms_Application
             ConfigureServices();
             Application.Run(new Form1());
             
+            
         }
         public static IServiceProvider ServiceProvider { get; set; }
 

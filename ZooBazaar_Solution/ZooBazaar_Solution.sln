@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooBazaar_Repositories", "Z
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooBazaar_DTO", "ZooBazaar_Interfaces\ZooBazaar_DTO.csproj", "{7159D057-E800-4A3E-A08F-8497736BE8BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooBazaar_DomainModels", "DomainModels\ZooBazaar_DomainModels.csproj", "{C862A6FA-8A01-4057-B974-1CDC568615DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooBazaar_DomainModels", "DomainModels\ZooBazaar_DomainModels.csproj", "{C862A6FA-8A01-4057-B974-1CDC568615DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

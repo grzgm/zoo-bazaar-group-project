@@ -10,5 +10,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
     public interface IScheduleManager
     {
         Schedule GetDayScheduleEmployee(DateOnly date, int employeeId);
+
+        List<Schedule> GetDayScheduleEmployeeAllSchdules(DateOnly date, int employeeId);
     }
 }

@@ -35,11 +35,26 @@ namespace ZooBazaar_ClassLibrary.Menagers
         public List<Schedule> GetDay(DateOnly date)
         {
             List<Schedule> schedules = new List<Schedule>();
-            foreach(ScheduleDTO dto in _scheduleRepository.GetByDate(date){
+            foreach(ScheduleDTO dto in _scheduleRepository.GetByDate(date)){
                 schedules.Add(new Schedule(dto));
             }
             return schedules;
         }
+
+        public List<Schedule> GetDayScheduleEmployeeAllSchdules(DateOnly date, int employeeId)
+        {
+            List<Schedule> schedules = new List<Schedule>();
+
+            foreach(ScheduleDTO dto in _scheduleRepository.GetByDateAndEmployeeIdAllSchdules(date, employeeId))
+            {
+                schedules.Add(new Schedule(dto));
+            }
+            return schedules;
+        }
+
+
+
+
 
     }
 }

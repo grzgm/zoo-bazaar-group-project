@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DomainModels\ZooBazaar_DomainModels.csproj" />
+    <ProjectReference Include="..\ZooBazaar_ClassLibrary\ZooBazaar_ClassLibrary.csproj" />
+    <ProjectReference Include="..\ZooBazaar_Interfaces\ZooBazaar_DTO.csproj" />
+    <ProjectReference Include="..\ZooBazaar_Repositories\ZooBazaar_Repositories.csproj" />
+  </ItemGroup>
+
+</Project>

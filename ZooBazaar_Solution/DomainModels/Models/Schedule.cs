@@ -32,7 +32,7 @@ namespace ZooBazaar_DomainModels.Models
         public Schedule(ScheduleDTO scheduleDTO)
         {
             this._id = scheduleDTO.ScheduleID;
-            this._date = new DateOnly(scheduleDTO.Year, scheduleDTO.Day, scheduleDTO.Day);
+            this._date = new DateOnly(scheduleDTO.Year, scheduleDTO.Month, scheduleDTO.Day);
             this._timeBlock = new TimeBlock(scheduleDTO.TimeBlockDTO);
             this._employee = new Employee(scheduleDTO.EmployeeDTO);
             this._task = new Task(scheduleDTO.TaskDTO);
@@ -40,6 +40,7 @@ namespace ZooBazaar_DomainModels.Models
 
         public int timeBlockId { get { return _timeBlock.ID; } }
         public string taskName { get { return _task.taskName; } }
+
 
     }
 }
