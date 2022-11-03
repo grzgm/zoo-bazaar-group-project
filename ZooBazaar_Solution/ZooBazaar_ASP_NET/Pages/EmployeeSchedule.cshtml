@@ -9,7 +9,7 @@
 <div id="container">
     <div class="navigation">
         <div>
-        <select class="dropdowns" id="animalEmployeeComboBox">
+@*        <select class="dropdowns" id="animalEmployeeComboBox">
             <option></option>
             <option></option>
             <option></option>
@@ -18,11 +18,11 @@
             <option></option>
             <option></option>
             <option></option>
-        </select>
+        </select>*@
         </div>
         <form method="post" autocomplete="on">
             <button asp-page-handler="previous">&#60;</button>
-            <button>Today</button>
+            <button asp-page-handler="today">Today</button>
             <button asp-page-handler="next">></button>
             <button asp-page-handler="new">New schedule</button>
         </form>

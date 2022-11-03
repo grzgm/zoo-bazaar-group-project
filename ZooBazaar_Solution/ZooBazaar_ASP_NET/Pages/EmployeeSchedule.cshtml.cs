@@ -57,6 +57,12 @@ namespace ZooBazaar_ASP_NET.Pages
             Response.Cookies.Append("firstDayOfWeek", (firstDayOfWeek.AddDays(-7)).ToString());
             return RedirectToPage("EmployeeSchedule");
         }
+        public IActionResult OnPostToday()
+        {
+            Response.Cookies.Delete("weekNumber");
+            Response.Cookies.Delete("firstDayOfWeek");
+            return RedirectToPage("EmployeeSchedule");
+        }
         public IActionResult OnPostNext()
         {
             weekNumber = int.Parse(Request.Cookies["weekNumber"]);
@@ -67,6 +73,7 @@ namespace ZooBazaar_ASP_NET.Pages
         }
         public IActionResult OnPostNew()
         {
+            return OnPostToday();
             return Page();
         }
         private DateOnly FirstDayOfWeek(DateOnly dt)
