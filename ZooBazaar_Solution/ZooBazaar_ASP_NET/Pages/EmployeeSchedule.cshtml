@@ -1,0 +1,74 @@
+﻿@page
+@model ZooBazaar_ASP_NET.Pages.EmployeeScheduleModel
+@{
+    ViewData["Title"] = "Employee Schedule";
+    ViewData["TabName"] = "Employee Schedule";
+    ViewData["Css"] = "~/css/EmployeeSchedule.css";
+}
+
+<div id="container">
+    <div class="navigation">
+        <div>
+@*        <select class="dropdowns" id="animalEmployeeComboBox">
+            <option></option>
+            <option></option>
+            <option></option>
+        </select>
+            <select class="dropdowns" id="entityComboBox">
+            <option></option>
+            <option></option>
+            <option></option>
+        </select>*@
+        </div>
+        <form method="post" autocomplete="on">
+            <button asp-page-handler="previous">&#60;</button>
+            <button asp-page-handler="today">Today</button>
+            <button asp-page-handler="next">></button>
+            <button asp-page-handler="new">New schedule</button>
+        </form>
+
+    </div>
+    <div class="week">Week @Model.weekNumber </div>
+    <div class="weekDays">
+        <div>Mon <br /> @Model.firstDayOfWeek.ToString()</div>
+        <div>Tue <br /> @Model.firstDayOfWeek.AddDays(1).ToString()</div>
+        <div>Wed <br /> @Model.firstDayOfWeek.AddDays(2).ToString()</div>
+        <div>Thu <br /> @Model.firstDayOfWeek.AddDays(3).ToString()</div>
+        <div>Fri <br /> @Model.firstDayOfWeek.AddDays(4).ToString()</div>
+        <div>Sat <br /> @Model.firstDayOfWeek.AddDays(5).ToString()</div>
+        <div>Sun <br /> @Model.firstDayOfWeek.AddDays(6).ToString()</div>
+    </div>
+    <div class="schedule">
+        @{
+            <div>
+            @{
+                for (int i = 0; i < 16; i++)
+                {
+                    <div class="hour">@(i+6):00 </div>
+                }
+            }
+            </div>
+            for (int i = 0; i < 7; i++)
+            {
+                <div class="day">
+                @{
+                for (int j = 0; j < 16; j++)
+                {
+                    if(Model.schedule[i] != null && Model.schedule[i].timeBlockId == j)
+                    {
+                        <div class="timeBlock">@Model.schedule[i].taskName</div>
+                    }
+                    else
+                    {
+                        <div class="timeBlock"></div>
+                    }
+                }
+                }
+                </div>
+            }
+        }
+    </div>
+    <div class="actionPanel">
+
+    </div>
+</div>

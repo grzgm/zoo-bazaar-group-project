@@ -1,18 +1,73 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+* {
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    font-family: Helvetica;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    display: flex;
+    min-height: 100%;
+}
+
+nav {
+    position: fixed;
+    width: 80px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #4C6674;
+}
+    nav a:first-child {
+        margin-top: 40px;
+    }
+
+.icon {
+    width: 60px;
+    min-height: 60px;
+    aspect-ratio: 1/1;
+    margin-bottom: 10px;
+    display: block;
+    background-color: #637988;
+    border-radius: 50px;
+    background-image: url("/Images/ScheduleIcon.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+    .icon:hover {
+        background-color: #29A57B;
+    }
+
+.panel{
+    margin-left: 80px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 10px auto;
+    grid-template-rows: 40px auto;
+}
+
+.border {
+    background-color: #119B6C;
+}
+
+.tabName{
+    line-height: 40px;
+}
+
+main {
+    background-color: #F0F0F0;
+}
+
+#welcome {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
 }

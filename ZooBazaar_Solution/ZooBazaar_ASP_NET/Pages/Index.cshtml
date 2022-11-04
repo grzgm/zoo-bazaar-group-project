@@ -4,7 +4,29 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class=""
+style="display: flex;
+justify-content: center;
+align-items: center;
+height: 100%;"
+>
+    <form method="post" autocomplete="on"
+style="display: flex;
+flex-direction: column;
+width: 400px;"
+>
+        <label asp-for="Name">Name: </label>
+        <input asp-for="Name" type="text">
+        <label asp-for="Password">Password: </label>
+        <input asp-for="Password" type="password">
+        <button type="submit">Login</button>
+        <div class="validation">
+            <span class="feedback" asp-validation-for="Name"></span>
+            <span class="feedback" asp-validation-for="Password"></span>
+        </div>
+    </form>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
