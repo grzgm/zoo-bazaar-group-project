@@ -33,6 +33,11 @@ namespace ZooBazaar_ClassLibrary.Menagers
             return new Employee(_employeeRepositroty.GetByEmployeeId(id));
         }
 
+        public Employee LoginEmployee(string email, string password)
+        {
+            return new Employee(_employeeRepositroty.GetEmployeeByLogin(email, password));
+        }
+
         public void NewEmployee(EmployeeAddDTO employeeDTO)
         {
             _employeeRepositroty.Insert(employeeDTO);

@@ -11,6 +11,42 @@ namespace ZooBazaar_Repositories.Repositories
 {
     public class EmployeeRepository : BaseRepository,IEmployeeRepositroty
     {
+        public EmployeeDTO GetEmployeeByLogin(string email, string password)
+        {
+            EmployeeDTO employeeDTO = new EmployeeDTO();
+            string Query = "SELECT * FROM Employee WHERE (Email = @Email AND Password = @Password)";
+            SqlConnection connection = GetConnection();
+            using (SqlCommand command = new SqlCommand(Query, connection))
+            {
+                command.Parameters.AddWithValue("@Email", email);
+                command.Parameters.AddWithValue("@Password", password);
+
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    int employeeid = reader.GetInt32(0);
+                    string firstname = reader.GetString(1);
+                    string lastname = reader.GetString(2);
+                    string employeeemail = reader.GetString(3);
+                    string phone = reader.GetString(4);
+                    string address = reader.GetString(5);
+                    string role = reader.GetString(6);
+
+                    employeeDTO = (new EmployeeDTO
+                    {
+                        EmployeeID = employeeid,
+                        FirstName = firstname,
+                        LastName = lastname,
+                        Email = email,
+                        Phone = phone,
+                        Address = address,
+                        Role = role
+                    });
+                }
+                return employeeDTO;
+            }
+        }
 
         void IEmployeeRepositroty.Delete(int id)
         {
