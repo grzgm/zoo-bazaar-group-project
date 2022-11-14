@@ -18,7 +18,8 @@ namespace ZooBazaar_ASP_NET.Pages
         private IScheduleManager scheduleManager;
 
         public DateOnly firstDayOfWeek;
-        public Schedule[] schedule = new Schedule[7];
+        public int openDuration = 16;
+        public Schedule[][] schedule;
         public int weekNumber { get; set; }
 
         public void OnGet()
@@ -46,6 +47,11 @@ namespace ZooBazaar_ASP_NET.Pages
                 firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
             }
 
+            schedule = new Schedule[7][];
+            for (int i = 0; i < 7; i++)
+            {
+                schedule[i] = new Schedule[openDuration];
+            }
             GetWeekSchedule();
         }
 
@@ -87,9 +93,17 @@ namespace ZooBazaar_ASP_NET.Pages
 
         private void GetWeekSchedule()
         {
+            List<Schedule> scheduleList = new List<Schedule>();
             for (int i = 0; i < 7; i++)
             {
-                schedule[i] = scheduleManager.GetDayScheduleEmployee(firstDayOfWeek.AddDays(i), 129);
+                scheduleList = scheduleManager.GetDayScheduleEmployeeAllSchdules(firstDayOfWeek.AddDays(i), 18);
+                if(scheduleList.Count > 0)
+                {
+                    foreach (Schedule block in scheduleList)
+                    {
+                        schedule[i][block.timeBlockId] = block;
+                    }
+                }
             }
         }
     }

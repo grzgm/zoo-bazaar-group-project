@@ -42,7 +42,7 @@
         @{
             <div>
             @{
-                for (int i = 0; i < 16; i++)
+                for (int i = 0; i < Model.openDuration; i++)
                 {
                     <div class="hour">@(i+6):00 </div>
                 }
@@ -52,11 +52,11 @@
             {
                 <div class="day">
                 @{
-                for (int j = 0; j < 16; j++)
+                        for (int j = 0; j < Model.openDuration; j++)
                 {
-                    if(Model.schedule[i] != null && Model.schedule[i].timeBlockId == j)
+                    if(Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
                     {
-                        <div class="timeBlock">@Model.schedule[i].taskName</div>
+                        <div class="timeBlock">@Model.schedule[i][j].taskName</div>
                     }
                     else
                     {
