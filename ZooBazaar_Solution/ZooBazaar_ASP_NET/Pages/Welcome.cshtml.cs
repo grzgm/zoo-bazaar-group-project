@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ZooBazaar_ASP_NET.Pages
@@ -7,6 +6,11 @@ namespace ZooBazaar_ASP_NET.Pages
     {
         public void OnGet()
         {
+            if (Request.Cookies.ContainsKey("weekNumber"))
+            {
+                Response.Cookies.Delete("weekNumber");
+                Response.Cookies.Delete("firstDayOfWeek");
+            }
         }
     }
 }
