@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Globalization;
+using System.Security.Claims;
 using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_ClassLibrary.Menagers;
 using ZooBazaar_DomainModels.Models;
@@ -96,7 +97,7 @@ namespace ZooBazaar_ASP_NET.Pages
             List<Schedule> scheduleList = new List<Schedule>();
             for (int i = 0; i < 7; i++)
             {
-                scheduleList = scheduleManager.GetDayScheduleEmployeeAllSchdules(firstDayOfWeek.AddDays(i), 18);
+                scheduleList = scheduleManager.GetDayScheduleEmployeeAllSchdules(firstDayOfWeek.AddDays(i), int.Parse(User.FindFirstValue("Id")));
                 if(scheduleList.Count > 0)
                 {
                     foreach (Schedule block in scheduleList)
