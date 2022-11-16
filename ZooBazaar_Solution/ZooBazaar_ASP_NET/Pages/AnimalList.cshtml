@@ -1,0 +1,55 @@
+﻿@page
+@using ZooBazaar_DomainModels.Models;
+@model ZooBazaar_ASP_NET.Pages.AnimalListModel
+@{
+    ViewData["Title"] = "Animal List";
+    ViewData["TabName"] = "Animal List";
+    ViewData["Css"] = "~/css/AnimalList.css";
+}
+
+<div id="container">
+    <div class="navigation">
+        <form method="post">
+            <select>
+                <option>aaa</option>
+                <option>bbb</option>
+            </select>
+            <select>
+                <option>aaa</option>
+                <option>bbb</option>
+            </select>
+            <select>
+                <option>aaa</option>
+                <option>bbb</option>
+            </select>
+            <select>
+                <option>aaa</option>
+                <option>bbb</option>
+            </select>
+        </form>
+
+    </div>
+    <div class="list">
+        @{
+            foreach(Animal animal in Model.animals)
+            {
+                <div class="animal">
+                    <div class="aName">
+                        @animal.Name;
+                    </div>
+                    <div class="aSpecies">
+                        @animal.Species;
+                    </div>
+                    <div class="aHabitat">
+                        @animal.Habitat.ToString();
+                    </div>
+                    <div class="aZone">
+                        @animal.Zone.ToString();
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="actionPanel">
+    </div>
+</div>
