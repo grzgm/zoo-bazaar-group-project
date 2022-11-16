@@ -4,22 +4,25 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZooBazaar_Windows_Forms_Application.Theme;
+
+using ZooBazaar_Windows_Forms_Application.UpdatedUIControls.Tables;
+using ZooBazaar_Windows_Forms_Application.UpdatedUIControls.Theme;
 
 
-namespace ZooBazaar_Windows_Forms_Application.controls
+namespace ZooBazaar_Windows_Forms_Application.UpdatedUIControls.Buttons
 {
     internal class MenuButton : Button
     {
-        private int id;
-        private MainMenuTable mainMenuTable;
+        int id;
 
-        public MenuButton(int id, string t, MainMenuTable mainMenuTable)
+        MainMenuTable parentTable;
+
+        public MenuButton(int id, MainMenuTable parentTable)
         {
-            //fields
-            this.id = id;
-            this.mainMenuTable = mainMenuTable;
+            this.id = id;   
+            this.parentTable = parentTable;
 
+            
             //set icon
             switch (id)
             {
@@ -33,12 +36,16 @@ namespace ZooBazaar_Windows_Forms_Application.controls
                     this.BackgroundImage = Properties.Resources.AnimalsIcon;
                     break;
                 case 3:
+                    //this.BackgroundImage = Properties.Resources.HabitatIcon;
                     break;
                 case 4:
+                    //this.BackgroundImage = Properties.Resources.ZoneIcon;
+                    break;
+                case 5:
+                    //this.BackgroundImage = Properties.Resources.StockIcon;
                     break;
             }
             this.BackgroundImageLayout = ImageLayout.Stretch;
-
 
             //properties
             Dock = DockStyle.Top;
@@ -47,10 +54,6 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             BackColor = ThemeColors.menuButtonColor;
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 0;
-            //Text = t.ToUpper();
-            TextAlign = ContentAlignment.MiddleCenter;
-            Font = new Font("Calibri", 14, FontStyle.Bold);
-
 
             //events
             this.Click += new System.EventHandler(this.MenuButton_Click);
@@ -58,7 +61,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
 
         private void MenuButton_Click(object? sender, EventArgs e)
         {
-            mainMenuTable.ButtonClick(this);
+            parentTable.ButtonClick(this);
         }
 
         private GraphicsPath GetFigurePath(RectangleF rect, float radius)
@@ -77,7 +80,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         protected override void OnPaint(PaintEventArgs pevent)
         {
             GraphicsPath path = new GraphicsPath();
-            path.AddEllipse(0,0,ClientSize.Width,ClientSize.Height);
+            path.AddEllipse(0, 0, ClientSize.Width, ClientSize.Height);
             this.Region = new System.Drawing.Region(path);
             base.OnPaint(pevent);
         }

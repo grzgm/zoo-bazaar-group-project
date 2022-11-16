@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooBazaar_DomainModels.Models;
 
-namespace ZooBazaar_Windows_Forms_Application.controls
+namespace ZooBazaar_Windows_Forms_Application.UpdatedUIControls.Tables
 {
-    internal class EmployeeNavBarTable : TableLayoutPanel
+    internal class EmployeeFilterTable : TableLayoutPanel
     {
 
         private ComboBox _NameComboBox;
         private ComboBox _FunctionComboBox;
         private ComboBox _WorkZoneComboBox;
-        private EmployeeTable _employeeTable;
+        private ElementTable employeeElementTable;
 
-        public EmployeeNavBarTable(EmployeeTable employeeTable)
+        public EmployeeFilterTable(ElementTable elementTable)
         {
-            _employeeTable = employeeTable;
+            employeeElementTable = elementTable;
             //assigning controls
             _NameComboBox = new ComboBox();
             _NameComboBox.Dock = DockStyle.Fill;
@@ -47,7 +47,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
             Controls.Add(_NameComboBox, 0, 0);
             Controls.Add(_FunctionComboBox, 1, 0);
             Controls.Add(_WorkZoneComboBox, 2, 0);
-            _employeeTable = employeeTable;
+            employeeElementTable = elementTable;
 
             //debug
             //BackColor = Color.Red;
@@ -55,8 +55,7 @@ namespace ZooBazaar_Windows_Forms_Application.controls
         }
         private void _SpeciesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            _employeeTable.UpdateTableContentBasedOnRole((ROLE)_FunctionComboBox.SelectedItem);
+            employeeElementTable.UpdateTable_EmployeesByRole((ROLE)_FunctionComboBox.SelectedItem);
         }
-
     }
 }
