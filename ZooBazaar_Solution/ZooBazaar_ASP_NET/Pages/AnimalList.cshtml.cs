@@ -20,6 +20,8 @@ namespace ZooBazaar_ASP_NET.Pages
             animalMenager = new AnimalManager(animalRepository);
 
             animals = animalMenager.GetAll();
+
+            var specie = Enum.GetValues(typeof(SPECIESTYPE));
         }
     }
 }

@@ -10,9 +10,11 @@
 <div id="container">
     <div class="navigation">
         <form method="post">
-            <select>
-                <option>aaa</option>
-                <option>bbb</option>
+            <select class="dropdownSpecies">
+                @foreach (var specie in Enum.GetValues(typeof(SPECIESTYPE)))
+                {
+                    <option>@specie.ToString()</option>
+                }
             </select>
             <select>
                 <option>aaa</option>
@@ -35,16 +37,16 @@
             {
                 <div class="animal">
                     <div class="aName">
-                        @animal.Name;
+                        @animal.Name
                     </div>
                     <div class="aSpecies">
-                        @animal.Species;
+                        @animal.Species
                     </div>
                     <div class="aHabitat">
-                        @animal.Habitat.ToString();
+                        @animal.Habitat.ToString()
                     </div>
                     <div class="aZone">
-                        @animal.Zone.ToString();
+                        @animal.Zone.ToString()
                     </div>
                 </div>
             }
@@ -53,3 +55,29 @@
     <div class="actionPanel">
     </div>
 </div>
+
+
+<script>
+
+    function sortAnimalsBySpecie(specie)
+    {
+        let animals = document.querySelectorAll('.animal');
+        let animalsArray = Array.prototype.slice.call(animals, 0);
+        animalsArray.sort((a, b) => (a.children[1].innerHTML > b.children[1].innerHTML ? 1 : -1));
+        console.log(animalsArray[0].children[1].innerHTML);
+        let list = document.querySelector('.list');
+        list.textContent = '';
+
+        for (let i = 0; i < animals.length; i++) {
+            list.appendChild(animalsArray[i]);
+        }
+    }
+
+    document.querySelectorAll('.dropdownSpecies').forEach(item => {
+        item.addEventListener('change', event => {
+            console.log(item.options[item.selectedIndex].text);
+            sortAnimalsBySpecie(item.options[item.selectedIndex].text);
+        });
+    })
+
+</script>
