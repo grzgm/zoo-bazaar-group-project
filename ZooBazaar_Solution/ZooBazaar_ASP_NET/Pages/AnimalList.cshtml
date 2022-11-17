@@ -9,25 +9,15 @@
 
 <div id="container">
     <div class="navigation">
-        <form method="post">
-            <select class="dropdownSpecies">
-                @foreach (var specie in Enum.GetValues(typeof(SPECIESTYPE)))
-                {
-                    <option>@specie.ToString()</option>
-                }
-            </select>
-            <select>
-                <option>aaa</option>
-                <option>bbb</option>
-            </select>
-            <select>
-                <option>aaa</option>
-                <option>bbb</option>
-            </select>
-            <select>
-                <option>aaa</option>
-                <option>bbb</option>
-            </select>
+        <form class="searchingForm" method="post">
+            <input asp-for="Name" type="text" />
+            <button asp-page-handler="Name" type="submit">Search</button>
+            <input asp-for="Species" type="text" />
+            <button asp-page-handler="Species" type="submit">Search</button>
+            <input asp-for="Habitat" type="text" />
+            <button asp-page-handler="Habitat" type="submit">Search</button>
+            <input asp-for="Zone" type="text" />
+            <button asp-page-handler="Zone" type="submit">Search</button>
         </form>
 
     </div>
@@ -75,6 +65,7 @@
 
     function sortAnimals(column)
     {
+        // Checking if sorting the same column and if change sorting order
         if (sortedColumn == column) {
             sortingFactor *= -1;
         }
@@ -82,10 +73,13 @@
             sortedColumn = column;
             sortingFactor = 1;
         }
+        // NodeList of all animals divs
         let animals = document.querySelectorAll('.animal');
+        // Array of all animals divs
         let animalsArray = Array.prototype.slice.call(animals, 0);
+        // Sorting array by celected column
         animalsArray.sort((a, b) => (a.children[column].innerHTML > b.children[column].innerHTML ? 1 * sortingFactor : -1 * sortingFactor));
-        console.log(column);
+        // Clear animals list and populate it with sorted animals
         let list = document.querySelector('.list');
         list.textContent = '';
 

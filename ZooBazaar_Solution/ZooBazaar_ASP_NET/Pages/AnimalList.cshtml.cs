@@ -14,14 +14,50 @@ namespace ZooBazaar_ASP_NET.Pages
         private IAnimalMenager animalMenager;
 
         public List<Animal> animals;
-        public void OnGet()
+
+        [BindProperty(SupportsGet = true)]
+        public string Name { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string Species { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string Habitat { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string Zone { get; set; }
+
+        public AnimalListModel()
         {
             animalRepository = new AnimalRepository();
             animalMenager = new AnimalManager(animalRepository);
 
             animals = animalMenager.GetAll();
+        }
+        public void OnGet()
+        {
+        }
 
-            var specie = Enum.GetValues(typeof(SPECIESTYPE));
+        public void OnPostName()
+        {
+            if (Name == null)
+                return;
+            animals = animals.FindAll(animal => animal.Name == this.Name);
+        }
+        public void OnPostSpecies()
+        {
+            if (Species == null)
+                return;
+            animals = animals.FindAll(animal => animal.Species == this.Species);
+        }
+        public void OnPostHabitat()
+        {
+            if (Habitat == null)
+                return;
+            animals = animals.FindAll(animal => animal.Habitat.ToString() == this.Habitat);
+        }
+        public void OnPostZone()
+        {
+            if (Zone == null)
+                return;
+            animals = animals.FindAll(animal => animal.Zone.ToString() == this.Zone);
         }
     }
 }

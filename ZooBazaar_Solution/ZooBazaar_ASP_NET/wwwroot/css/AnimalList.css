@@ -11,8 +11,8 @@
     flex-direction: row;
     justify-content: space-between;
 }
-    .navigation select {
-        width: 25%;
+    .navigation input {
+        width: 100%;
         padding: 0 5px;
     }
 
@@ -44,6 +44,13 @@
     .sortingMenu div:last-child {
         border-right: none;
     }
+
+.list{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+}
 
 .animal {
     width: 100%;
