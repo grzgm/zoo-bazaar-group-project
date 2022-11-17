@@ -31,21 +31,35 @@
         </form>
 
     </div>
+    <div class="sortingMenu">
+        <div class="sortOption Name">
+            Name
+        </div>
+        <div class="sortOption Species">
+            Species
+        </div>
+        <div class="sortOption Habitat">
+            Habitat
+        </div>
+        <div class="sortOption Zone">
+            Zone
+        </div>
+    </div>
     <div class="list">
         @{
             foreach(Animal animal in Model.animals)
             {
                 <div class="animal">
-                    <div class="aName">
+                    <div class="animalName">
                         @animal.Name
                     </div>
-                    <div class="aSpecies">
+                    <div class="animalSpecies">
                         @animal.Species
                     </div>
-                    <div class="aHabitat">
+                    <div class="animalHabitat">
                         @animal.Habitat.ToString()
                     </div>
-                    <div class="aZone">
+                    <div class="animalZone">
                         @animal.Zone.ToString()
                     </div>
                 </div>
@@ -59,12 +73,19 @@
 
 <script>
 
-    function sortAnimalsBySpecie(specie)
+    function sortAnimals(column)
     {
+        if (sortedColumn == column) {
+            sortingFactor *= -1;
+        }
+        else{
+            sortedColumn = column;
+            sortingFactor = 1;
+        }
         let animals = document.querySelectorAll('.animal');
         let animalsArray = Array.prototype.slice.call(animals, 0);
-        animalsArray.sort((a, b) => (a.children[1].innerHTML > b.children[1].innerHTML ? 1 : -1));
-        console.log(animalsArray[0].children[1].innerHTML);
+        animalsArray.sort((a, b) => (a.children[column].innerHTML > b.children[column].innerHTML ? 1 * sortingFactor : -1 * sortingFactor));
+        console.log(column);
         let list = document.querySelector('.list');
         list.textContent = '';
 
@@ -73,10 +94,12 @@
         }
     }
 
-    document.querySelectorAll('.dropdownSpecies').forEach(item => {
-        item.addEventListener('change', event => {
-            console.log(item.options[item.selectedIndex].text);
-            sortAnimalsBySpecie(item.options[item.selectedIndex].text);
+    let sortedColumn = -1;
+    let sortingFactor = 1;
+
+    document.querySelectorAll('.sortOption').forEach(item => {
+        item.addEventListener('click', event => {
+            sortAnimals(Array.from(item.parentNode.children).indexOf(item));
         });
     })
 
