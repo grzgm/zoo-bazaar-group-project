@@ -1,20 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
+using ElectronNET.API;
 
 namespace ZooBazaar_Desktop_App.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-        }
+        [BindProperty]
+        public string Name { get; set; }
+        [BindProperty]
+        public string Password { get; set; }
 
         public void OnGet()
         {
 
+        }
+
+        public IActionResult OnPost()
+        {
+            // here check in database if cerdentials are ok
+
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, Name));
+            claims.Add(new Claim("Password", Password));
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+
+            return RedirectToPage("/Welcome");
+
+           
         }
     }
 }

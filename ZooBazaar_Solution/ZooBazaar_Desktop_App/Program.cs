@@ -1,20 +1,48 @@
 using ElectronNET.API;
+using ElectronNET.API.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddElectron();
 builder.WebHost.UseElectron(args);
+
+builder.Services.AddElectron();
+builder.WebHost.UseElectron(args);
+
+
+builder.Services.AddElectron();
+builder.WebHost.UseElectron(args);
+
+
+
 if (HybridSupport.IsElectronActive)
 {
-    var window = await Electron.WindowManager.CreateWindowAsync();
-    window.OnClosed += () =>
+    var options = new BrowserWindowOptions()
     {
-        Electron.App.Quit();
+        AutoHideMenuBar = false,
+        DarkTheme = true,
+        ThickFrame = false      
     };
-        window.RemoveMenu();
 
+
+    // Open the Electron-Window here
+    Task.Run(async () =>
+    {
+        BrowserWindow window = await Electron.WindowManager.CreateWindowAsync(options);
+
+
+        window.OnClosed += () =>
+        {
+            Electron.App.Quit();
+        };
+
+    });
+    
 }
+
+
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
@@ -38,5 +66,6 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
+
 
 

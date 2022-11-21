@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Images\ScheduleIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\ScheduleIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ElectronNET.API" Version="13.5.1" />
   </ItemGroup>
 
