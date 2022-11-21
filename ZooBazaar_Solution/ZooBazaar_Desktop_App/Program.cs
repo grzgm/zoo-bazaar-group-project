@@ -37,4 +37,4 @@ app.MapRazorPages();
 
 app.Run();
 
-Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
+
