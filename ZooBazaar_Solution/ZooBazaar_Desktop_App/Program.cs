@@ -12,6 +12,8 @@ if (HybridSupport.IsElectronActive)
     {
         Electron.App.Quit();
     };
+        window.RemoveMenu();
+
 }
 // Add services to the container.
 builder.Services.AddRazorPages();
