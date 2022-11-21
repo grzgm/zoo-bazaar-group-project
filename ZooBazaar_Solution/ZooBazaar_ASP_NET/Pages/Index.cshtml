@@ -15,13 +15,13 @@ style="display: flex;
 flex-direction: column;
 width: 400px;"
 >
-        <label asp-for="Name">Name: </label>
-        <input asp-for="Name" type="text">
+        <label asp-for="Email">Email: </label>
+        <input asp-for="Email" type="text">
         <label asp-for="Password">Password: </label>
         <input asp-for="Password" type="password">
         <button type="submit">Login</button>
         <div class="validation">
-            <span class="feedback" asp-validation-for="Name"></span>
+            <span class="feedback" asp-validation-for="Email"></span>
             <span class="feedback" asp-validation-for="Password"></span>
         </div>
     </form>

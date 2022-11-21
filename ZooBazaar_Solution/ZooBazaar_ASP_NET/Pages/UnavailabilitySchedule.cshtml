@@ -1,5 +1,5 @@
 ﻿@page
-@model ZooBazaar_ASP_NET.Pages.EmployeeScheduleModel
+@model ZooBazaar_ASP_NET.Pages.UnavailabilityScheduleModel
 @{
     ViewData["Title"] = "Employee Schedule";
     ViewData["TabName"] = "Employee Schedule";
@@ -9,16 +9,16 @@
 <div id="container">
     <div class="navigation">
         <div>
-@*        <select class="dropdowns" id="animalEmployeeComboBox">
+            @*        <select class="dropdowns" id="animalEmployeeComboBox">
             <option></option>
             <option></option>
             <option></option>
-        </select>
+            </select>
             <select class="dropdowns" id="entityComboBox">
             <option></option>
             <option></option>
             <option></option>
-        </select>*@
+            </select>*@
         </div>
         <form method="post">
             <button asp-page-handler="previous">&#60;</button>
@@ -41,34 +41,33 @@
     <div class="schedule">
         @{
             <div>
-            @{
-                for (int i = 0; i < Model.openDuration; i++)
-                {
-                    <div class="hour">@(i+6):00 </div>
+                @{
+                    for (int i = 0; i < Model.openDuration; i++)
+                    {
+                        <div class="hour">@(i + 6):00 </div>
+                    }
                 }
-            }
             </div>
             for (int i = 0; i < 7; i++)
             {
                 <div class="day">
-                @{
+                    @{
                         for (int j = 0; j < Model.openDuration; j++)
-                {
-                    if(Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
-                    {
-                        <div class="timeBlock">@Model.schedule[i][j].taskName</div>
+                        {
+                            if (Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
+                            {
+                                <div class="timeBlock">@Model.schedule[i][j].taskName</div>
+                            }
+                            else
+                            {
+                                <div class="timeBlock"></div>
+                            }
+                        }
                     }
-                    else
-                    {
-                        <div class="timeBlock"></div>
-                    }
-                }
-                }
                 </div>
             }
         }
     </div>
     <div class="actionPanel">
-
     </div>
 </div>

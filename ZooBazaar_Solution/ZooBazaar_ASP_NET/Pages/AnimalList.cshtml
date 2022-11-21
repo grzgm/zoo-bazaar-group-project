@@ -1,0 +1,100 @@
+﻿@page
+@using ZooBazaar_DomainModels.Models;
+@model ZooBazaar_ASP_NET.Pages.AnimalListModel
+@{
+    ViewData["Title"] = "Animal List";
+    ViewData["TabName"] = "Animal List";
+    ViewData["Css"] = "~/css/AnimalList.css";
+}
+
+<div id="container">
+    <div class="navigation">
+        <form class="searchingForm" method="post">
+            <input asp-for="Name" type="text" />
+            <button asp-page-handler="Name" type="submit">Search</button>
+            <input asp-for="Species" type="text" />
+            <button asp-page-handler="Species" type="submit">Search</button>
+            <input asp-for="Habitat" type="text" />
+            <button asp-page-handler="Habitat" type="submit">Search</button>
+            <input asp-for="Zone" type="text" />
+            <button asp-page-handler="Zone" type="submit">Search</button>
+        </form>
+
+    </div>
+    <div class="sortingMenu">
+        <div class="sortOption Name">
+            Name
+        </div>
+        <div class="sortOption Species">
+            Species
+        </div>
+        <div class="sortOption Habitat">
+            Habitat
+        </div>
+        <div class="sortOption Zone">
+            Zone
+        </div>
+    </div>
+    <div class="list">
+        @{
+            foreach(Animal animal in Model.animals)
+            {
+                <div class="animal">
+                    <div class="animalName">
+                        @animal.Name
+                    </div>
+                    <div class="animalSpecies">
+                        @animal.Species
+                    </div>
+                    <div class="animalHabitat">
+                        @animal.Habitat.ToString()
+                    </div>
+                    <div class="animalZone">
+                        @animal.Zone.ToString()
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="actionPanel">
+    </div>
+</div>
+
+
+<script>
+
+    function sortAnimals(column)
+    {
+        // Checking if sorting the same column and if change sorting order
+        if (sortedColumn == column) {
+            sortingFactor *= -1;
+        }
+        else{
+            sortedColumn = column;
+            sortingFactor = 1;
+        }
+        // NodeList of all animals divs
+        let animals = document.querySelectorAll('.animal');
+        // Array of all animals divs
+        let animalsArray = Array.prototype.slice.call(animals, 0);
+        // Sorting array by celected column
+        animalsArray.sort((a, b) => (a.children[column].innerHTML > b.children[column].innerHTML ? 1 * sortingFactor : -1 * sortingFactor));
+        // Clear animals list and populate it with sorted animals
+        let list = document.querySelector('.list');
+        list.textContent = '';
+
+        for (let i = 0; i < animals.length; i++) {
+            list.appendChild(animalsArray[i]);
+        }
+    }
+
+    let sortedColumn = -1;
+    let sortingFactor = 1;
+
+    document.querySelectorAll('.sortOption').forEach(item => {
+        item.addEventListener('click', event => {
+            sortAnimals(Array.from(item.parentNode.children).indexOf(item));
+        });
+    })
+
+</script>

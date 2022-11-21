@@ -35,7 +35,13 @@ namespace ZooBazaar_ClassLibrary.Menagers
 
         public Employee LoginEmployee(string email, string password)
         {
-            return new Employee(_employeeRepositroty.GetEmployeeByLogin(email, password));
+            EmployeeDTO employeeDTO = _employeeRepositroty.GetEmployeeByLogin(email, password);
+            if(employeeDTO.FirstName == null)
+            {
+                return null;
+            }
+            return new Employee(employeeDTO);
+
         }
 
         public void NewEmployee(EmployeeAddDTO employeeDTO)

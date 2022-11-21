@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Globalization;
@@ -11,8 +10,7 @@ using ZooBazaar_Repositories.Repositories;
 
 namespace ZooBazaar_ASP_NET.Pages
 {
-    [Authorize]
-    public class EmployeeScheduleModel : PageModel
+    public class UnavailabilityScheduleModel : PageModel
     {
         private IScheduleRepository scheduleRepository;
         private ITaskRepository taskRepository;
@@ -22,7 +20,6 @@ namespace ZooBazaar_ASP_NET.Pages
         public int openDuration = 16;
         public Schedule[][] schedule;
         public int weekNumber { get; set; }
-
         public void OnGet()
         {
             scheduleRepository = new ScheduleRepository();
@@ -98,7 +95,7 @@ namespace ZooBazaar_ASP_NET.Pages
             for (int i = 0; i < 7; i++)
             {
                 scheduleList = scheduleManager.GetDayScheduleEmployeeAllSchdules(firstDayOfWeek.AddDays(i), int.Parse(User.FindFirstValue("Id")));
-                if(scheduleList.Count > 0)
+                if (scheduleList.Count > 0)
                 {
                     foreach (Schedule block in scheduleList)
                     {
