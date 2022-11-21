@@ -22,7 +22,7 @@ if (HybridSupport.IsElectronActive)
     {
         AutoHideMenuBar = false,
         DarkTheme = true,
-        ThickFrame = false      
+        Resizable = true,
     };
 
 
