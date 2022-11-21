@@ -11,120 +11,93 @@ namespace ZooBazaar_Repositories.Repositories
 {
     public class TimeblockRepository : BaseRepository, ITimeBlockRepository
     {
+        private IEnumerable<TimeBlockDTO> GetTimeblocks(string Query, List<SqlParameter>? sqlParameters)
+        {
+            List<TimeBlockDTO> timeblocks = new List<TimeBlockDTO>();
+            try
+            {
+                SqlConnection connection = GetConnection();
+                using (SqlCommand command = new SqlCommand(Query, connection))
+                {
+                    connection.Open();
+                    if (sqlParameters != null)
+                    {
+                        command.Parameters.AddRange(sqlParameters.ToArray());
+                    }
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        int timeblockid = reader.GetInt32(0);
+                        TimeSpan startingtime = reader.GetTimeSpan(1);
+                        TimeSpan endingtime = reader.GetTimeSpan(2);
+
+                        timeblocks.Add(new TimeBlockDTO
+                        {
+                            TimeblockID = timeblockid,
+                            StartingTime = startingtime,
+                            EndingTime = endingtime
+                        });
+
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+            return timeblocks;
+        }
+
         void ITimeBlockRepository.Delete(int id)
         {
             string Query = "DELETE FROM Timeblock WHERE TimeblockID = @TimeblockID";
-            SqlConnection connection = GetConnection();
-            using (SqlCommand command = new SqlCommand(Query, connection))
-            {
-                command.Parameters.AddWithValue("@TimeblockID", id);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@TimeblockID", id));
+            Execute(Query, sqlParameters);
         }
 
         IEnumerable<TimeBlockDTO> ITimeBlockRepository.GetAll()
         {
-            List<TimeBlockDTO> timeblockDTOs = new List<TimeBlockDTO>();
-            string selectQuery = "SELECT * FROM Timeblock";
-            SqlConnection connection = GetConnection();
-            using (SqlCommand command = new SqlCommand(selectQuery, connection))
-            {
-                connection.Open();
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    int timeblockid = reader.GetInt32(0);
-                    TimeSpan startingtime = reader.GetTimeSpan(1);
-                    TimeSpan endingtime = reader.GetTimeSpan(2);
-
-                    timeblockDTOs.Add(new TimeBlockDTO
-                    {
-                        TimeblockID = timeblockid,
-                        StartingTime = startingtime,
-                        EndingTime = endingtime
-                    });
-                }
-            }
-            return timeblockDTOs;
+            string Query = "SELECT * FROM Timeblock";
+            return GetTimeblocks(Query, null);
         }
 
         TimeBlockDTO ITimeBlockRepository.GetByTimeBlockId(int ID)
         {
-            TimeBlockDTO timeblockDTO = new TimeBlockDTO();
-            string selectQuery = "SELECT * FROM Timeblock WHERE TimeblockID = @ID";
-            SqlConnection connection = GetConnection();
-            using (SqlCommand command = new SqlCommand(selectQuery, connection))
-            {
-                connection.Open();
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    int timeblockid = reader.GetInt32(0);
-                    TimeSpan startingtime = reader.GetTimeSpan(1);
-                    TimeSpan endingtime = reader.GetTimeSpan(2);
-
-                    timeblockDTO = (new TimeBlockDTO
-                    {
-                        TimeblockID = timeblockid,
-                        StartingTime = startingtime,
-                        EndingTime = endingtime
-                    });
-                }
-            }
-            return timeblockDTO;
+            string Query = "SELECT * FROM Timeblock WHERE TimeblockID = @ID";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@ID", ID));
+            return GetTimeblocks(Query, sqlParameters).First();
         }
 
         void ITimeBlockRepository.Insert(TimeBlockDTO dto)
         {
             string Query = "INSERT INTO Timeblock VALUES (@StartingTime,@EndingTime)";
-            SqlConnection connection = GetConnection();
-            using (SqlCommand command = new SqlCommand(Query, connection))
-            {
-                command.Parameters.AddWithValue("@StartingTime", dto.StartingTime);
-                command.Parameters.AddWithValue("@EndingTime", dto.EndingTime);
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@StartingTime", dto.StartingTime));
+            sqlParameters.Add(new SqlParameter("@EndingTime", dto.EndingTime));
+            Execute(Query, sqlParameters);
         }
 
         int ITimeBlockRepository.nextID()
         {
-            int newID = 1;
             string Query = "SELECT MAX(TimeblockID) FROM Timeblock";
-            SqlConnection connection = GetConnection();
-            using (SqlCommand command = new SqlCommand(Query, connection))
-            {
-                connection.Open();
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    if (!reader.IsDBNull(0))
-                    {
-                        int id = reader.GetInt32(0);
-                        newID = id + 1;
-                    }
-                }
-            }
-            return newID;
+            return ExecuteNextID(Query);
         }
 
         void ITimeBlockRepository.Update(TimeBlockDTO dto)
         {
             string Query = "UPDATE Timeblock SET StartingTime=@StartingTime,EndingTime=@EndingTime WHERE TimeblockID=@TimeblockID";
-            SqlConnection connection = GetConnection();
-            using (SqlCommand command = new SqlCommand(Query, connection))
-            {
-                command.Parameters.AddWithValue("@TimeblockID", dto.TimeblockID);
-                command.Parameters.AddWithValue("@StartingTime", dto.StartingTime);
-                command.Parameters.AddWithValue("@EndingTime", dto.EndingTime);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeblockID));
+            sqlParameters.Add(new SqlParameter("@StartingTime", dto.StartingTime));
+            sqlParameters.Add(new SqlParameter("@EndingTime", dto.EndingTime));
+            Execute(Query, sqlParameters);
         }
     }
 }
