@@ -1,12 +1,9 @@
 ﻿@page
 @using ZooBazaar_DomainModels.Models;
-@model ZooBazaar_ASP_NET.Pages.AnimalListModel
+@model ZooBazaar_Desktop_App.Pages.AnimalListModel
 @{
-    ViewData["Title"] = "Animal List";
-    ViewData["TabName"] = "Animal List";
-    ViewData["Css"] = "~/css/AnimalList.css";
+    ViewData["Css"] = "~/css/Lists.css";
 }
-
 <div id="container">
     <div class="navigation">
         <form class="searchingForm" method="post">
@@ -39,7 +36,7 @@
         @{
             foreach(Animal animal in Model.animals)
             {
-                <div class="animal">
+                <div class="entity">
                     <div class="animalName">
                         @animal.Name
                     </div>
@@ -52,6 +49,7 @@
                     <div class="animalZone">
                         @animal.Zone.ToString()
                     </div>
+
                 </div>
             }
         }
@@ -63,13 +61,12 @@
 
 <script>
 
-    function sortEntity (column)
-    {
+    function sortEntity (column) {
         // Checking if sorting the same column and if change sorting order
         if (sortedColumn == column) {
             sortingFactor *= -1;
         }
-        else{
+        else {
             sortedColumn = column;
             sortingFactor = 1;
         }

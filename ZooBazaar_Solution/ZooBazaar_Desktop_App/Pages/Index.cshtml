@@ -2,6 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    Layout = Layout = "/Pages/Shared/_LayoutLogin.cshtml";
 }
 
 <div class=""
@@ -10,14 +11,12 @@
         align-items: center;
         height: 100%;">
     <form method="post" autocomplete="on"
-          style="display: flex;
-            flex-direction: column;
-            width: 400px;">
-        <label asp-for="Name">Name: zbbbbbuuuuu</label>
+          style="display: flex; flex-direction: column;">
+        <label style="margin: 5px 0px 5px 0px;" asp-for="Name">Name:</label>
         <input asp-for="Name" type="text">
-        <label asp-for="Password">Password: </label>
+        <label style="margin: 10px 0px 5px 0px;" asp-for="Password">Password:</label>
         <input asp-for="Password" type="password">
-        <button type="submit">Login</button>
+        <button style="margin-top: 20px; width:150px; align-self:center;" type="submit">Login</button>
         <div class="validation">
             <span class="feedback" asp-validation-for="Name"></span>
             <span class="feedback" asp-validation-for="Password"></span>

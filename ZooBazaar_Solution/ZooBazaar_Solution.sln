@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooBazaar_DTO", "ZooBazaar_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooBazaar_DomainModels", "DomainModels\ZooBazaar_DomainModels.csproj", "{C862A6FA-8A01-4057-B974-1CDC568615DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooBazaar_Desktop_App", "ZooBazaar_Desktop_App\ZooBazaar_Desktop_App.csproj", "{D09449C5-49F3-4AF4-B67A-85A7E92D3880}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooBazaar_Desktop_App", "ZooBazaar_Desktop_App\ZooBazaar_Desktop_App.csproj", "{D09449C5-49F3-4AF4-B67A-85A7E92D3880}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

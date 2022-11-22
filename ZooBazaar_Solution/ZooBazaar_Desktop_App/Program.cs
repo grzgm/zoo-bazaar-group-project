@@ -1,5 +1,11 @@
 using ElectronNET.API;
 using ElectronNET.API.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
+using ZooBazaar_ClassLibrary.Interfaces;
+using ZooBazaar_ClassLibrary.Menagers;
+using ZooBazaar_Repositories.Interfaces;
+using ZooBazaar_Repositories.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +19,14 @@ builder.WebHost.UseElectron(args);
 
 builder.Services.AddElectron();
 builder.WebHost.UseElectron(args);
+
+
+builder.Services.AddSingleton<IAnimalMenager, AnimalManager>();
+builder.Services.AddSingleton<IAnimalRepository, AnimalRepository>();
+builder.Services.AddSingleton<IEmployeeMenager, EmployeeManager>();
+builder.Services.AddSingleton<IEmployeeRepositroty, EmployeeRepository>();
+
+
 
 
 
@@ -45,6 +59,13 @@ if (HybridSupport.IsElectronActive)
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+
+
+
+
+
+
 
 var app = builder.Build();
 

@@ -5,32 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ZooBazaarDesktopApp</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="@ViewData["Css"]" asp-append-version="true" />
     <link rel="stylesheet" href="~/ZooBazaar_Desktop_App.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <nav>
-        <a asp-page="AnimalList" class="icon">
 
-        </a>
-        <a asp-page="Welcome" class="icon">
 
-        </a>
-        <a asp-page="Index"  class="icon">
-
-        </a>
-        <a asp-page="EmployeeList" class="icon">
-
-        </a>
-    </nav>
-    <div class="panel">
-        <div class="border"></div>
-        <div class="border tabName">@ViewData["TabName"]</div>
-        <div class="border"></div>
-        <main>
+        <main style=" width:100%; ">
             @RenderBody()
         </main>
-    </div>
+   
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
