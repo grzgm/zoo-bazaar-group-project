@@ -27,7 +27,6 @@
     display: flex;
     justify-content: space-between;
     color: #d3d3d3;
-    background-color: #4C6674;
 }
 
     .sortingMenu > div {
@@ -35,6 +34,7 @@
         line-height: 30px;
         padding-left: 5px;
         border-right: 2px solid #F0F0F0;
+        background-color: #4C6674;
     }
 
         .sortingMenu > div:hover {

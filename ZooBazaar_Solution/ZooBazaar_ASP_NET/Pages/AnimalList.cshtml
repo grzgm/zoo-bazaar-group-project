@@ -10,13 +10,13 @@
 <div id="container">
     <div class="navigation">
         <form class="searchingForm" method="post">
-            <input asp-for="Name" type="text" />
+            <input class="search" asp-for="Name" type="text" />
             <button asp-page-handler="Name" type="submit">Search</button>
-            <input asp-for="Species" type="text" />
+            <input class="search" asp-for="Species" type="text" />
             <button asp-page-handler="Species" type="submit">Search</button>
-            <input asp-for="Habitat" type="text" />
+            <input class="search" asp-for="Habitat" type="text" />
             <button asp-page-handler="Habitat" type="submit">Search</button>
-            <input asp-for="Zone" type="text" />
+            <input class="search" asp-for="Zone" type="text" />
             <button asp-page-handler="Zone" type="submit">Search</button>
         </form>
 
@@ -63,7 +63,15 @@
 
 <script>
 
-    function sortEntity (column)
+    function resetSrotingColumnColor(column)
+    {
+        document.querySelectorAll('.sortOption').forEach(item => {
+            item.style.backgroundColor = "#4C6674";
+        });
+        column.style.backgroundColor = "#637988";
+    }
+
+    function sortEntity(column)
     {
         // Checking if sorting the same column and if change sorting order
         if (sortedColumn == column) {
@@ -93,8 +101,11 @@
 
     document.querySelectorAll('.sortOption').forEach(item => {
         item.addEventListener('click', event => {
-            sortEntity (Array.from(item.parentNode.children).indexOf(item));
+            sortEntity(Array.from(item.parentNode.children).indexOf(item));
+            resetSrotingColumnColor(item)
         });
-    })
+    });
 
+    console.log('aaa');
+    document.querySelectorAll('.search').forEach(item => { item.value = ''; });
 </script>
