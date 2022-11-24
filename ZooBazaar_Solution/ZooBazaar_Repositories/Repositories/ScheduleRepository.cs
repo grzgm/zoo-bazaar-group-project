@@ -73,28 +73,21 @@ namespace ZooBazaar_Repositories.Repositories
                         }
 
                         int taskid = reader.GetInt32(14);
-                        int animalid = reader.GetInt32(16);
+                        int? animalid = null;
+                        if (!reader.IsDBNull(16))
+                        {
+                            animalid = reader.GetInt32(16);
+                        }
                         int habitatid = reader.GetInt32(29);
                         int zoneid = reader.GetInt32(32);
-                        int animalfeedingtimeid = reader.GetInt32(24);
 
 
                         if (!tasks.ContainsKey(taskid))
                         {
                             string taskname = reader.GetString(15);
 
-                            if (!animals.ContainsKey(animalid))
+                            if(animalid == null)
                             {
-                                string animalname = reader.GetString(17);
-                                int animalage = reader.GetInt32(18);
-                                DateTime animaldateofbirth = reader.GetDateTime(19);
-                                bool animalsex = reader.GetBoolean(20);
-                                string animalspecies = reader.GetString(21);
-                                string animalspeciestype = reader.GetString(22);
-                                string animaldiet = reader.GetString(23);
-                                int animalfeedinginterval = reader.GetInt32(27);
-                                string animalspecialcare = reader.GetString(28);
-
                                 if (!habitats.ContainsKey(habitatid))
                                 {
                                     string habitatname = reader.GetString(30);
@@ -124,46 +117,101 @@ namespace ZooBazaar_Repositories.Repositories
                                     habitats.Add(habitatid, newhabitat);
                                 }
 
-                                if (!timeblocks.ContainsKey(animalfeedingtimeid))
+                                TaskDTO taskwoanimal = new TaskDTO
                                 {
-                                    TimeSpan animalstartingtime = reader.GetTimeSpan(25);
-                                    TimeSpan animalendingtime = reader.GetTimeSpan(26);
+                                    TaskID = taskid,
+                                    Name = taskname,
+                                    HabitatDTO = habitats[habitatid]
+                                };
+                                tasks.Add(taskid, taskwoanimal);
+                            }
+                            else if (animalid != null)
+                            {
+                                int animalidnotnull = Convert.ToInt32(animalid);
+                                if (!animals.ContainsKey(animalidnotnull))
+                                {
+                                    string animalname = reader.GetString(17);
+                                    int animalage = reader.GetInt32(18);
+                                    DateTime animaldateofbirth = reader.GetDateTime(19);
+                                    bool animalsex = reader.GetBoolean(20);
+                                    string animalspecies = reader.GetString(21);
+                                    string animalspeciestype = reader.GetString(22);
+                                    string animaldiet = reader.GetString(23);
+                                    int animalfeedinginterval = reader.GetInt32(27);
+                                    string animalspecialcare = reader.GetString(28);
+                                    int animalfeedingtimeid = reader.GetInt32(24);
 
-                                    TimeBlockDTO newtimeblock = new TimeBlockDTO
+                                    if (!habitats.ContainsKey(habitatid))
                                     {
-                                        TimeblockID = animalfeedingtimeid,
-                                        StartingTime = animalstartingtime,
-                                        EndingTime = animalendingtime
+                                        string habitatname = reader.GetString(30);
+                                        int habitatcapacity = reader.GetInt32(31);
+
+                                        if (!zones.ContainsKey(zoneid))
+                                        {
+                                            string zonename = reader.GetString(33);
+                                            int zonecapacity = reader.GetInt32(34);
+
+                                            ZoneDTO newzone = new ZoneDTO
+                                            {
+                                                ZoneID = zoneid,
+                                                Name = zonename,
+                                                Capacity = zonecapacity
+                                            };
+                                            zones.Add(zoneid, newzone);
+                                        }
+
+                                        HabitatDTO newhabitat = new HabitatDTO
+                                        {
+                                            HabitatID = habitatid,
+                                            Name = habitatname,
+                                            Capacity = habitatcapacity,
+                                            ZoneDTO = zones[zoneid]
+                                        };
+                                        habitats.Add(habitatid, newhabitat);
+                                    }
+
+                                    if (!timeblocks.ContainsKey(animalfeedingtimeid))
+                                    {
+                                        TimeSpan animalstartingtime = reader.GetTimeSpan(25);
+                                        TimeSpan animalendingtime = reader.GetTimeSpan(26);
+
+                                        TimeBlockDTO newtimeblock = new TimeBlockDTO
+                                        {
+                                            TimeblockID = animalfeedingtimeid,
+                                            StartingTime = animalstartingtime,
+                                            EndingTime = animalendingtime
+                                        };
+                                        timeblocks.Add(animalfeedingtimeid, newtimeblock);
+                                    }
+
+                                    AnimalDTO newanimal = new AnimalDTO
+                                    {
+                                        AnimalId = animalidnotnull,
+                                        Name = animalname,
+                                        Age = animalage,
+                                        DateOfBirth = animaldateofbirth,
+                                        Sex = animalsex,
+                                        Species = animalspecies,
+                                        SpeciesType = animalspeciestype,
+                                        Diet = animaldiet,
+                                        FeedingInterval = animalfeedinginterval,
+                                        TimeBlockDTO = timeblocks[animalfeedingtimeid],
+                                        HabitatDTO = habitats[habitatid],
+                                        SpecialCare = animalspecialcare
                                     };
-                                    timeblocks.Add(animalfeedingtimeid, newtimeblock);
+                                    animals.Add(animalidnotnull, newanimal);
+
                                 }
 
-                                AnimalDTO newanimal = new AnimalDTO
+                                TaskDTO newtask = new TaskDTO
                                 {
-                                    AnimalId = animalid,
-                                    Name = animalname,
-                                    Age = animalage,
-                                    DateOfBirth = animaldateofbirth,
-                                    Sex = animalsex,
-                                    Species = animalspecies,
-                                    SpeciesType = animalspeciestype,
-                                    Diet = animaldiet,
-                                    FeedingInterval = animalfeedinginterval,
-                                    TimeBlockDTO = timeblocks[animalfeedingtimeid],
-                                    HabitatDTO = habitats[habitatid],
-                                    SpecialCare = animalspecialcare
+                                    TaskID = taskid,
+                                    Name = taskname,
+                                    AnimalDTO = animals[animalidnotnull],
+                                    HabitatDTO = habitats[habitatid]
                                 };
-                                animals.Add(animalid, newanimal);
+                                tasks.Add(taskid, newtask);
                             }
-
-                            TaskDTO newtask = new TaskDTO
-                            {
-                                TaskID = taskid,
-                                Name = taskname,
-                                AnimalDTO = animals[animalid],
-                                HabitatDTO = habitats[habitatid]
-                            };
-                            tasks.Add(taskid, newtask);
                         }
 
                         schedules.Add(new ScheduleDTO
@@ -194,7 +242,7 @@ namespace ZooBazaar_Repositories.Repositories
 
         ScheduleDTO IScheduleRepository.GetByDateAndEmployeeId(DateOnly date, int employeeId)
         {
-            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year AND S.EmployeeID = @EmployeeID";
+            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID LEFT JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year AND S.EmployeeID = @EmployeeID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
             try
@@ -229,12 +277,12 @@ namespace ZooBazaar_Repositories.Repositories
 
         IEnumerable<ScheduleDTO> IScheduleRepository.GetAll()
         {
-            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID";
+            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID LEFT JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID";
             return GetSchedules(Query, null);
         }
         ScheduleDTO IScheduleRepository.GetByScheduleId(int ID)
         {
-            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE ScheduleID = @ID";
+            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID LEFT JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE ScheduleID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
             try
@@ -299,7 +347,7 @@ namespace ZooBazaar_Repositories.Repositories
 
         public IEnumerable<ScheduleDTO> GetByDate(DateOnly date)
         {
-            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year";
+            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID LEFT JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
             try
@@ -317,7 +365,7 @@ namespace ZooBazaar_Repositories.Repositories
 
         public IEnumerable<ScheduleDTO> GetByEmployeeId(int employeeId)
         {
-            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE S.EmployeeID = @EmployeeID";
+            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID LEFT JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE S.EmployeeID = @EmployeeID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
             try
@@ -333,7 +381,7 @@ namespace ZooBazaar_Repositories.Repositories
 
         public IEnumerable<ScheduleDTO> GetByAnimalId(int animalId)
         {
-            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE T.AnimalID = @AnimalID";
+            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID LEFT JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE T.AnimalID = @AnimalID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
             try
@@ -349,7 +397,7 @@ namespace ZooBazaar_Repositories.Repositories
 
         public IEnumerable<ScheduleDTO> GetByDateAndEmployeeIdAllSchdules(DateOnly date, int employeeId)
         {
-            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year AND S.EmployeeID = @EmployeeID";
+            string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID LEFT JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year AND S.EmployeeID = @EmployeeID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
             try
