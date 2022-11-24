@@ -17,5 +17,6 @@ namespace ZooBazaar_ClassLibrary.Interfaces
         void NewAnimal(AnimalAddDTO animalAddDTO);
         void RemoveAnimal(int id);
         void UpdateAnimal(AnimalDTO animalDTO);
+        void AddSpecialCare(int id, string specialCare);
     }
 }

@@ -1,7 +1,10 @@
 ﻿#container {
     height: 100%;
+    width: 100%;
     display: grid;
-    grid-template-rows: 40px 20px 40px auto auto;
+    grid-template-rows: 40px 20px auto auto;
+    justify-items: center;
+    align-items: center;
 }
 
 .navigation {
@@ -13,54 +16,65 @@
     padding: 0 5px;
 }
 
-.dropdowns {
-    width: 20%;
-    min-width: 250px;
-}
-
-.week{
+.date{
     text-align: center;
 }
 
-.weekDays{
-    margin: 0 5px 0 107px;
-    display: flex;
-    flex-direction: row;
-    justify-content:space-around;
-}
-    .weekDays * {
-        width: 100%;
-        text-align: center;
-    }
+#calendar {
+    /*  border: 5px solid yellow;/
+                      display: grid;
+                      row-gap: 10px;
+                      grid-template-rows: 20px 20px 1fr;
+                  }
 
-.schedule{
+                  #Month {
+                      font-family: 'Quicksand', sans-serif;
+                      color: white;
+                      font-size: 30px;
+                      text-align:center;
+                  }
+
+                  .weekdays {
+                      justify-items: center;
+                  }
+
+                      .weekdays abbr {
+                          text-decoration: none;
+                          font-family: 'Quicksand', sans-serif;
+                          color: white;
+                          font-size: 20px;
+                          text-align: center;
+                      }
+
+                      .weekdays li {
+                          width: 40px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          list-style: none;
+                          margin-left: 0;
+                          /border: 5px solid lawngreen;*/
+}
+
+
+.month {
+    max-width: 50%;
     display: grid;
-    grid-template-columns: 100px repeat(7, 1fr);
-    grid-gap: 2px;
-    margin: 5px;
+    grid-template-rows: repeat(7, 80px);
+    grid-template-columns: repeat(7, 80px);
+    aspect-ratio: 1;
+    gap: 20px;
 }
 
-.hour {
-    height: 30px;
-    margin: 2px 0;
-    line-height: 30px;
-    text-align: center;
-}
-
-.day{
-
-}
-
-.timeBlock {
-    display: block;
-    min-width: 120px;
-    width: 100%;
-    height: 30px;
-    background-color: #d3d3d3;
-    margin: 2px 0;
-    border: none;
-}
-    .timeBlock:hover {
-        background-color: #4C6674;
-        cursor: pointer;
+    .month .dayOfMonth {
+        display: grid;
+        place-items: center;
+        background-color: #d3d3d3;
+        font-size: 20px;
+        box-sizing: border-box;
+        border: none;
+        transition: 0.3s;
     }
+        .month .dayOfMonth:enabled:hover {
+            background-color: #4C6674;
+        }

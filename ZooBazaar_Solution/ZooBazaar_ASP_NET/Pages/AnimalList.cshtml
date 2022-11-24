@@ -34,12 +34,15 @@
         <div class="sortOption Zone">
             Zone
         </div>
+        <div class="SpecialCare">
+            Special Care
+        </div>
     </div>
     <div class="list">
         @{
             foreach(Animal animal in Model.animals)
             {
-                <div class="animal">
+                <div class="animal @(animal.SpecialCare != "" ? "animalSpecialCare" : "")">
                     <div class="animalName">
                         @animal.Name
                     </div>
@@ -52,6 +55,11 @@
                     <div class="animalZone">
                         @animal.Zone.ToString()
                     </div>
+                    <form asp-page-handler="SpecialCare" method="post">
+                        <input asp-for="SpecialCareNote" type="text" value="@animal.SpecialCare"/>
+                        <input asp-for="SpecialCareId" hidden value="@animal.ID">
+                        <button type="submit">Add</button>
+                    </form>
                 </div>
             }
         }
@@ -106,6 +114,5 @@
         });
     });
 
-    console.log('aaa');
     document.querySelectorAll('.search').forEach(item => { item.value = ''; });
 </script>

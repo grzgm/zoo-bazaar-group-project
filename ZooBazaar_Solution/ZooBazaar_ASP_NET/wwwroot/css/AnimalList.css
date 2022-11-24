@@ -7,15 +7,17 @@
     align-items: center;
 }
 
-.navigation form {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.searchingForm {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(5, 2fr 1fr);
+    box-sizing: border-box;
+    padding: 0 15px 0 0;
 }
-    .navigation input {
-        width: 100%;
-        padding: 0 5px;
-    }
+.search {
+    width: 100%;
+    padding: 0 5px;
+}
 
 .dropdowns {
     width: 20%;
@@ -42,11 +44,15 @@
 
         .sortingMenu > div:hover {
             background-color: #637988;
+            cursor: pointer;
         }
 
     .sortingMenu div:last-child {
         border-right: none;
     }
+        .sortingMenu div:last-child:hover {
+            background-color: #4C6674;
+        }
 
 .list {
     height: 100%;
@@ -71,13 +77,20 @@
         color: #d3d3d3;
     }
 
-    .animal > div {
+    .animal > * {
         width: 25%;
         line-height: 30px;
         padding-left: 5px;
         border-right: 2px solid #F0F0F0;
         pointer-events: auto;
     }
-    .animal div:last-child {
+    .animal *:last-child {
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: space-evenly;
         border-right: none;
     }
+.animalSpecialCare
+{
+    background-color: red;
+}
