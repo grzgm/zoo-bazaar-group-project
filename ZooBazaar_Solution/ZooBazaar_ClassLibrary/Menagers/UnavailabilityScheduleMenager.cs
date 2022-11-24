@@ -19,14 +19,14 @@ namespace ZooBazaar_ClassLibrary.Menagers
             this._unavailabilityScheduleRepository = unavailabilityScheduleRepository;
         }
 
-        public void AddUnSchedule(UnavailabilityScheduleAddDTO unavailabilityScheduleAddDTO)
+        public void AddUnSchedule(UnavailabilityScheduleDTO unavailabilityScheduleDTO)
         {
-            _unavailabilityScheduleRepository.AddUnSchedule(unavailabilityScheduleAddDTO);
+            _unavailabilityScheduleRepository.AddUnSchedule(unavailabilityScheduleDTO);
         }
 
-        public void DeleteUnSchedule(int unScheduleid)
+        public void DeleteUnSchedule(UnavailabilityScheduleDTO unavailabilityScheduleDTO)
         {
-            _unavailabilityScheduleRepository.DeleteUnSchedule(unScheduleid);
+            _unavailabilityScheduleRepository.DeleteUnSchedule(unavailabilityScheduleDTO);
         }
 
         public IEnumerable<UnavailabilityScheduleDTO> GetByEmployeeIDMonthYear(int employeeid, int month, int year)
