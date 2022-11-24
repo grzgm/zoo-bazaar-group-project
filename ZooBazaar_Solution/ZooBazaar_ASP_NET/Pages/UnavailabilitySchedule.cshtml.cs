@@ -20,6 +20,11 @@ namespace ZooBazaar_ASP_NET.Pages
         public int openDuration = 16;
         public Schedule[][] schedule;
         public int weekNumber { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int create { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int delete { get; set; }
         public void OnGet()
         {
             scheduleRepository = new ScheduleRepository();
@@ -59,13 +64,13 @@ namespace ZooBazaar_ASP_NET.Pages
             Response.Cookies.Append("weekNumber", (weekNumber - 1).ToString());
             firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
             Response.Cookies.Append("firstDayOfWeek", (firstDayOfWeek.AddDays(-7)).ToString());
-            return RedirectToPage("EmployeeSchedule");
+            return RedirectToPage("UnavailabilitySchedule");
         }
         public IActionResult OnPostToday()
         {
             Response.Cookies.Delete("weekNumber");
             Response.Cookies.Delete("firstDayOfWeek");
-            return RedirectToPage("EmployeeSchedule");
+            return RedirectToPage("UnavailabilitySchedule");
         }
         public IActionResult OnPostNext()
         {
@@ -73,7 +78,7 @@ namespace ZooBazaar_ASP_NET.Pages
             Response.Cookies.Append("weekNumber", (weekNumber + 1).ToString());
             firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
             Response.Cookies.Append("firstDayOfWeek", (firstDayOfWeek.AddDays(7)).ToString());
-            return RedirectToPage("EmployeeSchedule");
+            return RedirectToPage("UnavailabilitySchedule");
         }
         public IActionResult OnPostNew()
         {
@@ -103,6 +108,18 @@ namespace ZooBazaar_ASP_NET.Pages
                     }
                 }
             }
+        }
+        public IActionResult OnPostCreate()
+        {
+            int a = create;
+            return OnPostToday();
+            return Page();
+        }
+        public IActionResult OnPostDelete()
+        {
+            int a = delete;
+            return OnPostToday();
+            return Page();
         }
     }
 }

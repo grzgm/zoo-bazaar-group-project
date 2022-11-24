@@ -1,9 +1,9 @@
 ﻿@page
 @model ZooBazaar_ASP_NET.Pages.UnavailabilityScheduleModel
 @{
-    ViewData["Title"] = "Employee Schedule";
-    ViewData["TabName"] = "Employee Schedule";
-    ViewData["Css"] = "~/css/EmployeeSchedule.css";
+    ViewData["Title"] = "Unavailability Schedule";
+    ViewData["TabName"] = "Unavailability Schedule";
+    ViewData["Css"] = "~/css/UnavailabilitySchedule.css";
 }
 
 <div id="container">
@@ -21,7 +21,18 @@
             </select>*@
         </div>
         <form method="post">
-            <button asp-page-handler="previous">&#60;</button>
+            @{
+                //int a = Model.firstDayOfWeek.CompareTo(DateOnly.FromDateTime(DateTime.Now));
+                if (Model.firstDayOfWeek.CompareTo(DateOnly.FromDateTime(DateTime.Now)) <= 0)
+                {
+                    <button disabled>&#60;</button>
+                    
+                }
+                else
+                {
+                    <button asp-page-handler="previous">&#60;</button>
+                }
+            }
             <button asp-page-handler="today">Today</button>
             <button asp-page-handler="next">></button>
             <button asp-page-handler="new">New schedule</button>
@@ -50,21 +61,21 @@
             </div>
             for (int i = 0; i < 7; i++)
             {
-                <div class="day">
+                <form class="day" method="post">
                     @{
                         for (int j = 0; j < Model.openDuration; j++)
                         {
                             if (Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
                             {
-                                <div class="timeBlock">@Model.schedule[i][j].taskName</div>
+                                <button asp-page-handler="delete" asp-route-delete="22" class="timeBlock">@Model.schedule[i][j].taskName</button>
                             }
                             else
                             {
-                                <div class="timeBlock"></div>
+                                <button asp-page-handler="create" asp-route-create="11" class="timeBlock"></button>
                             }
                         }
                     }
-                </div>
+                </form>
             }
         }
     </div>
