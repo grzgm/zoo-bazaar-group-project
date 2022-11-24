@@ -57,8 +57,16 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "DELETE FROM Timeblock WHERE TimeblockID = @TimeblockID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@TimeblockID", id));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@TimeblockID", id));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         IEnumerable<TimeBlockDTO> ITimeBlockRepository.GetAll()
@@ -71,17 +79,33 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "SELECT * FROM Timeblock WHERE TimeblockID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ID", ID));
-            return GetTimeblocks(Query, sqlParameters).First();
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ID", ID));
+                return GetTimeblocks(Query, sqlParameters).First();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void ITimeBlockRepository.Insert(TimeBlockDTO dto)
         {
             string Query = "INSERT INTO Timeblock VALUES (@StartingTime,@EndingTime)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@StartingTime", dto.StartingTime));
-            sqlParameters.Add(new SqlParameter("@EndingTime", dto.EndingTime));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@StartingTime", dto.StartingTime));
+                sqlParameters.Add(new SqlParameter("@EndingTime", dto.EndingTime));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         int ITimeBlockRepository.nextID()
@@ -94,10 +118,18 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "UPDATE Timeblock SET StartingTime=@StartingTime,EndingTime=@EndingTime WHERE TimeblockID=@TimeblockID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeblockID));
-            sqlParameters.Add(new SqlParameter("@StartingTime", dto.StartingTime));
-            sqlParameters.Add(new SqlParameter("@EndingTime", dto.EndingTime));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeblockID));
+                sqlParameters.Add(new SqlParameter("@StartingTime", dto.StartingTime));
+                sqlParameters.Add(new SqlParameter("@EndingTime", dto.EndingTime));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
     }
 }
