@@ -17,7 +17,8 @@ namespace ZooBazaar_ASP_NET.Pages
         private IScheduleManager scheduleManager;
 
         public DateOnly firstDayOfWeek;
-        public int openDuration = 16;
+        public int closingHour = 22;
+        public int startingHour = 6;
         public Schedule[][] schedule;
         public int weekNumber { get; set; }
 
@@ -53,7 +54,7 @@ namespace ZooBazaar_ASP_NET.Pages
             schedule = new Schedule[7][];
             for (int i = 0; i < 7; i++)
             {
-                schedule[i] = new Schedule[openDuration];
+                schedule[i] = new Schedule[24];
             }
             GetWeekSchedule();
         }
