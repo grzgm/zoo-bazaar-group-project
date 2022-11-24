@@ -44,5 +44,7 @@ namespace ZooBazaar_DTO.DTOs
 
         [Required(ErrorMessage = "All fields are required")]
         public int HabitatID { get; set; }
+
+        public string SpecialCare { get; set; }
     }
 }

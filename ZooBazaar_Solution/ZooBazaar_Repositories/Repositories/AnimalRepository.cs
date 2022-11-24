@@ -36,18 +36,19 @@ namespace ZooBazaar_Repositories.Repositories
                         string speciestype = reader.GetString(6);
                         string diet = reader.GetString(7);
                         int feedinginterval = reader.GetInt32(11);
+                        string specialcare = reader.GetString(12);
 
                         int feedingtimeid = reader.GetInt32(8);
                         TimeSpan staringtime = reader.GetTimeSpan(9);
                         TimeSpan endingtime = reader.GetTimeSpan(10);
 
-                        int zoneid = reader.GetInt32(12);
-                        string zonename = reader.GetString(13);
-                        int zonecapacity = reader.GetInt32(14);
+                        int zoneid = reader.GetInt32(13);
+                        string zonename = reader.GetString(14);
+                        int zonecapacity = reader.GetInt32(15);
 
-                        int habitatid = reader.GetInt32(15);
-                        string habitatname = reader.GetString(16);
-                        int habitatcapacity = reader.GetInt32(17);
+                        int habitatid = reader.GetInt32(16);
+                        string habitatname = reader.GetString(17);
+                        int habitatcapacity = reader.GetInt32(18);
 
                         animals.Add(new AnimalDTO
                         {
@@ -60,6 +61,7 @@ namespace ZooBazaar_Repositories.Repositories
                             SpeciesType = speciestype,
                             Diet = diet,
                             FeedingInterval = feedinginterval,
+                            SpecialCare = specialcare,
 
                             TimeBlockDTO = new TimeBlockDTO
                             {
@@ -106,13 +108,13 @@ namespace ZooBazaar_Repositories.Repositories
 
         IEnumerable<AnimalDTO> IAnimalRepository.GetAll()
         {
-            string Query = "SELECT A.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, T.StartingTime,T.EndingTime, A.FeedingInterval, A.ZoneID, Z.Name, Z.Capacity, A.HabitatID, H.Name, H.Capacity FROM Animal A JOIN Timeblock T ON A.FeedingTimeID = T.TimeblockID JOIN Zone Z ON A.ZoneID = Z.ZoneID JOIN Habitat H ON A.HabitatID = H.HabitatID";
+            string Query = "SELECT A.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, T.StartingTime,T.EndingTime, A.FeedingInterval, A.SpecialCare, A.ZoneID, Z.Name, Z.Capacity, A.HabitatID, H.Name, H.Capacity FROM Animal A JOIN Timeblock T ON A.FeedingTimeID = T.TimeblockID JOIN Zone Z ON A.ZoneID = Z.ZoneID JOIN Habitat H ON A.HabitatID = H.HabitatID";
             return GetAnimals(Query, null);
         }
 
         AnimalDTO IAnimalRepository.GetByAnimalId(int ID)
         {
-            string Query = "SELECT A.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, T.StartingTime,T.EndingTime, A.FeedingInterval, A.ZoneID, Z.Name, Z.Capacity, A.HabitatID, H.Name, H.Capacity FROM Animal A JOIN Timeblock T ON A.FeedingTimeID = T.TimeblockID JOIN Zone Z ON A.ZoneID = Z.ZoneID JOIN Habitat H ON A.HabitatID = H.HabitatID WHERE AnimalID = @ID";
+            string Query = "SELECT A.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, T.StartingTime,T.EndingTime, A.FeedingInterval, A.SpecialCare, A.ZoneID, Z.Name, Z.Capacity, A.HabitatID, H.Name, H.Capacity FROM Animal A JOIN Timeblock T ON A.FeedingTimeID = T.TimeblockID JOIN Zone Z ON A.ZoneID = Z.ZoneID JOIN Habitat H ON A.HabitatID = H.HabitatID WHERE AnimalID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             sqlParameters.Add(new SqlParameter("@ID", ID));
             return GetAnimals(Query, sqlParameters).First();
@@ -120,7 +122,7 @@ namespace ZooBazaar_Repositories.Repositories
 
         void IAnimalRepository.Insert(AnimalAddDTO dto)
         {
-            string Query = "INSERT INTO Animal VALUES (@Name,@Age,@DateOfBirth,@Sex,@Species,@SpeciesType,@Diet,@FeedingTimeID,@FeedingInterval,@ZoneID,@HabitatID)";
+            string Query = "INSERT INTO Animal VALUES (@Name,@Age,@DateOfBirth,@Sex,@Species,@SpeciesType,@Diet,@FeedingTimeID,@FeedingInterval,@ZoneID,@HabitatID,@SpecialCare)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             sqlParameters.Add(new SqlParameter("@Name", dto.Name));
             sqlParameters.Add(new SqlParameter("@Age", dto.Age));
@@ -133,6 +135,7 @@ namespace ZooBazaar_Repositories.Repositories
             sqlParameters.Add(new SqlParameter("@FeedingInterval", dto.FeedingInterval));
             sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
             sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatID));
+            sqlParameters.Add(new SqlParameter("@SpecialCare", dto.SpecialCare));
             Execute(Query, sqlParameters);
         }
 
@@ -144,7 +147,7 @@ namespace ZooBazaar_Repositories.Repositories
 
         void IAnimalRepository.Update(AnimalDTO dto)
         {
-            string Query = "UPDATE Animal SET Name=@Name,Age=@Age,DateOfBirth=@DateOfBirth,Sex=@Sex,Species=@Species,SpeciesType=@SpeciesType,Diet=@Diet,FeedingTimeID=@FeedingTimeID,FeedingInterval=@FeedingInterval,ZoneID=@ZoneID,HabitatID=@HabitatID WHERE AnimalID=@AnimalID";
+            string Query = "UPDATE Animal SET Name=@Name,Age=@Age,DateOfBirth=@DateOfBirth,Sex=@Sex,Species=@Species,SpeciesType=@SpeciesType,Diet=@Diet,FeedingTimeID=@FeedingTimeID,FeedingInterval=@FeedingInterval,ZoneID=@ZoneID,HabitatID=@HabitatID,SpecialCare=@SpecialCare WHERE AnimalID=@AnimalID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalId));
             sqlParameters.Add(new SqlParameter("@Name", dto.Name));
@@ -158,6 +161,16 @@ namespace ZooBazaar_Repositories.Repositories
             sqlParameters.Add(new SqlParameter("@FeedingInterval", dto.FeedingInterval));
             sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
             sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
+            sqlParameters.Add(new SqlParameter("@SpecialCare", dto.SpecialCare));
+            Execute(Query, sqlParameters);
+        }
+
+        public void AddSpecialCare(int id, string specialCare)
+        {
+            string Query = "UPDATE Animal SET SpecialCare=@SpecialCare WHERE AnimalID=@AnimalID";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@AnimalID", id));
+            sqlParameters.Add(new SqlParameter("@SpecialCare", specialCare));
             Execute(Query, sqlParameters);
         }
     }
