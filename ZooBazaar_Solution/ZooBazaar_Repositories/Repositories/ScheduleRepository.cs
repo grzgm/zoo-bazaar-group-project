@@ -196,19 +196,35 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year AND S.EmployeeID = @EmployeeID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Day", date.Day));
-            sqlParameters.Add(new SqlParameter("@Month", date.Month));
-            sqlParameters.Add(new SqlParameter("@Year", date.Year));
-            sqlParameters.Add(new SqlParameter("@EmployeeID", employeeId));
-            return GetSchedules(Query, sqlParameters).First();
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@Day", date.Day));
+                sqlParameters.Add(new SqlParameter("@Month", date.Month));
+                sqlParameters.Add(new SqlParameter("@Year", date.Year));
+                sqlParameters.Add(new SqlParameter("@EmployeeID", employeeId));
+                return GetSchedules(Query, sqlParameters).First();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void IScheduleRepository.Delete(int id)
         {
             string Query = "DELETE FROM Schedule WHERE ScheduleID = @ScheduleID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ScheduleID", id));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ScheduleID", id));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         IEnumerable<ScheduleDTO> IScheduleRepository.GetAll()
@@ -220,21 +236,37 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE ScheduleID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ID", ID));
-            return GetSchedules(Query, sqlParameters).First();
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ID", ID));
+                return GetSchedules(Query, sqlParameters).First();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void IScheduleRepository.Insert(ScheduleDTO dto)
         {
             string Query = "INSERT INTO Schedule VALUES (@Day,@Month,@Year,@TimeblockID,@EmployeeID,@TaskID)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Day", dto.Day));
-            sqlParameters.Add(new SqlParameter("@Month", dto.Month));
-            sqlParameters.Add(new SqlParameter("@Year", dto.Year));
-            sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeBlockDTO.TimeblockID));
-            sqlParameters.Add(new SqlParameter("@EmployeeID", dto.EmployeeDTO.EmployeeID));
-            sqlParameters.Add(new SqlParameter("@TaskID", dto.TaskDTO.TaskID));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@Day", dto.Day));
+                sqlParameters.Add(new SqlParameter("@Month", dto.Month));
+                sqlParameters.Add(new SqlParameter("@Year", dto.Year));
+                sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeBlockDTO.TimeblockID));
+                sqlParameters.Add(new SqlParameter("@EmployeeID", dto.EmployeeDTO.EmployeeID));
+                sqlParameters.Add(new SqlParameter("@TaskID", dto.TaskDTO.TaskID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         int IScheduleRepository.nextID()
@@ -247,51 +279,91 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "UPDATE Schedule SET Day=@Day,Month=@Month,Year=@Year,TimeblockID=@TimeblockID,EmployeeID=@EmployeeID,TaskID=@TaskID WHERE ScheduleID=@ScheduleID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ScheduleID", dto.ScheduleID));
-            sqlParameters.Add(new SqlParameter("@Day", dto.Day));
-            sqlParameters.Add(new SqlParameter("@Month", dto.Month));
-            sqlParameters.Add(new SqlParameter("@Year", dto.Year));
-            sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeBlockDTO.TimeblockID));
-            sqlParameters.Add(new SqlParameter("@EmployeeID", dto.EmployeeDTO.EmployeeID));
-            sqlParameters.Add(new SqlParameter("@TaskID", dto.TaskDTO.TaskID));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ScheduleID", dto.ScheduleID));
+                sqlParameters.Add(new SqlParameter("@Day", dto.Day));
+                sqlParameters.Add(new SqlParameter("@Month", dto.Month));
+                sqlParameters.Add(new SqlParameter("@Year", dto.Year));
+                sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeBlockDTO.TimeblockID));
+                sqlParameters.Add(new SqlParameter("@EmployeeID", dto.EmployeeDTO.EmployeeID));
+                sqlParameters.Add(new SqlParameter("@TaskID", dto.TaskDTO.TaskID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         public IEnumerable<ScheduleDTO> GetByDate(DateOnly date)
         {
             string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Day", date.Day));
-            sqlParameters.Add(new SqlParameter("@Month", date.Month));
-            sqlParameters.Add(new SqlParameter("@Year", date.Year));
-            return GetSchedules(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@Day", date.Day));
+                sqlParameters.Add(new SqlParameter("@Month", date.Month));
+                sqlParameters.Add(new SqlParameter("@Year", date.Year));
+                return GetSchedules(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         public IEnumerable<ScheduleDTO> GetByEmployeeId(int employeeId)
         {
             string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE S.EmployeeID = @EmployeeID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@EmployeeID", employeeId));
-            return GetSchedules(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@EmployeeID", employeeId));
+                return GetSchedules(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         public IEnumerable<ScheduleDTO> GetByAnimalId(int animalId)
         {
             string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE T.AnimalID = @AnimalID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@AnimalID", animalId));
-            return GetSchedules(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@AnimalID", animalId));
+                return GetSchedules(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         public IEnumerable<ScheduleDTO> GetByDateAndEmployeeIdAllSchdules(DateOnly date, int employeeId)
         {
             string Query = "SELECT S.ScheduleID, S.Day, S.Month, S.Year, S.TimeblockID, TB.StartingTime, TB.EndingTime, E.EmployeeID, E.FirstName, E.LastName, E.Email, E.Phone, E.Address, E.Role, T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB2.StartingTime, TB2.EndingTime, A.FeedingInterval, A.SpecialCare, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Schedule S JOIN Timeblock TB ON S.TimeblockID = TB.TimeblockID JOIN Employee E ON S.EmployeeID = E.EmployeeID JOIN Task T ON S.TaskID = T.TaskID LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB2 ON A.FeedingTimeID = TB2.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE Day = @Day AND Month = @Month AND Year = @Year AND S.EmployeeID = @EmployeeID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Day", date.Day));
-            sqlParameters.Add(new SqlParameter("@Month", date.Month));
-            sqlParameters.Add(new SqlParameter("@Year", date.Year));
-            sqlParameters.Add(new SqlParameter("@EmployeeID", employeeId));
-            return GetSchedules(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@Day", date.Day));
+                sqlParameters.Add(new SqlParameter("@Month", date.Month));
+                sqlParameters.Add(new SqlParameter("@Year", date.Year));
+                sqlParameters.Add(new SqlParameter("@EmployeeID", employeeId));
+                return GetSchedules(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
     }
 }

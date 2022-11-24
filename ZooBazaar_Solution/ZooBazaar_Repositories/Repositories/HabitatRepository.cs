@@ -66,8 +66,16 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "DELETE FROM Habitat WHERE HabitatID = @HabitatID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@HabitatID", id));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@HabitatID", id));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         IEnumerable<HabitatDTO> IHabitatRepository.GetAll()
@@ -79,19 +87,34 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "SELECT H.*, Z.Name, Z.Capacity FROM Habitat H JOIN Zone Z ON H.ZoneID = Z.ZoneID WHERE HabitatID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ID", ID));
-            return GetHabitats(Query, sqlParameters).First();
 
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ID", ID));
+                return GetHabitats(Query, sqlParameters).First();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void IHabitatRepository.Insert(HabitatAddDTO dto)
         {
             string Query = "INSERT INTO Habitat VALUES (@Name,@Capacity,@ZoneID)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-            sqlParameters.Add(new SqlParameter("@Capacity", dto.Capacity));
-            sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                sqlParameters.Add(new SqlParameter("@Capacity", dto.Capacity));
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         int IHabitatRepository.nextID()
@@ -104,11 +127,19 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "UPDATE Habitat SET Name=@Name,Capacity=@Capacity,ZoneID=@ZoneID WHERE HabitatID=@HabitatID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatID));
-            sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-            sqlParameters.Add(new SqlParameter("@Capacity", dto.Capacity));
-            sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneDTO.ZoneID));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatID));
+                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                sqlParameters.Add(new SqlParameter("@Capacity", dto.Capacity));
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneDTO.ZoneID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
     }
 }

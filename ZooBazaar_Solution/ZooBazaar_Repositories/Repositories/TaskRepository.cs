@@ -121,8 +121,16 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "DELETE FROM Task WHERE TaskID = @TaskID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@TaskID", id));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@TaskID", id));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         IEnumerable<TaskDTO> ITaskRepository.GetAll()
@@ -135,19 +143,35 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "SELECT T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, A.SpecialCare, TB.StartingTime, TB.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Task T LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB ON A.FeedingTimeID = TB.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE TaskID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ID", ID));
-            return GetTasks(Query, sqlParameters).First();
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ID", ID));
+                return GetTasks(Query, sqlParameters).First();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void ITaskRepository.Insert(TaskDTO dto)
         {
             string Query = "INSERT INTO Task VALUES (@Name,@AnimalID,@HabitatID,@ZoneID)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-            sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalDTO.AnimalId));
-            sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
-            sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalDTO.AnimalId));
+                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         int ITaskRepository.nextID()
@@ -160,12 +184,20 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "UPDATE Task SET Name=@Name,AnimalID=@AnimalID,HabitatID=@HabitatID,ZoneID=@ZoneID WHERE TaskID=@TaskID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@TaskID", dto.TaskID));
-            sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-            sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalDTO.AnimalId));
-            sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
-            sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@TaskID", dto.TaskID));
+                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalDTO.AnimalId));
+                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
     }
 }

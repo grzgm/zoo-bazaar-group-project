@@ -56,8 +56,16 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "DELETE FROM Zone WHERE ZoneID = @ZoneID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ZoneID", id));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ZoneID", id));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         IEnumerable<ZoneDTO> IZoneRepository.GetAll()
@@ -70,17 +78,33 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "SELECT * FROM Zone WHERE ZoneID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ID", ID));
-            return GetZones(Query, sqlParameters).First();
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ID", ID));
+                return GetZones(Query, sqlParameters).First();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void IZoneRepository.Insert(ZoneAddDTO dto)
         {
             string Query = "INSERT INTO Zone VALUES (@Name,@Capacity)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-            sqlParameters.Add(new SqlParameter("@Capacity", dto.Capacity));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                sqlParameters.Add(new SqlParameter("@Capacity", dto.Capacity));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         int IZoneRepository.nextID()
@@ -93,10 +117,18 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "UPDATE Zone SET Name=@Name,Capacity=@Capacity WHERE ZoneID=@ZoneID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
-            sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-            sqlParameters.Add(new SqlParameter("@Capacity", dto.Capacity));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
+                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                sqlParameters.Add(new SqlParameter("@Capacity", dto.Capacity));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
     }
 }

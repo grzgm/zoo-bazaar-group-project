@@ -102,8 +102,15 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "DELETE FROM Animal WHERE AnimalID = @AnimalID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@AnimalID", id));
-            Execute(Query, sqlParameters);
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@AnimalID", id));
+                Execute(Query, sqlParameters);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         IEnumerable<AnimalDTO> IAnimalRepository.GetAll()
@@ -116,27 +123,43 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "SELECT A.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, T.StartingTime,T.EndingTime, A.FeedingInterval, A.SpecialCare, A.ZoneID, Z.Name, Z.Capacity, A.HabitatID, H.Name, H.Capacity FROM Animal A JOIN Timeblock T ON A.FeedingTimeID = T.TimeblockID JOIN Zone Z ON A.ZoneID = Z.ZoneID JOIN Habitat H ON A.HabitatID = H.HabitatID WHERE AnimalID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ID", ID));
-            return GetAnimals(Query, sqlParameters).First();
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ID", ID));
+                return GetAnimals(Query, sqlParameters).First();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void IAnimalRepository.Insert(AnimalAddDTO dto)
         {
             string Query = "INSERT INTO Animal VALUES (@Name,@Age,@DateOfBirth,@Sex,@Species,@SpeciesType,@Diet,@FeedingTimeID,@FeedingInterval,@ZoneID,@HabitatID,@SpecialCare)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-            sqlParameters.Add(new SqlParameter("@Age", dto.Age));
-            sqlParameters.Add(new SqlParameter("@DateOfBirth", dto.DateOfBirth));
-            sqlParameters.Add(new SqlParameter("@Sex", dto.Sex));
-            sqlParameters.Add(new SqlParameter("@Species", dto.Species));
-            sqlParameters.Add(new SqlParameter("@SpeciesType", dto.SpeciesType));
-            sqlParameters.Add(new SqlParameter("@Diet", dto.Diet));
-            sqlParameters.Add(new SqlParameter("@FeedingTimeID", dto.FeedingTimeID));
-            sqlParameters.Add(new SqlParameter("@FeedingInterval", dto.FeedingInterval));
-            sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
-            sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatID));
-            sqlParameters.Add(new SqlParameter("@SpecialCare", dto.SpecialCare));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                sqlParameters.Add(new SqlParameter("@Age", dto.Age));
+                sqlParameters.Add(new SqlParameter("@DateOfBirth", dto.DateOfBirth));
+                sqlParameters.Add(new SqlParameter("@Sex", dto.Sex));
+                sqlParameters.Add(new SqlParameter("@Species", dto.Species));
+                sqlParameters.Add(new SqlParameter("@SpeciesType", dto.SpeciesType));
+                sqlParameters.Add(new SqlParameter("@Diet", dto.Diet));
+                sqlParameters.Add(new SqlParameter("@FeedingTimeID", dto.FeedingTimeID));
+                sqlParameters.Add(new SqlParameter("@FeedingInterval", dto.FeedingInterval));
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
+                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatID));
+                sqlParameters.Add(new SqlParameter("@SpecialCare", dto.SpecialCare));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         int IAnimalRepository.nextID()
@@ -149,29 +172,46 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "UPDATE Animal SET Name=@Name,Age=@Age,DateOfBirth=@DateOfBirth,Sex=@Sex,Species=@Species,SpeciesType=@SpeciesType,Diet=@Diet,FeedingTimeID=@FeedingTimeID,FeedingInterval=@FeedingInterval,ZoneID=@ZoneID,HabitatID=@HabitatID,SpecialCare=@SpecialCare WHERE AnimalID=@AnimalID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalId));
-            sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-            sqlParameters.Add(new SqlParameter("@Age", dto.Age));
-            sqlParameters.Add(new SqlParameter("@DateOfBirth", dto.DateOfBirth));
-            sqlParameters.Add(new SqlParameter("@Sex", dto.Sex));
-            sqlParameters.Add(new SqlParameter("@Species", dto.Species));
-            sqlParameters.Add(new SqlParameter("@SpeciesType", dto.SpeciesType));
-            sqlParameters.Add(new SqlParameter("@Diet", dto.Diet));
-            sqlParameters.Add(new SqlParameter("@FeedingTimeID", dto.TimeBlockDTO.TimeblockID));
-            sqlParameters.Add(new SqlParameter("@FeedingInterval", dto.FeedingInterval));
-            sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
-            sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
-            sqlParameters.Add(new SqlParameter("@SpecialCare", dto.SpecialCare));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalId));
+                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                sqlParameters.Add(new SqlParameter("@Age", dto.Age));
+                sqlParameters.Add(new SqlParameter("@DateOfBirth", dto.DateOfBirth));
+                sqlParameters.Add(new SqlParameter("@Sex", dto.Sex));
+                sqlParameters.Add(new SqlParameter("@Species", dto.Species));
+                sqlParameters.Add(new SqlParameter("@SpeciesType", dto.SpeciesType));
+                sqlParameters.Add(new SqlParameter("@Diet", dto.Diet));
+                sqlParameters.Add(new SqlParameter("@FeedingTimeID", dto.TimeBlockDTO.TimeblockID));
+                sqlParameters.Add(new SqlParameter("@FeedingInterval", dto.FeedingInterval));
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
+                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
+                sqlParameters.Add(new SqlParameter("@SpecialCare", dto.SpecialCare));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         public void AddSpecialCare(int id, string specialCare)
         {
             string Query = "UPDATE Animal SET SpecialCare=@SpecialCare WHERE AnimalID=@AnimalID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@AnimalID", id));
-            sqlParameters.Add(new SqlParameter("@SpecialCare", specialCare));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@AnimalID", id));
+                sqlParameters.Add(new SqlParameter("@SpecialCare", specialCare));
+                Execute(Query, sqlParameters);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
     }
 }
