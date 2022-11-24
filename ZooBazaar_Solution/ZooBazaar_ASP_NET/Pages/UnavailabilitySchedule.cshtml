@@ -8,23 +8,9 @@
 
 <div id="container">
     <div class="navigation">
-        <div>
-            @*        <select class="dropdowns" id="animalEmployeeComboBox">
-            <option></option>
-            <option></option>
-            <option></option>
-            </select>
-            <select class="dropdowns" id="entityComboBox">
-            <option></option>
-            <option></option>
-            <option></option>
-            </select>*@
-        </div>
         <form method="post">
             @{
-                //int a = Model.firstDayOfWeek.CompareTo(DateOnly.FromDateTime(DateTime.Now));
-                //if (Model.firstDayOfWeek.CompareTo(DateOnly.FromDateTime(DateTime.Now)) <= 0)
-                if (Model.year <= DateTime.Now.Year)
+                if (DateTime.Now.CompareTo(new DateTime(Model.year, Model.month, 1))>0)
                 {
                     <button disabled>&#60;</button>
                     
@@ -53,7 +39,7 @@
             //}
             //else
             //{
-                <button asp-page-handler="create" asp-route-create="@x.Day.ToString()" class="dayOfMonth">@x.Day.ToString()</button>
+                <button asp-page-handler="create" asp-route-month="@Model.month" asp-route-year="@Model.year" asp-route-create="@x.Day.ToString()" class="dayOfMonth @(Model.unavailabilityList.Where(p => p.Date.Day == x.Day) != null ? "aaa" : "")">@x.Day.ToString()</button>
                 //}
             }
             else

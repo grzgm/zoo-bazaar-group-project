@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ZooBazaar_ClassLibrary.Interfaces;
@@ -8,6 +9,7 @@ using ZooBazaar_Repositories.Repositories;
 
 namespace ZooBazaar_ASP_NET.Pages
 {
+    [Authorize]
     public class AnimalListModel : PageModel
     {
         private IAnimalRepository animalRepository;

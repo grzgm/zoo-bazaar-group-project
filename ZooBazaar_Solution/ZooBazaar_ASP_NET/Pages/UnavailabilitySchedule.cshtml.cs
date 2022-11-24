@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Globalization;
@@ -5,16 +6,17 @@ using System.Security.Claims;
 using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_ClassLibrary.Menagers;
 using ZooBazaar_DomainModels.Models;
+using ZooBazaar_DTO.DTOs;
 using ZooBazaar_Repositories.Interfaces;
 using ZooBazaar_Repositories.Repositories;
 
 namespace ZooBazaar_ASP_NET.Pages
 {
+    [Authorize]
     public class UnavailabilityScheduleModel : PageModel
     {
-        private IScheduleRepository scheduleRepository;
-        private ITaskRepository taskRepository;
-        private IScheduleManager scheduleManager;
+        private IUnavailabilityScheduleRepository unavailabilityScheduleRepository;
+        private IUnavailabilityScheduleMenager unavailabilityScheduleMenager;
 
         [BindProperty(SupportsGet = true)]
         public int create { get; set; }
@@ -27,19 +29,26 @@ namespace ZooBazaar_ASP_NET.Pages
 
         [BindProperty(SupportsGet = true)]
         public int year { get; set; }
+        public int employeeId { get; set; }
         public CalendarGenerator _generator { get; set; }
+
+        public List<UnavailabilityScheduleDTO> unavailabilityList;
         public UnavailabilityScheduleModel()
         {
             _generator = new CalendarGenerator();
+            unavailabilityScheduleRepository = new UnavailabilityScheduleRepository();
+            unavailabilityScheduleMenager = new UnavailabilityScheduleMenager(unavailabilityScheduleRepository);
+
+            //employeeId = int.Parse(User.FindFirstValue("Id"));
+            employeeId = 22;
+
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
         }
         public void OnGet()
         {
             year = DateTime.Now.Year;
             month= DateTime.Now.Month;
             _generator.GenerateCalendar(year, month);
-            scheduleRepository = new ScheduleRepository();
-            taskRepository = new TaskRepository();
-            scheduleManager = new ScheduleManager(scheduleRepository, taskRepository);
         }
 
         public IActionResult OnPostPrevious()
@@ -63,13 +72,14 @@ namespace ZooBazaar_ASP_NET.Pages
         }
         public IActionResult OnPostCreate()
         {
-            int a = create;
+            unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleAddDTO { Date = new DateTime(year,month,create), EmployeeID= employeeId });
             return OnPostToday();
             return Page();
         }
         public IActionResult OnPostDelete()
         {
-            int a = delete;
+            //unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleAddDTO { Date = new DateTime(year, month, create), EmployeeID = employeeId });
+            unavailabilityScheduleMenager.DeleteUnSchedule(1);
             return OnPostToday();
             return Page();
         }

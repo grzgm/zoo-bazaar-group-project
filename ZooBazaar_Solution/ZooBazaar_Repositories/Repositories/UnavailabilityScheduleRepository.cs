@@ -59,7 +59,7 @@ namespace ZooBazaar_Repositories.Repositories
             try
             {
                 sqlParameters.Add(new SqlParameter("@EmployeeID", unavailabilityScheduleAddDTO.EmployeeID));
-                sqlParameters.Add(new SqlParameter("@LastName", unavailabilityScheduleAddDTO.Date));
+                sqlParameters.Add(new SqlParameter("@Date", unavailabilityScheduleAddDTO.Date));
                 Execute(Query, sqlParameters);
             }
             catch (Exception ex)
