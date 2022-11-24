@@ -40,6 +40,7 @@ namespace ZooBazaar_DomainModels.Models
 
         public int timeBlockId { get { return _timeBlock.ID; } }
         public string taskName { get { return _task.taskName; } }
+        public string taskHabitat { get { return _task.habitat; } }
 
 
     }

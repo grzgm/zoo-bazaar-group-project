@@ -54,6 +54,7 @@ namespace ZooBazaar_DomainModels.Models
         }
 
         public string taskName { get { return _name.ToString(); } }
+        public string habitat { get { return _habitat.ToString(); } }
 
     }
 }
