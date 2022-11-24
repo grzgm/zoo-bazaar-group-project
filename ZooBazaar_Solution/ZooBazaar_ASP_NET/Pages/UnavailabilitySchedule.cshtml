@@ -33,13 +33,13 @@
         {
             if(x.Month != -1)
             {
-            //if (Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
-            //{
-            //    <button asp-page-handler="delete" asp-route-delete="@x.Day.ToString()" class="dayOfMonth">@x.Day.ToString()</button>
-            //}
-            //else
-            //{
-                <button asp-page-handler="create" asp-route-month="@Model.month" asp-route-year="@Model.year" asp-route-create="@x.Day.ToString()" class="dayOfMonth @(Model.unavailabilityList.Where(p => p.Date.Day == x.Day) != null ? "aaa" : "")">@x.Day.ToString()</button>
+                //if (Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
+                //{
+                //    <button asp-page-handler="delete" asp-route-delete="@x.Day.ToString()" class="dayOfMonth">@x.Day.ToString()</button>
+                //}
+                //else
+                //{
+                <button asp-page-handler="create" asp-route-month="@Model.month" asp-route-year="@Model.year" asp-route-create="@x.Day.ToString()" class="dayOfMonth @(Model.unavailabilityList.Where(p => p.Date.Day == x.Day).ToList().Any() ? "unavailable" : "")">@x.Day.ToString()</button>
                 //}
             }
             else

@@ -49,12 +49,14 @@ namespace ZooBazaar_ASP_NET.Pages
             year = DateTime.Now.Year;
             month= DateTime.Now.Month;
             _generator.GenerateCalendar(year, month);
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
         }
 
         public IActionResult OnPostPrevious()
         {
             DateCorrection();
             _generator.GenerateCalendar(year, month);
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
             return Page();
         }
         public IActionResult OnPostToday()
@@ -62,24 +64,25 @@ namespace ZooBazaar_ASP_NET.Pages
             year = DateTime.Now.Year;
             month = DateTime.Now.Month;
             _generator.GenerateCalendar(year, month);
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
             return Page();
         }
         public IActionResult OnPostNext()
         {
             DateCorrection();
             _generator.GenerateCalendar(year, month);
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
             return Page();
         }
         public IActionResult OnPostCreate()
         {
-            unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleAddDTO { Date = new DateTime(year,month,create), EmployeeID= employeeId });
+            unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year,month,create), EmployeeID= employeeId });
             return OnPostToday();
             return Page();
         }
         public IActionResult OnPostDelete()
         {
             //unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleAddDTO { Date = new DateTime(year, month, create), EmployeeID = employeeId });
-            unavailabilityScheduleMenager.DeleteUnSchedule(1);
             return OnPostToday();
             return Page();
         }

@@ -27,13 +27,11 @@ namespace ZooBazaar_Repositories.Repositories
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        int unScheduleID = reader.GetInt32(0);
                         int employeeID = reader.GetInt32(1);
                         DateTime date = reader.GetDateTime(2);
 
                         unSchedules.Add(new UnavailabilityScheduleDTO
                         {
-                            UnScheduleID = unScheduleID,
                             EmployeeID = employeeID,
                             Date = date,
                         });
@@ -52,14 +50,14 @@ namespace ZooBazaar_Repositories.Repositories
             return unSchedules;
         }
 
-        void IUnavailabilityScheduleRepository.AddUnSchedule(UnavailabilityScheduleAddDTO unavailabilityScheduleAddDTO)
+        void IUnavailabilityScheduleRepository.AddUnSchedule(UnavailabilityScheduleDTO unavailabilityScheduleDTO)
         {
             string Query = "INSERT INTO UnavailabilitySchedule VALUES (@EmployeeID,@Date)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             try
             {
-                sqlParameters.Add(new SqlParameter("@EmployeeID", unavailabilityScheduleAddDTO.EmployeeID));
-                sqlParameters.Add(new SqlParameter("@Date", unavailabilityScheduleAddDTO.Date));
+                sqlParameters.Add(new SqlParameter("@EmployeeID", unavailabilityScheduleDTO.EmployeeID));
+                sqlParameters.Add(new SqlParameter("@Date", unavailabilityScheduleDTO.Date));
                 Execute(Query, sqlParameters);
             }
             catch (Exception ex)
@@ -68,13 +66,14 @@ namespace ZooBazaar_Repositories.Repositories
             }
         }
 
-        void IUnavailabilityScheduleRepository.DeleteUnSchedule(int unScheduleid)
+        void IUnavailabilityScheduleRepository.DeleteUnSchedule(UnavailabilityScheduleDTO unavailabilityScheduleDTO)
         {
-            string Query = "DELETE FROM UnavailabilitySchedule WHERE UnScheduleID=@UnScheduleID";
+            string Query = "DELETE FROM UnavailabilitySchedule WHERE (EmployeeID=@EmployeeID AND Date=@Date)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             try
             {
-                sqlParameters.Add(new SqlParameter("@UnScheduleID", unScheduleid));
+                sqlParameters.Add(new SqlParameter("@EmployeeID", unavailabilityScheduleDTO.EmployeeID));
+                sqlParameters.Add(new SqlParameter("@Date", unavailabilityScheduleDTO.Date));
                 Execute(Query, sqlParameters);
             }
             catch (Exception ex)

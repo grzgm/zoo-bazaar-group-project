@@ -66,15 +66,18 @@
     gap: 20px;
 }
 
-    .month .dayOfMonth {
-        display: grid;
-        place-items: center;
-        background-color: #d3d3d3;
-        font-size: 20px;
-        box-sizing: border-box;
-        border: none;
-        transition: 0.3s;
+.dayOfMonth {
+    display: grid;
+    place-items: center;
+    background-color: #d3d3d3;
+    font-size: 20px;
+    box-sizing: border-box;
+    border: none;
+    transition: 0.3s;
+}
+    .dayOfMonth:enabled:hover {
+        background-color: #4C6674;
     }
-        .month .dayOfMonth:enabled:hover {
-            background-color: #4C6674;
-        }
+.unavailable {
+    background-color: #738794;
+}

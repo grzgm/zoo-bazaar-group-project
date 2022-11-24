@@ -8,7 +8,6 @@ namespace ZooBazaar_DTO.DTOs
 {
     public class UnavailabilityScheduleDTO
     {
-        public int UnScheduleID { get; set; }
         public int EmployeeID { get; set; }
         public DateTime Date { get; set; }
     }
