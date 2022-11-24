@@ -78,13 +78,11 @@ namespace ZooBazaar_ASP_NET.Pages
         {
             unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year,month,create), EmployeeID= employeeId });
             return OnPostToday();
-            return Page();
         }
         public IActionResult OnPostDelete()
         {
-            //unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleAddDTO { Date = new DateTime(year, month, create), EmployeeID = employeeId });
+            unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, create), EmployeeID = employeeId });
             return OnPostToday();
-            return Page();
         }
 
         public void DateCorrection()

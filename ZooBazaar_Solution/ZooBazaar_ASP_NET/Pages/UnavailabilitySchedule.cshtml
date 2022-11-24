@@ -39,7 +39,14 @@
                 //}
                 //else
                 //{
-                <button asp-page-handler="create" asp-route-month="@Model.month" asp-route-year="@Model.year" asp-route-create="@x.Day.ToString()" class="dayOfMonth @(Model.unavailabilityList.Where(p => p.Date.Day == x.Day).ToList().Any() ? "unavailable" : "")">@x.Day.ToString()</button>
+                if(@Model.unavailabilityList.Where(p => p.Date.Day == x.Day).ToList().Any())
+                {
+                    <button asp-page-handler="delete" asp-route-month="@Model.month" asp-route-year="@Model.year" asp-route-create="@x.Day.ToString()" class="dayOfMonth unavailable">@x.Day.ToString()</button>
+                }
+                else
+                {
+                    <button asp-page-handler="create" asp-route-month="@Model.month" asp-route-year="@Model.year" asp-route-create="@x.Day.ToString()" class="dayOfMonth">@x.Day.ToString()</button>
+                }
                 //}
             }
             else
