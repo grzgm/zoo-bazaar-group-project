@@ -19,6 +19,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
         AnimalDTO FromAnimalToAnimalDTO(Animal animal);
         void RemoveAnimal(int id);
         void UpdateAnimal(AnimalDTO animalDTO);
+        void AddSpecialCare(int id, string specialCare);
 
         AnimalDTO GetAnimalDTO(int id);
     }

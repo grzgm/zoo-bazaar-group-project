@@ -31,6 +31,7 @@ namespace ZooBazaar_DomainModels.Models
         private int _feedingInterval;
         private Zone _zone;
         private Habitat _habitat;
+        private string _specialCare;
 
         public Animal(AnimalDTO animalDTO)
         {
@@ -46,6 +47,7 @@ namespace ZooBazaar_DomainModels.Models
             this._feedingInterval = animalDTO.FeedingInterval;
             this._zone  = new Zone(animalDTO.HabitatDTO.ZoneDTO);
             this._habitat = new Habitat(animalDTO.HabitatDTO);
+            this._specialCare = animalDTO.SpecialCare;
         }
 
    
@@ -73,7 +75,7 @@ namespace ZooBazaar_DomainModels.Models
 
         public Habitat Habitat { get { return _habitat; } }
 
-
+        public string SpecialCare { get { return _specialCare; } }
 
     }
 }

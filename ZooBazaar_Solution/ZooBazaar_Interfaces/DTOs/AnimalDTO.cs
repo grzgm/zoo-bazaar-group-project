@@ -41,5 +41,7 @@ namespace ZooBazaar_DTO.DTOs
         public int FeedingInterval { get; set; }
 
         public HabitatDTO HabitatDTO { get; set; }
+
+        public string SpecialCare { get; set; }
     }
 }

@@ -65,43 +65,86 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "SELECT * FROM Employee WHERE (Email = @Email AND Password = @Password)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Email", email));
-            sqlParameters.Add(new SqlParameter("@Password", password));
-            return GetEmployees(Query, sqlParameters).First();
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@Email", email));
+                sqlParameters.Add(new SqlParameter("@Password", password));
+                return GetEmployees(Query, sqlParameters).First();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void IEmployeeRepositroty.Delete(int id)
         {
             string Query = "DELETE FROM Employee WHERE EmployeeID = @EmployeeID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@EmployeeID", id));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@EmployeeID", id));
+                Execute(Query, sqlParameters);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         List<EmployeeDTO> IEmployeeRepositroty.GetAllEmployees()
         {
             string Query = "SELECT * FROM Employee";
-            return GetEmployees(Query, null).ToList();
+            try
+            {
+                return GetEmployees(Query, null).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
         EmployeeDTO IEmployeeRepositroty.GetByEmployeeId(int ID)
         {
             string Query = "SELECT * FROM Employee WHERE EmployeeID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ID", ID));
-            return GetEmployees(Query, sqlParameters).First();
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ID", ID));
+                return GetEmployees(Query, sqlParameters).First();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void IEmployeeRepositroty.Insert(EmployeeAddDTO dto)
         {
             string Query = "INSERT INTO Employee VALUES (@FirstName,@LastName,@Email,@Phone,@Address,@Role)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@FirstName", dto.FirstName));
-            sqlParameters.Add(new SqlParameter("@LastName", dto.LastName));
-            sqlParameters.Add(new SqlParameter("@Email", dto.Email));
-            sqlParameters.Add(new SqlParameter("@Phone", dto.Phone));
-            sqlParameters.Add(new SqlParameter("@Address", dto.Address));
-            sqlParameters.Add(new SqlParameter("@Role", dto.Role));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@FirstName", dto.FirstName));
+                sqlParameters.Add(new SqlParameter("@LastName", dto.LastName));
+                sqlParameters.Add(new SqlParameter("@Email", dto.Email));
+                sqlParameters.Add(new SqlParameter("@Phone", dto.Phone));
+                sqlParameters.Add(new SqlParameter("@Address", dto.Address));
+                sqlParameters.Add(new SqlParameter("@Role", dto.Role));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         int IEmployeeRepositroty.nextID()
@@ -114,14 +157,22 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "UPDATE Employee SET FirstName=@FirstName,LastName=@LastName,Email=@Email,Phone=@Phone,Address=@Address,Role=@Role WHERE EmployeeID=@EmployeeID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@EmployeeID", dto.EmployeeID));
-            sqlParameters.Add(new SqlParameter("@FirstName", dto.FirstName));
-            sqlParameters.Add(new SqlParameter("@LastName", dto.LastName));
-            sqlParameters.Add(new SqlParameter("@Email", dto.Email));
-            sqlParameters.Add(new SqlParameter("@Phone", dto.Phone));
-            sqlParameters.Add(new SqlParameter("@Address", dto.Address));
-            sqlParameters.Add(new SqlParameter("@Role", dto.Role));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@EmployeeID", dto.EmployeeID));
+                sqlParameters.Add(new SqlParameter("@FirstName", dto.FirstName));
+                sqlParameters.Add(new SqlParameter("@LastName", dto.LastName));
+                sqlParameters.Add(new SqlParameter("@Email", dto.Email));
+                sqlParameters.Add(new SqlParameter("@Phone", dto.Phone));
+                sqlParameters.Add(new SqlParameter("@Address", dto.Address));
+                sqlParameters.Add(new SqlParameter("@Role", dto.Role));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
     }
 }

@@ -30,48 +30,64 @@ namespace ZooBazaar_Repositories.Repositories
                         int taskid = reader.GetInt32(0);
                         string taskname = reader.GetString(1);
 
-                        int animalid = reader.GetInt32(2);
-                        string animalname = reader.GetString(3);
-                        int animalage = reader.GetInt32(4);
-                        DateTime animaldateofbirth = reader.GetDateTime(5);
-                        bool animalsex = reader.GetBoolean(6);
-                        string animalspecies = reader.GetString(7);
-                        string animalspeciestype = reader.GetString(8);
-                        string animaldiet = reader.GetString(9);
-                        int animalfeedingtimeid = reader.GetInt32(10);
-                        TimeSpan animalstartingtime = reader.GetTimeSpan(11);
-                        TimeSpan animalendingtime = reader.GetTimeSpan(12);
-                        int animalfeedinginterval = reader.GetInt32(13);
+                        int habitatid = reader.GetInt32(15);
+                        string habitatname = reader.GetString(16);
+                        int habitatcapacity = reader.GetInt32(17);
 
-                        int habitatid = reader.GetInt32(14);
-                        string habitatname = reader.GetString(15);
-                        int habitatcapacity = reader.GetInt32(16);
+                        int zoneid = reader.GetInt32(18);
+                        string zonename = reader.GetString(19);
+                        int zonecapacity = reader.GetInt32(20);
 
-                        int zoneid = reader.GetInt32(17);
-                        string zonename = reader.GetString(18);
-                        int zonecapacity = reader.GetInt32(19);
-
-
-                        tasks.Add(new TaskDTO
+                        if (!reader.IsDBNull(2))
                         {
-                            TaskID = taskid,
-                            Name = taskname,
-                            AnimalDTO = new AnimalDTO
+                            int animalid = reader.GetInt32(2);
+                            string animalname = reader.GetString(3);
+                            int animalage = reader.GetInt32(4);
+                            DateTime animaldateofbirth = reader.GetDateTime(5);
+                            bool animalsex = reader.GetBoolean(6);
+                            string animalspecies = reader.GetString(7);
+                            string animalspeciestype = reader.GetString(8);
+                            string animaldiet = reader.GetString(9);
+                            int animalfeedingtimeid = reader.GetInt32(10);
+                            TimeSpan animalstartingtime = reader.GetTimeSpan(11);
+                            TimeSpan animalendingtime = reader.GetTimeSpan(12);
+                            int animalfeedinginterval = reader.GetInt32(13);
+                            string animalspecialcare = reader.GetString(14);
+
+                            tasks.Add(new TaskDTO
                             {
-                                AnimalId = animalid,
-                                Name = animalname,
-                                Age = animalage,
-                                DateOfBirth = animaldateofbirth,
-                                Sex = animalsex,
-                                Species = animalspecies,
-                                SpeciesType = animalspeciestype,
-                                Diet = animaldiet,
-                                FeedingInterval = animalfeedinginterval,
-                                TimeBlockDTO = new TimeBlockDTO
+                                TaskID = taskid,
+                                Name = taskname,
+                                AnimalDTO = new AnimalDTO
                                 {
-                                    TimeblockID = animalfeedingtimeid,
-                                    StartingTime = animalstartingtime,
-                                    EndingTime = animalendingtime
+                                    AnimalId = animalid,
+                                    Name = animalname,
+                                    Age = animalage,
+                                    DateOfBirth = animaldateofbirth,
+                                    Sex = animalsex,
+                                    Species = animalspecies,
+                                    SpeciesType = animalspeciestype,
+                                    Diet = animaldiet,
+                                    FeedingInterval = animalfeedinginterval,
+                                    SpecialCare = animalspecialcare,
+                                    TimeBlockDTO = new TimeBlockDTO
+                                    {
+                                        TimeblockID = animalfeedingtimeid,
+                                        StartingTime = animalstartingtime,
+                                        EndingTime = animalendingtime
+                                    },
+                                    HabitatDTO = new HabitatDTO
+                                    {
+                                        HabitatID = habitatid,
+                                        Name = habitatname,
+                                        Capacity = habitatcapacity,
+                                        ZoneDTO = new ZoneDTO
+                                        {
+                                            ZoneID = zoneid,
+                                            Name = zonename,
+                                            Capacity = zonecapacity
+                                        }
+                                    }
                                 },
                                 HabitatDTO = new HabitatDTO
                                 {
@@ -85,21 +101,28 @@ namespace ZooBazaar_Repositories.Repositories
                                         Capacity = zonecapacity
                                     }
                                 }
-                            },
-                            HabitatDTO = new HabitatDTO
+                            });
+                        }
+                        else if(reader.IsDBNull(2))
+                        {
+                            tasks.Add(new TaskDTO
                             {
-                                HabitatID = habitatid,
-                                Name = habitatname,
-                                Capacity = habitatcapacity,
-                                ZoneDTO = new ZoneDTO
+                                TaskID = taskid,
+                                Name = taskname,
+                                HabitatDTO = new HabitatDTO
                                 {
-                                    ZoneID = zoneid,
-                                    Name = zonename,
-                                    Capacity = zonecapacity
+                                    HabitatID = habitatid,
+                                    Name = habitatname,
+                                    Capacity = habitatcapacity,
+                                    ZoneDTO = new ZoneDTO
+                                    {
+                                        ZoneID = zoneid,
+                                        Name = zonename,
+                                        Capacity = zonecapacity
+                                    }
                                 }
-                            }
-                        });
-
+                            });
+                        }
                     }
                 }
             }
@@ -119,33 +142,57 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "DELETE FROM Task WHERE TaskID = @TaskID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@TaskID", id));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@TaskID", id));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         IEnumerable<TaskDTO> ITaskRepository.GetAll()
         {
-            string Query = "SELECT T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB.StartingTime, TB.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Task T LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB ON A.FeedingTimeID = TB.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID";
+            string Query = "SELECT T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, A.SpecialCare, TB.StartingTime, TB.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Task T LEFT JOIN Animal A ON T.AnimalID = A.AnimalID LEFT JOIN Timeblock TB ON A.FeedingTimeID = TB.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID";
             return GetTasks(Query, null);
         }
 
         TaskDTO ITaskRepository.GetByTaskId(int ID)
         {
-            string Query = "SELECT T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, TB.StartingTime, TB.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Task T LEFT JOIN Animal A ON T.AnimalID = A.AnimalID JOIN Timeblock TB ON A.FeedingTimeID = TB.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE TaskID = @ID";
+            string Query = "SELECT T.TaskID, T.Name, T.AnimalID, A.Name, A.Age, A.DateOfBirth, A.Sex, A.Species, A.SpeciesType, A.Diet, A.FeedingTimeID, A.SpecialCare, TB.StartingTime, TB.EndingTime, A.FeedingInterval, T.HabitatID, H.Name, H.Capacity, H.ZoneID, Z.Name, Z.Capacity FROM Task T LEFT JOIN Animal A ON T.AnimalID = A.AnimalID LEFT JOIN Timeblock TB ON A.FeedingTimeID = TB.TimeblockID JOIN Zone Z ON T.ZoneID = Z.ZoneID JOIN Habitat H ON T.HabitatID = H.HabitatID WHERE TaskID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ID", ID));
-            return GetTasks(Query, sqlParameters).First();
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ID", ID));
+                return GetTasks(Query, sqlParameters).First();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void ITaskRepository.Insert(TaskDTO dto)
         {
             string Query = "INSERT INTO Task VALUES (@Name,@AnimalID,@HabitatID,@ZoneID)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-            sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalDTO.AnimalId));
-            sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
-            sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalDTO.AnimalId));
+                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         int ITaskRepository.nextID()
@@ -158,12 +205,20 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "UPDATE Task SET Name=@Name,AnimalID=@AnimalID,HabitatID=@HabitatID,ZoneID=@ZoneID WHERE TaskID=@TaskID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@TaskID", dto.TaskID));
-            sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-            sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalDTO.AnimalId));
-            sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
-            sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@TaskID", dto.TaskID));
+                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalDTO.AnimalId));
+                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
     }
 }

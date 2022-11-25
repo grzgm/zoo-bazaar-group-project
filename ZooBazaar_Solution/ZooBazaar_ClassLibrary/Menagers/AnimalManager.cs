@@ -47,7 +47,11 @@ namespace ZooBazaar_ClassLibrary.Menagers
 
         public void UpdateAnimal(AnimalDTO animalDTO)
         {
-           _animalRepository.Update(animalDTO);
+            _animalRepository.Update(animalDTO);
+        }
+        public void AddSpecialCare(int id, string specialCare)
+        {
+            _animalRepository.AddSpecialCare(id, specialCare);
         }
 
         public AnimalDTO FromAnimalToAnimalDTO(Animal animal)

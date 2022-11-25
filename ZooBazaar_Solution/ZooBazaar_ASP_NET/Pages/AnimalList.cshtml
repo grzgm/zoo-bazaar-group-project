@@ -13,13 +13,13 @@
 <div id="container">
     <div class="navigation">
         <form class="searchingForm" method="post">
-            <input asp-for="Name" type="text" />
+            <input class="search" asp-for="Name" type="text" />
             <button asp-page-handler="Name" type="submit">Search</button>
-            <input asp-for="Species" type="text" />
+            <input class="search" asp-for="Species" type="text" />
             <button asp-page-handler="Species" type="submit">Search</button>
-            <input asp-for="Habitat" type="text" />
+            <input class="search" asp-for="Habitat" type="text" />
             <button asp-page-handler="Habitat" type="submit">Search</button>
-            <input asp-for="Zone" type="text" />
+            <input class="search" asp-for="Zone" type="text" />
             <button asp-page-handler="Zone" type="submit">Search</button>
         </form>
 
@@ -37,12 +37,15 @@
         <div class="sortOption Zone">
             Zone
         </div>
+        <div class="SpecialCare">
+            Special Care
+        </div>
     </div>
     <div class="list">
         @{
             foreach(Animal animal in Model.animals)
             {
-                <div class="animal">
+                <div class="animal @(animal.SpecialCare != "" ? "animalSpecialCare" : "")">
                     <div class="animalName">
                         @animal.Name
                     </div>
@@ -55,6 +58,11 @@
                     <div class="animalZone">
                         @animal.Zone.ToString()
                     </div>
+                    <form asp-page-handler="SpecialCare" method="post">
+                        <input asp-for="SpecialCareNote" type="text" value="@animal.SpecialCare"/>
+                        <input asp-for="SpecialCareId" hidden value="@animal.ID">
+                        <button type="submit">Add</button>
+                    </form>
                 </div>
             }
         }
@@ -66,7 +74,15 @@
 
 <script>
 
-    function sortEntity (column)
+    function resetSrotingColumnColor(column)
+    {
+        document.querySelectorAll('.sortOption').forEach(item => {
+            item.style.backgroundColor = "#4C6674";
+        });
+        column.style.backgroundColor = "#637988";
+    }
+
+    function sortEntity(column)
     {
         // Checking if sorting the same column and if change sorting order
         if (sortedColumn == column) {
@@ -96,8 +112,10 @@
 
     document.querySelectorAll('.sortOption').forEach(item => {
         item.addEventListener('click', event => {
-            sortEntity (Array.from(item.parentNode.children).indexOf(item));
+            sortEntity(Array.from(item.parentNode.children).indexOf(item));
+            resetSrotingColumnColor(item)
         });
-    })
+    });
 
+    document.querySelectorAll('.search').forEach(item => { item.value = ''; });
 </script>

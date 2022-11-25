@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Globalization;
@@ -5,104 +6,182 @@ using System.Security.Claims;
 using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_ClassLibrary.Menagers;
 using ZooBazaar_DomainModels.Models;
+using ZooBazaar_DTO.DTOs;
 using ZooBazaar_Repositories.Interfaces;
 using ZooBazaar_Repositories.Repositories;
 
 namespace ZooBazaar_ASP_NET.Pages
 {
+    [Authorize]
     public class UnavailabilityScheduleModel : PageModel
     {
-        private IScheduleRepository scheduleRepository;
-        private ITaskRepository taskRepository;
-        private IScheduleManager scheduleManager;
+        private IUnavailabilityScheduleRepository unavailabilityScheduleRepository;
+        private IUnavailabilityScheduleMenager unavailabilityScheduleMenager;
 
-        public DateOnly firstDayOfWeek;
-        public int openDuration = 16;
-        public Schedule[][] schedule;
-        public int weekNumber { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int create { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int delete { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int month { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int year { get; set; }
+        public int employeeId { get; set; }
+        public CalendarGenerator _generator { get; set; }
+
+        public List<UnavailabilityScheduleDTO> unavailabilityList;
+        public UnavailabilityScheduleModel()
+        {
+            _generator = new CalendarGenerator();
+            unavailabilityScheduleRepository = new UnavailabilityScheduleRepository();
+            unavailabilityScheduleMenager = new UnavailabilityScheduleMenager(unavailabilityScheduleRepository);
+
+            //employeeId = int.Parse(User.FindFirstValue("Id"));
+            employeeId = 22;
+
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+        }
         public void OnGet()
         {
-            scheduleRepository = new ScheduleRepository();
-            taskRepository = new TaskRepository();
-            scheduleManager = new ScheduleManager(scheduleRepository, taskRepository);
-
-            if (!Request.Cookies.ContainsKey("weekNumber"))
-            {
-                DateTime today = DateTime.Now;
-                DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(today);
-                if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
-                {
-                    today = today.AddDays(3);
-                }
-                weekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-                Response.Cookies.Append("weekNumber", weekNumber.ToString());
-                firstDayOfWeek = FirstDayOfWeek(DateOnly.FromDateTime(DateTime.Now));
-                Response.Cookies.Append("firstDayOfWeek", firstDayOfWeek.ToString());
-            }
-            else
-            {
-                weekNumber = int.Parse(Request.Cookies["weekNumber"]);
-                firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
-            }
-
-            schedule = new Schedule[7][];
-            for (int i = 0; i < 7; i++)
-            {
-                schedule[i] = new Schedule[openDuration];
-            }
-            GetWeekSchedule();
+            year = DateTime.Now.Year;
+            month= DateTime.Now.Month;
+            _generator.GenerateCalendar(year, month);
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
         }
 
         public IActionResult OnPostPrevious()
         {
-            weekNumber = int.Parse(Request.Cookies["weekNumber"]);
-            Response.Cookies.Append("weekNumber", (weekNumber - 1).ToString());
-            firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
-            Response.Cookies.Append("firstDayOfWeek", (firstDayOfWeek.AddDays(-7)).ToString());
-            return RedirectToPage("EmployeeSchedule");
+            DateCorrection();
+            _generator.GenerateCalendar(year, month);
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            return Page();
         }
         public IActionResult OnPostToday()
         {
-            Response.Cookies.Delete("weekNumber");
-            Response.Cookies.Delete("firstDayOfWeek");
-            return RedirectToPage("EmployeeSchedule");
+            year = DateTime.Now.Year;
+            month = DateTime.Now.Month;
+            _generator.GenerateCalendar(year, month);
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            return Page();
         }
         public IActionResult OnPostNext()
         {
-            weekNumber = int.Parse(Request.Cookies["weekNumber"]);
-            Response.Cookies.Append("weekNumber", (weekNumber + 1).ToString());
-            firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
-            Response.Cookies.Append("firstDayOfWeek", (firstDayOfWeek.AddDays(7)).ToString());
-            return RedirectToPage("EmployeeSchedule");
-        }
-        public IActionResult OnPostNew()
-        {
-            return OnPostToday();
+            DateCorrection();
+            _generator.GenerateCalendar(year, month);
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
             return Page();
         }
-        private DateOnly FirstDayOfWeek(DateOnly dt)
+        public IActionResult OnPostCreate()
         {
-            var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            var diff = dt.DayOfWeek - culture.DateTimeFormat.FirstDayOfWeek;
-            if (diff < 0)
-                diff += 7;
-            return dt.AddDays(-diff);
+            unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year,month,create), EmployeeID= employeeId });
+            return OnPostToday();
+        }
+        public IActionResult OnPostDelete()
+        {
+            unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, create), EmployeeID = employeeId });
+            return OnPostToday();
         }
 
-        private void GetWeekSchedule()
+        public void DateCorrection()
         {
-            List<Schedule> scheduleList = new List<Schedule>();
-            for (int i = 0; i < 7; i++)
+            if (month > 12)
             {
-                scheduleList = scheduleManager.GetDayScheduleEmployeeAllSchdules(firstDayOfWeek.AddDays(i), int.Parse(User.FindFirstValue("Id")));
-                if (scheduleList.Count > 0)
-                {
-                    foreach (Schedule block in scheduleList)
-                    {
-                        schedule[i][block.timeBlockId] = block;
-                    }
-                }
+                year += 1;
+                month = 1;
+            }
+            else if (month < 1)
+            {
+                year -= 1;
+                month = 12;
             }
         }
     }
+
+    public class CalendarGenerator
+    {
+        public struct DisplayDay
+        {
+            public int Day { get; set; }
+            public int Month { get; set; }
+        }
+
+
+        public DisplayDay[] days { get; set; }
+        public CalendarGenerator()
+        {
+            days = new DisplayDay[42];
+        }
+
+        public void GenerateCalendar(int year, int month)
+        {
+            //year = DateTime.Now.Year;
+            //month = DateTime.Now.Month;
+
+            DisplayDay[] displsayDays = new DisplayDay[42];
+            int AmountOfDaysInMonth = DateTime.DaysInMonth(year, month);
+            DateOnly firstDayOfMonth = new DateOnly(year, month, 01);
+            int position = 0;
+
+            switch (firstDayOfMonth.DayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                    position = 0;
+                    break;
+                case DayOfWeek.Tuesday:
+                    position = 1;
+                    break;
+                case DayOfWeek.Wednesday:
+                    position = 2;
+                    break;
+                case DayOfWeek.Thursday:
+                    position = 3;
+                    break;
+                case DayOfWeek.Friday:
+                    position = 4;
+                    break;
+                case DayOfWeek.Saturday:
+                    position = 5;
+                    break;
+                case DayOfWeek.Sunday:
+                    position = 6;
+                    break;
+            }
+
+            int counterOfDaysInCurrentMonth = 1;
+            for (int i = position; i < AmountOfDaysInMonth + position; i++)
+            {
+                displsayDays[i].Day = counterOfDaysInCurrentMonth;
+                displsayDays[i].Month = month;
+                counterOfDaysInCurrentMonth++;
+            }
+            int counterDaysOfNextMonth = 1;
+            for (int j = AmountOfDaysInMonth + position; j < 42; j++)
+            {
+                displsayDays[j].Day = counterDaysOfNextMonth;
+                displsayDays[j].Month = -1;
+                counterDaysOfNextMonth++;
+            }
+            if (position > 0)
+            {
+                // WHY
+                int amountOfDaysInMonthCounter;
+                if (month== 1)
+                    amountOfDaysInMonthCounter = DateTime.DaysInMonth(year-1, 12);
+                else
+                    amountOfDaysInMonthCounter = DateTime.DaysInMonth(year, month - 1);
+                for (int k = position - 1; k >= 0; k--)
+                {
+                    displsayDays[k].Day = amountOfDaysInMonthCounter;
+                    displsayDays[k].Month = -1;
+                    amountOfDaysInMonthCounter--;
+                }
+            }
+
+            days = displsayDays;
+        }
+    }
+
 }

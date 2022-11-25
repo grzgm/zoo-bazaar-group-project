@@ -76,8 +76,16 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "DELETE FROM Timepreference WHERE EmployeeID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ID", id));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ID", id));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         IEnumerable<TimePreferenceDTO> ITimePreferenceRepository.GetAll()
@@ -90,17 +98,33 @@ namespace ZooBazaar_Repositories.Repositories
         {
             string Query = "SELECT E.*, TB.* FROM Timepreference T JOIN Employee E ON T.EmployeeID = E.EmployeeID JOIN Timeblock TB ON T.TimeblockID = TB.TimeblockID WHERE EmployeeID = @ID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@ID", ID));
-            return GetTimepreferences(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ID", ID));
+                return GetTimepreferences(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         void ITimePreferenceRepository.Insert(TimePreferenceDTO dto)
         {
             string Query = "INSERT INTO Timepreference VALUES (@EmployeeID,@TimeblockID)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            sqlParameters.Add(new SqlParameter("@EmployeeID", dto.EmployeeDTO.EmployeeID));
-            sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeBlockDTO.TimeblockID));
-            Execute(Query, sqlParameters);
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@EmployeeID", dto.EmployeeDTO.EmployeeID));
+                sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeBlockDTO.TimeblockID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
     }
 }

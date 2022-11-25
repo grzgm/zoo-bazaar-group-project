@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ZooBazaar_ClassLibrary.Interfaces;
@@ -8,6 +9,7 @@ using ZooBazaar_Repositories.Repositories;
 
 namespace ZooBazaar_ASP_NET.Pages
 {
+    [Authorize]
     public class AnimalListModel : PageModel
     {
         private IAnimalRepository animalRepository;
@@ -17,12 +19,21 @@ namespace ZooBazaar_ASP_NET.Pages
 
         [BindProperty(SupportsGet = true)]
         public string Name { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public string Species { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public string Habitat { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public string Zone { get; set; }
+
+        [BindProperty]
+        public string SpecialCareNote { get; set; }
+
+        [BindProperty]
+        public int SpecialCareId { get; set; }
 
         public AnimalListModel()
         {
@@ -58,6 +69,11 @@ namespace ZooBazaar_ASP_NET.Pages
             if (Zone == null)
                 return;
             animals = animals.FindAll(animal => animal.Zone.ToString() == this.Zone);
+        }
+        public void OnPostSpecialCare()
+        {
+            animalMenager.AddSpecialCare(SpecialCareId, SpecialCareNote);
+            animals = animalMenager.GetAll();
         }
     }
 }
