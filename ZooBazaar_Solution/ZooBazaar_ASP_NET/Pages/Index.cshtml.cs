@@ -22,6 +22,8 @@ namespace ZooBazaar_ASP_NET.Pages
         [BindProperty]
         public string Password { get; set; }
 
+        public string mess { get; set; }
+
         public void OnGet()
         {
 
@@ -31,11 +33,21 @@ namespace ZooBazaar_ASP_NET.Pages
         {
             employeeRepositroty = new EmployeeRepository();
             employeeMenager = new EmployeeManager(employeeRepositroty);
+            Employee employee = null;
             // here check in database if cerdentials are ok
-            if(Email != null && Password != null)
+            if (Email != null && Password != null)
             {
-                Employee employee = employeeMenager.LoginEmployee(Email, Password);
-                if(employee != null)
+
+                try
+                {
+                    employee = employeeMenager.LoginEmployee(Email, Password);
+                }
+                catch (Exception ex)
+                {
+                    mess = "Wrong credentials.";
+                    return Page();
+                }
+                if (employee != null)
                 {
                     List<Claim> claims = new List<Claim>();
                     claims.Add(new Claim(ClaimTypes.Name, employee.FirstName));

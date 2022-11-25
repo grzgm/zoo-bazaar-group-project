@@ -76,13 +76,17 @@ namespace ZooBazaar_ASP_NET.Pages
         }
         public IActionResult OnPostCreate()
         {
+            _generator.GenerateCalendar(year, month);
             unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year,month,create), EmployeeID= employeeId });
-            return OnPostToday();
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            return Page();
         }
         public IActionResult OnPostDelete()
         {
+            _generator.GenerateCalendar(year, month);
             unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, create), EmployeeID = employeeId });
-            return OnPostToday();
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            return Page();
         }
 
         public void DateCorrection()

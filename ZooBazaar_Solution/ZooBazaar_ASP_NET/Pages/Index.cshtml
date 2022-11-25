@@ -21,6 +21,7 @@ width: 400px;"
         <input asp-for="Password" type="password">
         <button type="submit">Login</button>
         <div class="validation">
+            @Model.mess
             <span class="feedback" asp-validation-for="Email"></span>
             <span class="feedback" asp-validation-for="Password"></span>
         </div>
