@@ -7,8 +7,8 @@
 <div id="container">
     <div class="navigation">
         <form class="searchingForm" method="post">
-            <input asp-for="Name" type="text" />
-            <button asp-page-handler="Name" type="submit">Search</button>
+            <input asp-for="Name" type="text"/>
+            <button asp-page-handler="Name">Search</button>
             <input asp-for="Species" type="text" />
             <button asp-page-handler="Species" type="submit">Search</button>
             <input asp-for="Habitat" type="text" />
@@ -19,6 +19,10 @@
 
     </div>
     <div class="sortingMenu">
+        <div class="sortOption Name">
+            ID
+        </div>
+
         <div class="sortOption Name">
             Name
         </div>
@@ -37,17 +41,23 @@
             foreach(Animal animal in Model.animals)
             {
                 <div class="entity">
-                    <div class="animalName">
+                    <div class="entityName">
+                        @animal.ID
+                    </div>
+                    <div class="entityName">
                         @animal.Name
                     </div>
-                    <div class="animalSpecies">
+                    <div class="entitySpecies">
                         @animal.Species
                     </div>
-                    <div class="animalHabitat">
+                    <div class="entityHabitat">
                         @animal.Habitat.ToString()
                     </div>
-                    <div class="animalZone">
+                    <div class="entityZone">
                         @animal.Zone.ToString()
+                    </div>
+                    <div class="Button">
+                        <a type="button" asp-page="./AnimalDetails" asp-route-postId="@animal.ID" class="editBtn"> . . .</a>
                     </div>
 
                 </div>
@@ -55,13 +65,14 @@
         }
     </div>
     <div class="actionPanel">
+        <a type="button" asp-page="./AddAnimal" class="editBtn"> ADD</a>
     </div>
 </div>
 
 
 <script>
 
-    function sortEntity (column) {
+    function sortEntity(column) {
         // Checking if sorting the same column and if change sorting order
         if (sortedColumn == column) {
             sortingFactor *= -1;
@@ -71,17 +82,17 @@
             sortingFactor = 1;
         }
         // NodeList of all animals divs
-        let animals = document.querySelectorAll('.animal');
+        let entities = document.querySelectorAll('.entity');
         // Array of all animals divs
-        let animalsArray = Array.prototype.slice.call(animals, 0);
+        let entitiesArray = Array.prototype.slice.call(entities, 0);
         // Sorting array by celected column
-        animalsArray.sort((a, b) => (a.children[column].innerHTML > b.children[column].innerHTML ? 1 * sortingFactor : -1 * sortingFactor));
+        entitiesArray.sort((a, b) => (a.children[column].innerHTML > b.children[column].innerHTML ? 1 * sortingFactor : -1 * sortingFactor));
         // Clear animals list and populate it with sorted animals
         let list = document.querySelector('.list');
         list.textContent = '';
 
-        for (let i = 0; i < animals.length; i++) {
-            list.appendChild(animalsArray[i]);
+        for (let i = 0; i < entities.length; i++) {
+            list.appendChild(entitiesArray[i]);
         }
     }
 
@@ -90,7 +101,7 @@
 
     document.querySelectorAll('.sortOption').forEach(item => {
         item.addEventListener('click', event => {
-            sortEntity (Array.from(item.parentNode.children).indexOf(item));
+            sortEntity(Array.from(item.parentNode.children).indexOf(item));
         });
     })
 

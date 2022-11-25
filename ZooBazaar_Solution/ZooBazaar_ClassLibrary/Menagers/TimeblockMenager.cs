@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,11 @@ namespace ZooBazaar_ClassLibrary.Menagers
                 timeBlocks.Add(new TimeBlock(dto));
             }
             return timeBlocks;
+        }
+
+        public List<TimeBlockDTO> GetAllDTO()
+        {
+            return _timeBlockRepository.GetAll().ToList();
         }
     }
 }

@@ -13,21 +13,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddElectron();
 builder.WebHost.UseElectron(args);
 
-builder.Services.AddElectron();
-builder.WebHost.UseElectron(args);
-
-
-builder.Services.AddElectron();
-builder.WebHost.UseElectron(args);
-
 
 builder.Services.AddSingleton<IAnimalMenager, AnimalManager>();
 builder.Services.AddSingleton<IAnimalRepository, AnimalRepository>();
 builder.Services.AddSingleton<IEmployeeMenager, EmployeeManager>();
 builder.Services.AddSingleton<IEmployeeRepositroty, EmployeeRepository>();
+builder.Services.AddSingleton<IZoneRepository, ZoneRepository>();
+builder.Services.AddSingleton<IZoneMenager, ZoneManager>();
+builder.Services.AddSingleton<IHabitatMenager, HabitatManager>();
+builder.Services.AddSingleton<IHabitatRepository, HabitatRepository>();
+builder.Services.AddSingleton<ITimeBlockRepository, TimeblockRepository>();
+builder.Services.AddSingleton<ITimeBlockMenager, TimeblockMenager>();
 
 
 
+
+
+
+string fileName = "C:\\Users\\Michal\\Documents\\Repos\\School\\ZooBazzar\\s2_prj_zoobazaar\\ZooBazaar_Solution\\ZooBazaar_Desktop_App\\wwwroot\\Images\\ScheduleIcon.png";
 
 
 if (HybridSupport.IsElectronActive)
@@ -37,6 +40,8 @@ if (HybridSupport.IsElectronActive)
         AutoHideMenuBar = false,
         DarkTheme = true,
         Resizable = true,
+        Icon = fileName
+
     };
 
 

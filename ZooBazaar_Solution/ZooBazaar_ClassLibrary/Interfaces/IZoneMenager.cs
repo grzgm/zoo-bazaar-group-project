@@ -14,6 +14,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
         Zone GetZone(int id);
         void NewZone(ZoneAddDTO zoneDTO);
 
+        List<ZoneDTO> GetAllDTO();
         void RemoveZone(int id);
 
         List<Zone> GetAll();

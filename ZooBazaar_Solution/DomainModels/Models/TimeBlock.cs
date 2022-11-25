@@ -27,5 +27,9 @@ namespace ZooBazaar_DomainModels.Models
         }
 
         public int ID { get { return _id; } }
+
+        public TimeOnly StartTime { get { return _startTime; } } 
+
+        public TimeOnly EndTime { get { return _endTime; } }
     }
 }

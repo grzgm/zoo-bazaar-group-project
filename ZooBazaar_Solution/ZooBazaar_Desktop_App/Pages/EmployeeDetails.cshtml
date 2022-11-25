@@ -1,0 +1,65 @@
+﻿@page
+@model ZooBazaar_Desktop_App.Pages.EmployeeDetailsModel
+@{
+    ViewData["Css"] = "~/css/AnimalDetails.css";
+    Layout = Layout = "/Pages/Shared/_LayoutWithoutNavBar.cshtml";
+}
+<div class="AnimalDetailsSite">
+    <button runat="server" onclick="history.go(-1); return false;" style="width:200px">X</button>
+
+    <form method="post" id="animalForm" asp-page-handler="update">
+
+
+
+        <fieldset id="animalFormFieldset" disabled>
+            <label>ID</label>
+           
+
+           
+
+            <label for="Name">Name</label>
+            <input  id="Name">
+           
+
+            <label for="LastName">Last Name</label>
+            <input id="LastName">
+           
+
+            <label for="Email">Email</label>
+            <input id="Email">
+           
+
+            <label for="Phone">Phone</label>
+            <input id="Phone">
+
+            <label for="Adress">Adress</label>
+            <input id="Adress">
+
+            <label for="Role">Role</label>
+            <input id="Role">
+
+
+
+
+        </fieldset>
+        <input type="submit" id="btnUpdate" value="Update" hidden>
+    </form>
+    <input id="btnEdit" onclick="enableForm()" value="Edit">
+
+</div>
+
+<script>
+    function enableForm() {
+        document.getElementById("animalFormFieldset").disabled = false;
+        document.getElementById("btnUpdate").hidden = false;
+        document.getElementById("btnEdit").hidden = true;
+
+    }
+
+
+</script>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

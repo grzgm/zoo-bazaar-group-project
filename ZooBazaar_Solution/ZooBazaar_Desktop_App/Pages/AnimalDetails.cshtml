@@ -1,0 +1,83 @@
+﻿@page 
+@model ZooBazaar_Desktop_App.Pages.AnimalDetailsModel
+@{
+    ViewData["Title"] = "Home page";
+    ViewData["Css"] = "~/css/AnimalDetails.css";
+    Layout = Layout = "/Pages/Shared/_LayoutWithoutNavBar.cshtml";
+}
+<div class="AnimalDetailsSite" >
+    <button runat="server" onclick="history.go(-1); return false;" style="width:200px">X</button>
+
+    <form method="post" id="animalForm" asp-page-handler="update">
+        
+
+
+        <fieldset id="animalFormFieldset" disabled >
+            <label>ID</label>
+            <label>@Model.animalDTO.AnimalId</label>
+
+            <input asp-for="animalDTO.AnimalId" value=@Model.animalDTO.AnimalId id="IDofAnimal" hidden>
+
+            <label for="Name">Name</label>
+            <input asp-for="animalDTO.Name" id="Name">
+            <span asp-validation-for="animalDTO.Name"></span>
+
+            <label for="Age">Age</label>
+            <input asp-for="animalDTO.Age" id="Age">
+            <span asp-validation-for="animalDTO.Age"></span>
+
+            <label for="BirthDay">BirthDay</label>
+            <input asp-for="animalDTO.DateOfBirth" id="BirthDay">
+            <span asp-validation-for="animalDTO.DateOfBirth"></span>
+
+            <label for="Sex">Sex</label>
+            <input asp-for="animalDTO.Sex" id="Sex">
+            <span asp-validation-for="animalDTO.Sex"></span>
+
+            <label for="Species">Species</label>
+            <input asp-for="animalDTO.Species" id="Species">
+            <span asp-validation-for="animalDTO.Species"></span>
+
+            <label for="Diet">Diet</label>
+            <input asp-for="animalDTO.Diet" id="Diet">
+            <span asp-validation-for="animalDTO.Diet"></span>
+
+            <label for="Feeding">Feeding</label>
+            <input asp-for="animalDTO.FeedingInterval" id="Feeding">
+            <span asp-validation-for="animalDTO.FeedingInterval"></span>
+
+            <label for="Zone">Zone</label>
+
+            <span asp-validation-for="animalDTO.HabitatDTO.ZoneDTO"></span>
+
+            <label for="Habitat">Habitat</label> 
+           
+            <span asp-validation-for="animalDTO.HabitatDTO"></span>
+
+            <label for="TimeBlock">TimeBlock</label>
+        
+
+            <span asp-validation-for="animalDTO.TimeBlockDTO"></span>
+           
+        </fieldset>
+        <input type="submit" id="btnUpdate" value="Update" hidden>
+    </form>
+    <input id="btnEdit" onclick="enableForm()" value="Edit">
+    
+</div>
+
+<script>
+    function enableForm() {
+        document.getElementById("animalFormFieldset").disabled = false;
+        document.getElementById("btnUpdate").hidden = false;
+        document.getElementById("btnEdit").hidden = true;
+
+    }
+
+
+</script>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

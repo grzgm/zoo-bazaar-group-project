@@ -47,6 +47,8 @@ namespace ZooBazaar_DomainModels.Models
             this._zone  = new Zone(animalDTO.HabitatDTO.ZoneDTO);
             this._habitat = new Habitat(animalDTO.HabitatDTO);
         }
+
+   
   
         public int ID { get { return _id; } }
         public string Name { get { return _name; } }

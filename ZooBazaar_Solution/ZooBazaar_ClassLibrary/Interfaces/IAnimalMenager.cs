@@ -15,7 +15,11 @@ namespace ZooBazaar_ClassLibrary.Interfaces
         Animal GetAnimal(int id);
         List<Animal> GetAll();
         void NewAnimal(AnimalAddDTO animalAddDTO);
+
+        AnimalDTO FromAnimalToAnimalDTO(Animal animal);
         void RemoveAnimal(int id);
         void UpdateAnimal(AnimalDTO animalDTO);
+
+        AnimalDTO GetAnimalDTO(int id);
     }
 }

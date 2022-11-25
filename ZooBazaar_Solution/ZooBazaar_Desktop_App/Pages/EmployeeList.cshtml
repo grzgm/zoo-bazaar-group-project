@@ -16,10 +16,13 @@
 
     </div>
     <div class="sortingMenu">
+        <div class="sortOption ID">
+            ID
+        </div>
         <div class="sortOption Name">
             Name
         </div>
-        <div class="sortOption LastName">
+        <div class="sortOption LastName" style="width:80% ">
             Last Name
         </div>
     </div>
@@ -29,13 +32,18 @@
             {
                 <div class="entity">
                     <div class="entityName">
+                        @employee.ID
+                    </div>
+                    <div class="entityName">
                         @employee.FirstName
                     </div>
                     <div class="entityLastName">
                         @employee.LastName
                     </div>
                     <div>
-                        <button> . . .</button>
+                        <div class="Button">
+                            <a type="button" asp-page="./EmployeeDetails" class="editBtn"> . . .</a>
+                        </div>
                     </div>
 
                 </div>
@@ -43,6 +51,7 @@
         }
     </div>
     <div class="actionPanel">
+        <a type="button" asp-page="./EmployeeAdd" class="editBtn"> ADD</a>
     </div>
 </div>
 

@@ -49,5 +49,48 @@ namespace ZooBazaar_ClassLibrary.Menagers
         {
            _animalRepository.Update(animalDTO);
         }
+
+        public AnimalDTO FromAnimalToAnimalDTO(Animal animal)
+        {
+            AnimalDTO animalDTO = new AnimalDTO
+            {
+                AnimalId = animal.ID,
+                Name = animal.Name,
+                Age = animal.Age,
+                DateOfBirth = animal.DateOnly.ToDateTime(TimeOnly.MinValue),
+                Sex = animal.Sex,
+                Diet = animal.Diet,
+                FeedingInterval = animal.FeedingInterval,
+                Species = animal.Species,
+                SpeciesType = animal.SpeciesType,
+                TimeBlockDTO = new TimeBlockDTO
+                {
+                    TimeblockID = animal.TimeBlock.ID,
+                    EndingTime = animal.TimeBlock.EndTime.ToTimeSpan(),
+                    StartingTime = animal.TimeBlock.StartTime.ToTimeSpan()
+
+                },
+                HabitatDTO = new HabitatDTO
+                {
+                    HabitatID = animal.Habitat.ID,
+                    Name = animal.Habitat.Name,
+                    Capacity = animal.Habitat.Capacity,
+                    ZoneDTO = new ZoneDTO
+                    {
+                        ZoneID = animal.Zone.ID,
+                        Capacity = animal.Zone.Capacity,
+                        Name = animal.Zone.Name
+                    }
+                    
+                },
+            };
+            return animalDTO;
+        }
+
+        public AnimalDTO GetAnimalDTO(int id)
+        {
+            return _animalRepository.GetByAnimalId(id);
+          
+        }
     }
 }

@@ -6,11 +6,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="App.config" />
-    <Content Remove="wwwroot\Images\ScheduleIcon.png" />
+    <Content Remove="wwwroot\favicon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="wwwroot\Images\ScheduleIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ElectronNET.API" Version="13.5.1" />
@@ -22,8 +21,16 @@
     <ProjectReference Include="..\ZooBazaar_Repositories\ZooBazaar_Repositories.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="wwwroot\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
     <Content Update="electron.manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Images\ScheduleIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 </Project>

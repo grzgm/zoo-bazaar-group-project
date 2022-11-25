@@ -45,5 +45,16 @@ namespace ZooBazaar_ClassLibrary.Menagers
 
             return habitats;
         }
+
+        public HabitatDTO GetHabitatDTO(int id)
+        {
+            return _habitatRepository.GetByHabitatId(id);
+  
+        }
+
+        public List<HabitatDTO> GetAllDTO()
+        {
+            return _habitatRepository.GetAll().ToList();
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace ZooBazaar_ClassLibrary.Interfaces
     public interface ITimeBlockMenager
     {
         List<TimeBlock> GetAll();
+        List<TimeBlockDTO> GetAllDTO();
     }
 }

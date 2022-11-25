@@ -13,7 +13,7 @@ namespace ZooBazaar_DTO.DTOs
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "All fields are required")]
         //Why is it colon not Equals sign
-        [StringLength(maximumLength: 20, MinimumLength = 5, ErrorMessage = "First name must be between 5 and 20 characters")]
+        [StringLength(maximumLength: 20, MinimumLength = 1, ErrorMessage = "First name must be between 5 and 20 characters")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "All fields are required")]

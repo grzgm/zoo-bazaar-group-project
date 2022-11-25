@@ -30,5 +30,12 @@ namespace ZooBazaar_DomainModels.Models
             return _name;
         }
 
+        public int ID { get { return _id; } }
+        public string Name { get { return _name; } }
+        public int Capacity { get { return _capacity; } }   
+
+        public Zone Zone { get { return _zone; } }
+
+
     }
 }

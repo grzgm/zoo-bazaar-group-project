@@ -4,15 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 using ElectronNET.API;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZooBazaar_Desktop_App.Pages
 {
     public class IndexModel : PageModel
     {
 
-        [BindProperty]
+        [BindProperty, Required(ErrorMessage ="Please fullfill")]
+
         public string Name { get; set; }
-        [BindProperty]
+        [BindProperty, Required(ErrorMessage = "Please fullfill")]
+       
         public string Password { get; set; }
 
         public void OnGet()
@@ -23,11 +26,16 @@ namespace ZooBazaar_Desktop_App.Pages
         public IActionResult OnPost()
         {
 
-
-
-            return RedirectToPage("Welcome");
-
-           
+            if (ModelState.IsValid)
+            {
+                return new RedirectToPageResult("Welcome");
+               
+            }
+            else
+            { 
+                return Page();
+               
+            }           
         }
     }
 }
