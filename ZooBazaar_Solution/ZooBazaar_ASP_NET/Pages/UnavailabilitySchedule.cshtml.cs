@@ -9,6 +9,7 @@ using ZooBazaar_DomainModels.Models;
 using ZooBazaar_DTO.DTOs;
 using ZooBazaar_Repositories.Interfaces;
 using ZooBazaar_Repositories.Repositories;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ZooBazaar_ASP_NET.Pages
 {
@@ -38,54 +39,43 @@ namespace ZooBazaar_ASP_NET.Pages
             _generator = new CalendarGenerator();
             unavailabilityScheduleRepository = new UnavailabilityScheduleRepository();
             unavailabilityScheduleMenager = new UnavailabilityScheduleMenager(unavailabilityScheduleRepository);
-
-            //employeeId = int.Parse(User.FindFirstValue("Id"));
-            employeeId = 22;
-
-            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
         }
         public void OnGet()
         {
             year = DateTime.Now.Year;
             month= DateTime.Now.Month;
-            _generator.GenerateCalendar(year, month);
-            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            SettingUpPage();
         }
 
         public IActionResult OnPostPrevious()
         {
             DateCorrection();
-            _generator.GenerateCalendar(year, month);
-            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            SettingUpPage();
             return Page();
         }
         public IActionResult OnPostToday()
         {
             year = DateTime.Now.Year;
             month = DateTime.Now.Month;
-            _generator.GenerateCalendar(year, month);
-            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            SettingUpPage();
             return Page();
         }
         public IActionResult OnPostNext()
         {
             DateCorrection();
-            _generator.GenerateCalendar(year, month);
-            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            SettingUpPage();
             return Page();
         }
         public IActionResult OnPostCreate()
         {
-            _generator.GenerateCalendar(year, month);
             unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year,month,create), EmployeeID= employeeId });
-            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            SettingUpPage();
             return Page();
         }
         public IActionResult OnPostDelete()
         {
-            _generator.GenerateCalendar(year, month);
             unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, create), EmployeeID = employeeId });
-            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            SettingUpPage();
             return Page();
         }
 
@@ -101,6 +91,14 @@ namespace ZooBazaar_ASP_NET.Pages
                 year -= 1;
                 month = 12;
             }
+        }
+
+        public void SettingUpPage()
+        {
+            // cannot access User in the constructor IDK why???
+            employeeId = int.Parse(User.FindFirstValue("Id"));
+            _generator.GenerateCalendar(year, month);
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
         }
     }
 
