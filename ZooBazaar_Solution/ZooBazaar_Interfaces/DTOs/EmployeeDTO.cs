@@ -36,5 +36,7 @@ namespace ZooBazaar_DTO.DTOs
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "All fields are required")]
         public string Role { get; set; }
+        public string Password { get; set; }
+        public int UnavailabilityDays { get; set; }
     }
 }

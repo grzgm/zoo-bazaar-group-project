@@ -24,6 +24,8 @@ namespace ZooBazaar_DomainModels.Models
         private string _phone;
         private string _address;
         private ROLE _role;
+        private string _password;
+        private int _unavailabilityDays;
 
         public Employee(int id, string firstName, string lastName, string email, string phone, string address, ROLE role)
         {
@@ -44,7 +46,8 @@ namespace ZooBazaar_DomainModels.Models
             this._phone = employeeDTO.Phone;
             this._address = employeeDTO.Address;
             this._role = Enum.Parse<ROLE>(employeeDTO.Role, true);
-
+            this._password = employeeDTO.Password;
+            this._unavailabilityDays = employeeDTO.UnavailabilityDays;
         }
 
 
@@ -61,8 +64,7 @@ namespace ZooBazaar_DomainModels.Models
 
         public ROLE Role { get { return _role; } }
 
-
-
-
+        public string Password { get { return _password; } }
+        public int UnavailabilityDays { get { return _unavailabilityDays; } }
     }
 }

@@ -34,6 +34,8 @@ namespace ZooBazaar_Repositories.Repositories
                         string phone = reader.GetString(4);
                         string address = reader.GetString(5);
                         string role = reader.GetString(6);
+                        string password = reader.GetString(7);
+                        int unavailabilitydays = reader.GetInt32(8);
 
                         employees.Add(new EmployeeDTO
                         {
@@ -43,7 +45,9 @@ namespace ZooBazaar_Repositories.Repositories
                             Email = employeeemail,
                             Phone = phone,
                             Address = address,
-                            Role = role
+                            Role = role,
+                            Password = password,
+                            UnavailabilityDays = unavailabilitydays
                         });
                     }
                 }
@@ -128,7 +132,7 @@ namespace ZooBazaar_Repositories.Repositories
 
         void IEmployeeRepositroty.Insert(EmployeeAddDTO dto)
         {
-            string Query = "INSERT INTO Employee VALUES (@FirstName,@LastName,@Email,@Phone,@Address,@Role)";
+            string Query = "INSERT INTO Employee VALUES (@FirstName,@LastName,@Email,@Phone,@Address,@Role,@Password,@UnavailabilityDays)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
             try
@@ -139,6 +143,8 @@ namespace ZooBazaar_Repositories.Repositories
                 sqlParameters.Add(new SqlParameter("@Phone", dto.Phone));
                 sqlParameters.Add(new SqlParameter("@Address", dto.Address));
                 sqlParameters.Add(new SqlParameter("@Role", dto.Role));
+                sqlParameters.Add(new SqlParameter("@Password", dto.Password));
+                sqlParameters.Add(new SqlParameter("@UnavailabilityDays", dto.UnavailabilityDays));
                 Execute(Query, sqlParameters);
             }
             catch (Exception ex)
@@ -155,7 +161,7 @@ namespace ZooBazaar_Repositories.Repositories
 
         void IEmployeeRepositroty.Update(EmployeeDTO dto)
         {
-            string Query = "UPDATE Employee SET FirstName=@FirstName,LastName=@LastName,Email=@Email,Phone=@Phone,Address=@Address,Role=@Role WHERE EmployeeID=@EmployeeID";
+            string Query = "UPDATE Employee SET FirstName=@FirstName,LastName=@LastName,Email=@Email,Phone=@Phone,Address=@Address,Role=@Role,Password=@Password,UnavailabilityDays=@UnavailabilityDays WHERE EmployeeID=@EmployeeID";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
             try
@@ -167,6 +173,8 @@ namespace ZooBazaar_Repositories.Repositories
                 sqlParameters.Add(new SqlParameter("@Phone", dto.Phone));
                 sqlParameters.Add(new SqlParameter("@Address", dto.Address));
                 sqlParameters.Add(new SqlParameter("@Role", dto.Role));
+                sqlParameters.Add(new SqlParameter("@Password", dto.Password));
+                sqlParameters.Add(new SqlParameter("@UnavailabilityDays", dto.UnavailabilityDays));
                 Execute(Query, sqlParameters);
             }
             catch (Exception ex)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using ZooBazaar_ClassLibrary.Interfaces;
@@ -35,17 +36,19 @@ namespace ZooBazaar_ClassLibrary.Menagers
 
         public Employee LoginEmployee(string email, string password)
         {
-            EmployeeDTO employeeDTO = _employeeRepositroty.GetEmployeeByLogin(email, password);
+            string hashedpassword = PasswordHash(password);
+            EmployeeDTO employeeDTO = _employeeRepositroty.GetEmployeeByLogin(email, hashedpassword);
             if(employeeDTO.FirstName == null)
             {
                 return null;
             }
             return new Employee(employeeDTO);
-
         }
 
         public void NewEmployee(EmployeeAddDTO employeeDTO)
         {
+            string hashedpassword = PasswordHash(employeeDTO.Password);
+            employeeDTO.Password = hashedpassword;
             _employeeRepositroty.Insert(employeeDTO);
         }
 
@@ -56,7 +59,17 @@ namespace ZooBazaar_ClassLibrary.Menagers
 
         public void UpdateEmployee(EmployeeDTO employeeDTO)
         {
+            string hashedpassword = PasswordHash(employeeDTO.Password);
+            employeeDTO.Password = hashedpassword;
             _employeeRepositroty.Update(employeeDTO);
+        }
+
+        private string PasswordHash(string password)
+        {
+            var sha = SHA256.Create();
+            var asByteArray = Encoding.Default.GetBytes(password);
+            var hash = sha.ComputeHash(asByteArray);
+            return Convert.ToBase64String(hash);
         }
     }
 }
