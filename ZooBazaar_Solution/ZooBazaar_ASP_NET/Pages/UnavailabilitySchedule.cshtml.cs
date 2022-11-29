@@ -68,18 +68,43 @@ namespace ZooBazaar_ASP_NET.Pages
         }
         public IActionResult OnPostCreate()
         {
-            //SettingUpPage();
-            //if (maxAmountOfUnavailableDays > amountOfUnavailableDays)
-            unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
             SettingUpPage();
+            if (maxAmountOfUnavailableDays > amountOfUnavailableDays)
+                unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
+
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            amountOfUnavailableDays += 1;
+
             return Page();
         }
         public IActionResult OnPostDelete()
         {
-            unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
             SettingUpPage();
+            unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
+
+            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            if (amountOfUnavailableDays > 0)
+                amountOfUnavailableDays -= 1;
+
             return Page();
         }
+
+        //public IActionResult OnPostCreate()
+        //{
+        //    employeeId = int.Parse(User.FindFirstValue("Id"));
+        //    _generator.GenerateCalendar(year, month);
+        //    unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+        //    unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
+        //    unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+        //    return Page();
+        //}
+        //public IActionResult OnPostDelete()
+        //{
+        //    SettingUpPage();
+        //    unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
+        //    unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+        //    return Page();
+        //}
 
         public void DateCorrection()
         {
