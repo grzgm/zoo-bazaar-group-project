@@ -72,6 +72,8 @@ namespace ZooBazaar_ASP_NET.Pages
         }
         public void OnPostSpecialCare()
         {
+            if (SpecialCareNote == null)
+                SpecialCareNote = "";
             animalMenager.AddSpecialCare(SpecialCareId, SpecialCareNote);
             animals = animalMenager.GetAll();
         }

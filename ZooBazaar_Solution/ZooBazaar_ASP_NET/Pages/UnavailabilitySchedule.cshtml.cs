@@ -20,10 +20,7 @@ namespace ZooBazaar_ASP_NET.Pages
         private IUnavailabilityScheduleMenager unavailabilityScheduleMenager;
 
         [BindProperty(SupportsGet = true)]
-        public int create { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public int delete { get; set; }
+        public int day { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int month { get; set; }
@@ -31,6 +28,9 @@ namespace ZooBazaar_ASP_NET.Pages
         [BindProperty(SupportsGet = true)]
         public int year { get; set; }
         public int employeeId { get; set; }
+
+        public int amountOfUnavailableDays { get; set; }
+        public int maxAmountOfUnavailableDays { get; set; }
         public CalendarGenerator _generator { get; set; }
 
         public List<UnavailabilityScheduleDTO> unavailabilityList;
@@ -43,7 +43,7 @@ namespace ZooBazaar_ASP_NET.Pages
         public void OnGet()
         {
             year = DateTime.Now.Year;
-            month= DateTime.Now.Month;
+            month = DateTime.Now.Month;
             SettingUpPage();
         }
 
@@ -68,13 +68,15 @@ namespace ZooBazaar_ASP_NET.Pages
         }
         public IActionResult OnPostCreate()
         {
-            unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year,month,create), EmployeeID= employeeId });
+            //SettingUpPage();
+            //if (maxAmountOfUnavailableDays > amountOfUnavailableDays)
+            unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
             SettingUpPage();
             return Page();
         }
         public IActionResult OnPostDelete()
         {
-            unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, create), EmployeeID = employeeId });
+            unavailabilityScheduleMenager.DeleteUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
             SettingUpPage();
             return Page();
         }
@@ -99,6 +101,8 @@ namespace ZooBazaar_ASP_NET.Pages
             employeeId = int.Parse(User.FindFirstValue("Id"));
             _generator.GenerateCalendar(year, month);
             unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            maxAmountOfUnavailableDays = 17;
+            amountOfUnavailableDays = unavailabilityList.Count();
         }
     }
 
@@ -170,8 +174,8 @@ namespace ZooBazaar_ASP_NET.Pages
             {
                 // WHY
                 int amountOfDaysInMonthCounter;
-                if (month== 1)
-                    amountOfDaysInMonthCounter = DateTime.DaysInMonth(year-1, 12);
+                if (month == 1)
+                    amountOfDaysInMonthCounter = DateTime.DaysInMonth(year - 1, 12);
                 else
                     amountOfDaysInMonthCounter = DateTime.DaysInMonth(year, month - 1);
                 for (int k = position - 1; k >= 0; k--)

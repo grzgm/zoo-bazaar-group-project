@@ -33,11 +33,10 @@ namespace ZooBazaar_ASP_NET.Pages
         {
             employeeRepositroty = new EmployeeRepository();
             employeeMenager = new EmployeeManager(employeeRepositroty);
-            Employee employee = null;
             // here check in database if cerdentials are ok
             if (Email != null && Password != null)
             {
-
+                Employee employee = null;
                 try
                 {
                     employee = employeeMenager.LoginEmployee(Email, Password);
@@ -59,10 +58,15 @@ namespace ZooBazaar_ASP_NET.Pages
                     return RedirectToPage("/Welcome");
                 }
                 else
-                { return Page(); }
+                {
+                    mess = "Wrong credentials.";
+                    return Page(); }
             }
             else
-            { return Page(); }
+            {
+                mess = "Wrong credentials.";
+                return Page(); 
+            }
         }
     }
 }

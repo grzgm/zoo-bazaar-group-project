@@ -79,11 +79,6 @@ namespace ZooBazaar_ASP_NET.Pages
             Response.Cookies.Append("firstDayOfWeek", (firstDayOfWeek.AddDays(7)).ToString());
             return RedirectToPage("EmployeeSchedule");
         }
-        public IActionResult OnPostNew()
-        {
-            return OnPostToday();
-            return Page();
-        }
         private DateOnly FirstDayOfWeek(DateOnly dt)
         {
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
