@@ -28,7 +28,7 @@ namespace ZooBazaar_ASP_NET.Pages
         [BindProperty(SupportsGet = true)]
         public int timeBlock { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string taskName { get; set; }
+        public int taskName { get; set; }
         public int weekNumber { get; set; }
 
         public StaticScheduleModel()
@@ -68,24 +68,25 @@ namespace ZooBazaar_ASP_NET.Pages
         }
         public IActionResult OnPostCreate()
         {
-            TaskDTO taskDTO = new TaskDTO() {
-                Name = taskName,
-                HabitatDTO = null,
-                AnimalDTO = null,
+            TaskAddDTO taskAddDTO = new TaskAddDTO() {
+                Name = ((TASKNAME)taskName).ToString(),
+                AnimalID = null,
+                HabitatID = 2,
+                ZoneID = 1
             };
-            taskRepository.Insert(taskDTO);
-
-            ScheduleDTO scheduleDTO = new ScheduleDTO()
+            taskRepository.Insert(taskAddDTO);
+            
+            ScheduleAddDTO scheduleAddDTO = new ScheduleAddDTO()
             {
-                Day = DateTime.Now.Day,
+                Day = (FirstDayOfWeek(DateOnly.FromDateTime(DateTime.Now)).Day)+weekDay,
                 Month = DateTime.Now.Month,
                 Year = DateTime.Now.Year,
-                TimeBlockDTO = new TimeBlockDTO() { TimeblockID = this.timeBlock },
-                EmployeeDTO = new EmployeeDTO() { EmployeeID = 2 },
-                TaskDTO = new TaskDTO() { TaskID = taskRepository.nextID() },
+                TimeblockID = this.timeBlock,
+                EmployeeID =  2,
+                TaskID = taskRepository.nextID(),
             };
 
-            scheduleRepository.Insert(scheduleDTO);
+            scheduleRepository.Insert(scheduleAddDTO);
             
             return RedirectToPage("StaticSchedule");
         }

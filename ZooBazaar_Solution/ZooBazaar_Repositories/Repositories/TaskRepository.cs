@@ -178,27 +178,47 @@ namespace ZooBazaar_Repositories.Repositories
 
         void ITaskRepository.Insert(TaskAddDTO dto)
         {
-            string Query = "INSERT INTO Task VALUES (@Name,@AnimalID,@HabitatID,@ZoneID)";
-            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            if(dto.AnimalID != null)
+            {
+                string Query = "INSERT INTO Task VALUES (@Name,@AnimalID,@HabitatID,@ZoneID)";
+                List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
-            try
-            {
-                sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-                sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalID));
-                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatID));
-                sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
-                Execute(Query, sqlParameters);
+                try
+                {
+                    sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                    sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalID));
+                    sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatID));
+                    sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
+                    Execute(Query, sqlParameters);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.ToString());
+                }
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception(ex.ToString());
+                string Query = "INSERT INTO Task VALUES (@Name,Null,@HabitatID,@ZoneID)";
+                List<SqlParameter> sqlParameters = new List<SqlParameter>();
+
+                try
+                {
+                    sqlParameters.Add(new SqlParameter("@Name", dto.Name));
+                    sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatID));
+                    sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
+                    Execute(Query, sqlParameters);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.ToString());
+                }
             }
         }
 
         int ITaskRepository.nextID()
         {
             string Query = "SELECT MAX(TaskID) FROM Task";
-            return ExecuteNextID(Query);
+            return ExecuteLastID(Query);
         }
 
         void ITaskRepository.Update(TaskDTO dto)

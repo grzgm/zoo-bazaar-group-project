@@ -48,6 +48,7 @@ namespace ZooBazaar_Repositories.Repositories
                 SqlConnection connection = GetConnection();
                 using (SqlCommand command = new SqlCommand(Query, connection))
                 {
+                    connection.Open();
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -70,5 +71,35 @@ namespace ZooBazaar_Repositories.Repositories
             return id;
         }
 
+        public int ExecuteLastID(string Query)
+        {
+            int id = 1;
+            try
+            {
+                SqlConnection connection = GetConnection();
+                using (SqlCommand command = new SqlCommand(Query, connection))
+                {
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        id = reader.GetInt32(0);
+                    }
+                }
+            }
+            catch (System.Data.SqlTypes.SqlNullValueException)
+            {
+                return id;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            return id;
+        }
     }
 }

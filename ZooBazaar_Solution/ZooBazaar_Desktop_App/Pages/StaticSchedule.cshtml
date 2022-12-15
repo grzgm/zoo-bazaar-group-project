@@ -5,6 +5,7 @@
     ViewData["TabName"] = "Schedule";
     ViewData["Css"] = "~/css/StaticSchedule.css";
 }
+@using ZooBazaar_DomainModels.Models;
 
 <form method="post" id="container">
     <div class="weekDays">
@@ -48,6 +49,7 @@
     </div>
     <div class="actionPanel">
         <label type="text" asp-for="@Model.taskName">New Task Name:</label>
-        <input type="text" asp-for="@Model.taskName" required/>
+        <select name="taskname" asp-for="@Model.taskName" asp-items="@Html.GetEnumSelectList<TASKNAME>()">
+        </select>
     </div>
 </form>
