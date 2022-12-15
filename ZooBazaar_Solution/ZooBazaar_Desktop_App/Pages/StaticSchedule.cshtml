@@ -1,0 +1,53 @@
+﻿@page
+@model ZooBazaar_ASP_NET.Pages.StaticScheduleModel
+@{
+    ViewData["Title"] = "Schedule";
+    ViewData["TabName"] = "Schedule";
+    ViewData["Css"] = "~/css/StaticSchedule.css";
+}
+
+<form method="post" id="container">
+    <div class="weekDays">
+        <div>Mon <br /> @Model.firstDayOfWeek.ToString()</div>
+        <div>Tue <br /> @Model.firstDayOfWeek.AddDays(1).ToString()</div>
+        <div>Wed <br /> @Model.firstDayOfWeek.AddDays(2).ToString()</div>
+        <div>Thu <br /> @Model.firstDayOfWeek.AddDays(3).ToString()</div>
+        <div>Fri <br /> @Model.firstDayOfWeek.AddDays(4).ToString()</div>
+        <div>Sat <br /> @Model.firstDayOfWeek.AddDays(5).ToString()</div>
+        <div>Sun <br /> @Model.firstDayOfWeek.AddDays(6).ToString()</div>
+    </div>
+    <div class="schedule">
+        @{
+            <div>
+            @{
+                for (int i = Model.startingHour; i <= Model.closingHour; i++)
+                {
+                    <div class="hour">@(i):00 </div>
+                }
+            }
+            </div>
+            for (int i = 0; i < 7; i++)
+            {
+                <div class="day">
+                @{
+                for (int j = Model.startingHour; j <= Model.closingHour; j++)
+                {
+                    if(Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
+                    {
+                        <button asp-page-handler="Delete" asp-route-weekDay="@i" asp-route-timeBlock="@j" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat</button>
+                    }
+                    else
+                    {
+                        <button asp-page-handler="Create" asp-route-weekDay="@i" asp-route-timeBlock="@j" class="timeBlock"></button>
+                    }
+                }
+                }
+                </div>
+            }
+        }
+    </div>
+    <div class="actionPanel">
+        <label type="text" asp-for="@Model.taskName">New Task Name:</label>
+        <input type="text" asp-for="@Model.taskName" required/>
+    </div>
+</form>

@@ -18,10 +18,10 @@ namespace ZooBazaar_Desktop_App.Pages
        
         public string Password { get; set; }
 
-        public void OnGet()
-        {
-
-        }
+        public IActionResult OnGet()
+		{
+			return new RedirectToPageResult("StaticSchedule");
+		}
 
         public IActionResult OnPost()
         {
