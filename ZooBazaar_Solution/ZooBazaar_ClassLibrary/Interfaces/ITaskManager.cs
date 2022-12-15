@@ -5,15 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooBazaar_DTO.DTOs;
 
-namespace ZooBazaar_Repositories.Interfaces
+namespace ZooBazaar_ClassLibrary.Interfaces
 {
-    public interface ITaskRepository
+    public interface ITaskManager
     {
-        IEnumerable<TaskDTO> GetAll();
-        TaskDTO GetByTaskId(int ID);
         void Insert(TaskAddDTO dto);
         void Update(TaskDTO dto);
         void Delete(int id);
-        int nextID();
     }
 }

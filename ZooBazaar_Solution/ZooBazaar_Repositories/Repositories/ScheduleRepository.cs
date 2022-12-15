@@ -300,7 +300,7 @@ namespace ZooBazaar_Repositories.Repositories
             }
         }
 
-        void IScheduleRepository.Insert(ScheduleDTO dto)
+        void IScheduleRepository.Insert(ScheduleAddDTO dto)
         {
             string Query = "INSERT INTO Schedule VALUES (@Day,@Month,@Year,@TimeblockID,@EmployeeID,@TaskID)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
@@ -310,9 +310,9 @@ namespace ZooBazaar_Repositories.Repositories
                 sqlParameters.Add(new SqlParameter("@Day", dto.Day));
                 sqlParameters.Add(new SqlParameter("@Month", dto.Month));
                 sqlParameters.Add(new SqlParameter("@Year", dto.Year));
-                sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeBlockDTO.TimeblockID));
-                sqlParameters.Add(new SqlParameter("@EmployeeID", dto.EmployeeDTO.EmployeeID));
-                sqlParameters.Add(new SqlParameter("@TaskID", dto.TaskDTO.TaskID));
+                sqlParameters.Add(new SqlParameter("@TimeblockID", dto.TimeblockID));
+                sqlParameters.Add(new SqlParameter("@EmployeeID", dto.EmployeeID));
+                sqlParameters.Add(new SqlParameter("@TaskID", dto.TaskID));
                 Execute(Query, sqlParameters);
             }
             catch (Exception ex)

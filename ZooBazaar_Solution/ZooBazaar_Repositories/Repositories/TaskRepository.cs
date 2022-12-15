@@ -176,7 +176,7 @@ namespace ZooBazaar_Repositories.Repositories
             }
         }
 
-        void ITaskRepository.Insert(TaskDTO dto)
+        void ITaskRepository.Insert(TaskAddDTO dto)
         {
             string Query = "INSERT INTO Task VALUES (@Name,@AnimalID,@HabitatID,@ZoneID)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
@@ -184,9 +184,9 @@ namespace ZooBazaar_Repositories.Repositories
             try
             {
                 sqlParameters.Add(new SqlParameter("@Name", dto.Name));
-                sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalDTO.AnimalId));
-                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
-                sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
+                sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalID));
+                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatID));
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
                 Execute(Query, sqlParameters);
             }
             catch (Exception ex)

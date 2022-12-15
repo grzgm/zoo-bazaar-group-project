@@ -52,9 +52,19 @@ namespace ZooBazaar_ClassLibrary.Menagers
             return schedules;
         }
 
+        public void Insert(ScheduleAddDTO dto)
+        {
+            _scheduleRepository.Insert(dto);
+        }
 
+        public void Update(ScheduleDTO dto)
+        {
+            _scheduleRepository.Update(dto);
+        }
 
-
-
+        public void Delete(int id)
+        {
+            _scheduleRepository.Delete(id);
+        }
     }
 }
