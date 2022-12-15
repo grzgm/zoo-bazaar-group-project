@@ -29,8 +29,10 @@ namespace ZooBazaar_ASP_NET.Pages
         [BindProperty(SupportsGet = true)]
         public int day { get; set; }
 
+        [BindProperty(SupportsGet = true)]
         public int month { get; set; }
 
+        [BindProperty(SupportsGet = true)]
         public int year { get; set; }
 
         public StaticScheduleModel()
@@ -51,6 +53,10 @@ namespace ZooBazaar_ASP_NET.Pages
             weekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             firstDayOfWeek = FirstDayOfWeek(DateOnly.FromDateTime(DateTime.Now));
 
+            this.day = today.Day;
+            this.month = today.Month;
+            this.year = today.Year;
+
             schedule = new Schedule[7][];
             for (int i = 0; i < 7; i++)
             {
@@ -59,53 +65,35 @@ namespace ZooBazaar_ASP_NET.Pages
             GetWeekSchedule();
         }
 
-        public void OnGetPrevious()
+        public IActionResult OnPostPrevious()
         {
-            DayOfWeek dayOfWeek = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(day);
-            if (dayOfWeek >= DayOfWeek.Monday && dayOfWeek <= DayOfWeek.Wednesday)
-            {
-                day = day.AddDays(3);
-            }
-            weekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(todayOfWeek, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-            firstDayOfWeek = FirstDayOfWeek(DateOnly.FromDateTime(DateTime.Now));
-
+            weekNumber -= 1;
+            firstDayOfWeek = DateOnly.Parse(day.ToString() +"/"+ month.ToString() + "/" + year.ToString());
+            firstDayOfWeek.AddDays(-7);
             schedule = new Schedule[7][];
             for (int i = 0; i < 7; i++)
             {
                 schedule[i] = new Schedule[24];
             }
             GetWeekSchedule();
+            return Page();
         }
         public IActionResult OnPostToday()
         {
-            Response.Cookies.Delete("weekNumber");
-            Response.Cookies.Delete("firstDayOfWeek");
             return RedirectToPage("StaticSchedule");
         }
         public IActionResult OnPostNext()
         {
-            weekNumber = int.Parse(Request.Cookies["weekNumber"]);
-            Response.Cookies.Append("weekNumber", (weekNumber + 1).ToString());
-            firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
-            Response.Cookies.Append("firstDayOfWeek", (firstDayOfWeek.AddDays(7)).ToString());
-            return RedirectToPage("StaticSchedule");
-        }
-        public void DateCorrection()
-        {
-            if(day < 1)
+            weekNumber += 1;
+            firstDayOfWeek = DateOnly.Parse(day.ToString() + "/" + month.ToString() + "/" + year.ToString());
+            firstDayOfWeek.AddDays(+7);
+            schedule = new Schedule[7][];
+            for (int i = 0; i < 7; i++)
             {
-                month -= 1;
-                if (month > 12)
-                {
-                    year += 1;
-                    month = 1;
-                }
-                else if (month < 1)
-                {
-                    year -= 1;
-                    month = 12;
-                }
+                schedule[i] = new Schedule[24];
             }
+            GetWeekSchedule();
+            return Page();
         }
         private DateOnly FirstDayOfWeek(DateOnly dt)
         {
@@ -117,16 +105,16 @@ namespace ZooBazaar_ASP_NET.Pages
         }
         public IActionResult OnPostCreate()
         {
-            IUnavailabilityScheduleRepository unavailabilityScheduleRepository;
-            IUnavailabilityScheduleMenager unavailabilityScheduleMenager;
-            unavailabilityScheduleRepository = new UnavailabilityScheduleRepository();
-            unavailabilityScheduleMenager = new UnavailabilityScheduleMenager(unavailabilityScheduleRepository);
+            //IUnavailabilityScheduleRepository unavailabilityScheduleRepository;
+            //IUnavailabilityScheduleMenager unavailabilityScheduleMenager;
+            //unavailabilityScheduleRepository = new UnavailabilityScheduleRepository();
+            //unavailabilityScheduleMenager = new UnavailabilityScheduleMenager(unavailabilityScheduleRepository);
 
 
-            unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
+            //unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
 
-            unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
-            amountOfUnavailableDays += 1;
+            //unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
+            //amountOfUnavailableDays += 1;
 
             return RedirectToPage("StaticSchedule");
         }
