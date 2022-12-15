@@ -24,26 +24,19 @@ namespace ZooBazaar_ASP_NET.Pages
         public Schedule[][] schedule;
 
         [BindProperty(SupportsGet = true)]
+        public int weekDay { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int timeBlock { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string taskName { get; set; }
         public int weekNumber { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public int day { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public int month { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public int year { get; set; }
 
         public StaticScheduleModel()
         {
             scheduleRepository = new ScheduleRepository();
             taskRepository = new TaskRepository();
             scheduleManager = new ScheduleManager(scheduleRepository, taskRepository);
-        }
 
-        public void OnGet()
-        {
             DateTime today = DateTime.Now;
             DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(today);
             if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
@@ -53,10 +46,6 @@ namespace ZooBazaar_ASP_NET.Pages
             weekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             firstDayOfWeek = FirstDayOfWeek(DateOnly.FromDateTime(DateTime.Now));
 
-            this.day = today.Day;
-            this.month = today.Month;
-            this.year = today.Year;
-
             schedule = new Schedule[7][];
             for (int i = 0; i < 7; i++)
             {
@@ -65,35 +54,9 @@ namespace ZooBazaar_ASP_NET.Pages
             GetWeekSchedule();
         }
 
-        public IActionResult OnPostPrevious()
+        public void OnGet()
         {
-            weekNumber -= 1;
-            firstDayOfWeek = DateOnly.Parse(day.ToString() +"/"+ month.ToString() + "/" + year.ToString());
-            firstDayOfWeek.AddDays(-7);
-            schedule = new Schedule[7][];
-            for (int i = 0; i < 7; i++)
-            {
-                schedule[i] = new Schedule[24];
-            }
-            GetWeekSchedule();
-            return Page();
-        }
-        public IActionResult OnPostToday()
-        {
-            return RedirectToPage("StaticSchedule");
-        }
-        public IActionResult OnPostNext()
-        {
-            weekNumber += 1;
-            firstDayOfWeek = DateOnly.Parse(day.ToString() + "/" + month.ToString() + "/" + year.ToString());
-            firstDayOfWeek.AddDays(+7);
-            schedule = new Schedule[7][];
-            for (int i = 0; i < 7; i++)
-            {
-                schedule[i] = new Schedule[24];
-            }
-            GetWeekSchedule();
-            return Page();
+
         }
         private DateOnly FirstDayOfWeek(DateOnly dt)
         {
@@ -105,21 +68,30 @@ namespace ZooBazaar_ASP_NET.Pages
         }
         public IActionResult OnPostCreate()
         {
-            //IUnavailabilityScheduleRepository unavailabilityScheduleRepository;
-            //IUnavailabilityScheduleMenager unavailabilityScheduleMenager;
-            //unavailabilityScheduleRepository = new UnavailabilityScheduleRepository();
-            //unavailabilityScheduleMenager = new UnavailabilityScheduleMenager(unavailabilityScheduleRepository);
+            TaskDTO taskDTO = new TaskDTO() {
+                Name = taskName,
+                HabitatDTO = null,
+                AnimalDTO = null,
+            };
+            taskRepository.Insert(taskDTO);
 
+            ScheduleDTO scheduleDTO = new ScheduleDTO()
+            {
+                Day = DateTime.Now.Day,
+                Month = DateTime.Now.Month,
+                Year = DateTime.Now.Year,
+                TimeBlockDTO = new TimeBlockDTO() { TimeblockID = this.timeBlock },
+                EmployeeDTO = new EmployeeDTO() { EmployeeID = 2 },
+                TaskDTO = new TaskDTO() { TaskID = taskRepository.nextID() },
+            };
 
-            //unavailabilityScheduleMenager.AddUnSchedule(new UnavailabilityScheduleDTO { Date = new DateTime(year, month, day), EmployeeID = employeeId });
-
-            //unavailabilityList = unavailabilityScheduleMenager.GetByEmployeeIDMonthYear(employeeId, month, year).ToList();
-            //amountOfUnavailableDays += 1;
-
+            scheduleRepository.Insert(scheduleDTO);
+            
             return RedirectToPage("StaticSchedule");
         }
         public IActionResult OnPostDelete()
         {
+            scheduleRepository.Delete(schedule[weekDay][timeBlock].Id);
             return RedirectToPage("StaticSchedule");
         }
 
