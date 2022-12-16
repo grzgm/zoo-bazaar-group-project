@@ -8,6 +8,7 @@ using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_DomainModels.Models;
 using ZooBazaar_DTO.DTOs;
 using ZooBazaar_Repositories.Interfaces;
+using ZooBazaar_Repositories.Repositories;
 
 namespace ZooBazaar_ClassLibrary.Menagers
 {
@@ -70,6 +71,11 @@ namespace ZooBazaar_ClassLibrary.Menagers
             var asByteArray = Encoding.Default.GetBytes(password);
             var hash = sha.ComputeHash(asByteArray);
             return Convert.ToBase64String(hash);
+        }
+        public EmployeeDTO GetEmployeeDTO(int id)
+        {
+            return _employeeRepositroty.GetByEmployeeId(id);
+
         }
     }
 }

@@ -1,45 +1,52 @@
 ﻿@page
 @model ZooBazaar_Desktop_App.Pages.EmployeeAddModel
 @{
-    ViewData["Css"] = "~/css/AnimalDetails.css";
+    ViewData["Css"] = "~/css/EmployeeDetails.css";
     Layout = Layout = "/Pages/Shared/_LayoutWithoutNavBar.cshtml";
 }
-<div class="AnimalDetailsSite">
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<div class="EmployeeDetailsSite">
     <button runat="server" onclick="history.go(-1); return false;" style="width:200px">X</button>
 
-    <form method="post" id="animalForm" asp-page-handler="update">
+    <form method="post" id="employeeForm" asp-page-handler="create">
 
-
-
-        <fieldset id="animalFormFieldset" disabled>
-            <label>ID</label>
-
-
-
+        <fieldset id="employeeFormFieldset" >
 
             <label for="Name">Name</label>
             <input asp-for="employeeDTO.FirstName" id="Name">
+            <span asp-validation-for="employeeDTO.FirstName"></span>
 
 
             <label for="LastName">Last Name</label>
             <input asp-for="employeeDTO.LastName" id="LastName">
+            <span asp-validation-for="employeeDTO.LastName"></span>
 
 
             <label for="Email">Email</label>
             <input asp-for="employeeDTO.Email" id="Email">
+            <span asp-validation-for="employeeDTO.Email"></span>
+
+            <label for="Role">Password</label>
+            <input asp-for="employeeDTO.Password" id="Password">
+                <span asp-validation-for="employeeDTO.Password"></span>
 
 
             <label for="Phone">Phone</label>
             <input asp-for="employeeDTO.Phone" id="Phone">
+            <span asp-validation-for="employeeDTO.Phone"></span>
+
 
             <label for="Adress">Adress</label>
             <input asp-for="employeeDTO.Address"  id="Adress">
+            <span asp-validation-for="employeeDTO.Address"></span>
+
 
             <label for="Role">Role</label>
             <input asp-for="employeeDTO.Role" id="Role">
-
-
-
+                <span asp-validation-for="employeeDTO.Role"></span>
 
         </fieldset>
         <input type="submit" id="btnUpdate" value="Add" >
@@ -48,7 +55,3 @@
 
 </div>
 
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

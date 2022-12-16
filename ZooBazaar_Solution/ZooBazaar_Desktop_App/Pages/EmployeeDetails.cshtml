@@ -1,56 +1,68 @@
 ﻿@page
 @model ZooBazaar_Desktop_App.Pages.EmployeeDetailsModel
 @{
-    ViewData["Css"] = "~/css/AnimalDetails.css";
+    ViewData["Css"] = "~/css/EmployeeDetails.css";
     Layout = Layout = "/Pages/Shared/_LayoutWithoutNavBar.cshtml";
 }
-<div class="AnimalDetailsSite">
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<div class="EmployeeDetailsSite">
     <button runat="server" onclick="history.go(-1); return false;" style="width:200px">X</button>
 
-    <form method="post" id="animalForm" asp-page-handler="update">
+        <form method="post" id="employeeForm" asp-page-handler="update">
 
+        <fieldset id="employeeFormFieldset" disabled>
+                <label>ID</label>
+                <label>@Model.employeeDTO.EmployeeID</label>
 
+                <input asp-for="employeeDTO.EmployeeID" value=@Model.employeeDTO.EmployeeID id="IDofEmployee" hidden>
 
-        <fieldset id="animalFormFieldset" disabled>
-            <label>ID</label>
-           
-
-           
 
             <label for="Name">Name</label>
-            <input  id="Name">
-           
+            <input asp-for="employeeDTO.FirstName" id="Name">
+            <span asp-validation-for="employeeDTO.FirstName"></span>
+
 
             <label for="LastName">Last Name</label>
-            <input id="LastName">
-           
+            <input asp-for="employeeDTO.LastName" id="LastName">
+            <span asp-validation-for="employeeDTO.LastName"></span>
+
 
             <label for="Email">Email</label>
-            <input id="Email">
-           
+            <input asp-for="employeeDTO.Email" id="Email">
+            <span asp-validation-for="employeeDTO.Email"></span>
+
+            <label for="Role">Password</label>
+            <input asp-for="employeeDTO.Password" id="Password">
+            <span asp-validation-for="employeeDTO.Password"></span>
+
 
             <label for="Phone">Phone</label>
-            <input id="Phone">
+            <input asp-for="employeeDTO.Phone" id="Phone">
+            <span asp-validation-for="employeeDTO.Phone"></span>
+
 
             <label for="Adress">Adress</label>
-            <input id="Adress">
+            <input asp-for="employeeDTO.Address" id="Adress">
+            <span asp-validation-for="employeeDTO.Address"></span>
+
 
             <label for="Role">Role</label>
-            <input id="Role">
-
-
-
+            <input asp-for="employeeDTO.Role" id="Role">
+            <span asp-validation-for="employeeDTO.Role"></span>
 
         </fieldset>
-        <input type="submit" id="btnUpdate" value="Update" hidden>
+            <input type="submit" id="btnUpdate" value="Update" hidden>
     </form>
-    <input id="btnEdit" onclick="enableForm()" value="Edit">
+        <input id="btnEdit" onclick="enableForm()" value="Edit">
 
 </div>
 
+
 <script>
     function enableForm() {
-        document.getElementById("animalFormFieldset").disabled = false;
+        document.getElementById("employeeFormFieldset").disabled = false;
         document.getElementById("btnUpdate").hidden = false;
         document.getElementById("btnEdit").hidden = true;
 
@@ -60,6 +72,3 @@
 </script>
 
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

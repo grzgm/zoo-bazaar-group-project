@@ -65,8 +65,6 @@ namespace ZooBazaar_Desktop_App.Pages
             this.ID = postId;
             animalDTO = _animalMenager.GetAnimalDTO(postId);
 
-          
- 
         }
 
         public IActionResult OnPostUpdate()

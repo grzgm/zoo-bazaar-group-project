@@ -1,0 +1,15 @@
+﻿.EmployeeDetailsSite{
+    height:100%
+    
+}
+#employeeForm{
+
+}
+#employeeFormFieldset {
+    display: flex;
+    flex-direction: column;
+    width:40%;
+    margin-left: 20px;
+    margin-top: 20px;
+    border:none;
+}

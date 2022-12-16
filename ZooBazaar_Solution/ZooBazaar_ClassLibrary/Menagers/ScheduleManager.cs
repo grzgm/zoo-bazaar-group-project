@@ -7,6 +7,8 @@ using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_DTO.DTOs;
 using ZooBazaar_Repositories.Interfaces;
 using ZooBazaar_DomainModels.Models;
+using System.Diagnostics;
+
 
 namespace ZooBazaar_ClassLibrary.Menagers
 {
@@ -43,13 +45,16 @@ namespace ZooBazaar_ClassLibrary.Menagers
 
         public List<Schedule> GetDayScheduleEmployeeAllSchdules(DateOnly date, int employeeId)
         {
+            
             List<Schedule> schedules = new List<Schedule>();
 
             foreach(ScheduleDTO dto in _scheduleRepository.GetByDateAndEmployeeIdAllSchdules(date, employeeId))
             {
                 schedules.Add(new Schedule(dto));
             }
+
             return schedules;
+
         }
 
         public void Insert(ScheduleAddDTO dto)

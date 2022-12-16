@@ -16,5 +16,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
         void RemoveEmployee(int id);
         void UpdateEmployee(EmployeeDTO employeeDTO);
         Employee LoginEmployee(string email, string password);
+
+        EmployeeDTO GetEmployeeDTO(int id);
     }
 }

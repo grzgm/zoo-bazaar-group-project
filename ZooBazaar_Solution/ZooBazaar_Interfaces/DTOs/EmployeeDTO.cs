@@ -13,6 +13,10 @@ namespace ZooBazaar_DTO.DTOs
     {
         public int EmployeeID { get; set; }
 
+        public string Role { get; set; }
+        public string Password { get; set; }
+        public int UnavailabilityDays { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "All fields are required")]
         //Why is it colon not Equals sign
         [StringLength(maximumLength: 20, MinimumLength = 5, ErrorMessage = "First name must be between 5 and 20 characters")]
@@ -34,9 +38,7 @@ namespace ZooBazaar_DTO.DTOs
         [Required(AllowEmptyStrings = false, ErrorMessage = "All fields are required")]
         public string Address { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "All fields are required")]
-        public string Role { get; set; }
-        public string Password { get; set; }
-        public int UnavailabilityDays { get; set; }
+       
+
     }
 }

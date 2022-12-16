@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics;
 using System.Globalization;
 using System.Security.Claims;
 using ZooBazaar_ClassLibrary.Interfaces;
@@ -98,6 +99,7 @@ namespace ZooBazaar_ASP_NET.Pages
 
         private void GetWeekSchedule()
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
             List<Schedule> scheduleList = new List<Schedule>();
             for (int i = 0; i < 7; i++)
             {
@@ -110,6 +112,8 @@ namespace ZooBazaar_ASP_NET.Pages
                     }
                 }
             }
+            stopwatch.Stop();
+            Debug.WriteLine(stopwatch.ElapsedMilliseconds);
         }
     }
 }
