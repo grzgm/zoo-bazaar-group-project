@@ -31,12 +31,26 @@
             <span asp-validation-for="animalDTO.DateOfBirth"></span>
 
             <label for="Sex">Sex</label>
-            <input asp-for="animalDTO.Sex" id="Sex">
+            <div style="flex">
+                <label for="sexMale">Male</label>
+                <input asp-for="animalDTO.Sex" type="radio" value=@true id="sexMale">
+                <label for="sexFemale">Female</label>
+                <input asp-for="animalDTO.Sex" type="radio" value=@false id="sexFemale">
+            </div>
             <span asp-validation-for="animalDTO.Sex"></span>
 
             <label for="Species">Species</label>
             <input asp-for="animalDTO.Species" id="Species">
             <span asp-validation-for="animalDTO.Species"></span>
+
+            <label for="Species">Species type</label>
+            <input asp-for="animalDTO.SpeciesType" id="Species">
+            <span asp-validation-for="animalDTO.SpeciesType"></span>
+
+
+            <label for="Species">Sepcial care</label>
+            <input asp-for="animalDTO.SpecialCare" id="Species">
+            <span asp-validation-for="animalDTO.SpecialCare"></span>
 
             <label for="Diet">Diet</label>
             <input asp-for="animalDTO.Diet" id="Diet">
@@ -47,17 +61,13 @@
             <span asp-validation-for="animalDTO.FeedingInterval"></span>
 
             <label for="Zone">Zone</label>
-
-            <span asp-validation-for="animalDTO.HabitatDTO.ZoneDTO"></span>
-
-            <label for="Habitat">Habitat</label> 
-           
-            <span asp-validation-for="animalDTO.HabitatDTO"></span>
-
+            <select name="ZoneID" asp-items="Model.ZonesOptions" asp-for="zoneID"></select>
+            <label for="Habitat">Habitat</label>
+            <select name="HabitatID" asp-items="Model.HabitatsOptions" asp-for="habitatID"></select>
             <label for="TimeBlock">TimeBlock</label>
-        
+            <select name="TimeblockID" asp-items="Model.TimeBlockOptions" asp-for="timeblockID"></select>
 
-            <span asp-validation-for="animalDTO.TimeBlockDTO"></span>
+
            
         </fieldset>
         <input type="submit" id="btnUpdate" value="Update" hidden>

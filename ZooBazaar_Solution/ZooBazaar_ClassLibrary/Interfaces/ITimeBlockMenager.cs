@@ -12,5 +12,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
     {
         List<TimeBlock> GetAll();
         List<TimeBlockDTO> GetAllDTO();
+
+        TimeBlockDTO GetTimeblockDTO(int id);
     }
 }

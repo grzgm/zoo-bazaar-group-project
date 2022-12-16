@@ -51,5 +51,10 @@ namespace ZooBazaar_ClassLibrary.Menagers
         {
             return _zoneRepository.GetAll().ToList();
         }
+
+        public ZoneDTO GetZoneDTO(int id)
+        {
+            return _zoneRepository.GetByZoneId(id);
+        }
     }
 }

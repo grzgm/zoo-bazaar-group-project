@@ -34,5 +34,10 @@ namespace ZooBazaar_ClassLibrary.Menagers
         {
             return _timeBlockRepository.GetAll().ToList();
         }
+
+        public TimeBlockDTO GetTimeblockDTO(int id)
+        {
+            return _timeBlockRepository.GetByTimeBlockId(id);
+        }
     }
 }

@@ -28,13 +28,18 @@ namespace ZooBazaar_Desktop_App.Pages
         [BindProperty]
         public AnimalDTO animalDTO { get; set; }
 
-        public List<HabitatDTO> habitats { get; set;}
+        [BindProperty]
+        public int habitatID { get; set; }
+        [BindProperty]
+        public int zoneID { get; set; }
+        [BindProperty]
+        public int timeblockID { get; set; }
 
 
-        public List<ZoneDTO> zones { get; set; }
-   
+        public SelectList HabitatsOptions { get; set; }
 
-        public List<TimeBlockDTO> timeBlocks { get; set; }
+        public SelectList ZonesOptions { get; set; }
+        public SelectList TimeBlockOptions { get; set; }
 
 
         public AnimalDetailsModel(IAnimalMenager animalMenager,IHabitatMenager habitatMenager, ITimeBlockMenager timeBlockMenager, IZoneMenager zoneMenager)
@@ -45,38 +50,41 @@ namespace ZooBazaar_Desktop_App.Pages
             _timeBlockMenager = timeBlockMenager;
             _zoneMenager = zoneMenager;
 
-            
+            Dictionary<int, string> habitats = _habitatMenager.GetAllDTO().ToDictionary(x => x.HabitatID, v => v.Name);
+            Dictionary<int, string> zones = _zoneMenager.GetAllDTO().ToDictionary(x => x.ZoneID, v => v.Name);
+            Dictionary<int, string> timeblock = _timeBlockMenager.GetAllDTO().ToDictionary(x => x.TimeblockID, v => v.StartingTime.ToString() + " " + v.EndingTime.ToString());
+            HabitatsOptions = new SelectList(habitats, "Key", "Value");
+            ZonesOptions = new SelectList(zones, "Key", "Value");
+            TimeBlockOptions = new SelectList(timeblock, "Key", "Value");
+
+
         }
 
         public void OnGet(int postId)
         {
             this.ID = postId;
             animalDTO = _animalMenager.GetAnimalDTO(postId);
-            habitats = _habitatMenager.GetAllDTO();
-            zones = _zoneMenager.GetAllDTO();
-            timeBlocks = _timeBlockMenager.GetAllDTO();
+
           
  
         }
 
         public IActionResult OnPostUpdate()
         {
-            habitats = _habitatMenager.GetAllDTO();
-            zones = _zoneMenager.GetAllDTO();
-            timeBlocks = _timeBlockMenager.GetAllDTO();
+            animalDTO.HabitatDTO = _habitatMenager.GetHabitatDTO(habitatID);
+            animalDTO.HabitatDTO.ZoneDTO = _zoneMenager.GetZoneDTO(zoneID);
+            animalDTO.TimeBlockDTO = _timeBlockMenager.GetTimeblockDTO(timeblockID);
 
-            
-            
+           
 
             if (ModelState.IsValid)
             {
-                return new RedirectToPageResult("Welcome");
+                _animalMenager.UpdateAnimal(animalDTO);
+                return new RedirectToPageResult("AnimalList");
 
             }
             else
             {
-                
-
                 return Page();
 
             }
