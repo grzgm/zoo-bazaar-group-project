@@ -28,6 +28,7 @@ namespace ZooBazaar_Repositories.Repositories
                         command.Parameters.AddRange(sqlParameters.ToArray());
                     }
                     command.ExecuteNonQuery();
+                    connection.Close();
                 }
             }
             catch (SqlException ex)
@@ -54,6 +55,7 @@ namespace ZooBazaar_Repositories.Repositories
                     {
                         id = reader.GetInt32(0) + 1;
                     }
+                    connection.Close();
                 }
             }
             catch (System.Data.SqlTypes.SqlNullValueException)
@@ -85,6 +87,7 @@ namespace ZooBazaar_Repositories.Repositories
                     {
                         id = reader.GetInt32(0);
                     }
+                    connection.Close();
                 }
             }
             catch (System.Data.SqlTypes.SqlNullValueException)

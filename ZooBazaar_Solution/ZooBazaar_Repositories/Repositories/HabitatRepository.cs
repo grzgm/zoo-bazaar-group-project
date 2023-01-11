@@ -47,6 +47,7 @@ namespace ZooBazaar_Repositories.Repositories
                             }
                         });
                     }
+                    connection.Close();
                 }
             }
             catch (SqlException ex)

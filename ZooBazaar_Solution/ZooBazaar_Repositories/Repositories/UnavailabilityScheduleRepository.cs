@@ -36,6 +36,7 @@ namespace ZooBazaar_Repositories.Repositories
                             Date = date,
                         });
                     }
+                    connection.Close();
                 }
             }
             catch (SqlException ex)

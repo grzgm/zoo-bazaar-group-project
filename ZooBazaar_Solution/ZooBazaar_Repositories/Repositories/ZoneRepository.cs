@@ -38,6 +38,7 @@ namespace ZooBazaar_Repositories.Repositories
                             Capacity = capacity
                         });
                     }
+                    connection.Close();
                 }
             }
             catch (SqlException ex)

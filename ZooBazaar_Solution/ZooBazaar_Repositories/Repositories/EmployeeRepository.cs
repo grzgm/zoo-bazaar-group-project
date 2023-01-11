@@ -50,6 +50,7 @@ namespace ZooBazaar_Repositories.Repositories
                             UnavailabilityDays = unavailabilitydays
                         });
                     }
+                    connection.Close();
                 }
             }
             catch (SqlException ex)
