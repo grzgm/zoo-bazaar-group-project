@@ -8,7 +8,6 @@ namespace ZooBazaar_DTO.DTOs
 {
     public class StaticScheduleAddDTO
     {
-        public int DayOfWeek { get; set; }
         public int TimeBlockID { get; set; }
         public int DayOfTheWeek { get; set; }
         public int TaskID { get; set; }

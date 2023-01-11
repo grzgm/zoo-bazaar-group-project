@@ -11,9 +11,9 @@ namespace ZooBazaar_Repositories.Repositories
 {
     public class StaticScheduleRepository : BaseRepository, IStaticScheduleRepository
     {
-        private StaticScheduleDTO GetStaticSchedule(string Query, List<SqlParameter>? sqlParameters)
+        private List<StaticScheduleDTO> GetStaticSchedule(string Query, List<SqlParameter>? sqlParameters)
         {
-            StaticScheduleDTO schedule = new StaticScheduleDTO();
+            List<StaticScheduleDTO> schedules = new List<StaticScheduleDTO>();
             try
             {
                 SqlConnection connection = GetConnection();
@@ -45,7 +45,7 @@ namespace ZooBazaar_Repositories.Repositories
                         string zonename = reader.GetString(17);
                         int zonecapacity = reader.GetInt32(18);
 
-                        schedule = new StaticScheduleDTO
+                        schedules.Add(new StaticScheduleDTO
                         {
                             ScheduleID = staticscheduleid,
                             DayOfWeek = dayoftheweek,
@@ -72,7 +72,7 @@ namespace ZooBazaar_Repositories.Repositories
                                     }
                                 }
                             }
-                        };
+                        });
                     }
                     connection.Close();
                 }
@@ -86,7 +86,7 @@ namespace ZooBazaar_Repositories.Repositories
                 throw new Exception(ex.ToString());
             }
 
-            return schedule;
+            return schedules;
         }
         public void AddSchedule(StaticScheduleAddDTO staticScheduleAddDTO)
         {
@@ -94,7 +94,7 @@ namespace ZooBazaar_Repositories.Repositories
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             try
             {
-                sqlParameters.Add(new SqlParameter("@DayOfTheWeek", staticScheduleAddDTO.DayOfWeek));
+                sqlParameters.Add(new SqlParameter("@DayOfTheWeek", staticScheduleAddDTO.DayOfTheWeek));
                 sqlParameters.Add(new SqlParameter("@TimeblockID", staticScheduleAddDTO.TimeBlockID));
                 sqlParameters.Add(new SqlParameter("@TaskID", staticScheduleAddDTO.TaskID));
                 Execute(Query, sqlParameters);
@@ -105,14 +105,13 @@ namespace ZooBazaar_Repositories.Repositories
             }
         }
 
-        public StaticScheduleDTO GetScheduleFromDayAndTimeblockID(int day, int timeblockID)
+        public List<StaticScheduleDTO> GetScheduleFromDay(int day)
         {
-            string Query = "SELECT * FROM StaticSchedule S JOIN Timeblock T ON S.TimeblockID=T.TimeblockID JOIN TASK TK ON S.TaskID=TK.TaskID JOIN Habitat H ON TK.HabitatID=H.HabitatID JOIN Zone Z ON Z.ZoneID=TK.ZoneID WHERE (DayOfTheWeek=@DayOfTheWeek AND TimeblockID=@TimeblockID)";
+            string Query = "SELECT * FROM StaticSchedule S JOIN Timeblock T ON S.TimeblockID=T.TimeblockID JOIN TASK TK ON S.TaskID=TK.TaskID JOIN Habitat H ON TK.HabitatID=H.HabitatID JOIN Zone Z ON Z.ZoneID=TK.ZoneID WHERE DayOfTheWeek=@DayOfTheWeek";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             try
             {
                 sqlParameters.Add(new SqlParameter("@DayOfTheWeek", day));
-                sqlParameters.Add(new SqlParameter("@TimeblockID", timeblockID));
                 return GetStaticSchedule(Query, sqlParameters);
             }
             catch (Exception ex)

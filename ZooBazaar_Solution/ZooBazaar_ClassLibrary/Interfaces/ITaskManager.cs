@@ -12,5 +12,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
         void Insert(TaskAddDTO dto);
         void Update(TaskDTO dto);
         void Delete(int id);
+        int NextID();
+        void UpdateHabitatAndZone(int id, TaskAddDTO dto);
     }
 }

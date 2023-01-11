@@ -11,6 +11,6 @@ namespace ZooBazaar_Repositories.Interfaces
     {
         void AddSchedule(StaticScheduleAddDTO staticScheduleAddDTO);
         void RemoveSchedule(int scheduleid);
-        StaticScheduleDTO GetScheduleFromDayAndTimeblockID(int day, int timeblockID);
+        List<StaticScheduleDTO> GetScheduleFromDay(int day);
     }
 }

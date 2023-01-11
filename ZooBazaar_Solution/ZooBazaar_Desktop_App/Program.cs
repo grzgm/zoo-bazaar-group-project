@@ -24,6 +24,10 @@ builder.Services.AddSingleton<IHabitatMenager, HabitatManager>();
 builder.Services.AddSingleton<IHabitatRepository, HabitatRepository>();
 builder.Services.AddSingleton<ITimeBlockRepository, TimeblockRepository>();
 builder.Services.AddSingleton<ITimeBlockMenager, TimeblockMenager>();
+builder.Services.AddSingleton<IStaticScheduleRepository, StaticScheduleRepository>();
+builder.Services.AddSingleton<IStaticScheduleManager, StaticScheduleManager>();
+builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
+builder.Services.AddSingleton<ITaskManager, TaskMenager>();
 
 
 

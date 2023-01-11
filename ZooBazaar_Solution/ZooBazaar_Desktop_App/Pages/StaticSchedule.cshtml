@@ -9,13 +9,13 @@
 
 <form method="post" id="container">
     <div class="weekDays">
-        <div>Mon <br /> @Model.firstDayOfWeek.ToString()</div>
-        <div>Tue <br /> @Model.firstDayOfWeek.AddDays(1).ToString()</div>
-        <div>Wed <br /> @Model.firstDayOfWeek.AddDays(2).ToString()</div>
-        <div>Thu <br /> @Model.firstDayOfWeek.AddDays(3).ToString()</div>
-        <div>Fri <br /> @Model.firstDayOfWeek.AddDays(4).ToString()</div>
-        <div>Sat <br /> @Model.firstDayOfWeek.AddDays(5).ToString()</div>
-        <div>Sun <br /> @Model.firstDayOfWeek.AddDays(6).ToString()</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+        <div>Sun</div>
     </div>
     <div class="schedule">
         @{
@@ -35,7 +35,7 @@
                 {
                     if(Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
                     {
-                        <button asp-page-handler="Delete" asp-route-weekDay="@i" asp-route-timeBlock="@j" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat</button>
+                        <button asp-page-handler="Delete" asp-route-weekDay="@i" asp-route-timeBlock="@j" formnovalidate class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat</button>
                     }
                     else
                     {
@@ -50,6 +50,15 @@
     <div class="actionPanel">
         <label type="text" asp-for="@Model.taskName">New Task Name:</label>
         <select name="taskname" asp-for="@Model.taskName" asp-items="@Html.GetEnumSelectList<TASKNAME>()">
+        </select>
+
+        <label type="text">Zone:</label>
+        <select asp-for="zoneID" onchange="this.form.submit();" asp-items=@Model.Zones>
+            <option value="0"></option>
+        </select>
+
+        <label type="text">Habitat:</label>
+        <select required asp-for="@Model.habitatID" asp-items=@Model.Habitats>
         </select>
     </div>
 </form>

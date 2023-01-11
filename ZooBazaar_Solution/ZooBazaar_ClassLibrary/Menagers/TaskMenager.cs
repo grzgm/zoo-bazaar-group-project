@@ -28,9 +28,19 @@ namespace ZooBazaar_ClassLibrary.Menagers
             _taskRepository.Insert(dto);
         }
 
+        public int NextID()
+        {
+            return _taskRepository.nextID();
+        }
+
         public void Update(TaskDTO dto)
         {
             _taskRepository.Update(dto);
+        }
+
+        public void UpdateHabitatAndZone(int id, TaskAddDTO dto)
+        {
+            _taskRepository.UpdateHabitatAndZone(id, dto);
         }
     }
 }

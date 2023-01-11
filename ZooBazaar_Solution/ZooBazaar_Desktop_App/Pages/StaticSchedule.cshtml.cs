@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security.Claims;
@@ -15,14 +17,14 @@ namespace ZooBazaar_ASP_NET.Pages
 {
     public class StaticScheduleModel : PageModel
     {
-        private IScheduleRepository scheduleRepository;
-        private ITaskRepository taskRepository;
-        private IScheduleManager scheduleManager;
+        private readonly IStaticScheduleManager _staticScheduleManager;
+        private readonly ITaskManager _taskManager;
+        private readonly IZoneMenager _zoneManager;
+        private readonly IHabitatMenager _habitatManager;
 
-        public DateOnly firstDayOfWeek;
         public int closingHour = 22;
         public int startingHour = 6;
-        public Schedule[][] schedule;
+        public StaticSchedule[][] schedule;
 
         [BindProperty(SupportsGet = true)]
         public int weekDay { get; set; }
@@ -30,90 +32,131 @@ namespace ZooBazaar_ASP_NET.Pages
         public int timeBlock { get; set; }
         [BindProperty(SupportsGet = true)]
         public int taskName { get; set; }
-        public int weekNumber { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string zoneID { get; set; }
+        [BindProperty(SupportsGet = true)][Required]
+        public string habitatID { get; set; }
+        public List<SelectListItem> Zones { get; set; }
+        public List<SelectListItem> Habitats { get; set; }
 
-        public StaticScheduleModel()
+        public StaticScheduleModel(IStaticScheduleManager staticScheduleManager, ITaskManager taskManager, IZoneMenager zoneMenager, IHabitatMenager habitatMenager)
         {
-            scheduleRepository = new ScheduleRepository();
-            taskRepository = new TaskRepository();
-            scheduleManager = new ScheduleManager(scheduleRepository, taskRepository);
+            _staticScheduleManager = staticScheduleManager;
+            _taskManager = taskManager;
+            _zoneManager = zoneMenager;
+            _habitatManager = habitatMenager;
 
-            DateTime today = DateTime.Now;
-            DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(today);
-            if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
-            {
-                today = today.AddDays(3);
-            }
-            weekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-            firstDayOfWeek = FirstDayOfWeek(DateOnly.FromDateTime(DateTime.Now));
-
-            schedule = new Schedule[7][];
+            schedule = new StaticSchedule[7][];
             for (int i = 0; i < 7; i++)
             {
-                schedule[i] = new Schedule[24];
+                schedule[i] = new StaticSchedule[24];
             }
             GetWeekSchedule();
+            LoadZones();
+            LoadHabitats(0);
         }
 
-        public void OnGet()
+        public void OnPost()
         {
-
-        }
-        private DateOnly FirstDayOfWeek(DateOnly dt)
-        {
-            var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            var diff = dt.DayOfWeek - culture.DateTimeFormat.FirstDayOfWeek;
-            if (diff < 0)
-                diff += 7;
-            return dt.AddDays(-diff);
+            int zoneid = Convert.ToInt32(zoneID);
+            GetWeekSchedule();
+            LoadZones();
+            LoadHabitats(zoneid);
         }
         public IActionResult OnPostCreate()
         {
+            int day = weekDay + 1;
+            if(day > 6)
+            {
+                day = 0;
+            }
             TaskAddDTO taskAddDTO = new TaskAddDTO() {
                 Name = ((TASKNAME)taskName).ToString(),
                 AnimalID = null,
-                HabitatID = 2,
-                ZoneID = 1
+                HabitatID = Convert.ToInt32(habitatID),
+                ZoneID = Convert.ToInt32(zoneID)
             };
-            taskRepository.Insert(taskAddDTO);
-            
-            ScheduleAddDTO scheduleAddDTO = new ScheduleAddDTO()
+            _taskManager.Insert(taskAddDTO);
+
+            StaticScheduleAddDTO scheduleAddDTO = new StaticScheduleAddDTO()
             {
-                Day = (FirstDayOfWeek(DateOnly.FromDateTime(DateTime.Now)).Day)+weekDay,
-                Month = DateTime.Now.Month,
-                Year = DateTime.Now.Year,
-                TimeblockID = this.timeBlock,
-                EmployeeID =  2,
-                TaskID = taskRepository.nextID(),
+                DayOfTheWeek = day,
+                TimeBlockID = this.timeBlock,
+                TaskID = _taskManager.NextID(),
             };
 
-            scheduleRepository.Insert(scheduleAddDTO);
+            _staticScheduleManager.AddSchedule(scheduleAddDTO);
             
             return RedirectToPage("StaticSchedule");
         }
         public IActionResult OnPostDelete()
         {
-            scheduleRepository.Delete(schedule[weekDay][timeBlock].Id);
-            return RedirectToPage("StaticSchedule");
+            if (habitatID != null)
+            {
+                int habitatid = Convert.ToInt32(habitatID);
+                int taskid = schedule[weekDay][timeBlock].TaskID;
+                TaskAddDTO taskDTO = new TaskAddDTO
+                {
+                    HabitatID=habitatid,
+                    ZoneID= Convert.ToInt32(zoneID)
+                };
+                _taskManager.UpdateHabitatAndZone(taskid, taskDTO);
+                return RedirectToPage("StaticSchedule");
+            }
+            else
+            {
+                _staticScheduleManager.RemoveSchedule(schedule[weekDay][timeBlock].Id);
+                return RedirectToPage("StaticSchedule");
+            }
         }
 
         private void GetWeekSchedule()
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            List<Schedule> scheduleList = new List<Schedule>();
+            List<StaticSchedule> scheduleList = new List<StaticSchedule>();
             for (int i = 0; i < 7; i++)
             {
-                scheduleList = scheduleManager.GetDayScheduleEmployeeAllSchdules(firstDayOfWeek.AddDays(i), 2);
+                int day = i + 1;
+                if(day > 6)
+                {
+                    day = 0;
+                }
+                scheduleList = _staticScheduleManager.GetScheduleFromDay(day);
                 if(scheduleList.Count > 0)
                 {
-                    foreach (Schedule block in scheduleList)
+                    foreach (StaticSchedule block in scheduleList)
                     {
                         schedule[i][block.timeBlockId] = block;
                     }
                 }
             }
-            stopwatch.Stop();
-            Debug.WriteLine(stopwatch.ElapsedMilliseconds);
+        }
+
+        public void LoadZones()
+        {
+            Zones = new List<SelectListItem>();
+            foreach(Zone zone in _zoneManager.GetAll())
+            {
+                Zones.Add(new SelectListItem { Text = zone.Name, Value = zone.ID.ToString()});
+            }
+        }
+
+        public void LoadHabitats(int zoneid)
+        {
+            Habitats = new List<SelectListItem>();
+            if (zoneid != 0)
+            {
+                foreach (Habitat habitat in _habitatManager.GetAll())
+                {
+                    if (habitat.Zone.ID == zoneid)
+                    {
+                        Habitats.Add(new SelectListItem { Text = habitat.Name, Value = habitat.ID.ToString() });
+                    }
+                }
+            }
+            else
+            {
+                Habitats.Add(new SelectListItem { Text = "Select a Zone", Value = "" });
+            }
         }
     }
 }

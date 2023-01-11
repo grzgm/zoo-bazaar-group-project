@@ -241,5 +241,23 @@ namespace ZooBazaar_Repositories.Repositories
                 throw new Exception(ex.ToString());
             }
         }
+
+        public void UpdateHabitatAndZone(int id, TaskAddDTO dto)
+        {
+            string Query = "UPDATE Task SET HabitatID=@HabitatID,ZoneID=@ZoneID WHERE TaskID=@TaskID";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@TaskID", id));
+                sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatID));
+                sqlParameters.Add(new SqlParameter("@ZoneID", dto.ZoneID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
     }
 }

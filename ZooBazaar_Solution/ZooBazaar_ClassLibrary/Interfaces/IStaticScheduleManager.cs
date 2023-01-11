@@ -12,6 +12,6 @@ namespace ZooBazaar_ClassLibrary.Interfaces
     {
         void AddSchedule(StaticScheduleAddDTO staticScheduleAddDTO);
         void RemoveSchedule(int scheduleid);
-        StaticSchedule GetScheduleFromDayAndTimeblockID(int day, int timeblockID);
+        List<StaticSchedule> GetScheduleFromDay(int day);
     }
 }

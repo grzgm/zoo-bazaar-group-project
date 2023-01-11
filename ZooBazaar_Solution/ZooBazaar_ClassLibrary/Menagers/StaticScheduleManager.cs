@@ -24,9 +24,14 @@ namespace ZooBazaar_ClassLibrary.Menagers
             staticScheduleRepository.AddSchedule(staticScheduleAddDTO);
         }
 
-        public StaticSchedule GetScheduleFromDayAndTimeblockID(int day, int timeblockID)
+        public List<StaticSchedule> GetScheduleFromDay(int day)
         {
-            return new StaticSchedule(staticScheduleRepository.GetScheduleFromDayAndTimeblockID(day, timeblockID));
+            List<StaticSchedule> schedules = new List<StaticSchedule>();
+            foreach(StaticScheduleDTO staticScheduleDTO in staticScheduleRepository.GetScheduleFromDay(day))
+            {
+                schedules.Add(new StaticSchedule(staticScheduleDTO));
+            }
+            return schedules;
         }
 
         public void RemoveSchedule(int scheduleid)
