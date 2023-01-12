@@ -10,6 +10,7 @@ namespace ZooBazaar_Repositories.Interfaces
     public interface IUnavailabilityScheduleRepository
     {
         IEnumerable<UnavailabilityScheduleDTO> GetByEmployeeIDMonthYear(int employeeid, int month, int year);
+        IEnumerable<UnavailabilityScheduleDTO> GetByEmployeeIDDayMonthYear(int employeeid, int day, int month, int year);
         void AddUnSchedule(UnavailabilityScheduleDTO unavailabilityScheduleDTO);
         void DeleteUnSchedule(UnavailabilityScheduleDTO unavailabilityScheduleDTO);
     }

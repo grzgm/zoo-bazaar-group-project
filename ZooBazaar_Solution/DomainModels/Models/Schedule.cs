@@ -39,10 +39,11 @@ namespace ZooBazaar_DomainModels.Models
         }
 
         public int timeBlockId { get { return _timeBlock.ID; } }
+        public TimeBlock timeBlock { get { return _timeBlock; } }
         public int Id { get { return _id; } }
         public string taskName { get { return _task.taskName; } }
         public string taskHabitat { get { return _task.habitat; } }
-
-
+        public Task task { get { return _task; } }
+        public DateOnly date { get { return _date; } }
     }
 }
