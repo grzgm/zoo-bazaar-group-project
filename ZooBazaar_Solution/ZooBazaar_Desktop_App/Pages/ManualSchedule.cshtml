@@ -1,0 +1,90 @@
+﻿@page
+@Html.AntiForgeryToken();
+@model ZooBazaar_Desktop_App.Pages.ManualScheduleModel
+@{
+    ViewData["Title"] = "Schedule";
+    ViewData["TabName"] = "Schedule";
+    ViewData["Css"] = "~/css/ManualSchedule.css";
+}
+@section Scripts {
+    <script>
+
+        function AddEmployee(i, j) {
+            $.ajax({
+                url: 'ManualSchedule/?handler=AddEmployee',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    i: i,
+                    j: j,
+                    employeeID: $("#employeeSlection option:selected").val(),
+                },
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (result) {
+                    $('YourSelector').html(result);
+                }
+                
+            });
+        }
+
+
+
+    </script>
+}
+<div method="post" id="container">
+    <div class="weekDays">
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+        <div>Sun</div>
+    </div>
+    <div class="schedule">
+        @{
+            <div>
+                @{
+                    for (int i = Model.startingHour; i <= Model.closingHour; i++)
+                    {
+                        <div class="hour">@(i):00 </div>
+                    }
+                }
+            </div>
+            for (int i = 0; i < 7; i++)
+            {
+                <div class="day">
+                    @{
+                        for (int j = Model.startingHour; j <= Model.closingHour; j++)
+                        {
+                            if (Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
+                            {
+                                <button oncontextmenu="" onclick="AddEmployee(@i,@j)" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat -    /@Model.schedule[i][j].EmployeesNeeded</button>
+                            }
+                            else
+                            {
+                                <button asp-route-weekDay="@i" asp-route-timeBlock="@j" class="timeBlock"></button>
+                            }
+ 
+
+
+                        }
+                    }
+                </div>
+            }
+        }
+    </div>
+    <div class="actionPanel">
+
+
+
+        <label type="text">Employee:</label>
+            <select required asp-for="@Model.employeeID" asp-items=@Model.Employees id="employeeSlection">
+        </select>
+
+
+    </div>
+</div>

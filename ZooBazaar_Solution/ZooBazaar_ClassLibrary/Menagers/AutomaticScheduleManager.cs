@@ -6,8 +6,8 @@ using ZooBazaar_Repositories.Repositories;
 
 namespace ZooBazaar_ClassLibrary.Menagers
 {
-	public class AutomaticScheduleManager
-	{
+	public class AutomaticScheduleManager : IAutomaticScheduleManager
+    {
 		private IScheduleRepository scheduleRepository;
 		private ITaskRepository taskRepository;
 		private IScheduleManager scheduleManager;
