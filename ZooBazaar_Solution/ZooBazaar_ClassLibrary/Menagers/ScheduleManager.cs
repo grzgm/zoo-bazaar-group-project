@@ -71,5 +71,11 @@ namespace ZooBazaar_ClassLibrary.Menagers
         {
             _scheduleRepository.Delete(id);
         }
-    }
+
+        public int AmountOfEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId)
+		{
+			return _scheduleRepository.AmountOfEmployessAssignedToTaskTimeBlockDate(day, month, year, taskID, timeBlockId);
+		}
+
+	}
 }

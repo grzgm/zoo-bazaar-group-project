@@ -20,5 +20,7 @@ namespace ZooBazaar_Repositories.Interfaces
         void Update(ScheduleDTO dto);
         void Delete(int id);
         int nextID();
-    }
+        int AmountOfEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId);
+
+	}
 }

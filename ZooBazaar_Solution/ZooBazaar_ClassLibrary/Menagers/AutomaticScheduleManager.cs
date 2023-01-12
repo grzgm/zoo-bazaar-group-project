@@ -47,34 +47,40 @@ namespace ZooBazaar_ClassLibrary.Menagers
 			{
 				foreach (StaticSchedule staticSchedule in dayStaticSchedule)
 				{
-					//foreach (Employee employee in employees)
-					//{
-					//	if (unavailabilityScheduleMenager.GetByEmployeeIDDayMonthYear(employee.ID, addDate.Day, addDate.Month, addDate.Year).Any())
-					//	{
-					//		continue;
-					//	}
-					//	List<Schedule> employeeDaySchedule = scheduleManager.GetDayScheduleEmployeeAllSchdules(addDate, employee.ID);
-					//	if (employeeDaySchedule.Find(x => x.timeBlock.StartTime == staticSchedule.timeBlock.StartTime) != null)
-					//	{
-					//		continue;
-					//	}
-					//	if (employeeDaySchedule.Count >= 8)
-					//	{
-					//		continue;
-					//	}
+					int amountOfEmployeesAddedToTask = scheduleManager.AmountOfEmployessAssignedToTaskTimeBlockDate(addDate.Day, addDate.Month, addDate.Year, staticSchedule.TaskID, staticSchedule.timeBlockId);
+					foreach (Employee employee in employees)
+					{
+						if (staticSchedule.EmployeesNeeded <= amountOfEmployeesAddedToTask)
+						{
+							break;
+						}
+						if (unavailabilityScheduleMenager.GetByEmployeeIDDayMonthYear(employee.ID, addDate.Day, addDate.Month, addDate.Year).Any())
+						{
+							continue;
+						}
+						List<Schedule> employeeDaySchedule = scheduleManager.GetDayScheduleEmployeeAllSchdules(addDate, employee.ID);
+						if (employeeDaySchedule.Find(x => x.timeBlock.StartTime == staticSchedule.timeBlock.StartTime) != null)
+						{
+							continue;
+						}
+						if (employeeDaySchedule.Count >= 8)
+						{
+							continue;
+						}
 
-					//	ScheduleAddDTO scheduleAddDTO = new ScheduleAddDTO()
-					//	{
-					//		Day = addDate.Day,
-					//		Month = addDate.Month,
-					//		Year = addDate.Year,
-					//		TimeblockID = staticSchedule.timeBlockId,
-					//		EmployeeID = employee.ID,
-					//		TaskID = staticSchedule.task.ID,
-					//	};
+						ScheduleAddDTO scheduleAddDTO = new ScheduleAddDTO()
+						{
+							Day = addDate.Day,
+							Month = addDate.Month,
+							Year = addDate.Year,
+							TimeblockID = staticSchedule.timeBlockId,
+							EmployeeID = employee.ID,
+							TaskID = staticSchedule.task.ID,
+						};
 
-					//	scheduleManager.Insert(scheduleAddDTO);
-					//}
+						scheduleManager.Insert(scheduleAddDTO);
+						amountOfEmployeesAddedToTask++;
+					}
 				}
 				addDate = addDate.AddDays(1);
 			}

@@ -44,6 +44,7 @@ namespace ZooBazaar_DomainModels.Models
         public string taskName { get { return _task.taskName; } }
         public string taskHabitat { get { return _task.habitat; } }
         public int TaskID { get { return _task.ID; } }
+        public Task task { get { return _task; } }
         public DayOfWeek dayOfTheWeek { get { return this._dayOfTheWeek; } }
         public int EmployeesNeeded { get { return this._employeesNeeded; } }
     }

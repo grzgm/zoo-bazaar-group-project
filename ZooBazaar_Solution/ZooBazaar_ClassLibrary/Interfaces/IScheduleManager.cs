@@ -15,5 +15,8 @@ namespace ZooBazaar_ClassLibrary.Interfaces
         void Insert(ScheduleAddDTO dto);
         void Update(ScheduleDTO dto);
         void Delete(int id);
-    }
+
+        int AmountOfEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId);
+
+	}
 }

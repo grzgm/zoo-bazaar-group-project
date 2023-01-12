@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using ZooBazaar_DTO.DTOs;
 using ZooBazaar_Repositories.Interfaces;
 using System.Diagnostics;
+using System.Collections;
+using System.Xml.Linq;
 
 
 namespace ZooBazaar_Repositories.Repositories
@@ -404,9 +406,6 @@ namespace ZooBazaar_Repositories.Repositories
             }
         }
 
-        
-        
-
         public IEnumerable<ScheduleDTO> GetByDateAndEmployeeIdAllSchdules(DateOnly date, int employeeId)
         {
 
@@ -427,9 +426,49 @@ namespace ZooBazaar_Repositories.Repositories
             {
                 throw new Exception(ex.ToString());
             }
-   
+		}
 
+		public int AmountOfEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId)
+		{
+			string Query = "SELECT COUNT(EmployeeID) FROM Schedule WHERE Day = @day AND Month = @month AND Year = @year AND TimeblockID = @timeblockId AND TaskID = @taskId;";
+			List<SqlParameter> sqlParameters = new List<SqlParameter>();
+			sqlParameters.Add(new SqlParameter("@day", day));
+			sqlParameters.Add(new SqlParameter("@month", month));
+			sqlParameters.Add(new SqlParameter("@year", year));
+			sqlParameters.Add(new SqlParameter("@timeblockId", timeBlockId));
+			sqlParameters.Add(new SqlParameter("@taskId", taskID));
 
-        }
-    }
+            int amountOfEmployessAssigned = 0;
+
+			try
+			{
+				SqlConnection connection = GetConnection();
+				using (SqlCommand command = new SqlCommand(Query, connection))
+				{
+					command.Parameters.AddRange(sqlParameters.ToArray());
+
+					connection.Open();
+					var reader = command.ExecuteReader();
+					while (reader.Read())
+					{
+						amountOfEmployessAssigned = reader.GetInt32(0);
+					}
+					connection.Close();
+				}
+			}
+			catch (System.Data.SqlTypes.SqlNullValueException)
+			{
+				return amountOfEmployessAssigned;
+			}
+			catch (SqlException ex)
+			{
+				throw new Exception(ex.ToString());
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.ToString());
+			}
+			return amountOfEmployessAssigned;
+		}
+	}
 }
