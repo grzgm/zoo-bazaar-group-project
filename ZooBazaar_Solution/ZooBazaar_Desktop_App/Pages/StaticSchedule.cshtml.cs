@@ -36,6 +36,8 @@ namespace ZooBazaar_ASP_NET.Pages
         public string zoneID { get; set; }
         [BindProperty(SupportsGet = true)][Required]
         public string habitatID { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string employeesNeeded { get; set; }
         public List<SelectListItem> Zones { get; set; }
         public List<SelectListItem> Habitats { get; set; }
 
@@ -83,6 +85,7 @@ namespace ZooBazaar_ASP_NET.Pages
                 DayOfTheWeek = day,
                 TimeBlockID = this.timeBlock,
                 TaskID = _taskManager.NextID(),
+                EmployeesNeeded = Convert.ToInt32(employeesNeeded)
             };
 
             _staticScheduleManager.AddSchedule(scheduleAddDTO);
@@ -95,12 +98,14 @@ namespace ZooBazaar_ASP_NET.Pages
             {
                 int habitatid = Convert.ToInt32(habitatID);
                 int taskid = schedule[weekDay][timeBlock].TaskID;
+                int EmployeesNeeded = Convert.ToInt32(employeesNeeded);
                 TaskAddDTO taskDTO = new TaskAddDTO
                 {
                     HabitatID=habitatid,
                     ZoneID= Convert.ToInt32(zoneID)
                 };
                 _taskManager.UpdateHabitatAndZone(taskid, taskDTO);
+                _staticScheduleManager.UpdateEmployeesNeeded(schedule[weekDay][timeBlock].Id, EmployeesNeeded);
                 return RedirectToPage("StaticSchedule");
             }
             else

@@ -10,6 +10,7 @@ namespace ZooBazaar_DTO.DTOs
     {
         public int ScheduleID { get; set; }
         public int DayOfWeek { get; set; }
+        public int EmployeesNeeded { get; set; }
         public TimeBlockDTO TimeBlockDTO { get; set; }
         public TaskDTO TaskDTO { get; set; }
     }

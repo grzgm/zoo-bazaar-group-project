@@ -38,5 +38,10 @@ namespace ZooBazaar_ClassLibrary.Menagers
         {
             staticScheduleRepository.RemoveSchedule(scheduleid);
         }
+
+        public void UpdateEmployeesNeeded(int scheduleid, int employeesNeeded)
+        {
+            staticScheduleRepository.UpdateEmployeesNeeded(scheduleid, employeesNeeded);
+        }
     }
 }

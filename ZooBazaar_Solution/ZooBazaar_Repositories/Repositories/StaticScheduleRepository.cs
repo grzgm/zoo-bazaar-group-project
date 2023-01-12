@@ -29,26 +29,28 @@ namespace ZooBazaar_Repositories.Repositories
                     {
                         int staticscheduleid = reader.GetInt32(0);
                         int dayoftheweek = reader.GetInt32(1);
+                        int employeesneeded = reader.GetInt32(4);
                         
-                        int timeblockid = reader.GetInt32(4);
-                        TimeSpan starttime = reader.GetTimeSpan(5);
-                        TimeSpan endtime = reader.GetTimeSpan(6);
+                        int timeblockid = reader.GetInt32(5);
+                        TimeSpan starttime = reader.GetTimeSpan(6);
+                        TimeSpan endtime = reader.GetTimeSpan(7);
 
-                        int taskid = reader.GetInt32(7);
-                        string taskname = reader.GetString(8);
+                        int taskid = reader.GetInt32(8);
+                        string taskname = reader.GetString(9);
 
-                        int habitatid = reader.GetInt32(12);
-                        string habitatname = reader.GetString(13);
-                        int habitatcapacity = reader.GetInt32(14);
+                        int habitatid = reader.GetInt32(13);
+                        string habitatname = reader.GetString(14);
+                        int habitatcapacity = reader.GetInt32(15);
 
-                        int zoneid = reader.GetInt32(16);
-                        string zonename = reader.GetString(17);
-                        int zonecapacity = reader.GetInt32(18);
+                        int zoneid = reader.GetInt32(17);
+                        string zonename = reader.GetString(18);
+                        int zonecapacity = reader.GetInt32(19);
 
                         schedules.Add(new StaticScheduleDTO
                         {
                             ScheduleID = staticscheduleid,
                             DayOfWeek = dayoftheweek,
+                            EmployeesNeeded = employeesneeded,
                             TimeBlockDTO = new TimeBlockDTO 
                             {
                                 TimeblockID = timeblockid,
@@ -90,13 +92,14 @@ namespace ZooBazaar_Repositories.Repositories
         }
         public void AddSchedule(StaticScheduleAddDTO staticScheduleAddDTO)
         {
-            string Query = "INSERT INTO StaticSchedule Values(@DayOfTheWeek,@TimeblockID,@TaskID)";
+            string Query = "INSERT INTO StaticSchedule Values(@DayOfTheWeek,@TimeblockID,@TaskID,@EmployeesNeeded)";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             try
             {
                 sqlParameters.Add(new SqlParameter("@DayOfTheWeek", staticScheduleAddDTO.DayOfTheWeek));
                 sqlParameters.Add(new SqlParameter("@TimeblockID", staticScheduleAddDTO.TimeBlockID));
                 sqlParameters.Add(new SqlParameter("@TaskID", staticScheduleAddDTO.TaskID));
+                sqlParameters.Add(new SqlParameter("@EmployeesNeeded", staticScheduleAddDTO.EmployeesNeeded));
                 Execute(Query, sqlParameters);
             }
             catch (Exception ex)
@@ -127,6 +130,22 @@ namespace ZooBazaar_Repositories.Repositories
             try
             {
                 sqlParameters.Add(new SqlParameter("@ScheduleID", scheduleid));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public void UpdateEmployeesNeeded(int scheduleid, int employeesNeeded)
+        {
+            string Query = "UPDATE StaticSchedule SET EmployeesNeeded=@EmployeesNeeded WHERE StaticScheduleID=@ScheduleID";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@ScheduleID", scheduleid));
+                sqlParameters.Add(new SqlParameter("@EmployeesNeeded", employeesNeeded));
                 Execute(Query, sqlParameters);
             }
             catch (Exception ex)
