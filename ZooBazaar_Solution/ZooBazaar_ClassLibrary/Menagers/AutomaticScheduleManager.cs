@@ -11,6 +11,8 @@ namespace ZooBazaar_ClassLibrary.Menagers
 		private IScheduleRepository scheduleRepository;
 		private ITaskRepository taskRepository;
 		private IScheduleManager scheduleManager;
+		private IStaticScheduleManager staticScheduleManager;
+		private IStaticScheduleRepository staticScheduleRepository;
 		private IEmployeeMenager employeeMenager;
 		private IEmployeeRepositroty employeeRepositroty;
 		private IUnavailabilityScheduleRepository unavailabilityScheduleRepository;
@@ -21,55 +23,60 @@ namespace ZooBazaar_ClassLibrary.Menagers
 			scheduleRepository = new ScheduleRepository();
 			taskRepository = new TaskRepository();
 			scheduleManager = new ScheduleManager(scheduleRepository, taskRepository);
+			staticScheduleRepository = new StaticScheduleRepository();
+			staticScheduleManager = new StaticScheduleManager(staticScheduleRepository);
 			employeeRepositroty = new EmployeeRepository();
 			employeeMenager = new EmployeeManager(employeeRepositroty);
 			unavailabilityScheduleRepository = new UnavailabilityScheduleRepository();
 			unavailabilityScheduleMenager = new UnavailabilityScheduleMenager(unavailabilityScheduleRepository);
 
-			List<List<Schedule>> weekStaticSchedule = new List<List<Schedule>>();
+			List<List<StaticSchedule>> weekStaticSchedule = new List<List<StaticSchedule>>();
 			List<Employee> employees = new List<Employee>();
 
 			employees = employeeMenager.GetAll();
 
-			DateOnly date = new DateOnly(2022, 12, 12);
-			for (int i = 0; i < 7; i++)
+			DateOnly addDate = firstDayOfWeek;
+			for (int i = 1; i < 7; i++)
 			{
-				weekStaticSchedule.Add(scheduleManager.GetDayScheduleEmployeeAllSchdules(date.AddDays(i), 2));
+				weekStaticSchedule.Add(staticScheduleManager.GetScheduleFromDay(i));
 			}
 
-			foreach (List<Schedule> dayStaticSchedule in weekStaticSchedule)
+			weekStaticSchedule.Add(staticScheduleManager.GetScheduleFromDay(0));
+
+			foreach (List<StaticSchedule> dayStaticSchedule in weekStaticSchedule)
 			{
-				foreach (Schedule staticSchedule in dayStaticSchedule)
+				foreach (StaticSchedule staticSchedule in dayStaticSchedule)
 				{
-					foreach (Employee employee in employees)
-					{
-						if (unavailabilityScheduleMenager.GetByEmployeeIDDayMonthYear(employee.ID, staticSchedule.date.Day, staticSchedule.date.Month, staticSchedule.date.Year).Any())
-						{
-							continue;
-						}
-						List<Schedule> employeeDaySchedule = scheduleManager.GetDayScheduleEmployeeAllSchdules(staticSchedule.date, employee.ID);
-						if (employeeDaySchedule.Find(x => x.timeBlock.StartTime == staticSchedule.timeBlock.StartTime) != null)
-						{
-							continue;
-						}
-						if(employeeDaySchedule.Count >= 8)
-						{
-							continue;
-						}
+					//foreach (Employee employee in employees)
+					//{
+					//	if (unavailabilityScheduleMenager.GetByEmployeeIDDayMonthYear(employee.ID, addDate.Day, addDate.Month, addDate.Year).Any())
+					//	{
+					//		continue;
+					//	}
+					//	List<Schedule> employeeDaySchedule = scheduleManager.GetDayScheduleEmployeeAllSchdules(addDate, employee.ID);
+					//	if (employeeDaySchedule.Find(x => x.timeBlock.StartTime == staticSchedule.timeBlock.StartTime) != null)
+					//	{
+					//		continue;
+					//	}
+					//	if (employeeDaySchedule.Count >= 8)
+					//	{
+					//		continue;
+					//	}
 
-						ScheduleAddDTO scheduleAddDTO = new ScheduleAddDTO()
-						{
-							Day = staticSchedule.date.Day,
-							Month = staticSchedule.date.Month,
-							Year = staticSchedule.date.Year,
-							TimeblockID = staticSchedule.timeBlockId,
-							EmployeeID = employee.ID,
-							TaskID = staticSchedule.task.id,
-						};
+					//	ScheduleAddDTO scheduleAddDTO = new ScheduleAddDTO()
+					//	{
+					//		Day = addDate.Day,
+					//		Month = addDate.Month,
+					//		Year = addDate.Year,
+					//		TimeblockID = staticSchedule.timeBlockId,
+					//		EmployeeID = employee.ID,
+					//		TaskID = staticSchedule.task.ID,
+					//	};
 
-						scheduleManager.Insert(scheduleAddDTO);
-					}
+					//	scheduleManager.Insert(scheduleAddDTO);
+					//}
 				}
+				addDate = addDate.AddDays(1);
 			}
 
 			return null;
