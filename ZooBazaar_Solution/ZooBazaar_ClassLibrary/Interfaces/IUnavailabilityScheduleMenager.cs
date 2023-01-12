@@ -11,6 +11,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
     public interface IUnavailabilityScheduleMenager
     {
         IEnumerable<UnavailabilityScheduleDTO> GetByEmployeeIDMonthYear(int employeeid, int month, int year);
+        IEnumerable<UnavailabilityScheduleDTO> GetByEmployeeIDDayMonthYear(int employeeid, int day, int month, int year);
         void AddUnSchedule(UnavailabilityScheduleDTO unavailabilityScheduleAddDTO);
         void DeleteUnSchedule(UnavailabilityScheduleDTO unavailabilityScheduleDTO);
     }

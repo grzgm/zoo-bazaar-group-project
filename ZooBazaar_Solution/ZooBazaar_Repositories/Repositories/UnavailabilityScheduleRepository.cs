@@ -99,5 +99,23 @@ namespace ZooBazaar_Repositories.Repositories
                 throw new Exception(ex.ToString());
             }
         }
+
+        IEnumerable<UnavailabilityScheduleDTO> IUnavailabilityScheduleRepository.GetByEmployeeIDDayMonthYear(int employeeid, int day, int month, int year)
+		{
+            string Query = "SELECT * FROM UnavailabilitySchedule WHERE (EmployeeID=@EmployeeID AND DAY(Date)=@Day AND MONTH(Date)=@Month AND YEAR(Date)=@Year)";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@EmployeeID",employeeid));
+                sqlParameters.Add(new SqlParameter("@Day", day));
+                sqlParameters.Add(new SqlParameter("@Month", month));
+                sqlParameters.Add(new SqlParameter("@Year", year));
+                return GetUnSchedule(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
     }
 }

@@ -27,11 +27,16 @@ namespace ZooBazaar_ClassLibrary.Menagers
         public void DeleteUnSchedule(UnavailabilityScheduleDTO unavailabilityScheduleDTO)
         {
             _unavailabilityScheduleRepository.DeleteUnSchedule(unavailabilityScheduleDTO);
-        }
+		}
 
-        public IEnumerable<UnavailabilityScheduleDTO> GetByEmployeeIDMonthYear(int employeeid, int month, int year)
-        {
-            return _unavailabilityScheduleRepository.GetByEmployeeIDMonthYear(employeeid, month, year);
-        }
-    }
+		public IEnumerable<UnavailabilityScheduleDTO> GetByEmployeeIDMonthYear(int employeeid, int month, int year)
+		{
+			return _unavailabilityScheduleRepository.GetByEmployeeIDMonthYear(employeeid, month, year);
+		}
+
+		public IEnumerable<UnavailabilityScheduleDTO> GetByEmployeeIDDayMonthYear(int employeeid, int day, int month, int year)
+		{
+			return _unavailabilityScheduleRepository.GetByEmployeeIDDayMonthYear(employeeid, day, month, year);
+		}
+	}
 }

@@ -26,7 +26,8 @@ namespace ZooBazaar_ASP_NET.Pages
 
         public void OnGet()
         {
-
+            //AutomaticScheduleManager automaticScheduleManager = new AutomaticScheduleManager();
+            //automaticScheduleManager.MakeSchedule(new DateOnly(2023, 1, 9));
         }
 
         public IActionResult OnPost()
