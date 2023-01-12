@@ -39,7 +39,8 @@ namespace ZooBazaar_DomainModels.Models
         }
 
         public int timeBlockId { get { return _timeBlock.ID; } }
-        public int Id { get { return _id; } }
+		public TimeBlock timeBlock { get { return _timeBlock; } }
+		public int Id { get { return _id; } }
         public string taskName { get { return _task.taskName; } }
         public string taskHabitat { get { return _task.habitat; } }
         public int TaskID { get { return _task.ID; } }
