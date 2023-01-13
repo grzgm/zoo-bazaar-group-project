@@ -66,10 +66,10 @@
                     },
                     success: function (data) {
                         var text ="";
-                        for (var i = 0; i < data.employees.length; i++) {
+                        for (var k = 0; k < data.employees.length; k++) {
                             text = text + 
-                            "<li id="+"employee-"+data.employees[i].id+" onclick="+"SubMenu("+data.employees[i].id+")><div> "+ data.employees[i].firstName+" "+data.employees[i].lastName+ "</div>"+
-                                    "<ul class = " + "custom-menuEmployee" + " id="+"sublistEmployee-"+data.employees[i].id+" > <li><button>yguiyg</button></li> </ul>" +
+                            "<li id="+"employee-"+data.employees[k].id + "-" + i + "-" + j +" onclick="+"SubMenu("+ i +","+ j +","+ data.employees[k].id +")><div> "+ data.employees[k].firstName+" "+data.employees[k].lastName+ "</div>"+
+                                    "<ul class = " + "custom-menuEmployee" + " id="+"sublistEmployee-"+data.employees[k].id + "-" + i + "-" + j +" > <li><button onclick="+"DeleteEmployee("+ i +","+ j +","+ data.employees[k].id +")"+">Delete</button></li> </ul>" +
                             "</li>";
                         };
                         
@@ -99,18 +99,47 @@
 
         function SubMenu(i, j, empID) {
 
-            var x = $("#employee-" + empID).width();
-            var p = $("#employee-" + empID).position();
+            var x = $("#employee-" + empID + "-" + i + "-" + j).width();
+            var p = $("#employee-" + empID + "-" + i + "-" + j).position();
+        
 
             event.preventDefault();
-            $("#sublistEmployee-" + empID).finish().toggle(100).
+            $("#sublistEmployee-" + empID + "-" +i+"-"+j).finish().toggle(100).
                 css({
+                    left: x + 25 + "px",
                     top: p.top + "px",
-                    left: x + 25 + "px"
+                    
               });
  
         }
+        function DeleteEmployee(i, j, empID) {
+            $.ajax({
+                url: 'ManualSchedule/?handler=RemoveEmployee',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    i: i,
+                    j: j,
+                    employeeID: empID,
+                },
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (result) {
 
+                    $("#amoutOfEmployees-" + i + "-" + j).text(result.amountOfEmployees);
+                    $(".custom-menu").hide(100);
+                    $(".custom-menuEmployee").hide(100);
+                }
+
+            });
+ 
+        }
+
+        function FadeOut(){
+            $("#container").fadeOut();
+        }
 
 
 
@@ -181,7 +210,7 @@
             <select required asp-for="@Model.employeeID" asp-items=@Model.Employees id="employeeSlection">
         </select>
         <form asp-page-handler="automate" method="post">
-            <button class="btn btn-default">Devide work</button>
+            <button onclick="FadeOut()" class="btn btn-default">Devide work</button>
         </form>
 
     </div>

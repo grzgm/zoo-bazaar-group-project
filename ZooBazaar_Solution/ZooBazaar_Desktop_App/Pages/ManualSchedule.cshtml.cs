@@ -124,6 +124,17 @@ namespace ZooBazaar_Desktop_App.Pages
             var result = new { employees = block.employees  };
             return new JsonResult(result);
         }
+
+        public IActionResult OnPostRemoveEmployee(int i, int j, int employeeID)
+        {
+            Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
+
+            _scheduleManager.DeleteByTaskTimeBlockEmployeeDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId, employeeID);
+            var result = new { amountOfEmployees = _scheduleManager.AmountOfEmployessAssignedToTaskTimeBlockDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId) };
+
+            return new JsonResult(result);
+        }
+
         public void GenarteDatesOfTheWeek()
         {
             DateTime dt = DateTime.Now;

@@ -516,5 +516,26 @@ namespace ZooBazaar_Repositories.Repositories
             }
         }
 
+        public void DeleteByTaskTimeBlockEmployeeDate(int day, int month, int year, int taskID, int timeBlockId, int employeeID)
+        {
+            string Query = "DELETE FROM Schedule WHERE Day = @day AND Month = @month AND Year = @year AND TimeblockID = @timeblockId AND TaskID = @taskId AND EmployeeID = @employeeID ";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@day", day));
+                sqlParameters.Add(new SqlParameter("@month", month));
+                sqlParameters.Add(new SqlParameter("@year", year));
+                sqlParameters.Add(new SqlParameter("@timeblockId", timeBlockId));
+                sqlParameters.Add(new SqlParameter("@taskId", taskID));
+                sqlParameters.Add(new SqlParameter("@employeeID", employeeID));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
     }
 }

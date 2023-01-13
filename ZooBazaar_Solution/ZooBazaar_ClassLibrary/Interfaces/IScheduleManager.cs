@@ -20,7 +20,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
 
         bool DoesEmplyeeIsAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId, int employeeID);
 
-
+        void DeleteByTaskTimeBlockEmployeeDate(int day, int month, int year, int taskID, int timeBlockId, int employeeID);
 
     }
 }

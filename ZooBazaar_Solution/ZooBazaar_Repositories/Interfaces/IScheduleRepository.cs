@@ -24,5 +24,7 @@ namespace ZooBazaar_Repositories.Interfaces
 
         bool DoesEmplyeeIsAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId, int employeeID);
 
+        void DeleteByTaskTimeBlockEmployeeDate(int day, int month, int year, int taskID, int timeBlockId, int employeeID);
+
     }
 }

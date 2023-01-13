@@ -82,6 +82,10 @@ namespace ZooBazaar_ClassLibrary.Menagers
             return _scheduleRepository.DoesEmplyeeIsAssignedToTaskTimeBlockDate(day, month, year, taskID, timeBlockId, employeeID);
         }
 
+        public void DeleteByTaskTimeBlockEmployeeDate(int day, int month, int year, int taskID, int timeBlockId, int employeeID)
+        {
+            _scheduleRepository.DeleteByTaskTimeBlockEmployeeDate( day,  month,  year,  taskID,  timeBlockId,  employeeID);
+        }
 
     }
 }
