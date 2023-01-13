@@ -18,5 +18,9 @@ namespace ZooBazaar_ClassLibrary.Interfaces
 
         int AmountOfEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId);
 
-	}
+        bool DoesEmplyeeIsAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId, int employeeID);
+
+
+
+    }
 }

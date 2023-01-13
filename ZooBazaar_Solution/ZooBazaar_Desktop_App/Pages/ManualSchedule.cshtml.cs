@@ -75,7 +75,7 @@ namespace ZooBazaar_Desktop_App.Pages
 
             Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
 
-            if(block.amountOfEmployes <= schedule[i][j].EmployeesNeeded)
+            if(block.amountOfEmployes <= schedule[i][j].EmployeesNeeded && _scheduleManager.DoesEmplyeeIsAssignedToTaskTimeBlockDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId, employeeID) == false)
             {
                 ScheduleAddDTO scheduleAddDTO = new ScheduleAddDTO
                 {

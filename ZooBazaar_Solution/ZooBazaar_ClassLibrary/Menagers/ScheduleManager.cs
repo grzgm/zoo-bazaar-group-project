@@ -77,5 +77,11 @@ namespace ZooBazaar_ClassLibrary.Menagers
 			return _scheduleRepository.AmountOfEmployessAssignedToTaskTimeBlockDate(day, month, year, taskID, timeBlockId);
 		}
 
-	}
+        public bool DoesEmplyeeIsAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId, int employeeID)
+        {
+            return _scheduleRepository.DoesEmplyeeIsAssignedToTaskTimeBlockDate(day, month, year, taskID, timeBlockId, employeeID);
+        }
+
+
+    }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooBazaar_DomainModels.Models;
 using ZooBazaar_DTO.DTOs;
+using ZooBazaar_Repositories.Interfaces;
 
 namespace ZooBazaar_ClassLibrary.Interfaces
 {
@@ -18,5 +19,7 @@ namespace ZooBazaar_ClassLibrary.Interfaces
         Employee LoginEmployee(string email, string password);
 
         EmployeeDTO GetEmployeeDTO(int id);
+
+        List<EmployeeDTO> GetEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId);
     }
 }

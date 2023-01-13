@@ -77,5 +77,15 @@ namespace ZooBazaar_ClassLibrary.Menagers
             return _employeeRepositroty.GetByEmployeeId(id);
 
         }
+
+        public List<Employee> GetEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId)
+        {
+            List<Employee> employees = new List<Employee>();
+            foreach (EmployeeDTO dto in _employeeRepositroty.GetEmployessAssignedToTaskTimeBlockDate(day,month,year,taskID,timeBlockId))
+            {
+                employees.Add(new Employee(dto));
+            }
+            return employees;
+        }
     }
 }

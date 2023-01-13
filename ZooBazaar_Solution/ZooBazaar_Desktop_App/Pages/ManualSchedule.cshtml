@@ -110,7 +110,7 @@
                                     <li data-action="second">Second thing</li>
                                     <li data-action="third">Third thing</li>
                                 </ul>
-                                <button id ="block-@i-@j" oncontextmenu="ContextMenu(@i,@j)" onclick="" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat - <p id="amoutOfEmployees-@i-@j" style="font-size: 15px; display: inline;"> @Model.Blocks.Find(x =>x.blockSchedule == Model.schedule[i][j]).amountOfEmployes</p>/@Model.schedule[i][j].EmployeesNeeded</button>
+                                <button id ="block-@i-@j" oncontextmenu="ContextMenu(@i,@j)" onclick="AddEmployee(@i, @j)" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat - <p id="amoutOfEmployees-@i-@j" style="font-size: 15px; display: inline;"> @Model.Blocks.Find(x =>x.blockSchedule == Model.schedule[i][j]).amountOfEmployes</p>/@Model.schedule[i][j].EmployeesNeeded</button>
                             }
                             else
                             {

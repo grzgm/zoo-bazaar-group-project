@@ -470,5 +470,51 @@ namespace ZooBazaar_Repositories.Repositories
 			}
 			return amountOfEmployessAssigned;
 		}
-	}
+
+        public bool DoesEmplyeeIsAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId, int employeeID)
+        {
+            string Query = "SELECT COUNT(EmployeeID) FROM Schedule WHERE Day = @day AND Month = @month AND Year = @year AND TimeblockID = @timeblockId AND TaskID = @taskId AND EmployeeID = @employeeID ";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            sqlParameters.Add(new SqlParameter("@day", day));
+            sqlParameters.Add(new SqlParameter("@month", month));
+            sqlParameters.Add(new SqlParameter("@year", year));
+            sqlParameters.Add(new SqlParameter("@timeblockId", timeBlockId));
+            sqlParameters.Add(new SqlParameter("@taskId", taskID));
+            sqlParameters.Add(new SqlParameter("@employeeID", employeeID));
+
+            try
+            {
+                SqlConnection connection = GetConnection();
+                using (SqlCommand command = new SqlCommand(Query, connection))
+                {
+                    command.Parameters.AddRange(sqlParameters.ToArray());
+
+                    connection.Open();
+                    int UserExist = (int)command.ExecuteScalar();
+
+                    if (UserExist > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (System.Data.SqlTypes.SqlNullValueException)
+            {
+                return false;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+    }
 }

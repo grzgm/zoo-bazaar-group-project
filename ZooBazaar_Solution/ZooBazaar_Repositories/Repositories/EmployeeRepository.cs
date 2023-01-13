@@ -116,10 +116,19 @@ namespace ZooBazaar_Repositories.Repositories
         }
         List<EmployeeDTO> IEmployeeRepositroty.GetEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId)
         {
-            string Query = "SELECT * FROM Employee";
+            string Query = "SELECT e.* FROM Schedule as s "+
+                          "join Employee as e on s.EmployeeID = e.EmployeeID "+
+                          "WHERE Day = @day AND Month = @month AND Year = @year AND TimeblockID = @timeblockId AND TaskID = @taskId; ";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
             try
             {
-                return GetEmployees(Query, null).ToList();
+                
+                sqlParameters.Add(new SqlParameter("@day", day));
+                sqlParameters.Add(new SqlParameter("@month", month));
+                sqlParameters.Add(new SqlParameter("@year", year));
+                sqlParameters.Add(new SqlParameter("@timeblockId", timeBlockId));
+                sqlParameters.Add(new SqlParameter("@taskId", taskID));
+                return GetEmployees(Query, sqlParameters).ToList();
 
             }
             catch (Exception ex)
