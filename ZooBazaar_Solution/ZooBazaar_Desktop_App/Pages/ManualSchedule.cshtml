@@ -129,8 +129,11 @@
                 success: function (result) {
 
                     $("#amoutOfEmployees-" + i + "-" + j).text(result.amountOfEmployees);
+
+                    $("#contextmenu-" + i + "-" + j).empty()
                     $(".custom-menu").hide(100);
                     $(".custom-menuEmployee").hide(100);
+                    
                 }
 
             });
