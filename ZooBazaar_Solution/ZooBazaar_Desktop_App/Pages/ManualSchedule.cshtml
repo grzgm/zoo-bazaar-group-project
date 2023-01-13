@@ -24,7 +24,8 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
                 success: function (result) {
-                    $('YourSelector').html(result);
+
+                    $("#amoutOfEmployees-" + i + "-" + j).text(result.amountOfEmployees);
                 }
                 
             });
@@ -32,9 +33,48 @@
 
 
 
+
+        $(document).bind("mousedown", function (e) {
+
+            if (!$(e.target).parents(".custom-menu").length > 0) {
+
+                $(".custom-menu").hide(100);
+            }
+        });
+
+
+
+
+        function ContextMenu(i, j) {
+            event.preventDefault();
+
+            $("#contextmenu-" + i + "-" + j).finish().toggle(100).
+
+                css({
+                    top: event.pageY + "px",
+                    left: event.pageX + "px"
+                });
+                $("#contextmenu-" + i + "-" + j +" li").click(function () {
+
+                    switch($(this).attr("data-action")) {
+        
+                        case "first": alert(i+" "+j); break;
+                        case "second": alert("second"); break;
+                        case "third": alert("third"); break;
+                    }
+
+                    $("#contextmenu-" + i + "-" + j).hide(100);
+                });
+        }
+
+
+
     </script>
 }
-<div method="post" id="container">
+<div id="container">
+
+
+
     <div class="weekDays">
         <div>Mon</div>
         <div>Tue</div>
@@ -56,13 +96,21 @@
             </div>
             for (int i = 0; i < 7; i++)
             {
+
+
                 <div class="day">
+                    @Model.datesOfWeek[i]
                     @{
                         for (int j = Model.startingHour; j <= Model.closingHour; j++)
                         {
                             if (Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
                             {
-                                <button oncontextmenu="" onclick="AddEmployee(@i,@j)" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat -    /@Model.schedule[i][j].EmployeesNeeded</button>
+                                 <ul class='custom-menu' id="contextmenu-@i-@j">
+                                    <li data-action="Remove employee from task">First thing</li>
+                                    <li data-action="second">Second thing</li>
+                                    <li data-action="third">Third thing</li>
+                                </ul>
+                                <button id ="block-@i-@j" oncontextmenu="ContextMenu(@i,@j)" onclick="" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat - <p id="amoutOfEmployees-@i-@j" style="font-size: 15px; display: inline;"> @Model.Blocks.Find(x =>x.blockSchedule == Model.schedule[i][j]).amountOfEmployes</p>/@Model.schedule[i][j].EmployeesNeeded</button>
                             }
                             else
                             {

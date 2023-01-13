@@ -114,6 +114,21 @@ namespace ZooBazaar_Repositories.Repositories
                 throw new Exception(ex.ToString());
             }
         }
+        List<EmployeeDTO> IEmployeeRepositroty.GetEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId)
+        {
+            string Query = "SELECT * FROM Employee";
+            try
+            {
+                return GetEmployees(Query, null).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+
         EmployeeDTO IEmployeeRepositroty.GetByEmployeeId(int ID)
         {
             string Query = "SELECT * FROM Employee WHERE EmployeeID = @ID";

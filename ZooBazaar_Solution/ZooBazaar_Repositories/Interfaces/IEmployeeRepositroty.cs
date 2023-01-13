@@ -16,5 +16,7 @@ namespace ZooBazaar_Repositories.Interfaces
         void Delete(int id);
         int nextID();
         EmployeeDTO GetEmployeeByLogin(string email, string password);
+
+        List<EmployeeDTO> GetEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId);
     }
 }

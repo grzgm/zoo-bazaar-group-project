@@ -29,6 +29,8 @@ builder.Services.AddSingleton<IStaticScheduleManager, StaticScheduleManager>();
 builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
 builder.Services.AddSingleton<ITaskManager, TaskMenager>();
 builder.Services.AddSingleton<IAutomaticScheduleManager, AutomaticScheduleManager>();
+builder.Services.AddSingleton<IScheduleManager, ScheduleManager>();
+builder.Services.AddSingleton<IScheduleRepository, ScheduleRepository>();
 
 
 
