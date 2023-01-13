@@ -68,16 +68,26 @@ namespace ZooBazaar_Desktop_App.Pages
             GetWeekSchedule();
             LoadEmployees();
         }
+        public IActionResult OnPostAutomate()
+        {
+            DateTime dt = DateTime.Now;
+            DayOfWeek startOfWeek = DayOfWeek.Monday;
+            DateTime mondayOftheWeek;
+            int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
+            mondayOftheWeek = dt.AddDays(-1 * diff).Date;
+
+            _automaticScheduleManager.MakeSchedule(DateOnly.FromDateTime(mondayOftheWeek));
+
+            return RedirectToPage("ManualSchedule");
+        }
 
 
         public IActionResult OnPostAddEmployee(int i, int j, int employeeID)
         {
-            GenarteDatesOfTheWeek();
-            GetWeekSchedule();
 
             Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
 
-            if(block.amountOfEmployes <= schedule[i][j].EmployeesNeeded && _scheduleManager.DoesEmplyeeIsAssignedToTaskTimeBlockDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId, employeeID) == false)
+            if(block.amountOfEmployes < schedule[i][j].EmployeesNeeded && (_scheduleManager.DoesEmplyeeIsAssignedToTaskTimeBlockDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId, employeeID) == false))
             {
                 ScheduleAddDTO scheduleAddDTO = new ScheduleAddDTO
                 {
@@ -95,7 +105,7 @@ namespace ZooBazaar_Desktop_App.Pages
             }
             else
             {
-                var resultNotAdded = new { amountOfEmployees = block.amountOfEmployes };
+                var resultNotAdded = new { amountOfEmployees = "full" };
 
                 return new JsonResult(resultNotAdded);
             }
@@ -103,9 +113,6 @@ namespace ZooBazaar_Desktop_App.Pages
             var result = new { amountOfEmployees = _scheduleManager.AmountOfEmployessAssignedToTaskTimeBlockDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId) };
 
             return new JsonResult(result);
-
-
-
 
         }
         public IActionResult OnGetGetEmployeesOfTask(int i, int j)

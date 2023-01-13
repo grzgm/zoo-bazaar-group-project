@@ -25,8 +25,12 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
                 success: function (result) {
-
-                    $("#amoutOfEmployees-" + i + "-" + j).text(result.amountOfEmployees);
+                    if (result.amountOfEmployees == "full") {
+                        alert("Employee is alredy added or There are enough Employees");
+                    }else{
+                        $("#amoutOfEmployees-" + i + "-" + j).text(result.amountOfEmployees);
+                    }
+                    
                 }
                 
             });
@@ -40,6 +44,11 @@
             if (!$(e.target).parents(".custom-menu").length > 0) {
 
                 $(".custom-menu").hide(100);
+
+            }
+            if (!$(e.target).parents(".custom-menuEmployee").length > 0) {
+
+                $(".custom-menuEmployee").hide(100);
 
             }
 
@@ -58,8 +67,12 @@
                     success: function (data) {
                         var text ="";
                         for (var i = 0; i < data.employees.length; i++) {
-                            text = text + "<li id="+"employee-"+data.employees[i].id+">"+ data.employees[i].firstName+" "+data.employees[i].lastName+ "</li>";
+                            text = text + 
+                            "<li id="+"employee-"+data.employees[i].id+" onclick="+"SubMenu("+data.employees[i].id+")><div> "+ data.employees[i].firstName+" "+data.employees[i].lastName+ "</div>"+
+                                    "<ul class = " + "custom-menuEmployee" + " id="+"sublistEmployee-"+data.employees[i].id+" > <li><button>yguiyg</button></li> </ul>" +
+                            "</li>";
                         };
+                        
                         resolve(text);
                     },
                     error: function (error) {
@@ -67,12 +80,9 @@
                     },
                 });
               });
-
+                
 
         }
-
-
-
 
         function ContextMenu(i, j) {
             event.preventDefault();
@@ -84,11 +94,22 @@
 
             GetEmployees(i, j).then((text) => {
                 $("#contextmenu-" + i + "-" + j).html(text);
-            });
-           
-       
+            });      
         }
 
+        function SubMenu(i, j, empID) {
+
+            var x = $("#employee-" + empID).width();
+            var p = $("#employee-" + empID).position();
+
+            event.preventDefault();
+            $("#sublistEmployee-" + empID).finish().toggle(100).
+                css({
+                    top: p.top + "px",
+                    left: x + 25 + "px"
+              });
+ 
+        }
 
 
 
@@ -135,6 +156,7 @@
                                 <ul class='custom-menu' id="contextmenu-@i-@j">
                                     
                                 </ul>
+                                
 
                                 <button id ="block-@i-@j" oncontextmenu="ContextMenu(@i,@j)" onclick="AddEmployee(@i, @j)" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat - <p id="amoutOfEmployees-@i-@j" style="font-size: 15px; display: inline;"> @block.amountOfEmployes</p>/@Model.schedule[i][j].EmployeesNeeded</button>
                             }
@@ -158,7 +180,7 @@
         <label type="text">Employee:</label>
             <select required asp-for="@Model.employeeID" asp-items=@Model.Employees id="employeeSlection">
         </select>
-        <form asp-page-handler="Automate" method="post">
+        <form asp-page-handler="automate" method="post">
             <button class="btn btn-default">Devide work</button>
         </form>
 
