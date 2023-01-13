@@ -20,6 +20,6 @@ namespace ZooBazaar_ClassLibrary.Interfaces
 
         EmployeeDTO GetEmployeeDTO(int id);
 
-        List<EmployeeDTO> GetEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId);
+        List<Employee> GetEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId);
     }
 }

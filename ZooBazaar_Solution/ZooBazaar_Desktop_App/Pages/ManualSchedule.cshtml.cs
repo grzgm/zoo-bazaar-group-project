@@ -7,6 +7,7 @@ using ZooBazaar_ClassLibrary.Interfaces;
 using ZooBazaar_DomainModels.Models;
 using ZooBazaar_DTO.DTOs;
 using System.Reflection;
+using static ZooBazaar_Desktop_App.Pages.ManualScheduleModel;
 
 namespace ZooBazaar_Desktop_App.Pages
 {
@@ -42,6 +43,7 @@ namespace ZooBazaar_Desktop_App.Pages
         public struct Block
         {
             public StaticSchedule blockSchedule;
+            public List<Employee> employees;
             public int amountOfEmployes;
             public DateOnly date;
         }
@@ -106,7 +108,15 @@ namespace ZooBazaar_Desktop_App.Pages
 
 
         }
+        public IActionResult OnGetGetEmployeesOfTask(int i, int j)
+        {
+           Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
+            
 
+
+            var result = new { employees = block.employees  };
+            return new JsonResult(result);
+        }
         public void GenarteDatesOfTheWeek()
         {
             DateTime dt = DateTime.Now;
@@ -114,15 +124,12 @@ namespace ZooBazaar_Desktop_App.Pages
             DateTime mondayOftheWeek;
             int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
             mondayOftheWeek = dt.AddDays(-1 * diff).Date;
-
             datesOfWeek = new DateOnly[7];
-
             for(int i = 0; i < 7; i++)
             {
-                datesOfWeek[i] = DateOnly.FromDateTime(mondayOftheWeek.AddDays(i).Date); 
+                datesOfWeek[i] = DateOnly.FromDateTime(mondayOftheWeek.AddDays(i).Date);
             }
         }
-
         private void GetWeekSchedule()
         {
             GenarteDatesOfTheWeek();
@@ -142,7 +149,12 @@ namespace ZooBazaar_Desktop_App.Pages
                     foreach (StaticSchedule block in scheduleList)
                     {
                         schedule[i][block.timeBlockId] = block;
-                        Blocks.Add(new Block { blockSchedule = block, amountOfEmployes = _scheduleManager.AmountOfEmployessAssignedToTaskTimeBlockDate(datesOfWeek[i].Day, datesOfWeek[i].Month, datesOfWeek[i].Year, block.TaskID, block.timeBlockId), date = datesOfWeek[i] });
+                        Blocks.Add(new Block { 
+                            blockSchedule = block, 
+                            amountOfEmployes = _scheduleManager.AmountOfEmployessAssignedToTaskTimeBlockDate(datesOfWeek[i].Day, datesOfWeek[i].Month, datesOfWeek[i].Year, block.TaskID, block.timeBlockId), 
+                            date = datesOfWeek[i],
+                            employees = _employeeMenager.GetEmployessAssignedToTaskTimeBlockDate(datesOfWeek[i].Day, datesOfWeek[i].Month, datesOfWeek[i].Year, block.TaskID, block.timeBlockId),
+                        });
                     }
                 }
             }

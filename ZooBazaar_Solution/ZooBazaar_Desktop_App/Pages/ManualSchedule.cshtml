@@ -1,5 +1,6 @@
 ﻿@page
 @Html.AntiForgeryToken();
+@using ZooBazaar_DomainModels.Models;
 @model ZooBazaar_Desktop_App.Pages.ManualScheduleModel
 @{
     ViewData["Title"] = "Schedule";
@@ -39,33 +40,56 @@
             if (!$(e.target).parents(".custom-menu").length > 0) {
 
                 $(".custom-menu").hide(100);
+
             }
+
         });
+
+        function GetEmployees(i, j){
+             return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: 'ManualSchedule/?handler=GetEmployeesOfTask',
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {
+                        i: i,
+                        j: j,
+                    },
+                    success: function (data) {
+                        var text ="";
+                        for (var i = 0; i < data.employees.length; i++) {
+                            text = text + "<li id="+"employee-"+data.employees[i].id+">"+ data.employees[i].firstName+" "+data.employees[i].lastName+ "</li>";
+                        };
+                        resolve(text);
+                    },
+                    error: function (error) {
+                        reject(error)
+                    },
+                });
+              });
+
+
+        }
 
 
 
 
         function ContextMenu(i, j) {
             event.preventDefault();
-
-            $("#contextmenu-" + i + "-" + j).finish().toggle(100).
-
+                $("#contextmenu-" + i + "-" + j).finish().toggle(100).
                 css({
                     top: event.pageY + "px",
                     left: event.pageX + "px"
                 });
-                $("#contextmenu-" + i + "-" + j +" li").click(function () {
 
-                    switch($(this).attr("data-action")) {
-        
-                        case "first": alert(i+" "+j); break;
-                        case "second": alert("second"); break;
-                        case "third": alert("third"); break;
-                    }
-
-                    $("#contextmenu-" + i + "-" + j).hide(100);
-                });
+            GetEmployees(i, j).then((text) => {
+                $("#contextmenu-" + i + "-" + j).html(text);
+            });
+           
+       
         }
+
+
 
 
 
@@ -105,12 +129,14 @@
                         {
                             if (Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
                             {
-                                 <ul class='custom-menu' id="contextmenu-@i-@j">
-                                    <li data-action="Remove employee from task">First thing</li>
-                                    <li data-action="second">Second thing</li>
-                                    <li data-action="third">Third thing</li>
+                               
+                                var block = Model.Blocks.Find(x => x.blockSchedule == Model.schedule[i][j]);
+                                
+                                <ul class='custom-menu' id="contextmenu-@i-@j">
+                                    
                                 </ul>
-                                <button id ="block-@i-@j" oncontextmenu="ContextMenu(@i,@j)" onclick="AddEmployee(@i, @j)" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat - <p id="amoutOfEmployees-@i-@j" style="font-size: 15px; display: inline;"> @Model.Blocks.Find(x =>x.blockSchedule == Model.schedule[i][j]).amountOfEmployes</p>/@Model.schedule[i][j].EmployeesNeeded</button>
+
+                                <button id ="block-@i-@j" oncontextmenu="ContextMenu(@i,@j)" onclick="AddEmployee(@i, @j)" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat - <p id="amoutOfEmployees-@i-@j" style="font-size: 15px; display: inline;"> @block.amountOfEmployes</p>/@Model.schedule[i][j].EmployeesNeeded</button>
                             }
                             else
                             {
@@ -132,7 +158,9 @@
         <label type="text">Employee:</label>
             <select required asp-for="@Model.employeeID" asp-items=@Model.Employees id="employeeSlection">
         </select>
-
+        <form asp-page-handler="Automate" method="post">
+            <button class="btn btn-default">Devide work</button>
+        </form>
 
     </div>
 </div>
