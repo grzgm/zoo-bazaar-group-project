@@ -101,16 +101,19 @@ namespace ZooBazaar_ASP_NET.Pages
                 int EmployeesNeeded = Convert.ToInt32(employeesNeeded);
                 TaskAddDTO taskDTO = new TaskAddDTO
                 {
+                    Name = ((TASKNAME)taskName).ToString(),
                     HabitatID=habitatid,
                     ZoneID= Convert.ToInt32(zoneID)
                 };
                 _taskManager.UpdateHabitatAndZone(taskid, taskDTO);
                 _staticScheduleManager.UpdateEmployeesNeeded(schedule[weekDay][timeBlock].Id, EmployeesNeeded);
+                _staticScheduleManager.DeleteExistingSchedules(schedule[weekDay][timeBlock].TaskID);
                 return RedirectToPage("StaticSchedule");
             }
             else
             {
                 _staticScheduleManager.RemoveSchedule(schedule[weekDay][timeBlock].Id);
+                _staticScheduleManager.DeleteExistingSchedules(schedule[weekDay][timeBlock].TaskID);
                 return RedirectToPage("StaticSchedule");
             }
         }

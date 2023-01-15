@@ -153,5 +153,20 @@ namespace ZooBazaar_Repositories.Repositories
                 throw new Exception(ex.ToString());
             }
         }
+
+        public void DeleteExistingSchedules(int taskid)
+        {
+            string Query = "DELETE FROM Schedule WHERE TaskID=@TaskID";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            try
+            {
+                sqlParameters.Add(new SqlParameter("@TaskID", taskid));
+                Execute(Query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
     }
 }
