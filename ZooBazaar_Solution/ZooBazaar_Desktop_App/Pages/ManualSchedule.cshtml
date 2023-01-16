@@ -149,9 +149,6 @@
     </script>
 }
 <div id="container">
-
-
-
     <div class="weekDays">
         <div>Mon</div>
         <div>Tue</div>
@@ -206,15 +203,10 @@
         }
     </div>
     <div class="actionPanel">
-
-
-
         <label type="text">Employee:</label>
-            <select required asp-for="@Model.employeeID" asp-items=@Model.Employees id="employeeSlection">
-        </select>
+        <select required asp-for="@Model.employeeID" asp-items=@Model.Employees id="employeeSlection"></select>
         <form asp-page-handler="automate" method="post">
             <button onclick="FadeOut()" class="btn btn-default">Devide work</button>
         </form>
-
     </div>
 </div>
