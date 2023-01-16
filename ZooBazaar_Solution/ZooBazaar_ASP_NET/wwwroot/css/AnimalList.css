@@ -3,7 +3,7 @@
     box-sizing: border-box;
     padding: 5px;
     display: grid;
-    grid-template-rows: 40px 40px 75% auto;
+    grid-template-rows: 40px 40px calc(0.75*100vh) auto;
     align-items: center;
 }
 
