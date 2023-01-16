@@ -8,6 +8,7 @@ using ZooBazaar_DomainModels.Models;
 using ZooBazaar_DTO.DTOs;
 using System.Reflection;
 using static ZooBazaar_Desktop_App.Pages.ManualScheduleModel;
+using System.Diagnostics.Contracts;
 
 namespace ZooBazaar_Desktop_App.Pages
 {
@@ -40,6 +41,8 @@ namespace ZooBazaar_Desktop_App.Pages
 
         public DateOnly[] datesOfWeek { get; set; }
 
+        public static DateTime CurrentDate { get; set; } = DateTime.Now;
+
         public struct Block
         {
             public StaticSchedule blockSchedule;
@@ -58,16 +61,22 @@ namespace ZooBazaar_Desktop_App.Pages
             _automaticScheduleManager= automaticScheduleManager;
             _scheduleManager= scheduleManager;
 
+        }
+        public void OnGet()
+        {
             schedule = new StaticSchedule[7][];
             for (int i = 0; i < 7; i++)
             {
                 schedule[i] = new StaticSchedule[24];
             }
+            CurrentDate = DateTime.Now;
 
-            GenarteDatesOfTheWeek();
-            GetWeekSchedule();
+            GetWeekSchedule(CurrentDate);
             LoadEmployees();
         }
+
+
+
         public IActionResult OnPostAutomate()
         {
             DateTime dt = DateTime.Now;
@@ -135,9 +144,9 @@ namespace ZooBazaar_Desktop_App.Pages
             return new JsonResult(result);
         }
 
-        public void GenarteDatesOfTheWeek()
+        public void GenarteDatesOfTheWeek(DateTime date)
         {
-            DateTime dt = DateTime.Now;
+            DateTime dt = date;
             DayOfWeek startOfWeek = DayOfWeek.Monday;
             DateTime mondayOftheWeek;
             int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
@@ -148,9 +157,9 @@ namespace ZooBazaar_Desktop_App.Pages
                 datesOfWeek[i] = DateOnly.FromDateTime(mondayOftheWeek.AddDays(i).Date);
             }
         }
-        private void GetWeekSchedule()
+        private void GetWeekSchedule(DateTime date)
         {
-            GenarteDatesOfTheWeek();
+            GenarteDatesOfTheWeek(date);
 
             List<StaticSchedule> scheduleList = new List<StaticSchedule>();
             Blocks = new List<Block>();
@@ -187,6 +196,32 @@ namespace ZooBazaar_Desktop_App.Pages
             }
         }
 
+        public IActionResult OnPostMoveWeekForward()
+        {
+            CurrentDate = CurrentDate.AddDays(7);
+            schedule = new StaticSchedule[7][];
+            for (int i = 0; i < 7; i++)
+            {
+                schedule[i] = new StaticSchedule[24];
+            }
+            GetWeekSchedule(CurrentDate);
+            LoadEmployees();
+
+            return Page();
+        }
+        public IActionResult OnPostMoveWeekBackwards()
+        {
+            CurrentDate = CurrentDate.AddDays(-7);
+            schedule = new StaticSchedule[7][];
+            for (int i = 0; i < 7; i++)
+            {
+                schedule[i] = new StaticSchedule[24];
+            }
+            GetWeekSchedule(CurrentDate);
+            LoadEmployees();
+
+            return Page();
+        }
 
     }
 }

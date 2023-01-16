@@ -29,15 +29,10 @@
                         alert("Employee is alredy added or There are enough Employees");
                     }else{
                         $("#amoutOfEmployees-" + i + "-" + j).text(result.amountOfEmployees);
-                    }
-                    
-                }
-                
+                    }   
+                }               
             });
         }
-
-
-
 
         $(document).bind("mousedown", function (e) {
 
@@ -132,12 +127,9 @@
 
                     $("#contextmenu-" + i + "-" + j).empty()
                     $(".custom-menu").hide(100);
-                    $(".custom-menuEmployee").hide(100);
-                    
+                    $(".custom-menuEmployee").hide(100);                    
                 }
-
             });
- 
         }
 
         function FadeOut(){
@@ -161,7 +153,20 @@
         <div>Sat</div>
         <div>Sun</div>
     </div>
+    <div>
+        <form method="post">
+            <button asp-page-handler="MoveWeekBackwards" id="previousWeek">
+                <
+            </button>
+            week
+            <button asp-page-handler="MoveWeekForward" id="nextWeek">
+                >
+            </button>
+        </form>
+ 
+    </div>
     <div class="schedule">
+        
         @{
             <div>
                 @{
@@ -204,6 +209,7 @@
                 </div>
             }
         }
+
     </div>
     <div class="actionPanel">
 

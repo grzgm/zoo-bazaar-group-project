@@ -33,11 +33,8 @@ builder.Services.AddSingleton<IScheduleManager, ScheduleManager>();
 builder.Services.AddSingleton<IScheduleRepository, ScheduleRepository>();
 
 
-
-
-
-
 string fileName = "C:\\Users\\Michal\\Documents\\Repos\\School\\ZooBazzar\\s2_prj_zoobazaar\\ZooBazaar_Solution\\ZooBazaar_Desktop_App\\wwwroot\\Images\\ScheduleIcon.png";
+
 
 
 if (HybridSupport.IsElectronActive)
@@ -57,7 +54,6 @@ if (HybridSupport.IsElectronActive)
     {
         BrowserWindow window = await Electron.WindowManager.CreateWindowAsync(options);
 
-
         window.OnClosed += () =>
         {
             Electron.App.Quit();
@@ -67,17 +63,8 @@ if (HybridSupport.IsElectronActive)
     
 }
 
-
-
 // Add services to the container.
 builder.Services.AddRazorPages();
-
-
-
-
-
-
-
 
 var app = builder.Build();
 
