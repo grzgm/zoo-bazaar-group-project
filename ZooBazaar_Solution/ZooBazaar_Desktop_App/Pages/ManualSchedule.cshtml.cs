@@ -60,7 +60,15 @@ namespace ZooBazaar_Desktop_App.Pages
             _employeeMenager = employeeMenager;
             _automaticScheduleManager= automaticScheduleManager;
             _scheduleManager= scheduleManager;
+            schedule = new StaticSchedule[7][];
+            for (int i = 0; i < 7; i++)
+            {
+                schedule[i] = new StaticSchedule[24];
 
+            }
+
+            GetWeekSchedule(CurrentDate);
+            LoadEmployees();
         }
         public void OnGet()
         {
@@ -126,6 +134,8 @@ namespace ZooBazaar_Desktop_App.Pages
         }
         public IActionResult OnGetGetEmployeesOfTask(int i, int j)
         {
+
+
            Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
             
 
@@ -204,6 +214,7 @@ namespace ZooBazaar_Desktop_App.Pages
             {
                 schedule[i] = new StaticSchedule[24];
             }
+
             GetWeekSchedule(CurrentDate);
             LoadEmployees();
 
@@ -217,6 +228,7 @@ namespace ZooBazaar_Desktop_App.Pages
             {
                 schedule[i] = new StaticSchedule[24];
             }
+
             GetWeekSchedule(CurrentDate);
             LoadEmployees();
 
