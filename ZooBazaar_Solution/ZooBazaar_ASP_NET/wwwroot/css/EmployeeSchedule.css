@@ -67,6 +67,8 @@
     height: 30px;
     background-color: #d3d3d3;
     margin: 2px 0;
+    font-size: 15px;
+    overflow: hidden;
 }
     .timeBlock:hover {
         background-color: #4C6674;
