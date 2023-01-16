@@ -48,6 +48,7 @@ nav {
 .panel{
     margin-left: 80px;
     width: 100%;
+    height: 100%;
     display: grid;
     grid-template-columns: 10px auto;
     grid-template-rows: 40px auto;
