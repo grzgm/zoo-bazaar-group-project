@@ -23,17 +23,6 @@ namespace ZooBazaar_ClassLibrary.Menagers
             this._taskRepository = taskRepository;
         }
 
-        public Schedule GetDayScheduleEmployee(DateOnly date, int employeeId)
-        {
-            ScheduleDTO dto = _scheduleRepository.GetByDateAndEmployeeId(date, employeeId);
-            if(dto != null)
-            {
-                TaskDTO taskDTO = dto.TaskDTO;
-                return new Schedule(dto);
-            }
-            return null;
-        }
-
         public List<Schedule> GetDay(DateOnly date)
         {
             List<Schedule> schedules = new List<Schedule>();

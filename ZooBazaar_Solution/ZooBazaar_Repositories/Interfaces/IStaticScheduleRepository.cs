@@ -13,5 +13,6 @@ namespace ZooBazaar_Repositories.Interfaces
         void RemoveSchedule(int scheduleid);
         List<StaticScheduleDTO> GetScheduleFromDay(int day);
         void UpdateEmployeesNeeded(int scheduleid, int employeesNeeded);
+        void DeleteExistingSchedules(int taskid);
     }
 }
