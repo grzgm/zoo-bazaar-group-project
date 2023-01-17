@@ -68,3 +68,9 @@
         background-color: #4C6674;
         cursor: pointer;
     }
+
+.actionPanel {
+    display: grid;
+    grid-auto-flow: column;
+    place-content: flex-start center;
+}

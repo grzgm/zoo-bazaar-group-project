@@ -149,6 +149,13 @@
         </form>
 
     </div>
+    <div class="weekDays">
+        @for (int i = 0; i < 7; i++)
+        {
+            <div>@Model.namesOfDaysOfWeek[i] <br>
+                @Model.datesOfWeek[i]</div>
+        }
+    </div>
     <div class="schedule">
         
         @{
@@ -162,10 +169,7 @@
             </div>
             for (int i = 0; i < 7; i++)
             {
-
-
                 <div class="day">
-                    @Model.datesOfWeek[i]
                     @{
                         for (int j = Model.startingHour; j <= Model.closingHour; j++)
                         {
@@ -185,9 +189,6 @@
                             {
                                 <button asp-route-weekDay="@i" asp-route-timeBlock="@j" class="timeBlock"></button>
                             }
- 
-
-
                         }
                     }
                 </div>

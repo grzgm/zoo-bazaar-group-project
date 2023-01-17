@@ -40,6 +40,7 @@ namespace ZooBazaar_Desktop_App.Pages
         public List<SelectListItem> Employees { get; set; }  
 
         public DateOnly[] datesOfWeek { get; set; }
+        public string[] namesOfDaysOfWeek = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
 
         public static DateTime CurrentDate { get; set; } = DateTime.Now;
 
@@ -66,9 +67,6 @@ namespace ZooBazaar_Desktop_App.Pages
                 schedule[i] = new StaticSchedule[24];
 
             }
-
-            GetWeekSchedule(CurrentDate);
-            LoadEmployees();
         }
         public void OnGet()
         {
