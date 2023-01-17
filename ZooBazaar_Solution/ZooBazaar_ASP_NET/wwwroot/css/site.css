@@ -33,16 +33,20 @@ nav {
     min-height: 60px;
     aspect-ratio: 1/1;
     margin-bottom: 10px;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: black;
     background-color: #637988;
     border-radius: 50px;
-    background-image: url("../Images/ScheduleIcon.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
     .icon:hover {
         background-color: #29A57B;
+    }
+    .icon span {
+        font-size: 40px;
     }
 
 .panel{
