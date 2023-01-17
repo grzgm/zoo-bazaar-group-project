@@ -7,45 +7,50 @@
     align-items: center;
 }
 
-.navigation form {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-    .navigation input {
-        width: 100%;
-        padding: 0 5px;
-    }
-
-.dropdowns {
-    width: 20%;
-    min-width: 250px;
-}
-
-.sortingMenu {
-    width: 100%;
-    height: 30px;
+.searchingForm {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(5, 2fr 1fr);
     box-sizing: border-box;
     padding: 0 15px 0 0;
-    display: flex;
-    justify-content: space-between;
+}
+
+.search {
+    width: 100%;
+    padding: 0 5px;
+}
+
+.column {
+    width: 100%;
+    height: 30px;
+    display: grid;
+    grid-template-columns: repeat(5, calc(100%/5));
+    box-sizing: border-box;
+}
+
+    .column > * {
+        height: 30px;
+        line-height: 30px;
+        padding-left: 5px;
+        border-right: 2px solid #F0F0F0;
+        text-overflow: ellipsis;
+    }
+
+.sortingMenu {
+    padding: 0 15px 0 0;
     color: #d3d3d3;
 }
 
     .sortingMenu > div {
-        width: 25%;
-        line-height: 30px;
-        padding-left: 5px;
-        border-right: 2px solid #F0F0F0;
         background-color: #4C6674;
     }
 
         .sortingMenu > div:hover {
             background-color: #637988;
+            cursor: pointer;
         }
 
     .sortingMenu div:last-child {
-        width:30%;
         border-right: none;
     }
 
@@ -59,11 +64,7 @@
 }
 
 .entity {
-    width: 100%;
-    height: 30px;
-    display: flex;
     margin-bottom: 5px;
-    justify-content: space-between;
     background-color: #d3d3d3;
     pointer-events: none;
 }
@@ -73,27 +74,23 @@
     }
 
     .entity > div {
-        width: 25%;
-        line-height: 30px;
-        padding-left: 5px;
-        border-right: 2px solid #F0F0F0;
         pointer-events: auto;
     }
     .entity div:last-child {
-        width: 50px;
+        display: grid;
+        grid-template-columns: 1fr 40px;
         border-right: none;
     }
 
 .editBtn {
-    background-color: white;
     color: black;
-    height:auto;
-    width:auto;
     text-decoration: none;
+    text-align: center;
+    background-color: #637988;
 }
 
     .editBtn:focus,
     .editBtn:hover {
-        background-color: gray;
+        background-color: #4C6674;
         color: black;
     }

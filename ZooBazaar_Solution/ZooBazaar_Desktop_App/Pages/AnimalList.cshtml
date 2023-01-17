@@ -2,8 +2,12 @@
 @using ZooBazaar_DomainModels.Models;
 @model ZooBazaar_Desktop_App.Pages.AnimalListModel
 @{
+    ViewData["Title"] = "Animal List";
+    ViewData["TabName"] = "Animal List";
+
     ViewData["Css"] = "~/css/Lists.css";
 }
+
 <div id="container">
     <div class="navigation">
         <form class="searchingForm" method="post">
@@ -18,7 +22,7 @@
         </form>
 
     </div>
-    <div class="sortingMenu">
+    <div class="sortingMenu column">
         <div class="sortOption Name">
             ID
         </div>
@@ -40,7 +44,7 @@
         @{
             foreach(Animal animal in Model.animals)
             {
-                <div class="entity">
+                <div class="entity column">
                     <div class="entityName">
                         @animal.ID
                     </div>
@@ -55,11 +59,8 @@
                     </div>
                     <div class="entityZone">
                         @animal.Zone.ToString()
+                        <a type="button" asp-page="./AnimalDetails" asp-route-postId="@animal.ID" class="editBtn">. . .</a>
                     </div>
-                    <div class="Button">
-                        <a type="button" asp-page="./AnimalDetails" asp-route-postId="@animal.ID" class="editBtn"> . . .</a>
-                    </div>
-
                 </div>
             }
         }
