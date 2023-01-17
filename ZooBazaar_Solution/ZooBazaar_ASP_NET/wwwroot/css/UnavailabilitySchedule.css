@@ -32,6 +32,7 @@
 .dayOfMonth {
     display: grid;
     place-items: center;
+    color: black;
     background-color: #d3d3d3;
     font-size: 20px;
     box-sizing: border-box;
@@ -43,4 +44,8 @@
     }
 .unavailable {
     background-color: #738794;
+}
+
+button:disabled{
+    color: grey;
 }
