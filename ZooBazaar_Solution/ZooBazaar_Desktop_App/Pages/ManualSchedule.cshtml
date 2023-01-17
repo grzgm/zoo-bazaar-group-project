@@ -1,5 +1,5 @@
 ﻿@page
-@Html.AntiForgeryToken();
+@Html.AntiForgeryToken()
 @using ZooBazaar_DomainModels.Models;
 @model ZooBazaar_Desktop_App.Pages.ManualScheduleModel
 @{
@@ -141,26 +141,13 @@
     </script>
 }
 <div id="container">
-    <div class="weekDays">
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-        <div>Sun</div>
-    </div>
-    <div>
+    <div class="navigation">
         <form method="post">
-            <button asp-page-handler="MoveWeekBackwards" id="previousWeek">
-                <
-            </button>
-            week
-            <button asp-page-handler="MoveWeekForward" id="nextWeek">
-                >
-            </button>
+            <button asp-page-handler="previous">&#60;</button>
+            <button asp-page-handler="today">Today</button>
+            <button asp-page-handler="next">></button>
         </form>
- 
+
     </div>
     <div class="schedule">
         

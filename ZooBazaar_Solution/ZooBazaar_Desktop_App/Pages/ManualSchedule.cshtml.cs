@@ -206,7 +206,7 @@ namespace ZooBazaar_Desktop_App.Pages
             }
         }
 
-        public IActionResult OnPostMoveWeekForward()
+        public IActionResult OnPostNext()
         {
             CurrentDate = CurrentDate.AddDays(7);
             schedule = new StaticSchedule[7][];
@@ -220,7 +220,7 @@ namespace ZooBazaar_Desktop_App.Pages
 
             return Page();
         }
-        public IActionResult OnPostMoveWeekBackwards()
+        public IActionResult OnPostPrevious()
         {
             CurrentDate = CurrentDate.AddDays(-7);
             schedule = new StaticSchedule[7][];
