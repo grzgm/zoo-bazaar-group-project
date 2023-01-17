@@ -41,11 +41,11 @@
                 //{
                 if (@Model.unavailabilityList.Where(p => p.Date.Day == x.Day).ToList().Any())
                 {
-                    <button asp-page-handler="delete" asp-route-month="@Model.month" asp-route-year="@Model.year" asp-route-day="@x.Day" class="dayOfMonth unavailable">@x.Day.ToString()</button>
+                    <button asp-page-handler="delete" asp-route-month="@Model.month" asp-route-year="@Model.year" asp-route-day="@x.Day" class="dayOfMonth unavailable" disabled="@Model.IsTwoWeek(x)">@x.Day.ToString()</button>
                 }
                 else
                 {
-                    <button asp-page-handler="create" asp-route-month="@Model.month" asp-route-year="@Model.year" asp-route-day="@x.Day" class="dayOfMonth">@x.Day.ToString()</button>
+                    <button asp-page-handler="create" asp-route-month="@Model.month" asp-route-year="@Model.year" asp-route-day="@x.Day" class="dayOfMonth" disabled="@Model.IsTwoWeek(x)">@x.Day.ToString()</button>
                 }
                 //}
             }

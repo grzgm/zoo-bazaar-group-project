@@ -129,6 +129,17 @@ namespace ZooBazaar_ASP_NET.Pages
             maxAmountOfUnavailableDays = 17;
             amountOfUnavailableDays = unavailabilityList.Count();
         }
+
+        public bool IsTwoWeek(CalendarGenerator.DisplayDay date)
+        {
+            DateTime twoweekDate = DateTime.Now.AddDays(14);
+            DateTime selectedDate = new DateTime(twoweekDate.Year, date.Month, date.Day);
+            if (selectedDate < twoweekDate)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
     public class CalendarGenerator
