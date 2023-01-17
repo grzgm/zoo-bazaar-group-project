@@ -1,7 +1,7 @@
 ﻿#container {
     height: 100%;
     display: grid;
-    grid-template-rows: auto auto;
+    grid-template-rows: 80px 40px auto auto;
 }
 
 .navigation {
@@ -33,12 +33,14 @@
     text-align: center;
 }
 
-.weekDays{
+.weekDays {
     margin: 0 5px 0 107px;
     display: flex;
     flex-direction: row;
-    justify-content:space-around;
+    justify-content: space-around;
+    align-items: center;
 }
+
     .weekDays * {
         width: 100%;
         text-align: center;
@@ -59,7 +61,7 @@
 }
 
 .day{
-
+    text-align: center;
 }
 
 .timeBlock {
@@ -140,3 +142,9 @@
         .custom-menuEmployee div:hover {
             background-color: #DEF;
         }
+
+.actionPanel{
+    display: grid;
+    grid-auto-flow: column;
+    place-content: flex-start center;
+}

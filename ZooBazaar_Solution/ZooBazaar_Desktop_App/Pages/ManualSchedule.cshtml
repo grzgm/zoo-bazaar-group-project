@@ -1,5 +1,5 @@
 ﻿@page
-@Html.AntiForgeryToken();
+@Html.AntiForgeryToken()
 @using ZooBazaar_DomainModels.Models;
 @model ZooBazaar_Desktop_App.Pages.ManualScheduleModel
 @{
@@ -141,29 +141,20 @@
     </script>
 }
 <div id="container">
-
-
-
-    <div class="weekDays">
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-        <div>Sun</div>
-    </div>
-    <div>
+    <div class="navigation">
         <form method="post">
-            <button asp-page-handler="MoveWeekBackwards" id="previousWeek">
-                <
-            </button>
-            week
-            <button asp-page-handler="MoveWeekForward" id="nextWeek">
-                >
-            </button>
+            <button asp-page-handler="previous">&#60;</button>
+            <button asp-page-handler="today">Today</button>
+            <button asp-page-handler="next">></button>
         </form>
- 
+
+    </div>
+    <div class="weekDays">
+        @for (int i = 0; i < 7; i++)
+        {
+            <div>@Model.namesOfDaysOfWeek[i] <br>
+                @Model.datesOfWeek[i]</div>
+        }
     </div>
     <div class="schedule">
         
@@ -178,10 +169,7 @@
             </div>
             for (int i = 0; i < 7; i++)
             {
-
-
                 <div class="day">
-                    @Model.datesOfWeek[i]
                     @{
                         for (int j = Model.startingHour; j <= Model.closingHour; j++)
                         {
@@ -201,9 +189,6 @@
                             {
                                 <button asp-route-weekDay="@i" asp-route-timeBlock="@j" class="timeBlock"></button>
                             }
- 
-
-
                         }
                     }
                 </div>
@@ -212,15 +197,10 @@
 
     </div>
     <div class="actionPanel">
-
-
-
         <label type="text">Employee:</label>
-            <select required asp-for="@Model.employeeID" asp-items=@Model.Employees id="employeeSlection">
-        </select>
+        <select required asp-for="@Model.employeeID" asp-items=@Model.Employees id="employeeSlection"></select>
         <form asp-page-handler="automate" method="post">
             <button onclick="FadeOut()" class="btn btn-default">Devide work</button>
         </form>
-
     </div>
 </div>

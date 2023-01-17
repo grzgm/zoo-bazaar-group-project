@@ -2,8 +2,10 @@
 @using ZooBazaar_DomainModels.Models;
 @model ZooBazaar_Desktop_App.Pages.EmployeeListModel
 @{
-    ViewData["Css"] = "~/css/Lists.css";
+    ViewData["Title"] = "Employee List";
+    ViewData["TabName"] = "Employee List";
 
+    ViewData["Css"] = "~/css/employeeLists.css";
 }
 <div id="container">
     <div class="navigation">
@@ -15,14 +17,14 @@
         </form>
 
     </div>
-    <div class="sortingMenu">
+    <div class="sortingMenu column">
         <div class="sortOption ID">
             ID
         </div>
         <div class="sortOption Name">
             Name
         </div>
-        <div class="sortOption LastName" style="width:80% ">
+        <div class="sortOption LastName">
             Last Name
         </div>
     </div>
@@ -30,7 +32,7 @@
         @{
             foreach (Employee employee in Model._employees)
             {
-                <div class="entity">
+                <div class="entity column">
                     <div class="entityName">
                         @employee.ID
                     </div>
@@ -39,11 +41,7 @@
                     </div>
                     <div class="entityLastName">
                         @employee.LastName
-                    </div>
-                    <div>
-                        <div class="Button">
-                            <a type="button" asp-page="./EmployeeDetails" asp-route-postId="@employee.ID" class="editBtn"> . . .</a>
-                        </div>
+                        <a type="button" asp-page="./EmployeeDetails" asp-route-postId="@employee.ID" class="editBtn"> . . .</a>
                     </div>
 
                 </div>
@@ -51,7 +49,7 @@
         }
     </div>
     <div class="actionPanel">
-        <a type="button" asp-page="./EmployeeAdd" class="editBtn"> ADD</a>
+        <a type="button" asp-page="./EmployeeAdd" class="addBtn"> ADD</a>
     </div>
 </div>
 

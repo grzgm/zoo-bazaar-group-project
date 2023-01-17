@@ -8,8 +8,6 @@
     ViewData["Css"] = "~/css/AnimalList.css";
 }
 
-
-
 <div id="container">
     <div class="navigation">
         <form class="searchingForm" method="post">
@@ -24,7 +22,7 @@
         </form>
 
     </div>
-    <div class="sortingMenu">
+    <div class="sortingMenu column">
         <div class="sortOption Name">
             Name
         </div>
@@ -45,7 +43,7 @@
         @{
             foreach(Animal animal in Model.animals)
             {
-                <div class="animal @(animal.SpecialCare != "" ? "animalSpecialCare" : "")">
+                <div class="animal @(animal.SpecialCare != "" ? "animalSpecialCare" : "") column">
                     <div class="animalName">
                         @animal.Name
                     </div>

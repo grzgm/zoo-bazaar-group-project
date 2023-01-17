@@ -20,13 +20,16 @@
                     <button asp-page-handler="previous" asp-route-month="@(Model.month-1)" asp-route-year="@Model.year">&#60;</button>
                 }
             }
-            <button asp-page-handler="today">Today</button>
+            <button asp-page-handler="today">This Month</button>
             <button asp-page-handler="next" asp-route-month="@(Model.month+1)" asp-route-year="@Model.year">></button>
         </form>
 
     </div>
     <div class="date">
         @Model.month.@Model.year
+    </div>
+    <div class="actionPanel">
+        Amount of available Unavailability Days: @Model.amountOfUnavailableDays / @Model.maxAmountOfUnavailableDays
     </div>
     <form method="post" class="month">
         @foreach (var x in Model._generator.days)
@@ -55,7 +58,4 @@
             }
         }
     </form>
-    <div class="actionPanel">
-        @Model.amountOfUnavailableDays / @Model.maxAmountOfUnavailableDays
-    </div>
 </div>

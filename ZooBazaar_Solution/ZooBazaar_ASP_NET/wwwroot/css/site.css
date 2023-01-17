@@ -12,6 +12,7 @@ html {
 body {
     display: flex;
     min-height: 100%;
+    min-width: 800px;
 }
 
 nav {
@@ -32,16 +33,20 @@ nav {
     min-height: 60px;
     aspect-ratio: 1/1;
     margin-bottom: 10px;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: black;
     background-color: #637988;
     border-radius: 50px;
-    background-image: url("../Images/ScheduleIcon.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
     .icon:hover {
         background-color: #29A57B;
+    }
+    .icon span {
+        font-size: 40px;
     }
 
 .panel{
@@ -49,7 +54,7 @@ nav {
     width: 100%;
     display: grid;
     grid-template-columns: 10px auto;
-    grid-template-rows: 40px calc(100vh - 40px);
+    grid-template-rows: 40px auto;
 }
 
 .border {
@@ -62,6 +67,7 @@ nav {
 
 main {
     background-color: #F0F0F0;
+    min-height: calc(100vh - 40px);
 }
 
 #welcome {
@@ -70,4 +76,11 @@ main {
     justify-content: center;
     align-items: center;
     font-size: 48px;
+}
+
+button {
+    border: 1px solid black;
+    background-color: #119B6C;
+    padding: 0 20px;
+    color: white;
 }

@@ -65,8 +65,12 @@
 .timeBlock {
     min-width: 120px;
     height: 30px;
+    line-height: 30px;
+    font-size: 15px;
     background-color: #d3d3d3;
     margin: 2px 0;
+    overflow: hidden;
+    text-align: center;
 }
     .timeBlock:hover {
         background-color: #4C6674;
