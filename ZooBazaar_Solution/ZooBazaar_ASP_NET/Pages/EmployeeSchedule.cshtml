@@ -1,10 +1,63 @@
 ﻿@page
+@Html.AntiForgeryToken()
 @model ZooBazaar_ASP_NET.Pages.EmployeeScheduleModel
 @{
     ViewData["Title"] = "Employee Schedule";
     ViewData["TabName"] = "Employee Schedule";
     ViewData["Css"] = "~/css/EmployeeSchedule.css";
 }
+@section Scripts {
+    <script>
+
+        function GetTaskDetails(i, j) {
+            $.ajax({
+                url: 'EmployeeSchedule/?handler=InformationAboutTask',
+                method: 'GET',
+                dataType: 'json',
+                data: {
+                    i: i,
+                    j: j,
+                },
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (result) {
+
+                    $("#TaskName").text(result.taskName);
+                    $("#TaskHabitat").text(result.taskHabitat);
+                    $("#TaskZone").text(result.taskZone);
+
+                    $("#TaskDate").text(result.date);
+                    $("#TaskStartTime").text(result.startTime);
+                    $("#TaskEndTime").text(result.endTime);
+
+                    if (result.HaveAnimal == true)
+                    {
+                        $("#taskAnimal").css('display', ''); 
+                        
+                        $("#AnimalName").text(result.TaskName);
+                        $("#AnimalDiet").text(result.TaskName);
+                        $("#AnimalAge").text(result.TaskName);
+                        $("#AnimalFeedingInterval").text(result.TaskName);
+                        $("#AnimalGender").text(result.TaskName);
+                        $("#AnimalSpecialCare").text(result.TaskName);
+                        $("#AnimalSpecies").text(result.TaskName);
+                        $("#AnimalSpeciesType").text(result.TaskName);
+                    }
+                    else
+                    {
+                        $("#taskAnimal").css('display', 'none');
+                    }
+                }
+            });
+        }
+
+
+    </script>
+}
+
+
 
 <div id="container">
     <div class="navigation">
@@ -43,7 +96,7 @@
                 {
                     if(Model.schedule[i][j] != null && Model.schedule[i][j].timeBlockId == j)
                     {
-                                <div class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat</div>
+                                <div class="timeBlock" onclick="GetTaskDetails(@i, @j)">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat</div>                             
                     }
                     else
                     {
@@ -54,8 +107,74 @@
                 </div>
             }
         }
+        
     </div>
     <div class="actionPanel">
+        <div class="taskInformation">
+            <div class="taskDetails">
+                <p>
+                    <label for="TaskName">Name:</label>
+                    <span  id="TaskName"></span>
+                </p>
+                <p>
+                    <label for="TaskHabitat">Habitiat:</label>
+                    <span id="TaskHabitat"></span>
+                </p>
+                <p>
+                    <label for="TaskZone">Zone:</label>
+                    <span id="TaskZone"></span>
+                </p>
+                <p>
+                    <label for="TaskDate">Date:</label>
+                    <span id="TaskDate"></span>
+                </p>
+                <p>
+                    <label for="TaskStartTime">Start time:</label>
+                    <span id="TaskStartTime"></span>
+                </p>
+                <p>
+                    <label for="TaskEndTime">End time:</label>
+                    <span id="TaskEndTime"></span>
+                </p>
+
+            </div>
+            <div style="display: none;" class="taskAnimal">
+                <p>
+                    <label for="AnimalName">Name:</label>
+                    <span id="AnimalName"></span>
+                </p>
+                <p>
+                    <label for="AnimalDiet">Diet:</label>
+                    <span id="AnimalDiet"></span>
+                </p>
+                <p>
+                    <label for="AnimalAge">Age:</label>
+                    <span id="AnimalAge"></span>
+                </p>
+                <p>
+                    <label for="AnimalFeedingInterval">Feeding interval:</label>
+                    <span id="AnimalFeedingInterval"></span>
+                </p>
+                <p>
+                    <label for="AnimalGender">Gender:</label>
+                    <span id="AnimalGender"></span>
+                </p>
+                <p>
+                    <label for="AnimalSpecialCare">Special care:</label>
+                    <span id="AnimalSpecialCare"></span>
+                </p>
+                <p>
+                    <label for="AnimalSpecies">Species:</label>
+                    <span id="AnimalSpecies"></span>
+                </p>
+                <p>
+                    <label for="AnimalSpeciesType">Species type:</label>
+                    <span id="AnimalSpeciesType"></span>
+                </p>
+            </div>
+
+        </div>
+
 
     </div>
 </div>

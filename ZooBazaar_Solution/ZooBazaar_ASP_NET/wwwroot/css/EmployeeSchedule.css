@@ -1,7 +1,7 @@
 ﻿#container {
     height: 100%;
     display: grid;
-    grid-template-rows: 40px 20px 40px auto auto;
+    grid-template-rows: 40px 20px 40px auto 100%;
 }
 
 .navigation {
@@ -76,3 +76,7 @@
         background-color: #4C6674;
         cursor: pointer;
     }
+.taskInformation {
+    display: grid;
+    grid-template-columns: 200px 200px;
+}

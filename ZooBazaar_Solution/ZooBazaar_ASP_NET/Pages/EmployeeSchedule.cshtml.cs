@@ -103,5 +103,83 @@ namespace ZooBazaar_ASP_NET.Pages
                 }
             }
         }
+
+        public IActionResult OnGetInformationAboutTask(int i, int j)
+        {
+
+            scheduleRepository = new ScheduleRepository();
+            taskRepository = new TaskRepository();
+            scheduleManager = new ScheduleManager(scheduleRepository, taskRepository);
+
+            if (!Request.Cookies.ContainsKey("weekNumber"))
+            {
+                DateTime today = DateTime.Now;
+                DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(today);
+                if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
+                {
+                    today = today.AddDays(3);
+                }
+                weekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+                Response.Cookies.Append("weekNumber", weekNumber.ToString());
+                firstDayOfWeek = FirstDayOfWeek(DateOnly.FromDateTime(DateTime.Now));
+                Response.Cookies.Append("firstDayOfWeek", firstDayOfWeek.ToString());
+            }
+            else
+            {
+                weekNumber = int.Parse(Request.Cookies["weekNumber"]);
+                firstDayOfWeek = DateOnly.Parse(Request.Cookies["firstDayOfWeek"]);
+            }
+
+            schedule = new Schedule[7][];
+            for (int k = 0; k < 7; k++)
+            {
+                schedule[k] = new Schedule[24];
+            }
+            GetWeekSchedule();
+
+            if (schedule[i][j].task.animal != null)
+            {
+                return new JsonResult(new
+                {
+                    TaskName = schedule[i][j].taskName,
+                    TaskHabitat = schedule[i][j].taskHabitat,
+                    TaskZone = schedule[i][j].taskZone,
+                    date = schedule[i][j].date.ToString(),
+                    startTime = schedule[i][j].timeBlock.StartTime.ToString(),
+                    endTime = schedule[i][j].timeBlock.EndTime.ToString(),
+                    HaveAnimal = true,
+                    animalName = schedule[i][j].task.animal.Name,
+                    animalDiet = schedule[i][j].task.animal.Diet,
+                    animalAge = schedule[i][j].task.animal.Age,
+                    animalFeedingInterval = schedule[i][j].task.animal.FeedingInterval,
+                    animalGender = schedule[i][j].task.animal.Sex,
+                    animalSpecialCare = schedule[i][j].task.animal.SpecialCare,
+                    animalSpecies = schedule[i][j].task.animal.Species,
+                    animalSpeciesType = schedule[i][j].task.animal.SpeciesType,
+                   
+                }); ;
+
+            }
+            else
+            {
+                return new JsonResult(new
+                {
+                    TaskName = schedule[i][j].taskName,
+                    TaskHabitat = schedule[i][j].taskHabitat,
+                    TaskZone = schedule[i][j].taskZone,
+                    date = schedule[i][j].date.ToString(),
+                    startTime = schedule[i][j].timeBlock.StartTime.ToString(),
+                    endTime = schedule[i][j].timeBlock.EndTime.ToString(),
+                    HaveAnimal = false,
+                }); ;
+            }
+
+
+
+
+            
+        }
+
+
     }
 }

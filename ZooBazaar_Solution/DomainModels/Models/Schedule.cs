@@ -43,6 +43,7 @@ namespace ZooBazaar_DomainModels.Models
         public int Id { get { return _id; } }
         public string taskName { get { return _task.taskName; } }
         public string taskHabitat { get { return _task.habitat; } }
+        public string taskZone { get { return _task.zone; } }
         public Task task { get { return _task; } }
         public DateOnly date { get { return _date; } }
     }

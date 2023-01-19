@@ -53,8 +53,10 @@ namespace ZooBazaar_DomainModels.Models
             this._zone = new Zone(taskDTO.HabitatDTO.ZoneDTO);
         }
 
+        public Animal? animal { get { return _animal != null ? _animal : null; } }
         public string taskName { get { return _name.ToString(); } }
         public string habitat { get { return _habitat.ToString(); } }
+        public string zone { get { return _zone.ToString(); } }
         public int ID { get { return _id; } }
 
     }
