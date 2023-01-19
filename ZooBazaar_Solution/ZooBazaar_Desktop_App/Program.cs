@@ -31,6 +31,9 @@ builder.Services.AddSingleton<ITaskManager, TaskMenager>();
 builder.Services.AddSingleton<IAutomaticScheduleManager, AutomaticScheduleManager>();
 builder.Services.AddSingleton<IScheduleManager, ScheduleManager>();
 builder.Services.AddSingleton<IScheduleRepository, ScheduleRepository>();
+builder.Services.AddSingleton<IUnavailabilityScheduleMenager, UnavailabilityScheduleMenager>();
+builder.Services.AddSingleton<IUnavailabilityScheduleRepository, UnavailabilityScheduleRepository>();
+
 
 
 string fileName = "C:\\Users\\Michal\\Documents\\Repos\\School\\ZooBazzar\\s2_prj_zoobazaar\\ZooBazaar_Solution\\ZooBazaar_Desktop_App\\wwwroot\\Images\\ScheduleIcon.png";

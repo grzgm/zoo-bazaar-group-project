@@ -9,6 +9,7 @@ using ZooBazaar_DTO.DTOs;
 using System.Reflection;
 using static ZooBazaar_Desktop_App.Pages.ManualScheduleModel;
 using System.Diagnostics.Contracts;
+using ZooBazaar_ClassLibrary.Menagers;
 
 namespace ZooBazaar_Desktop_App.Pages
 {
@@ -19,6 +20,7 @@ namespace ZooBazaar_Desktop_App.Pages
         private readonly IEmployeeMenager _employeeMenager;
         private readonly IAutomaticScheduleManager _automaticScheduleManager;
         private readonly IScheduleManager _scheduleManager;
+        private readonly IUnavailabilityScheduleMenager _unavailabilityScheduleMenager;
 
         public int closingHour = 22;
         public int startingHour = 6;
@@ -54,13 +56,14 @@ namespace ZooBazaar_Desktop_App.Pages
 
         public List<Block> Blocks { get; set; }
 
-        public ManualScheduleModel(IStaticScheduleManager staticScheduleManager,IScheduleManager scheduleManager ,ITaskManager taskManager, IEmployeeMenager employeeMenager, IAutomaticScheduleManager automaticScheduleManager)
+        public ManualScheduleModel(IStaticScheduleManager staticScheduleManager,IScheduleManager scheduleManager ,ITaskManager taskManager, IEmployeeMenager employeeMenager, IAutomaticScheduleManager automaticScheduleManager, IUnavailabilityScheduleMenager unavailabilityScheduleMenager)
         {
             _staticScheduleManager = staticScheduleManager;
             _taskManager = taskManager;
             _employeeMenager = employeeMenager;
             _automaticScheduleManager= automaticScheduleManager;
             _scheduleManager= scheduleManager;
+            _unavailabilityScheduleMenager= unavailabilityScheduleMenager;
             schedule = new StaticSchedule[7][];
             for (int i = 0; i < 7; i++)
             {
@@ -101,7 +104,8 @@ namespace ZooBazaar_Desktop_App.Pages
         {
 
 
-            if(amountOfEmployees < amountOfNeededEmployees && (_scheduleManager.DoesEmplyeeIsAssignedToTaskTimeBlockDate(day, month, year, taskID, timeblockID, employeeID) == false))
+            if(amountOfEmployees < amountOfNeededEmployees && (_scheduleManager.DoesEmplyeeIsAssignedToTaskTimeBlockDate(day, month, year, taskID, timeblockID, employeeID) == false) 
+                && (!_unavailabilityScheduleMenager.GetByEmployeeIDDayMonthYear(employeeID, day, month, year).Any()))
             {
                 ScheduleAddDTO scheduleAddDTO = new ScheduleAddDTO
                 {
