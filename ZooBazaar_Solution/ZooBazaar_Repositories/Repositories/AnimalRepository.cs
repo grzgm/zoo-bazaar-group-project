@@ -145,7 +145,7 @@ namespace ZooBazaar_Repositories.Repositories
             {
                 sqlParameters.Add(new SqlParameter("@Name", dto.Name));
                 sqlParameters.Add(new SqlParameter("@Age", dto.Age));
-                sqlParameters.Add(new SqlParameter("@DateOfBirth", dto.DateOfBirth));
+                sqlParameters.Add(new SqlParameter("@DateOfBirth", dto.DateOfBirth.ToString("MM-dd-yyyy")));
                 sqlParameters.Add(new SqlParameter("@Sex", dto.Sex));
                 sqlParameters.Add(new SqlParameter("@Species", dto.Species));
                 sqlParameters.Add(new SqlParameter("@SpeciesType", dto.SpeciesType));
@@ -179,7 +179,7 @@ namespace ZooBazaar_Repositories.Repositories
                 sqlParameters.Add(new SqlParameter("@AnimalID", dto.AnimalId));
                 sqlParameters.Add(new SqlParameter("@Name", dto.Name));
                 sqlParameters.Add(new SqlParameter("@Age", dto.Age));
-                sqlParameters.Add(new SqlParameter("@DateOfBirth", dto.DateOfBirth));
+                sqlParameters.Add(new SqlParameter("@DateOfBirth", dto.DateOfBirth.ToString("MM-dd-yyyy")));
                 sqlParameters.Add(new SqlParameter("@Sex", dto.Sex));
                 sqlParameters.Add(new SqlParameter("@Species", dto.Species));
                 sqlParameters.Add(new SqlParameter("@SpeciesType", dto.SpeciesType));
