@@ -188,7 +188,15 @@ namespace ZooBazaar_Repositories.Repositories
                 sqlParameters.Add(new SqlParameter("@FeedingInterval", dto.FeedingInterval));
                 sqlParameters.Add(new SqlParameter("@ZoneID", dto.HabitatDTO.ZoneDTO.ZoneID));
                 sqlParameters.Add(new SqlParameter("@HabitatID", dto.HabitatDTO.HabitatID));
-                sqlParameters.Add(new SqlParameter("@SpecialCare", dto.SpecialCare));
+                if(dto.SpecialCare != null)
+                {
+                    sqlParameters.Add(new SqlParameter("@SpecialCare", dto.SpecialCare));
+                }
+                else
+                {
+                    sqlParameters.Add(new SqlParameter("@SpecialCare", ""));
+                }
+                
                 Execute(Query, sqlParameters);
             }
             catch (Exception ex)

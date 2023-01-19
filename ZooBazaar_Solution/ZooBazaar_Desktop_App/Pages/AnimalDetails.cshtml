@@ -9,8 +9,6 @@
     <button runat="server" onclick="history.go(-1); return false;" style="width:200px">X</button>
 
     <form method="post" id="animalForm" asp-page-handler="update">
-        
-
 
         <fieldset id="animalFormFieldset" disabled >
             <label>ID</label>
@@ -73,7 +71,10 @@
         <input type="submit" id="btnUpdate" value="Update" hidden>
     </form>
     <input id="btnEdit" onclick="enableForm()" value="Edit">
-    
+    <br />
+    <form method="post" asp-page-handler="delete" asp-route-id="@Model.animalDTO.AnimalId">
+        <button class="delete">Delete Animal</button>
+    </form>
 </div>
 
 <script>

@@ -48,5 +48,12 @@ namespace ZooBazaar_Desktop_App.Pages
 
             }
         }
+
+        public IActionResult OnPostDelete(string id)
+        {
+            int employeeid = Convert.ToInt32(id);
+            _employeeMenager.RemoveEmployee(employeeid);
+            return RedirectToPage("EmployeeList");
+        }
     }
 }

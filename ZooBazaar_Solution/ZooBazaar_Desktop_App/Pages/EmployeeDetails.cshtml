@@ -54,9 +54,11 @@
 
         </fieldset>
             <input type="submit" id="btnUpdate" value="Update" hidden>
-    </form>
+        </form>
         <input id="btnEdit" onclick="enableForm()" value="Edit">
-
+        <form method="post" asp-page-handler="delete" asp-route-id="@Model.employeeDTO.EmployeeID">
+            <button class="delete">Delete Employee</button>
+        </form>
 </div>
 
 

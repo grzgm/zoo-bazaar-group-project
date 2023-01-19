@@ -90,5 +90,12 @@ namespace ZooBazaar_Desktop_App.Pages
 
         }
 
+        public IActionResult OnPostDelete(string id)
+        {
+            int animalid = Convert.ToInt32(id);
+            _animalMenager.RemoveAnimal(animalid);
+            return RedirectToPage("AnimalList");
+        }
+
     }
 }
