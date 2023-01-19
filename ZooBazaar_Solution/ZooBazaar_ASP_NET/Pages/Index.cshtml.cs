@@ -24,8 +24,17 @@ namespace ZooBazaar_ASP_NET.Pages
 
         public string mess { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToPage("Welcome");
+            }
+            else
+            {
+                return Page();
+            }
+
             // AutomaticScheduleManager automaticScheduleManager = new AutomaticScheduleManager();
             // automaticScheduleManager.MakeSchedule(new DateOnly(2023, 1, 9));
         }

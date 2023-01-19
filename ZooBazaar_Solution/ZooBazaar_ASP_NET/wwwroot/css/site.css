@@ -84,3 +84,15 @@ button {
     padding: 0 20px;
     color: white;
 }
+
+.logoutButton{
+    background-color:transparent;
+    width:auto;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+.logoutForm{
+    display: flex;
+    justify-content:center;
+}

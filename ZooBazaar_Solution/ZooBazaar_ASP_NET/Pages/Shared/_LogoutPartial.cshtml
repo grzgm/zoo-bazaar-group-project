@@ -1,0 +1,17 @@
+﻿
+@if (User.Identity.IsAuthenticated)
+{
+    <form class="logoutForm" method="post" asp-page="/Logout">
+        <button class="logoutButton" type="submit">
+           <div class="icon">
+                <span class="material-symbols-outlined">
+                    logout
+                </span>
+           </div>
+       </button>            
+    </form>
+}
+else
+{
+
+}
