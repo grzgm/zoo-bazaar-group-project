@@ -75,7 +75,7 @@ namespace ZooBazaar_Desktop_App.Pages
             {
                 schedule[i] = new StaticSchedule[24];
             }
-            CurrentDate = DateTime.Now;
+            
 
             GetWeekSchedule(CurrentDate);
             LoadEmployees();
@@ -85,7 +85,7 @@ namespace ZooBazaar_Desktop_App.Pages
 
         public IActionResult OnPostAutomate()
         {
-            DateTime dt = DateTime.Now;
+            DateTime dt = CurrentDate;
             DayOfWeek startOfWeek = DayOfWeek.Monday;
             DateTime mondayOftheWeek;
             int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
@@ -137,7 +137,7 @@ namespace ZooBazaar_Desktop_App.Pages
             {
                 schedule[k] = new StaticSchedule[24];
             }
-            CurrentDate = DateTime.Now;
+            
 
             GetWeekSchedule(CurrentDate);
             LoadEmployees();
@@ -157,7 +157,7 @@ namespace ZooBazaar_Desktop_App.Pages
             {
                 schedule[k] = new StaticSchedule[24];
             }
-            CurrentDate = DateTime.Now;
+            
 
             GetWeekSchedule(CurrentDate);
             LoadEmployees();
