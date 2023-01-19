@@ -1,0 +1,1 @@
+{"ScheduleID":8,"DayOfWeek":5,"EmployeesNeeded":1,"TimeBlockDTO":{"TimeblockID":15,"StartingTime":"14:00:00","EndingTime":"15:00:00"},"TaskDTO":{"TaskID":89,"Name":"Cleaning","AnimalDTO":null,"HabitatDTO":{"HabitatID":20,"Name":"Grasslands","Capacity":5,"ZoneDTO":{"ZoneID":7,"Name":"Middle East","Capacity":15}}}}

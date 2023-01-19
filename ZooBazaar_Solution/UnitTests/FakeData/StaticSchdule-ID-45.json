@@ -1,0 +1,1 @@
+{"ScheduleID":45,"DayOfWeek":4,"EmployeesNeeded":1,"TimeBlockDTO":{"TimeblockID":20,"StartingTime":"19:00:00","EndingTime":"20:00:00"},"TaskDTO":{"TaskID":126,"Name":"Cleaning","AnimalDTO":null,"HabitatDTO":{"HabitatID":19,"Name":"Desert","Capacity":10,"ZoneDTO":{"ZoneID":7,"Name":"Middle East","Capacity":15}}}}

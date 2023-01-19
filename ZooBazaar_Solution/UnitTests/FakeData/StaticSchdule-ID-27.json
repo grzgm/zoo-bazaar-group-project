@@ -1,0 +1,1 @@
+{"ScheduleID":27,"DayOfWeek":1,"EmployeesNeeded":4,"TimeBlockDTO":{"TimeblockID":12,"StartingTime":"11:00:00","EndingTime":"12:00:00"},"TaskDTO":{"TaskID":108,"Name":"PlayTime","AnimalDTO":null,"HabitatDTO":{"HabitatID":19,"Name":"Desert","Capacity":10,"ZoneDTO":{"ZoneID":7,"Name":"Middle East","Capacity":15}}}}

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ZooBazaar_ASP_NET": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:65029;http://localhost:65030"
+    }
+  }
+}

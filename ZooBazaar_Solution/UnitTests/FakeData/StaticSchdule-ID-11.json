@@ -1,0 +1,1 @@
+{"ScheduleID":11,"DayOfWeek":1,"EmployeesNeeded":3,"TimeBlockDTO":{"TimeblockID":9,"StartingTime":"08:00:00","EndingTime":"09:00:00"},"TaskDTO":{"TaskID":92,"Name":"Cleaning","AnimalDTO":null,"HabitatDTO":{"HabitatID":17,"Name":"Wetlands","Capacity":10,"ZoneDTO":{"ZoneID":6,"Name":"Europe","Capacity":30}}}}

@@ -1,0 +1,1 @@
+{"ScheduleID":18,"DayOfWeek":3,"EmployeesNeeded":1,"TimeBlockDTO":{"TimeblockID":8,"StartingTime":"07:00:00","EndingTime":"08:00:00"},"TaskDTO":{"TaskID":99,"Name":"WaterRefill","AnimalDTO":null,"HabitatDTO":{"HabitatID":16,"Name":"Forest ","Capacity":10,"ZoneDTO":{"ZoneID":6,"Name":"Europe","Capacity":30}}}}

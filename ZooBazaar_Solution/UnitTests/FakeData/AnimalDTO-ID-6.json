@@ -1,0 +1,1 @@
+{"AnimalId":6,"Name":"Zea","Age":16,"DateOfBirth":"2009-09-11T00:00:00","Sex":true,"Species":"Birds","SpeciesType":"Brocket, red","Diet":"nibh in","TimeBlockDTO":{"TimeblockID":20,"StartingTime":"19:00:00","EndingTime":"20:00:00"},"FeedingInterval":5,"HabitatDTO":{"HabitatID":18,"Name":"Marine","Capacity":10,"ZoneDTO":{"ZoneID":6,"Name":"Europe","Capacity":30}},"SpecialCare":""}
