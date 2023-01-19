@@ -12,8 +12,6 @@ namespace ZooBazaar_Desktop_App.Pages
 {
     public class AnimalDetailsModel : PageModel
     {
-
-
         private readonly IAnimalMenager _animalMenager;
 
         private readonly IHabitatMenager _habitatMenager;
@@ -41,7 +39,6 @@ namespace ZooBazaar_Desktop_App.Pages
         public SelectList ZonesOptions { get; set; }
         public SelectList TimeBlockOptions { get; set; }
 
-
         public AnimalDetailsModel(IAnimalMenager animalMenager,IHabitatMenager habitatMenager, ITimeBlockMenager timeBlockMenager, IZoneMenager zoneMenager)
         {
             animalDTO = new AnimalDTO();
@@ -56,8 +53,6 @@ namespace ZooBazaar_Desktop_App.Pages
             HabitatsOptions = new SelectList(habitats, "Key", "Value");
             ZonesOptions = new SelectList(zones, "Key", "Value");
             TimeBlockOptions = new SelectList(timeblock, "Key", "Value");
-
-
         }
 
         public void OnGet(int postId)
@@ -73,21 +68,15 @@ namespace ZooBazaar_Desktop_App.Pages
             animalDTO.HabitatDTO.ZoneDTO = _zoneMenager.GetZoneDTO(zoneID);
             animalDTO.TimeBlockDTO = _timeBlockMenager.GetTimeblockDTO(timeblockID);
 
-           
-
             if (ModelState.IsValid)
             {
                 _animalMenager.UpdateAnimal(animalDTO);
                 return new RedirectToPageResult("AnimalList");
-
             }
             else
             {
                 return Page();
-
             }
-
-
         }
 
         public IActionResult OnPostDelete(string id)
