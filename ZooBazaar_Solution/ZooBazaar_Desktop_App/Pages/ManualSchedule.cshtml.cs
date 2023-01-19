@@ -97,21 +97,20 @@ namespace ZooBazaar_Desktop_App.Pages
         }
 
 
-        public IActionResult OnPostAddEmployee(int i, int j, int employeeID)
+        public IActionResult OnPostAddEmployee(int employeeID, int day, int month, int year, int taskID, int timeblockID, int amountOfEmployees, int amountOfNeededEmployees)
         {
 
-            Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
 
-            if(block.amountOfEmployes < schedule[i][j].EmployeesNeeded && (_scheduleManager.DoesEmplyeeIsAssignedToTaskTimeBlockDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId, employeeID) == false))
+            if(amountOfEmployees < amountOfNeededEmployees && (_scheduleManager.DoesEmplyeeIsAssignedToTaskTimeBlockDate(day, month, year, taskID, timeblockID, employeeID) == false))
             {
                 ScheduleAddDTO scheduleAddDTO = new ScheduleAddDTO
                 {
                     EmployeeID= employeeID,
-                    TaskID= schedule[i][j].TaskID,
-                    TimeblockID = schedule[i][j].timeBlock.ID,
-                    Day = block.date.Day,
-                    Month= block.date.Month,
-                    Year= block.date.Year,
+                    TaskID= taskID,
+                    TimeblockID = timeblockID,
+                    Day = day,
+                    Month= month,
+                    Year= year,
                     
                 };
 
@@ -125,47 +124,24 @@ namespace ZooBazaar_Desktop_App.Pages
                 return new JsonResult(resultNotAdded);
             }
 
-            var result = new { amountOfEmployees = _scheduleManager.AmountOfEmployessAssignedToTaskTimeBlockDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId) };
+            var result = new { amountOfEmployees = _scheduleManager.AmountOfEmployessAssignedToTaskTimeBlockDate(day, month, year, taskID, timeblockID) };
 
             return new JsonResult(result);
 
         }
-        public IActionResult OnGetGetEmployeesOfTask(int i, int j)
+        public IActionResult OnGetGetEmployeesOfTask(int day, int month, int year, int taskID, int timeblockID)
         {
-            schedule = new StaticSchedule[7][];
-            for (int k = 0; k < 7; k++)
-            {
-                schedule[k] = new StaticSchedule[24];
-            }
-            
+            List<Employee> Employees = _employeeMenager.GetEmployessAssignedToTaskTimeBlockDate(day, month, year, taskID, timeblockID);
 
-            GetWeekSchedule(CurrentDate);
-            LoadEmployees();
-
-            Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
-            
-
-
-            var result = new { employees = block.employees  };
+            var result = new { employees = Employees};
             return new JsonResult(result);
         }
 
-        public IActionResult OnPostRemoveEmployee(int i, int j, int employeeID)
+        public IActionResult OnPostRemoveEmployee(int employeeID, int day, int month, int year, int taskID, int timeblockID)
         {
-            schedule = new StaticSchedule[7][];
-            for (int k = 0; k < 7; k++)
-            {
-                schedule[k] = new StaticSchedule[24];
-            }
-            
 
-            GetWeekSchedule(CurrentDate);
-            LoadEmployees();
-
-            Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
-
-            _scheduleManager.DeleteByTaskTimeBlockEmployeeDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId, employeeID);
-            var result = new { amountOfEmployees = _scheduleManager.AmountOfEmployessAssignedToTaskTimeBlockDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId) };
+            _scheduleManager.DeleteByTaskTimeBlockEmployeeDate(day, month, year, taskID, timeblockID, employeeID);
+            var result = new { amountOfEmployees = _scheduleManager.AmountOfEmployessAssignedToTaskTimeBlockDate(day, month, year, taskID, timeblockID) };
 
             return new JsonResult(result);
         }

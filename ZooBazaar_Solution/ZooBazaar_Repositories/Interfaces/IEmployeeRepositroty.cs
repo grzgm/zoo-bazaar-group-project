@@ -17,6 +17,8 @@ namespace ZooBazaar_Repositories.Interfaces
         int nextID();
         EmployeeDTO GetEmployeeByLogin(string email, string password);
 
+        List<EmployeeDTO> GetEmployeesBySchduleID(int schduleID);
+
         List<EmployeeDTO> GetEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -82,6 +83,16 @@ namespace ZooBazaar_ClassLibrary.Menagers
         {
             List<Employee> employees = new List<Employee>();
             foreach (EmployeeDTO dto in _employeeRepositroty.GetEmployessAssignedToTaskTimeBlockDate(day,month,year,taskID,timeBlockId))
+            {
+                employees.Add(new Employee(dto));
+            }
+            return employees;
+        }
+
+        public List<Employee> GetEmployessByScheduleID(int sheduleID)
+        {
+            List<Employee> employees = new List<Employee>();
+            foreach (EmployeeDTO dto in _employeeRepositroty.GetEmployeesBySchduleID(sheduleID))
             {
                 employees.Add(new Employee(dto));
             }

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using ZooBazaar_DTO.DTOs;
 using ZooBazaar_Repositories.Interfaces;
 using System.Data.SqlClient;
+using System.Drawing;
 
 namespace ZooBazaar_Repositories.Repositories
 {
-    public class EmployeeRepository : BaseRepository,IEmployeeRepositroty
+    public class EmployeeRepository : BaseRepository, IEmployeeRepositroty
     {
         private IEnumerable<EmployeeDTO> GetEmployees(string Query, List<SqlParameter>? sqlParameters)
         {
@@ -137,6 +138,24 @@ namespace ZooBazaar_Repositories.Repositories
             }
         }
 
+        List<EmployeeDTO> IEmployeeRepositroty.GetEmployeesBySchduleID(int scheduleID)
+        {
+            string Query = "SELECT e.* FROM Schedule as s " +
+              "join Employee as e on s.EmployeeID = e.EmployeeID " +
+              "WHERE s.ScheduleID = @id; ";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            try
+            {
+
+                sqlParameters.Add(new SqlParameter("@id", scheduleID));
+                return GetEmployees(Query, sqlParameters).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
 
         EmployeeDTO IEmployeeRepositroty.GetByEmployeeId(int ID)
         {
