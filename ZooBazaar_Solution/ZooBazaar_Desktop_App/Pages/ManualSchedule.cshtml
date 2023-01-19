@@ -10,15 +10,20 @@
 @section Scripts {
     <script>
 
-        function AddEmployee(i, j) {
+        function AddEmployee(i, j, day, month, year, taskID, timeblockID, amountOfEmployes, amountOfNeededEmployees) {
             $.ajax({
                 url: 'ManualSchedule/?handler=AddEmployee',
                 method: 'POST',
                 dataType: 'json',
                 data: {
-                    i: i,
-                    j: j,
                     employeeID: $("#employeeSlection option:selected").val(),
+                    day: day,
+                    month: month,
+                    year: year,
+                    taskID: taskID,
+                    timeblockID: timeblockID,
+                    amountOfEmployees: amountOfEmployes,
+                    amountOfNeededEmployees: amountOfNeededEmployees,
                 },
                 headers: {
                     RequestVerificationToken:
@@ -49,22 +54,25 @@
 
         });
 
-        function GetEmployees(i, j){
+        function GetEmployees(i, j, day, month, year, taskID, timeblockID) {
              return new Promise((resolve, reject) => {
                 $.ajax({
                     url: 'ManualSchedule/?handler=GetEmployeesOfTask',
                     method: 'GET',
                     dataType: 'json',
                     data: {
-                        i: i,
-                        j: j,
+                        day: day,
+                        month: month,
+                        year: year,
+                        taskID: taskID,
+                        timeblockID: timeblockID,
                     },
                     success: function (data) {
                         var text ="";
                         for (var k = 0; k < data.employees.length; k++) {
                             text = text + 
                             "<li id="+"employee-"+data.employees[k].id + "-" + i + "-" + j +" onclick="+"SubMenu("+ i +","+ j +","+ data.employees[k].id +")><div> "+ data.employees[k].firstName+" "+data.employees[k].lastName+ "</div>"+
-                                    "<ul class = " + "custom-menuEmployee" + " id="+"sublistEmployee-"+data.employees[k].id + "-" + i + "-" + j +" > <li><button onclick="+"DeleteEmployee("+ i +","+ j +","+ data.employees[k].id +")"+">Delete</button></li> </ul>" +
+                                "<ul class = " + "custom-menuEmployee" + " id=" + "sublistEmployee-" + data.employees[k].id + "-" + i + "-" + j + " > <li><button onclick=" + "DeleteEmployee(" + i + "," + j + "," + data.employees[k].id + "," + day + "," + month + "," + year + "," + taskID + "," + timeblockID + ")" + ">Delete</button></li> </ul>" +
                             "</li>";
                         };
                         
@@ -79,7 +87,7 @@
 
         }
 
-        function ContextMenu(i, j) {
+        function ContextMenu(i, j, day, month, year, taskID, timeblockID) {
             event.preventDefault();
                 $("#contextmenu-" + i + "-" + j).finish().toggle(100).
                 css({
@@ -87,7 +95,7 @@
                     left: event.pageX + "px"
                 });
 
-            GetEmployees(i, j).then((text) => {
+            GetEmployees(i, j, day, month, year, taskID, timeblockID).then((text) => {
                 $("#contextmenu-" + i + "-" + j).html(text);
             });      
         }
@@ -107,15 +115,18 @@
               });
  
         }
-        function DeleteEmployee(i, j, empID) {
+        function DeleteEmployee(i, j, empID, day, month, year, taskID, timeblockID) {
             $.ajax({
                 url: 'ManualSchedule/?handler=RemoveEmployee',
                 method: 'POST',
                 dataType: 'json',
                 data: {
-                    i: i,
-                    j: j,
                     employeeID: empID,
+                    day: day,
+                    month: month,
+                    year: year,
+                    taskID: taskID,
+                    timeblockID: timeblockID,
                 },
                 headers: {
                     RequestVerificationToken:
@@ -181,9 +192,9 @@
                                 <ul class='custom-menu' id="contextmenu-@i-@j">
                                     
                                 </ul>
-                                
 
-                                <button id ="block-@i-@j" oncontextmenu="ContextMenu(@i,@j)" onclick="AddEmployee(@i, @j)" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat - <p id="amoutOfEmployees-@i-@j" style="font-size: 15px; display: inline;"> @block.amountOfEmployes</p>/@Model.schedule[i][j].EmployeesNeeded</button>
+
+                                <button id="block-@i-@j" oncontextmenu="ContextMenu(@i,@j,@block.date.Day, @block.date.Month, @block.date.Year, @Model.schedule[i][j].TaskID,@Model.schedule[i][j].timeBlockId) " onclick="AddEmployee(@i,@j,@block.date.Day, @block.date.Month, @block.date.Year, @Model.schedule[i][j].TaskID,@Model.schedule[i][j].timeBlockId, @block.amountOfEmployes, @Model.schedule[i][j].EmployeesNeeded)" class="timeBlock">@Model.schedule[i][j].taskName - @Model.schedule[i][j].taskHabitat - <p id="amoutOfEmployees-@i-@j" style="font-size: 15px; display: inline;"> @block.amountOfEmployes</p>/@Model.schedule[i][j].EmployeesNeeded</button>
                             }
                             else
                             {

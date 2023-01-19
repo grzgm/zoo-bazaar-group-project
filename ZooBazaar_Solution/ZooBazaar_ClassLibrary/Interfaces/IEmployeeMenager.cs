@@ -17,9 +17,8 @@ namespace ZooBazaar_ClassLibrary.Interfaces
         void RemoveEmployee(int id);
         void UpdateEmployee(EmployeeDTO employeeDTO);
         Employee LoginEmployee(string email, string password);
-
         EmployeeDTO GetEmployeeDTO(int id);
-
+        List<Employee> GetEmployessByScheduleID(int sheduleID);
         List<Employee> GetEmployessAssignedToTaskTimeBlockDate(int day, int month, int year, int taskID, int timeBlockId);
     }
 }
