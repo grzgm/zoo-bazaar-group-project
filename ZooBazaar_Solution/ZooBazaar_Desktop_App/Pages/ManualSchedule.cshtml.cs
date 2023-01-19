@@ -132,9 +132,17 @@ namespace ZooBazaar_Desktop_App.Pages
         }
         public IActionResult OnGetGetEmployeesOfTask(int i, int j)
         {
+            schedule = new StaticSchedule[7][];
+            for (int k = 0; k < 7; k++)
+            {
+                schedule[k] = new StaticSchedule[24];
+            }
+            CurrentDate = DateTime.Now;
 
+            GetWeekSchedule(CurrentDate);
+            LoadEmployees();
 
-           Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
+            Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
             
 
 
@@ -144,6 +152,16 @@ namespace ZooBazaar_Desktop_App.Pages
 
         public IActionResult OnPostRemoveEmployee(int i, int j, int employeeID)
         {
+            schedule = new StaticSchedule[7][];
+            for (int k = 0; k < 7; k++)
+            {
+                schedule[k] = new StaticSchedule[24];
+            }
+            CurrentDate = DateTime.Now;
+
+            GetWeekSchedule(CurrentDate);
+            LoadEmployees();
+
             Block block = Blocks.Find(x => x.blockSchedule == schedule[i][j]);
 
             _scheduleManager.DeleteByTaskTimeBlockEmployeeDate(block.date.Day, block.date.Month, block.date.Year, block.blockSchedule.TaskID, block.blockSchedule.timeBlockId, employeeID);
