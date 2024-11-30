@@ -70,7 +70,7 @@ The Synthesis Assignment System follows a 3-Tier Architecture to ensure modulari
 |                                       |
 +---------------------------------------+
                     |
-                    |
+                    |   Dependency Inversion
                     ▼
 +---------------------------------------+
 |         Business Logic Layer          |
